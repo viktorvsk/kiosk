@@ -103,7 +103,7 @@ group :doc do
   gem 'w3c_validators'
 end
 
-group :development, :test do
+group :development do
   # Test coverage
   gem 'coverband'
 
@@ -128,11 +128,14 @@ group :development, :test do
   gem 'guard', '~> 2.8'
   gem 'guard-rails'
   gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'guard-minitest'
   gem 'guard-rubocop'
   gem 'guard-livereload'
   gem 'spork-rails', github: 'sporkrb/spork-rails' # rubygems version not rails 4 compatible
   gem 'guard-spork'
+  gem 'spork-testunit'
+  gem 'ruby-prof'
   gem 'guard-brakeman'
 
   # Deployment
