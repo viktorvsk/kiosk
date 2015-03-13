@@ -1,45 +1,199 @@
 source 'https://rubygems.org'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Basic
 gem 'rails', '4.2.0'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'pg'
+gem 'puma'
+gem 'bower-rails', '~> 0.9.2'
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+# Schedule
+gem 'resque', '1.25.2'
+
+# Translations
+gem 'russian', '~> 0.6.0'
+
+# Robust
+gem 'parallel'
+gem 'activerecord-import', '0.4.0'
+gem 'benchmark-ips', require: false
+
+# Security
+gem 'secure_headers', require: 'secure_headers'
+
+# Search
+gem 'mysql2', '~> 0.3.13'
+gem 'thinking-sphinx', '~> 3.1.3'
+gem 'ransack'
+
+# Settings
+gem 'figaro'
+gem 'rails-settings-cached', '0.4.1'
+
+# Markup Helpers
+gem 'haml-rails'
+gem 'simple_form'
+gem 'bootstrap-generators', '~> 3.3.1'
+gem 'auto_html'
+gem 'gretel'
+
+# Assets
+gem 'ckeditor'
+# gem 'ace-rails-ap'
+# gem 'jquery-ui-rails'
+# gem 'select2-rails'
+# gem 'bootstrap-sass', '~> 3.3.3'
+# gem 'jquery-rails'
+
+# API
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# Auth
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-vkontakte'
+gem 'omniauth-facebook'
+gem 'cancancan', '~> 1.8'
 
-# Use Unicorn as the app server
-# gem 'unicorn'
+# Refactoring
+gem 'draper'
+gem 'has_scope'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+# ActivePricelist
+gem 'roo'
+gem 'simple_xlsx_reader'
+gem 'nokogiri'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+# Images
+gem 'mini_magick'
+gem 'carrierwave'
 
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+gem 'file_browser'
 
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+# SEO
+gem 'meta-tags'
+gem 'friendly_id', '~> 5.1.0'
+gem 'dynamic_sitemaps',   require: false
+gem 'sitemap_generator',  require: false
+
+# Env helpers
+gem 'backup'
+gem 'rails_db_dump'
+
+# ActiveRecord helpers
+gem 'foreigner'
+gem 'activevalidators', '~> 3.0.0'
+gem 'strip_attributes'
+gem 'kaminari'
+
+# ActiveRecord acts_as
+gem 'paranoia', '~> 2.0'
+gem 'paper_trail', '~> 4.0.0.beta'
+gem 'acts_as_commentable_with_threading'
+gem 'unread'
+gem 'awesome_nested_set'
+gem 'acts_as_list'
+
+# Helpers
+gem 'monetize'
+gem 'money'
+gem 'faraday'
+
+group :doc do
+  gem 'sdoc', '~> 0.4.0'
+  gem 'w3c_validators'
 end
 
+group :development, :test do
+  # Test coverage
+  gem 'coverband'
+
+  # Debug
+  gem 'binding_of_caller'
+  gem 'better_errors'
+  gem 'awesome_print'
+  gem 'colorized'
+  gem 'quiet_assets'
+  gem 'bullet'
+  gem 'rails_view_annotator'
+  gem 'peek'
+  gem 'xray-rails'
+  gem 'rack-livereload'
+
+  # Watching
+  # gem 'libnotify', require: false
+  # gem 'ruby-growl'
+  # gem 'ruby_gntp'
+  # gem 'uniform_notifier'
+
+  gem 'guard', '~> 2.8'
+  gem 'guard-rails'
+  gem 'guard-rspec'
+  gem 'guard-minitest'
+  gem 'guard-rubocop'
+  gem 'guard-livereload'
+  gem 'spork-rails', github: 'sporkrb/spork-rails' # rubygems version not rails 4 compatible
+  gem 'guard-spork'
+  gem 'guard-brakeman'
+
+  # Deployment
+  gem 'capistrano', '3.2.1'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano3-puma'
+end
+
+group :development, :test do
+  gem 'byebug'
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
+  gem 'letter_opener'
+  gem 'factory_girl_rails'
+  gem 'ffaker'
+  gem 'did_you_mean'
+  gem 'rails-footnotes', '~> 4.0'
+  gem 'zapata'
+end
+
+group :test do
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-mocks'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
+  gem 'cucumber-rails', require: false
+  gem 'shoulda-matchers', require: false
+end
+
+group :production do
+  gem 'rack-cache'
+  gem 'rails_12factor'
+end
+
+group :assets do
+  gem 'sass-rails', '~> 5.0'
+  gem 'uglifier', '>= 1.3.0'
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'autoprefixer-rails'
+end
+
+group :system_helpers do
+  gem 'flog',                   require: false
+  gem 'rubocop',                require: false
+  gem 'lol_dba',                require: false
+  gem 'rails_best_practices',   require: false
+  gem 'brakeman',               require: false
+  gem 'cane',                   require: false
+  gem 'reek',                   require: false
+  gem 'rubycritic',             require: false
+  gem 'request-log-analyzer',   require: false
+  gem 'foreman',                require: false
+  gem 'bundler-audit',          require: false
+  gem 'clockwork',              require: false
+  gem 'god',                    require: false
+end
+
+# Temporary
+# gem 'fuzzy_match'
+# gem 'amatch'
+# gem 'browserlog'
