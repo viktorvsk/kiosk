@@ -1,7 +1,6 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "bootstrap": "latest",
     "jquery-ui": "latest",
     "magnific-popup": "latest",
     "nouislider": "latest",

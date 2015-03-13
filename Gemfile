@@ -38,11 +38,11 @@ gem 'gretel'
 
 # Assets
 gem 'ckeditor'
+gem 'jquery-rails'
+gem 'bootstrap-sass', '~> 3.3.3'
 # gem 'ace-rails-ap'
 # gem 'jquery-ui-rails'
 # gem 'select2-rails'
-# gem 'bootstrap-sass', '~> 3.3.3'
-# gem 'jquery-rails'
 
 # API
 gem 'jbuilder', '~> 2.0'
