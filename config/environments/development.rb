@@ -1,4 +1,7 @@
 Rails.application.configure do
+
+  config.middleware.use Rack::LiveReload
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -38,4 +41,22 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # config.after_initialize do
+  #   Bullet.enable               = true
+  #   Bullet.alert                = true
+  #   Bullet.bullet_logger        = true
+  #   Bullet.console              = true
+  #   Bullet.growl                = true
+  #   Bullet.rails_logger         = true
+  #   Bullet.bugsnag              = true
+  #   Bullet.airbrake             = true
+  #   Bullet.add_footer           = true
+  #   # Bullet.stacktrace_includes  = [ 'your_gem', 'your_middleware' ]
+  #   # Bullet.xmpp                 = { :account  => 'bullets_account@jabber.org',
+  #   #                                 :password => 'bullets_password_for_jabber',
+  #   #                                 :receiver => 'your_account@jabber.org',
+  #   #                                 :show_online_status => true
+  #   #                               }
+  # end
 end
