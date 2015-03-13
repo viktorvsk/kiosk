@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_admin_product_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Product
+  %h1 Listing admin_products
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+        %th
+        %th
+
+    %tbody
+      - @admin_products.each do |admin_product|
+        %tr
+          %td= link_to 'Show', admin_product
+          %td= link_to 'Edit', edit_admin_product_path(admin_product)
+          %td= link_to 'Destroy', admin_product, :data => { confirm: 'Are you sure?' }, :method => :delete
