@@ -1,0 +1,25 @@
+{
+  "name": "maskedInput",
+  "version": "1.3.0",
+  "description": "The Angelwatt Masked Input script provides a way to add a text format to a text field and enforce it's structure as the user types in values. The mask shows the general format and gives the user an idea about how they should input the data that your form is requesting of them. A common example of this, is wanting a date to be inputted in a specific format, such as in a month, day, and year order. The common way to portray this to the user is to add some text near the text input that tells or shows the format e.g., MM/DD/YYYY or 04/23/1994. That's good and all, but a text mask can help the user out a little more. The text mask takes your format and throws it directly inside the text field and allows the user to type over the mask as they enter in the data. Examples are probably the better way to get the point across so check out some examples further below.",
+  "main": "masked-input.js",
+  "keywords": [
+    "masked",
+    "input",
+    "maskedInput",
+    "masked-input",
+    "ui"
+  ],
+  "authors": [
+    "Kendall Conrad"
+  ],
+  "license": "CC",
+  "homepage": "http://www.angelwatt.com/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
