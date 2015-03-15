@@ -21,8 +21,8 @@ gem 'benchmark-ips', require: false
 gem 'secure_headers', require: 'secure_headers'
 
 # Search
-gem 'mysql2', '~> 0.3.13'
-gem 'thinking-sphinx', '~> 3.1.3'
+# gem 'mysql2', '~> 0.3.13'
+# gem 'thinking-sphinx', '~> 3.1.3'
 gem 'ransack'
 
 # Settings
@@ -140,8 +140,9 @@ group :development do
 
   # Deployment
   gem 'mina'
-  gem 'mina-puma', :require => false
-  gem 'mina-nginx', :require => false
+  gem 'mina-puma',  require: false
+  gem 'mina-nginx', require: false
+  gem 'mina-scp',   require: false
 end
 
 group :development, :test do

@@ -4,17 +4,19 @@ require 'mina/git'
 require 'mina/rbenv'
 require 'mina/puma'
 require 'mina/nginx'
+require 'mina/scp'
+
+current_root = File.expand_path '../', __FILE__
 
 set :domain,      'vvsk@terenkur.com'
-set :application  'kiosk'
-set :server_name  'kiosk.evotex.kh.ua'
+set :application, 'kiosk'
+set :server_name, 'kiosk.evotex.kh.ua'
 set :deploy_to,   '/home/vvsk/kiosk'
 set :repository,  'git@bitbucket.org:victorvsk/kiosk.git'
 set :branch,      'master'
 
 set :shared_paths, [
-  'config/database.yml', 'log', 'tmp/sockets', 'tmp/pids',
-  'config/secrets.yml'
+  'config/database.yml', 'log', 'config/secrets.yml'
 ]
 
 task :environment do
@@ -22,8 +24,6 @@ task :environment do
 end
 
 task :setup => :environment do
-
-  # Puma needs a place to store its pid file and socket file.
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids")
@@ -32,19 +32,26 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
 
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/server"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/server"]
+
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
-  database_yml = File.read(Rails.root.join('config', 'secrets', 'database.yml'))
-  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
-  queue! %[echo "#{database_yml}" > #{deploy_to}/#{shared_path}/config/database.yml]
+  scp_upload("#{current_root}/secrets/database.yml", "#{deploy_to}/#{shared_path}/config/database.yml")
+  scp_upload("#{current_root}/secrets.yml", "#{deploy_to}/#{shared_path}/config/secrets.yml")
+  scp_upload("#{current_root}/application.yml", "#{deploy_to}/#{shared_path}/config/application.yml")
+
+  scp_upload("#{current_root}/server/kiosk.conf",       "#{deploy_to}/#{shared_path}/server/kiosk.conf")
+  scp_upload("#{current_root}/server/nginx.conf",       "#{deploy_to}/#{shared_path}/server/nginx.conf")
+  scp_upload("#{current_root}/server/puma.monit",       "#{deploy_to}/#{shared_path}/server/puma.monit")
+  scp_upload("#{current_root}/server/resque.monit",     "#{deploy_to}/#{shared_path}/server/resque.monit")
+  scp_upload("#{current_root}/server/clockwork.monit",  "#{deploy_to}/#{shared_path}/server/clockwork.monit")
 end
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
-    # Put things that will set up an empty directory into a fully set-up
-    # instance of your project.
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
