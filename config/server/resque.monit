@@ -1,0 +1,8 @@
+check process resque_kiosk
+  with pidfile /home/vvsk/kiosk/shared/tmp/pids/resque.pid
+  start program = "/bin/su - vvsk -c 'cd /home/vvsk/kiosk/current && BUNDLE_GEMFILE=/home/vvsk/kiosk/current/Gemfile bundle exec rake resque:work RAILS_ENV=production COUNT=1 QUEUE=produc
+ts_creater VERBOSE=1 BACKGROUND=yes PIDFILE=/home/vvsk/kiosk/shared/tmp/pids/resque.pid >> /home/vvsk/kiosk/shared/log/resque.log'"
+  stop program = "/bin/su - vvsk -c 'cd /home/vvsk/kiosk/current/ && kill -9 $(cat /home/vvsk/kiosk/shared/tmp/pids/resque.pid) && rm -f /home/vvsk/kiosk/shared/tmp/pids/resque.
+pid; exit 0;'"
+  if totalmem is greater than 900 MB for 10 cycles then restart  # eating up memory?
+  group resque_kiosk
