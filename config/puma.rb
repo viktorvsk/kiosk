@@ -1,5 +1,6 @@
 deploy_to = '/home/vvsk/kiosk'
 
+workers 2
 environment    'production'
 daemonize       true
 threads 0, 16
