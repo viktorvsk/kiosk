@@ -46,7 +46,6 @@ desc "Upload config files"
 task :upload_config => :environment do
   scp_upload("#{current_root}/secrets/database.yml", "#{deploy_to}/#{shared_path}/config/database.yml")
   scp_upload("#{current_root}/secrets/secrets.yml", "#{deploy_to}/#{shared_path}/config/secrets.yml")
-  scp_upload("#{current_root}/secrets.yml", "#{deploy_to}/#{shared_path}/config/secrets.yml")
   scp_upload("#{current_root}/application.yml", "#{deploy_to}/#{shared_path}/config/application.yml")
 
   scp_upload("#{current_root}/server/kiosk.conf",       "#{deploy_to}/#{shared_path}/server/kiosk.conf")
