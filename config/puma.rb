@@ -2,6 +2,8 @@ deploy_to = '/home/vvsk/kiosk'
 
 environment    'production'
 daemonize       false
+threads 0, 16
+rackup      DefaultRackup
 
 directory       deploy_to
 pidfile         "#{deploy_to}/shared/tmp/pids/puma.pid"
