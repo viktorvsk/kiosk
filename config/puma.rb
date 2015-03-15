@@ -5,6 +5,7 @@ environment    'production'
 daemonize       true
 threads 0, 16
 rackup "#{deploy_to}/current/config.ru"
+preload_app!
 
 directory       "#{deploy_to}/current"
 pidfile         "#{deploy_to}/shared/tmp/pids/puma.pid"
