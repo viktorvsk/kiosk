@@ -139,11 +139,7 @@ group :development do
   gem 'guard-brakeman'
 
   # Deployment
-  gem 'capistrano', '3.2.1'
-  gem 'capistrano-rails'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rbenv', '~> 2.0'
-  gem 'capistrano3-puma'
+  gem 'mina'
 end
 
 group :development, :test do
