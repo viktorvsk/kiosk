@@ -16,7 +16,7 @@ set :repository,  'git@bitbucket.org:victorvsk/kiosk.git'
 set :branch,      'master'
 
 set :shared_paths, [
-  'config/database.yml', 'log', 'config/secrets.yml'
+  'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml', 'tmp'
 ]
 
 task :environment do
@@ -38,7 +38,13 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
+
+end
+
+desc "Upload config files"
+task :upload_config => :environment do
   scp_upload("#{current_root}/secrets/database.yml", "#{deploy_to}/#{shared_path}/config/database.yml")
+  scp_upload("#{current_root}/secrets/secrets.yml", "#{deploy_to}/#{shared_path}/config/secrets.yml")
   scp_upload("#{current_root}/secrets.yml", "#{deploy_to}/#{shared_path}/config/secrets.yml")
   scp_upload("#{current_root}/application.yml", "#{deploy_to}/#{shared_path}/config/application.yml")
 
