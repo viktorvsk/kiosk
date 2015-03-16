@@ -1,7 +1,27 @@
-= simple_form_for(@catalog_product) do |f|
+= simple_form_for(@product, url: admin_products_path) do |f|
   = f.error_notification
-
-  .form-inputs
+  =# render 'shared/error_messages', object: f.object
+  .form-inputs.well.bs-component
+    .form-group{ class: ('has-error' if f.object.errors[:name].any?) }
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+      = f.error :name
+    .form-group{ class: ('has-error' if f.object.errors[:model].any?) }
+      = f.label :model
+      = f.text_field :model, class: 'form-control'
+      = f.error :model
+    .form-group{ class: ('has-error' if f.object.errors[:slug].any?) }
+      = f.label :slug
+      = f.text_field :slug, class: 'form-control'
+      = f.error :slug
+    .form-group{ class: ('has-error' if f.object.errors[:category].any?) }
+      = f.label :category
+      = f.text_field :category, class: 'form-control'
+      = f.error :category
+    .form-group{ class: ('has-error' if f.object.errors[:brand].any?) }
+      = f.label :brand
+      = f.text_field :brand, class: 'form-control'
+      = f.error :brand
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, 'Создать товар', class: 'btn btn-primary'

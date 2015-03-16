@@ -1,10 +1,10 @@
 .page-header
-  = link_to catalog_products_path, :class => 'btn btn-default' do
+  = link_to admin_products_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to @catalog_product, :class => 'btn btn-primary' do
+    Назад
+  = link_to @product, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-info-sign
     Show
-  %h1 Editing catalog_product
+  %h1 Редактирование товара
 
 = render 'form'

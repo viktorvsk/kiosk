@@ -2,9 +2,9 @@
   = link_to admin_vendor_merchants_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
     Back
-  = link_to @admin_vendor_merchant, :class => 'btn btn-primary' do
+  = link_to [:admin, @merchant], :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-info-sign
     Show
-  %h1 Editing admin_vendor_merchant
+  %h1 Редактировать поставщика
 
 = render 'form'

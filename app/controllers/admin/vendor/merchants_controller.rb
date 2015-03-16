@@ -1,10 +1,10 @@
 class Admin::Vendor::MerchantsController < Admin::BaseController
-  before_action :set_admin_vendor_merchant, only: [:show, :edit, :update, :destroy]
+  before_action :set_merchant, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/vendor/merchants
   # GET /admin/vendor/merchants.json
   def index
-    @admin_vendor_merchants = Admin::Vendor::Merchant.all
+    @merchants = ::Vendor::Merchant.all
   end
 
   # GET /admin/vendor/merchants/1
@@ -14,7 +14,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
   # GET /admin/vendor/merchants/new
   def new
-    @admin_vendor_merchant = Admin::Vendor::Merchant.new
+    @merchant = ::Vendor::Merchant.new
   end
 
   # GET /admin/vendor/merchants/1/edit
@@ -24,15 +24,15 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   # POST /admin/vendor/merchants
   # POST /admin/vendor/merchants.json
   def create
-    @admin_vendor_merchant = Admin::Vendor::Merchant.new(admin_vendor_merchant_params)
+    @merchant = ::Vendor::Merchant.new(merchant_params)
 
     respond_to do |format|
-      if @admin_vendor_merchant.save
-        format.html { redirect_to @admin_vendor_merchant, notice: 'Merchant was successfully created.' }
-        format.json { render :show, status: :created, location: @admin_vendor_merchant }
+      if @merchant.save
+        format.html { redirect_to admin_vendor_merchants_path, notice: 'Merchant was successfully created.' }
+        format.json { render :show, status: :created, location: @merchant }
       else
         format.html { render :new }
-        format.json { render json: @admin_vendor_merchant.errors, status: :unprocessable_entity }
+        format.json { render json: @merchant.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,12 +41,12 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   # PATCH/PUT /admin/vendor/merchants/1.json
   def update
     respond_to do |format|
-      if @admin_vendor_merchant.update(admin_vendor_merchant_params)
-        format.html { redirect_to @admin_vendor_merchant, notice: 'Merchant was successfully updated.' }
-        format.json { render :show, status: :ok, location: @admin_vendor_merchant }
+      if @merchant.update(merchant_params)
+        format.html { redirect_to admin_vendor_merchants_path, notice: 'Merchant was successfully updated.' }
+        format.json { render :show, status: :ok, location: @merchant }
       else
         format.html { render :edit }
-        format.json { render json: @admin_vendor_merchant.errors, status: :unprocessable_entity }
+        format.json { render json: @merchant.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,7 +54,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   # DELETE /admin/vendor/merchants/1
   # DELETE /admin/vendor/merchants/1.json
   def destroy
-    @admin_vendor_merchant.destroy
+    @merchant.destroy
     respond_to do |format|
       format.html { redirect_to admin_vendor_merchants_url, notice: 'Merchant was successfully destroyed.' }
       format.json { head :no_content }
@@ -63,12 +63,12 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_admin_vendor_merchant
-      @admin_vendor_merchant = Admin::Vendor::Merchant.find(params[:id])
+    def set_merchant
+      @merchant = ::Vendor::Merchant.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def admin_vendor_merchant_params
-      params[:admin_vendor_merchant]
+    def merchant_params
+      params.require(:vendor_merchant).permit(:name)
     end
 end

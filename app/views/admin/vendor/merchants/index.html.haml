@@ -1,20 +1,24 @@
 .page-header
   = link_to new_admin_vendor_merchant_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
-    New Merchant
-  %h1 Listing admin_vendor_merchants
+    Новый поставщик
+  %h1= @merchants.present? ? 'Все поставщики' : 'Поставщики отсутствуют'
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th
-        %th
-        %th
-
-    %tbody
-      - @admin_vendor_merchants.each do |admin_vendor_merchant|
+- if @merchants.present?
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
-          %td= link_to 'Show', admin_vendor_merchant
-          %td= link_to 'Edit', edit_admin_vendor_merchant_path(admin_vendor_merchant)
-          %td= link_to 'Destroy', admin_vendor_merchant, :data => { confirm: 'Are you sure?' }, :method => :delete
+          %th Название
+      %tbody
+        - @merchants.each do |merchant|
+          %tr
+            %td
+              .col-xs-4
+                %h4= merchant.name
+              .col-xs-4.col-xs-offset-4.text-right
+                = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-primary' do
+                  %iglyphicon.glyphicon-pencil
+                = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
+                  %i.glyphicon.glyphicon-remove
+

@@ -1,7 +1,11 @@
-= simple_form_for(@admin_vendor_merchant) do |f|
+
+= simple_form_for(@merchant, url: (@merchant.new_record? ? admin_vendor_merchants_path : admin_vendor_merchant_path(@merchant))) do |f|
   = f.error_notification
 
-  .form-inputs
-
+  .form-inputs.well.bs-component
+    .form-group{ class: ('has-error' if f.object.errors[:name].any?) }
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+      = f.error :name
   .form-actions
-    = f.button :submit
+    = f.button :submit, @merchant.new_record? ? "Сохранить" : "Обновить"

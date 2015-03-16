@@ -16,28 +16,16 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
-      .container
-        .navbar-header
-          %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          = link_to "Project name", "#", :class => "navbar-brand"
-        #navbar.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            %li.active
-              %a{:href => "#"} Home
-            %li
-              %a{:href => "#about"} About
-            %li
-              %a{:href => "#contact"} Contact
+
     .container
-      - flash.each do |name, msg|
-        = content_tag :div, :class => "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable", :role => "alert" do
-          %button.close{:type => "button", :data => {:dismiss => "alert"} }
-            span{:aria => {:hidden => "true"} } &times;
-            span.sr-only Close
-          = msg
-      = yield
+      .col-xs-12
+        - flash.each do |name, msg|
+          = content_tag :div, :class => "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable", :role => "alert" do
+            %button.close{:type => "button", :data => {:dismiss => "alert"} }
+              %span{:aria => {:hidden => "true"} } &times;
+              %span.sr-only Close
+            = msg
+      .col-lg-2
+        = admin_nav
+      .col-lg-10
+        = yield
