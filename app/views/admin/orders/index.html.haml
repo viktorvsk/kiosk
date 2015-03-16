@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_admin_order_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Order
+  %h1 Listing admin_orders
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+        %th
+        %th
+
+    %tbody
+      - @admin_orders.each do |admin_order|
+        %tr
+          %td= link_to 'Show', admin_order
+          %td= link_to 'Edit', edit_admin_order_path(admin_order)
+          %td= link_to 'Destroy', admin_order, :data => { confirm: 'Are you sure?' }, :method => :delete

@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_admin_conf_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Conf
+  %h1 Listing admin_confs
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+        %th
+        %th
+
+    %tbody
+      - @admin_confs.each do |admin_conf|
+        %tr
+          %td= link_to 'Show', admin_conf
+          %td= link_to 'Edit', edit_admin_conf_path(admin_conf)
+          %td= link_to 'Destroy', admin_conf, :data => { confirm: 'Are you sure?' }, :method => :delete

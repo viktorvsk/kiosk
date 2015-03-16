@@ -1,0 +1,2 @@
+module StaticConrtollersHelper
+end

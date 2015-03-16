@@ -1,0 +1,10 @@
+.page-header
+  = link_to admin_confs_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_admin_conf_path(@admin_conf), :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show admin_conf
+
+%dl.dl-horizontal

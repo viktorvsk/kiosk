@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_admin_markup_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Markup
+  %h1 Listing admin_markups
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+        %th
+        %th
+
+    %tbody
+      - @admin_markups.each do |admin_markup|
+        %tr
+          %td= link_to 'Show', admin_markup
+          %td= link_to 'Edit', edit_admin_markup_path(admin_markup)
+          %td= link_to 'Destroy', admin_markup, :data => { confirm: 'Are you sure?' }, :method => :delete
