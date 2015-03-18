@@ -1,5 +1,5 @@
 class Admin::Vendor::MerchantsController < Admin::BaseController
-  before_action :set_merchant, only: [:show, :edit, :update, :destroy]
+  before_action :set_merchant, only: [:show, :edit, :update, :destroy, :pricelist]
 
   # GET /admin/vendor/merchants
   # GET /admin/vendor/merchants.json
@@ -28,7 +28,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
     respond_to do |format|
       if @merchant.save
-        format.html { redirect_to admin_vendor_merchants_path, notice: 'Merchant was successfully created.' }
+        format.html { redirect_to admin_vendor_merchants_path, notice: 'Поставщик создан' }
         format.json { render :show, status: :created, location: @merchant }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   def update
     respond_to do |format|
       if @merchant.update(merchant_params)
-        format.html { redirect_to admin_vendor_merchants_path, notice: 'Merchant was successfully updated.' }
+        format.html { redirect_to admin_vendor_merchants_path, notice: 'Поставщик обновлен' }
         format.json { render :show, status: :ok, location: @merchant }
       else
         format.html { render :edit }
@@ -56,9 +56,15 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   def destroy
     @merchant.destroy
     respond_to do |format|
-      format.html { redirect_to admin_vendor_merchants_url, notice: 'Merchant was successfully destroyed.' }
+      format.html { redirect_to admin_vendor_merchants_url, notice: 'Поставщик удален' }
       format.json { head :no_content }
     end
+  end
+
+  # POST /admin/vendor/merchants/1/pricelist
+  def pricelist
+    ::Vendor::Pricelist.new(@merchant, params[:vendor_merchant][:pricelist]).import!
+    redirect_to admin_vendor_merchants_url, notice: "Прайс обработан"
   end
 
   private
@@ -69,6 +75,13 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def merchant_params
-      params.require(:vendor_merchant).permit(:name)
+      params.require(:vendor_merchant).permit(:name, :description, :email, :discount,
+                                              :f_start, :f_model, :f_name,
+                                              :f_code, :f_usd, :f_uah, :f_rrc,
+                                              :f_eur, :f_not_in_stock, :encoding,
+                                              :format, :required, :currency_order,
+                                              :currency_rates, :parser_class, :f_uah_1,
+                                              :f_uah_2, :f_monitor, :f_ddp,
+                                              :f_stock_kharkov, :f_stock_kiev, :not_in_stock)
     end
 end

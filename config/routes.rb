@@ -17,7 +17,10 @@ Rails.application.routes.draw do
     resources :orders,      except: [:show]
     resources :users,       except: [:show]
     namespace :vendor do
-      resources :merchants, except: [:show]
+      resources :products, only: [:index]
+      resources :merchants, except: [:show] do
+        post :pricelist, on: :member
+      end
     end
   end
 end
