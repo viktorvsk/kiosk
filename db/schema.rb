@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150316102643) do
   create_table "catalog_categories", force: :cascade do |t|
     t.string   "name",       default: "", null: false
     t.string   "slug",       default: "", null: false
+    t.hstore   "info",                    null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -281,7 +282,7 @@ ActiveRecord::Schema.define(version: 20150316102643) do
     t.string   "articul",            default: "",    null: false
     t.integer  "vendor_merchant_id",                 null: false
     t.integer  "catalog_product_id"
-    t.hstore   "info"
+    t.json     "info"
     t.integer  "price",              default: 0,     null: false
     t.boolean  "in_stock",           default: true,  null: false
     t.boolean  "is_rrc",             default: false, null: false
