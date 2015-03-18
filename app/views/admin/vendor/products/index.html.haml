@@ -1,20 +1,18 @@
 .page-header
-  = link_to new_admin_vendor_product_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Product
-  %h1 Listing admin_vendor_products
+  %h1 Привязка
+.row
+  .col-sm-6
+    111
+  .col-sm-6
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th Название
+            %th Цена
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th
-        %th
-        %th
-
-    %tbody
-      - @admin_vendor_products.each do |admin_vendor_product|
-        %tr
-          %td= link_to 'Show', admin_vendor_product
-          %td= link_to 'Edit', edit_admin_vendor_product_path(admin_vendor_product)
-          %td= link_to 'Destroy', admin_vendor_product, :data => { confirm: 'Are you sure?' }, :method => :delete
+        %tbody
+          - @products.each do |product|
+            %tr
+              %td= product.name
+              %td= product.price

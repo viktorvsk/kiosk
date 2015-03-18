@@ -1,4 +1,4 @@
-= simple_form_for(@admin_vendor_product) do |f|
+= simple_form_for(@product, url: admin_vendor_product_path(@product)) do |f|
   = f.error_notification
 
   .form-inputs

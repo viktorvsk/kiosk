@@ -11,14 +11,6 @@
         %tr
           %th Название
       %tbody
-        - @merchants.each do |merchant|
-          %tr
-            %td
-              .col-xs-4
-                %h4= merchant.name
-              .col-xs-4.col-xs-offset-4.text-right
-                = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-primary' do
-                  %iglyphicon.glyphicon-pencil
-                = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
-                  %i.glyphicon.glyphicon-remove
+        = render @merchants
+
 
