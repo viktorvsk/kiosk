@@ -6,6 +6,15 @@ GIT
       rails (>= 3.0.0, < 5)
       spork (>= 1.0rc0)
 
+PATH
+  remote: ../my_gems/active_pricelist
+  specs:
+    active_pricelist (0.0.1)
+      activesupport (~> 4.2)
+      nokogiri (~> 1.6)
+      roo (~> 1)
+      simple_xlsx_reader (~> 1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -673,6 +682,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_pricelist!
   activerecord-import (= 0.4.0)
   activevalidators (~> 3.0.0)
   acts_as_commentable_with_threading

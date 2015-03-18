@@ -62,6 +62,7 @@ gem 'has_scope'
 gem 'roo'
 gem 'simple_xlsx_reader'
 gem 'nokogiri'
+gem 'active_pricelist', path: '../my_gems/active_pricelist'
 
 # Images
 gem 'mini_magick'
