@@ -15,14 +15,15 @@
  *= require_self
  */
 
-.admin-nav{
-  list-style: none;
-  padding: 0;
-  ul{
-    padding: 0
-  }
+ .form-actions{
+  text-align: right;
 }
-.page-header{
-  margin-top: 0;
-  display: block
+.button_to{
+  display: inline;
+}
+.form-inline{
+  display: inline;
+  input[type="file"]{
+    // display: none
+  }
 }
