@@ -25,5 +25,7 @@ module Kiosk
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
+    config.autoload_paths += %W(#{config.root}/app/vendors)
+
   end
 end
