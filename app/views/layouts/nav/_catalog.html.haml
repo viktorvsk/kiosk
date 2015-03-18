@@ -1,0 +1,18 @@
+%nav.navbar.navbar-default.navbar-fixed-top{:role => "navigation"}
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "Киоск", root_path, :class => "navbar-brand"
+    #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          - if current_user.admin?
+            %li= link_to 'Админ', admin_orders_path
+          %li= link_to 'Выйти', destroy_user_session_path, method: :delete
+        - else
+          %li= link_to 'Войти', new_user_session_path
+          %li= link_to 'Зарегистрироваться', new_user_registration_path

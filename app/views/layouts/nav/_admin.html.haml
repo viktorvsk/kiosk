@@ -1,0 +1,56 @@
+%nav.navbar.navbar-default.navbar-mini{:role => "navigation"}
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "Админ", admin_orders_path, :class => "navbar-brand"
+    #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+            CRM
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to 'Заказы', '#'
+            %li= link_to 'Клиенты', '#'
+            %li= link_to 'Комментарии', '#'
+            %li= link_to 'Коллбеки', '#'
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+            Каталог
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to 'Товары', '#'
+            %li= link_to 'Категории', '#'
+            %li= link_to 'Характеристики', '#'
+            %li= link_to 'Фильтры', '#'
+            %li= link_to 'Бренды', '#'
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+            Поставщики
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to 'Прайсы', admin_vendor_merchants_path
+            %li= link_to 'Привязка', admin_vendor_products_path
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+            Настройки
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to 'Страницы', '#'
+            %li= link_to 'Блоки', '#'
+            %li= link_to 'Слайды', '#'
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to current_user.name, '#'
+        %li= link_to 'В магазин', root_path
+        - if current_user
+          %li
+            = link_to 'Выйти', destroy_user_session_path, method: :delete
+        - else
+          %li
+            = link_to 'Войти', new_user_session_path
+          %li
+            = link_to 'Зарегистрироваться', new_user_registration_path
