@@ -3,9 +3,17 @@ class Vendor::Merchant < ActiveRecord::Base
   store_accessor :settings, :f_start, :f_model, :f_name, :f_code, :f_usd, :f_uah, :f_rrc, :f_eur, :f_not_in_stock,
                             :encoding, :format, :parser_class,
                             :required, :currency_order, :currency_rates, :not_in_stock,
-                            :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev
+                            :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev,
+                            :f_brand, :f_warranty, :f_category
   validates :name, presence: true, uniqueness: true
-  has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id
+  has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id, dependent: :delete_all
+  CUSTOM = [
+    %w( Обычный Default),
+    %w( ERC Erc ),
+    %w( Рейнколд Ranecold ),
+    %w( Технотрейд Technotrade ),
+    %w( ЮГ-Контракт Yug )
+  ]
 
   def to_partial_path
     "admin/#{super}"
@@ -16,12 +24,13 @@ class Vendor::Merchant < ActiveRecord::Base
   end
 
   def to_activepricelist
+    rates = currency_rates.kind_of?(String) ? JSON.parse(currency_rates) : currency_rates
     settings = {
       'start'           => f_start,
       'format'          => format,
       'file'            => pricelist_path,
       'encoding'        => encoding,
-      'rates'           => JSON.parse(currency_rates),
+      'rates'           => rates,
       'currency_order'  => currency_order,
       'required'        => required,
       'not_in_stock'    => not_in_stock,
