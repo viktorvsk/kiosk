@@ -1,0 +1,31 @@
+ru:
+  activerecord:
+    attributes:
+      vendor/merchant:
+        name: Название
+        discount: Скидка
+        encoding: Кодировка прайса
+        format: Формат прайса
+        description: Описание
+        f_start: Первое поле
+        f_model: Модель
+        f_name: Название
+        f_usd: Доллар
+        f_uah: Гривна
+        f_eur: Евро
+        f_rrc: РРЦ
+        f_not_in_stock: Наличие
+        f_uah_1: Цена Харьков (Для Технотрейда)
+        f_uah_2: Цена Киев (Для Технотрейда)
+        f_monitor: Монитор (Для ERC)
+        f_ddp: DDP (Для ERC)
+        f_stock_kharkov: Наличие в Харькове (Для ЮГ Контракта)
+        f_stock_kiev: Наличие в Киеве (Для ЮГ Контракта)
+        f_category: Категория
+        f_brand: Бренд
+        f_warranty: Гарантия
+        parser_class: Специальный поставщик
+        not_in_stock: Слова для определения ОТСУТСТВИЯ в наличии
+        required: Обязательные поля
+        currency_order: Порядок валюты
+        currency_rates: Курсы валют
