@@ -115,9 +115,10 @@ group :development do
   gem 'colorized'
   gem 'quiet_assets'
   gem 'bullet'
-  gem 'rails_view_annotator'
+  # Works bad with js.erb render
+  # gem 'rails_view_annotator'
+  # gem 'xray-rails'
   gem 'peek'
-  gem 'xray-rails'
   gem 'rack-livereload'
 
   # Watching

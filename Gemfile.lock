@@ -480,7 +480,6 @@ GEM
     rails_db_dump (0.1.1)
     rails_serve_static_assets (0.0.4)
     rails_stdout_logging (0.0.3)
-    rails_view_annotator (0.0.10)
     railties (4.2.0)
       actionpack (= 4.2.0)
       activesupport (= 4.2.0)
@@ -663,9 +662,6 @@ GEM
     websocket (1.2.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    xray-rails (0.1.15)
-      coffee-rails
-      rails (>= 3.1.0)
     zapata (0.1.5)
       andand (~> 1.3)
       file-temp (~> 1.2)
@@ -771,7 +767,6 @@ DEPENDENCIES
   rails_12factor
   rails_best_practices
   rails_db_dump
-  rails_view_annotator
   ransack
   reek
   request-log-analyzer
@@ -799,5 +794,4 @@ DEPENDENCIES
   unread
   w3c_validators
   web-console (~> 2.0)
-  xray-rails
   zapata
