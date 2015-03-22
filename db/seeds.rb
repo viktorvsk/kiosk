@@ -1,5 +1,6 @@
 user          = User.create!( name: 'Vasya', email: 'vasya@example.com', password: 11111111, phone: '+380931234567' )
 admin         = User.create!( name: 'Admin', email: 'admin@example.com', password: 11111111, phone: '+380931234568' )
+admin.promote_to :admin
 properties    = Catalog::Property.create!([
     { name: 'Цвет' },
     { name: 'Размер экрана' }
