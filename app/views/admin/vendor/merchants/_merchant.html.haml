@@ -1,14 +1,14 @@
 %tr
   %td
-    .col-xs-4
-      %h4= merchant.name
-    .col-xs-4.col-xs-offset-4.text-right
-      = form_tag pricelist_admin_vendor_merchant_path(merchant), multipart: true, class: 'form-inline' do
-
-        = button_tag type: :submit, class: 'btn btn-xs btn-warning' do
+    = form_tag pricelist_admin_vendor_merchant_path(merchant), multipart: true, class: 'form-inline' do
+      .col-xs-4
+        %h4
+          = merchant.name
           = file_field_tag 'vendor_merchant[pricelist]'
+      .col-xs-4.col-xs-offset-4.text-right
+        = button_tag type: :submit, class: 'btn btn-xs btn-warning' do
           %i.glyphicon.glyphicon-list
-      = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-primary' do
-        %i.glyphicon.glyphicon-pencil
-      = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
-        %i.glyphicon.glyphicon-remove
+        = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-primary' do
+          %i.glyphicon.glyphicon-pencil
+        = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
+          %i.glyphicon.glyphicon-remove

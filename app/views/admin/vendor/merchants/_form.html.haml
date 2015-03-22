@@ -26,6 +26,9 @@
             = field_for(f, :f_rrc)
             = field_for(f, :f_eur)
             = field_for(f, :f_not_in_stock)
+            = field_for(f, :f_category)
+            = field_for(f, :f_brand)
+            = field_for(f, :f_warranty)
         = field_set_tag do
           %legend Индивидуальные настройки полей
           = field_for(f, :f_uah_1)
@@ -36,7 +39,7 @@
           = field_for(f, :f_stock_kiev)
         = field_set_tag do
           %legend Настройки рассчета
-          = select_field_for(f, :parser_class, collection: %w(Erc Ranecold Technotrade Yug Default))
+          = select_field_for(f, :parser_class, collection: @custom_merchants)
           = field_for(f, :not_in_stock)
           = field_for(f, :required)
           = field_for(f, :currency_order)
