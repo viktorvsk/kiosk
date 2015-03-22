@@ -7,18 +7,18 @@ gem 'puma'
 gem 'bower-rails', '~> 0.9.2'
 
 # Schedule
-gem 'resque', '1.25.2'
+# gem 'resque', '1.25.2'
 
 # Translations
-gem 'russian', '~> 0.6.0'
+# gem 'russian', '~> 0.6.0'
 
 # Robust
-gem 'parallel'
-gem 'activerecord-import', '0.4.0'
-gem 'benchmark-ips', require: false
+# gem 'parallel'
+# gem 'activerecord-import', '0.4.0'
+# gem 'benchmark-ips', require: false
 
 # Security
-gem 'secure_headers', require: 'secure_headers'
+# gem 'secure_headers', require: 'secure_headers'
 
 # Search
 # gem 'mysql2', '~> 0.3.13'
@@ -32,12 +32,12 @@ gem 'rails-settings-cached', '0.4.1'
 # Markup Helpers
 gem 'haml-rails'
 gem 'simple_form'
-gem 'bootstrap-generators', '~> 3.3.1'
-gem 'auto_html'
-gem 'gretel'
+
+# gem 'auto_html'
+# gem 'gretel'
 
 # Assets
-gem 'ckeditor'
+# gem 'ckeditor'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 # gem 'ace-rails-ap'
@@ -49,64 +49,65 @@ gem 'jbuilder', '~> 2.0'
 
 # Auth
 gem 'devise'
-gem 'omniauth'
-gem 'omniauth-vkontakte'
-gem 'omniauth-facebook'
-gem 'cancancan', '~> 1.8'
+# gem 'omniauth'
+# gem 'omniauth-vkontakte'
+# gem 'omniauth-facebook'
+# gem 'cancancan', '~> 1.8'
 
 # Refactoring
-gem 'draper'
-gem 'has_scope'
+# gem 'draper'
+# gem 'has_scope'
 
 # ActivePricelist
 gem 'roo'
 gem 'simple_xlsx_reader'
 gem 'nokogiri'
-gem 'active_pricelist', path: '../my_gems/active_pricelist'
+gem 'active_pricelist', github: 'ablebeam/active_pricelist'
 
 # Images
-gem 'mini_magick'
-gem 'carrierwave'
+# gem 'mini_magick'
+# gem 'carrierwave'
 
-gem 'file_browser'
+# gem 'file_browser'
 
 # SEO
-gem 'meta-tags'
-gem 'friendly_id', '~> 5.1.0'
-gem 'dynamic_sitemaps',   require: false
-gem 'sitemap_generator',  require: false
+# gem 'meta-tags'
+# gem 'friendly_id', '~> 5.1.0'
+# gem 'dynamic_sitemaps',   require: false
+# gem 'sitemap_generator',  require: false
 
 # Env helpers
-gem 'backup'
-gem 'rails_db_dump'
+# gem 'backup'
+# gem 'rails_db_dump'
 
 # ActiveRecord helpers
-gem 'foreigner'
-gem 'activevalidators', '~> 3.0.0'
-gem 'strip_attributes'
+# gem 'foreigner'
+# gem 'activevalidators', '~> 3.0.0'
+# gem 'strip_attributes'
 gem 'kaminari'
 
 # ActiveRecord acts_as
-gem 'paranoia', '~> 2.0'
-gem 'paper_trail', '~> 4.0.0.beta'
-gem 'acts_as_commentable_with_threading'
-gem 'unread'
-gem 'awesome_nested_set'
-gem 'acts_as_list'
+# gem 'paranoia', '~> 2.0'
+# gem 'paper_trail', '~> 4.0.0.beta'
+# gem 'acts_as_commentable_with_threading'
+# gem 'unread'
+# gem 'awesome_nested_set'
+# gem 'acts_as_list'
 
 # Helpers
-gem 'monetize'
-gem 'money'
-gem 'faraday'
+# gem 'monetize'
+# gem 'money'
+# gem 'faraday'
 
-group :doc do
-  gem 'sdoc', '~> 0.4.0'
-  gem 'w3c_validators'
-end
+# group :doc do
+#   gem 'sdoc', '~> 0.4.0'
+#   gem 'w3c_validators'
+# end
 
 group :development do
   # Test coverage
   gem 'coverband'
+  gem 'bootstrap-generators', '~> 3.3.1'
 
   # Debug
   gem 'binding_of_caller'
@@ -171,31 +172,31 @@ end
 
 group :production do
   gem 'rack-cache'
-  gem 'rails_12factor'
+  # gem 'rails_12factor'
 end
 
 group :assets do
   gem 'sass-rails', '~> 5.0'
   gem 'uglifier', '>= 1.3.0'
   gem 'coffee-rails', '~> 4.1.0'
-  gem 'autoprefixer-rails'
+  # gem 'autoprefixer-rails'
 end
 
-group :system_helpers do
-  gem 'flog',                   require: false
-  gem 'rubocop',                require: false
-  gem 'lol_dba',                require: false
-  gem 'rails_best_practices',   require: false
-  gem 'brakeman',               require: false
-  gem 'cane',                   require: false
-  gem 'reek',                   require: false
-  gem 'rubycritic',             require: false
-  gem 'request-log-analyzer',   require: false
-  gem 'foreman',                require: false
-  gem 'bundler-audit',          require: false
-  gem 'clockwork',              require: false
-  gem 'god',                    require: false
-end
+# group :system_helpers do
+#   gem 'flog',                   require: false
+#   gem 'rubocop',                require: false
+#   gem 'lol_dba',                require: false
+#   gem 'rails_best_practices',   require: false
+#   gem 'brakeman',               require: false
+#   gem 'cane',                   require: false
+#   gem 'reek',                   require: false
+#   gem 'rubycritic',             require: false
+#   gem 'request-log-analyzer',   require: false
+#   gem 'foreman',                require: false
+#   gem 'bundler-audit',          require: false
+#   gem 'clockwork',              require: false
+#   gem 'god',                    require: false
+# end
 
 # Temporary
 # gem 'fuzzy_match'

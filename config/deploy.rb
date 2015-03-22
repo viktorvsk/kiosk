@@ -38,6 +38,7 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
+  queue! %[dropdb kiosk]
   queue! %[createdb kiosk]
 
 end
