@@ -1,5 +1,6 @@
 class Admin::Vendor::MerchantsController < Admin::BaseController
   before_action :set_merchant, only: [:show, :edit, :update, :destroy, :pricelist]
+  before_action :set_custom_merchants, only: [:new, :edit]
 
   # GET /admin/vendor/merchants
   # GET /admin/vendor/merchants.json
@@ -71,6 +72,10 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_merchant
       @merchant = ::Vendor::Merchant.find(params[:id])
+    end
+
+    def set_custom_merchants
+      @custom_merchants = ::Vendor::Merchant::CUSTOM
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

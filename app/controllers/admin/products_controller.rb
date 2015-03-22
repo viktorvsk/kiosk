@@ -4,7 +4,7 @@ class Admin::ProductsController < Admin::BaseController
   # GET /admin/products
   # GET /admin/products.json
   def index
-    @products = Catalog::Product.all
+    @products = Catalog::Product.page(params[:page])
   end
 
   # GET /admin/products/new
@@ -54,6 +54,11 @@ class Admin::ProductsController < Admin::BaseController
       format.html { redirect_to admin_products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def search
+    @q = ::Catalog::Product.ransack(params[:q])
+    @products = @q.result.page(params[:page])
   end
 
   private

@@ -2,7 +2,13 @@ class Admin::Vendor::ProductsController < Admin::BaseController
   # GET /admin/vendor/products
   # GET /admin/vendor/products.json
   def index
-    @products = ::Vendor::Product.limit(100)
+    @q_vendor_products = ::Vendor::Product.ransack(params[:q_vendor_products])
+    @q_catalog_products = ::Catalog::Product.ransack(params[:q_catalog_products])
+  end
+
+  def search
+    @q_vendor_products = ::Vendor::Product.ransack(params[:q_vendor_products])
+    @products = @q_vendor_products.result.page(params[:page])
   end
 
 end
