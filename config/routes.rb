@@ -7,20 +7,24 @@ Rails.application.routes.draw do
   resources :orders
   resource :user, only: [:edit, :update]
 
-
   namespace :admin do
     root 'products#index'
-    resources :products,    except: [:show]
+    resources :products,    except: [:show] do
+      get :search, on: :collection
+    end
     resources :categories,  except: [:show]
     resources :confs,       except: [:show]
     resources :markups,     except: [:show]
     resources :orders,      except: [:show]
     resources :users,       except: [:show]
     namespace :vendor do
-      resources :products, only: [:index]
+      resources :products, only: [:index] do
+        get :search, on: :collection
+      end
       resources :merchants, except: [:show] do
         post :pricelist, on: :member
       end
     end
   end
+
 end
