@@ -1,0 +1,225 @@
+namespace :vendor do
+  desc 'Create default Vendors'
+  task seed: :environment do
+    vendors_params = [
+      {
+        name: 'DC-link',
+        email: 'email@dclink.com',
+        format: 'xls',
+        f_start: '1',
+        f_model: '2',
+        f_name: '3',
+        f_code: '11',
+        f_usd: '5',
+        f_uah: '6',
+        f_not_in_stock: '8',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json
+
+      },
+      {
+        name: 'Brain',
+        email: 'email@brain.com',
+        format: 'xlsx',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '1',
+        f_model: '7',
+        f_name: '7',
+        f_code: '2',
+        f_usd: '9',
+        f_not_in_stock: '16'
+      },
+      {
+        name: 'MTI',
+        email: 'email@mti.com',
+        format: 'xlsx',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '1',
+        f_model: '',
+        f_name: '4',
+        f_code: '2',
+        f_category: '1',
+        f_warranty: '7',
+        f_brand: '6',
+        f_usd: '9',
+        f_uah: '8'
+
+      },
+      {
+        name: 'ERC',
+        email: 'email@erc.com',
+        format: 'xml',
+        encoding: 'windows-1251',
+        parser_class: 'Erc',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '//goods',
+        f_model: 'code/text()',
+        f_name: 'gname/text()',
+        f_code: 'code/text()',
+        f_usd: 'sprice/text()',
+        f_uah: 'rprce/text()',
+        f_warranty: 'warr/text()',
+        f_not_in_stock: 'swh/text()',
+        f_monitor: 'monitor/text()',
+        f_ddp: 'ddp/text()'
+
+      },
+      {
+        name: 'Швейка',
+        email: 'email@shveika.com',
+        format: 'xls',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '1',
+        f_model: '2',
+        f_name: '2',
+        f_code: '2',
+        f_usd: '4',
+        f_rrc: '7',
+        f_not_in_stock: '5'
+      },
+      {
+        name: 'Акустика',
+        email: 'email@akustika.ua',
+        discount: '26',
+        format: 'xls',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '3',
+        f_model: '8',
+        f_name: '6',
+        f_code: '9',
+        f_uah: '12'
+
+      },
+      {
+        name: 'Техномастер',
+        email: 'email@tm.ua',
+        format: 'xls',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '9',
+        f_model: '4',
+        f_name: '4',
+        f_code: '1',
+        f_uah: '5',
+        f_not_in_stock: '6'
+      },
+      {
+        name: 'Рейнколд',
+        email: 'email@ranekold.com',
+        format: 'xlsx',
+        parser_class: 'Ranecold',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '2',
+        f_name: '3',
+        f_code: '7',
+        f_brand: '2',
+        f_category: '1',
+        f_uah: '4',
+        f_rrc: '5'
+
+      },
+      {
+        name: 'Технотрейд',
+        email: 'email@techtrade.ua',
+        format: 'xlsx',
+        parser_class:  'Technotrade',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '2',
+        f_name: '3',
+        f_code: '7',
+        f_uah_1: '3',
+        f_uah_2: '4',
+        f_rrc: '5',
+        f_brand: '2',
+        f_category: '1'
+      },
+      {
+        name: 'Юг Контракт',
+        email: 'email@yugcontract.com',
+        format: 'xls',
+        parser_class: 'Yug',
+        currency_rates: {
+          uah: 1,
+          rrc: 1,
+          usd: 24,
+          eur: 30
+        }.to_json,
+        f_start: '1',
+        f_model: '5',
+        f_name: '6',
+        f_code: '4',
+        f_usd: '15',
+        f_uah: '16',
+        f_rrc: '32',
+        f_stock_kharkov: '9',
+        f_stock_kiev: '10'
+
+      }
+    ]
+    vendors = Vendor::Merchant.create!(vendors_params)
+    puts "Created #{vendors.count} new vendors."
+  end
+
+  desc 'Destroy all Vendors'
+  task reset: :environment do
+    Vendor::Merchant.destroy_all
+  end
+
+  namespace :product do
+
+    desc 'Create default Vendor::Products'
+    task seed: :environment do
+      Vendor::Merchant.find_each do |merchant|
+        file = File.new Rails.root.join('spec', 'support', "#{merchant.name}.#{merchant.format}")
+        puts "Started importing #{merchant.name} pricelist"
+        t1 = Time.now
+        Vendor::Pricelist.new(merchant, file).import!
+        time = Time.now - t1
+        puts "Finished importing #{merchant.name} pricelist in #{time.to_i} seconds"
+      end
+    end
+  end
+end
