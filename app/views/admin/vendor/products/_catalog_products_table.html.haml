@@ -1,0 +1,24 @@
+.well
+  = search_form_for @q_catalog_products, url: search_admin_products_path(format: :js), remote: true do |f|
+    .row
+      .col-sm-4
+        = f.label :name_cont
+        = f.search_field :name_cont, class: 'form-control'
+      .col-sm-4
+        = f.label :catalog_category_id_eq
+        = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, {}, class: 'form-control')
+      .col-sm-4
+        .form-actions.text-right
+          = f.submit 'Найти', class: 'btn btn-primary btn-xs'
+
+  .table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %tfoot
+      %tr
+        %td#catalog-products-paginate.text-center{ colspan: 3 }
+    %thead
+      %tr
+        %th Название
+        %th Категория
+        %th Модель
+    %tbody#catalog-products

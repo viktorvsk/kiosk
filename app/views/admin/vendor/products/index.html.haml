@@ -2,17 +2,7 @@
   %h1 Привязка
 .row
   .col-sm-6
-    111
+    = render 'admin/vendor/products/catalog_products_table'
   .col-sm-6
-    .table-responsive
-      %table.table.table-striped.table-bordered.table-hover
-        %thead
-          %tr
-            %th Название
-            %th Цена
+    = render 'admin/vendor/products/vendor_products_table'
 
-        %tbody
-          - @products.each do |product|
-            %tr
-              %td= product.name
-              %td= product.price
