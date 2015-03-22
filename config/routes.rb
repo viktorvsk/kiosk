@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'products#index'
   devise_for :users
-  mount Ckeditor::Engine => '/ckeditor'
+  # mount Ckeditor::Engine => '/ckeditor'
   resources :products,    only: [:index, :show]
   resources :categories,  only: [:index, :show]
   resources :orders
