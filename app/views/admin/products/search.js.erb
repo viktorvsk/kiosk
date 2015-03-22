@@ -1,0 +1,2 @@
+$('#catalog-products').html("<%= escape_javascript(render(@products)) %>")
+$('#catalog-products-paginate').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>")

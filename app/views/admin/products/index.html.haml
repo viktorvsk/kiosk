@@ -8,12 +8,15 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th
-        %th
-        %th
+        %th Название
+        %th Модель
 
     %tbody
       - @products.each do |product|
         %tr
-          %td= link_to 'Edit', edit_admin_product_path(product)
-          %td= link_to 'Destroy', product, :data => { confirm: 'Вы уверены?' }, :method => :delete
+          %td= product.name
+          %td= product.model
+    %tfoot
+      %tr
+        %td.text-center{ colspan: 2 }
+          = paginate @products
