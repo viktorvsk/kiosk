@@ -3,6 +3,7 @@ require 'csv'
 module Vendor
   class Pricelist
     UPDATE_ATTRIBUTES = %w(uah usd eur rrc in_stock in_stock_kharkov in_stock_kiev price is_rrc)
+    SELECT_ATTRIBUTES = %w( id articul price  )
     REAL_ATTRIBUTES   = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id)
     CSV_COLUMNS       = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
@@ -10,13 +11,18 @@ module Vendor
       @file = file
       @merchant = merchant
       @settings = @merchant.to_activepricelist
-      @parser_class = @merchant.parser_class.presence || 'DefaultParser'
+      @parser_class = @merchant.parser_class.presence || 'Default'
     end
 
     def import!
       upload_pricelist
       parse_pricelist
+      GC.enable
+      GC.start
       batch_create_or_update
+      GC.enable
+      GC.start
+      true
     end
 
   private
@@ -68,13 +74,16 @@ module Vendor
     def from_hash_to_update_and_to_create
       to_create, to_update = [], []
 
-      articuls          = @products.map{ |p| p['articul'] }
-      products_names = ::Vendor::Product.pluck(:name)
-      products_articuls = ::Vendor::Product.pluck(:articul)
-      to_update      = @merchant.products.where(articul: articuls)
-      to_update_articuls= to_update.pluck(:articul)
+      articuls            = @products.map{ |p| p['articul'] }
+      products_names      = ::Vendor::Product.pluck(:name)
+      products_articuls   = ::Vendor::Product.pluck(:articul)
+      to_update           = @merchant.products.where(articul: articuls).all
+      to_update_articuls  = to_update.pluck(:articul)
+
       to_update.map do |product|
-        new_product_attributes = @products.detect{ |p| p['articul'] == product.articul }.slice( *REAL_ATTRIBUTES )
+        new_product = @products.detect{ |p| p['articul'] == product.articul }
+        next if product['price'].to_i == new_product['price'].to_i
+        new_product_attributes = new_product.slice( *UPDATE_ATTRIBUTES )
         new_product_attributes.each do |k, v|
           product.send("#{k}=", v)
         end
