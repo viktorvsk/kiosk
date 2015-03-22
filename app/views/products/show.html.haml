@@ -1,7 +1,16 @@
 .page-header
   = link_to products_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
-    Back
-  %h1 Show product
+    Все товары
+  %h1
+    = @product.name
+    %small
+      = @product.category.try(:name)
+      ,
+      = @product.brand.try(:name)
 
 %dl.dl-horizontal
+
+= @product.description.try(:html_safe)
+Модель:
+= @product.model

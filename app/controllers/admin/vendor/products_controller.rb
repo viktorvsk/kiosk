@@ -7,7 +7,7 @@ class Admin::Vendor::ProductsController < Admin::BaseController
   end
 
   def search
-    @q_vendor_products = ::Vendor::Product.ransack(params[:q_vendor_products])
+    @q_vendor_products = ::Vendor::Product.ransack(params[:q])
     @products = @q_vendor_products.result.page(params[:page])
   end
 

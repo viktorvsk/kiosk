@@ -6,7 +6,8 @@
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
     %meta{:content => "", :name => "description"}
     %meta{:content => "", :name => "author"}
-    %title= content_for?(:title) ? yield(:title) : @title
+    %title
+      = (content_for?(:title) ? yield(:title) : @title) || 'Киоск'
 
     / HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     /[if lt IE 9]
