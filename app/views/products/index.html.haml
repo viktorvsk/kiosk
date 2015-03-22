@@ -1,15 +1,17 @@
 .page-header
   %h1 Все товары
-
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th
-        %th
-        %th
-
+        %th Название
+        %th Модель
     %tbody
       - @products.each do |product|
         %tr
-          %td= link_to 'Show', product
+          %td= product.name
+          %td= product.model
+    %tfooter
+      %tr
+        %td.text-center{ colspan: 2 }
+          = paginate @products
