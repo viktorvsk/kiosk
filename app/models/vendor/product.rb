@@ -3,9 +3,11 @@ class Vendor::Product < ActiveRecord::Base
                  :in_stock_kharkov, :in_stock_kiev,
                  :model, :brand, :category,
                  :warranty
-  validates :name, :articul, :merchant, :price, :in_stock, :is_rrc, presence: true
+  validates :name, :articul, :merchant, :price, presence: true
+  validates :in_stock, :is_rrc, :inclusion => { :in => [true, false] }
   belongs_to :product, class_name: Catalog::Product, foreign_key: :catalog_product_id
   belongs_to :merchant, class_name: Vendor::Merchant, foreign_key: :vendor_merchant_id
+  belongs_to :catalog_category, class_name: Catalog::Category
 
   class << self
     def to_csv
@@ -22,11 +24,11 @@ class Vendor::Product < ActiveRecord::Base
   end
 
   def bind_to( catalog_product )
-    update( product: catalog_product )
+    update!( product: catalog_product )
   end
 
   def unbind
-    update( product: nil )
+    update!( product: nil )
   end
 
   def to_partial_path
