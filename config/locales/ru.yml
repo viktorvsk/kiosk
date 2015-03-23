@@ -1,6 +1,11 @@
 ru:
   activerecord:
     attributes:
+      catalog/category:
+        name: Название
+        tax: Наценка ниже
+        tax_max: Наценка выше
+        tax_threshold: Порог наценки
       vendor/merchant:
         name: Название
         discount: Скидка

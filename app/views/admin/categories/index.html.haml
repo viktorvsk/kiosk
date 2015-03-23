@@ -1,20 +1,20 @@
 .page-header
   = link_to new_admin_category_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
-    New Category
-  %h1 Listing admin_categories
+    Новая категория
+  %h1 Категории
 
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th
-        %th
-        %th
+        %th Название
+        %th Действия
 
     %tbody
-      - @admin_categories.each do |admin_category|
+      = render @categories
+    - if @categories.respond_to?(:current_page)
+      %tfoot
         %tr
-          %td= link_to 'Show', admin_category
-          %td= link_to 'Edit', edit_admin_category_path(admin_category)
-          %td= link_to 'Destroy', admin_category, :data => { confirm: 'Are you sure?' }, :method => :delete
+          %td.text-center
+            = paginate @categories

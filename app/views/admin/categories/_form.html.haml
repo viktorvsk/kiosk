@@ -1,7 +1,11 @@
-= simple_form_for(@admin_category) do |f|
-  = f.error_notification
+.well
+  = simple_form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
+    = f.error_notification
 
-  .form-inputs
-
-  .form-actions
-    = f.button :submit
+    .form-inputs
+      = field_for(f, :name)
+      = field_for(f, :tax_threshold)
+      = field_for(f, :tax)
+      = field_for(f, :tax_max)
+    .form-actions
+      = f.button :submit, f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
