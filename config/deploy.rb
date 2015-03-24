@@ -24,6 +24,8 @@ set :shared_paths, [
 
 task :environment do
   invoke :'rbenv:load'
+  queue! %(export NODE_PATH="#{node_path}")
+  queue! %(export PATH="#{node_path}:$PATH")
 end
 
 task :setup => :environment do
@@ -60,25 +62,26 @@ task :upload_config => :environment do
   scp_upload("#{current_root}/server/clockwork.monit",  "#{deploy_to}/#{shared_path}/server/clockwork.monit")
 end
 
+desc "Install assets with bower."
+task :bower_install => :environment do
+  queue! %(rake bower:install)
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
-
-  queue! %(export NODE_PATH="#{node_path}")
-  queue! %(export PATH="#{node_path}:$PATH")
 
   deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    queue! %(rake bower:install)
+    invoke :'bower_install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       invoke :'puma:phased_restart'
-
     end
   end
 end
