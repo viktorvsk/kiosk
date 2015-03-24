@@ -7,6 +7,7 @@ require 'mina/nginx'
 require 'mina/scp'
 
 current_root = File.expand_path '../', __FILE__
+node_path    = '/home/vvsk/.nvm/versions/node/v0.12.1/bin'
 
 set :domain,      'vvsk@terenkur.com'
 set :application, 'kiosk'
@@ -14,6 +15,8 @@ set :server_name, 'kiosk.evotex.kh.ua'
 set :deploy_to,   '/home/vvsk/kiosk'
 set :repository,  'git@bitbucket.org:victorvsk/kiosk.git'
 set :branch,      'master'
+
+
 
 set :shared_paths, [
   'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml', 'tmp'
@@ -24,6 +27,7 @@ task :environment do
 end
 
 task :setup => :environment do
+
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids")
@@ -58,11 +62,16 @@ end
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
+
+  queue! %(export NODE_PATH="#{node_path}")
+  queue! %(export PATH="#{node_path}:$PATH")
+
   deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
+    queue! %(rake bower:install)
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 

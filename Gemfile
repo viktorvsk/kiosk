@@ -176,9 +176,9 @@ group :production do
 end
 
 group :assets do
-  gem 'sass-rails', '~> 5.0'
-  gem 'uglifier', '>= 1.3.0'
-  gem 'coffee-rails', '~> 4.1.0'
+  gem 'sass-rails', '~> 5.0', require: false
+  gem 'uglifier', '>= 1.3.0', require: false
+  gem 'coffee-rails', '~> 4.1.0', require: false
   # gem 'autoprefixer-rails'
 end
 
