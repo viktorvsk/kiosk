@@ -1,3 +1,5 @@
 %tr
-  %td= product.name
-  %td= product.price
+  %td{ colspan: 2 }
+    %div{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id }
+      = product.name
+      = product.price

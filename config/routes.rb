@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'products#index'
+    post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
+    delete 'binding/:vendor_product_id', to: 'binding#unbind'
     resources :products,    except: [:show] do
       get :search, on: :collection
     end

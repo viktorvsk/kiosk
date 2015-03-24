@@ -11,13 +11,13 @@
         .form-actions.text-right
           = f.submit 'Найти', class: 'btn btn-primary btn-xs'
 
-.table-responsive
-%table.table.table-striped.table-bordered.table-hover
-  %tfoot
-    %tr
-      %td#vendor-products-paginate.text-center{ colspan: 2 }
-  %thead
-    %tr
-      %th Название
-      %th Цена
-  %tbody#vendor-products
+.table-responsive{ 'data-droppable' => 'vendorProductsTable'}
+  %table.table.table-striped.table-bordered.table-hover
+    %tfoot
+      %tr
+        %td#vendor-products-paginate.text-center{ colspan: 2 }
+    %thead
+      %tr
+        %th Название
+        %th Цена
+    %tbody#vendor-products

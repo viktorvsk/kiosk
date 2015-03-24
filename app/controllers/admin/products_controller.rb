@@ -1,5 +1,6 @@
 class Admin::ProductsController < Admin::BaseController
-  before_action :set_product, only: [:edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :update, :destroy, :bind, :unbind]
+  after_action :set_vendor_product, :recount_product, only: [:bind, :unbind]
 
   # GET /admin/products
   # GET /admin/products.json
@@ -61,10 +62,26 @@ class Admin::ProductsController < Admin::BaseController
     @products = @q.result.page(params[:page])
   end
 
+  def bind
+    @product.bind(@vendor_product)
+  end
+
+  def unbind
+    @product.unbind(@vendor_product)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Catalog::Product.find(params[:id])
+      @product = ::Catalog::Product.find(params[:id])
+    end
+
+    def set_vendor_product
+      @vendor_product = ::Vendor::Product.find(params[:vendor_product_id])
+    end
+
+    def recount_product
+      @product.recount
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

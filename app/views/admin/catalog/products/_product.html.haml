@@ -1,4 +1,8 @@
 %tr
-  %td= link_to product.name, product_path(product)
-  %td= product.category.name
-  %td= product.model
+  %td
+    %div{ 'data-droppable' => 'product', 'data-product-id' => product.id }
+      = link_to product.name, product_path(product)
+      %ul
+        - product.vendor_products.each do |v_product|
+          %li{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => v_product.id }
+            = v_product.name

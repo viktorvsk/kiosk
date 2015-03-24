@@ -1,2 +1,3 @@
-$('#vendor-products').html("<%= escape_javascript(render(@products)) %>")
-$('#vendor-products-paginate').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>")
+$('#vendor-products').html("<%= escape_javascript(render(@products)) %>");
+$('#vendor-products-paginate').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>");
+Binding.init();

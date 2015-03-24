@@ -7,7 +7,28 @@ class Catalog::Product < ActiveRecord::Base
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :vendor_products, class_name: Vendor::Product, dependent: :nullify, foreign_key: :catalog_product_id
 
+  class << self
+    def recount
+      transaction do
+        all.eager_load(:vendor_products).find_each do |product|
+          product.recount
+        end
+      end
+    end
+  end
+
   def recount
+    return if fixed_price?
+    rrc = vendor_products.select_rrc
+    if rrc
+      # @TODO Log if more than one RRC present
+      update(price: rrc)
+    else
+      prices = vendor_products.active.map do |vendor_product|
+        vendor_product.price + category.tax_for(vendor_product.price)
+      end
+      update(price: prices.min)
+    end
   end
 
   def bind(vendor_product)
