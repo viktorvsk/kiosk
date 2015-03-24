@@ -5,7 +5,7 @@ gem 'rails', '4.2.0'
 gem 'pg'
 gem 'puma'
 gem 'bower-rails', '~> 0.9.2'
-
+gem 'execjs'
 # Schedule
 # gem 'resque', '1.25.2'
 

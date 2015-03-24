@@ -495,6 +495,7 @@ DEPENDENCIES
   database_cleaner
   devise
   did_you_mean
+  execjs
   factory_girl_rails
   ffaker
   figaro
