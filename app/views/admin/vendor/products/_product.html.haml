@@ -1,5 +1,9 @@
 %tr
-  %td{ colspan: 2 }
+  %td
     %div{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id }
       = product.name
-      = product.price
+      %hr/
+      %b= "#{product.price} грн."
+      %i= product.merchant.name
+      - unless product.active?
+        %b Неактивный

@@ -67,6 +67,11 @@ task :bower_install => :environment do
   queue! %(rake bower:install)
 end
 
+desc "test"
+task :tes => :environment do
+  invoke :'puma:start'
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
 

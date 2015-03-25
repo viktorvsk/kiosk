@@ -7,9 +7,9 @@ class Catalog::Category < ActiveRecord::Base
   def tax_for(value)
     value = value.to_f.ceil
     if value > tax_threshold.to_f.ceil
-      value + tax_max.to_f.ceil
+      tax_max.to_f.ceil
     else
-      value + tax.to_f.ceil
+      tax.to_f.ceil
     end
   end
 

@@ -6,7 +6,7 @@
         = f.search_field :name_cont, class: 'form-control'
       .col-sm-4
         = f.label :catalog_category_id_eq, 'Категория'
-        = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, {}, class: 'form-control', inlude_blank: true)
+        = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, { include_blank: 'Все категории' }, class: 'form-control')
       .col-sm-4
         .form-actions.text-right
           = f.submit 'Найти', class: 'btn btn-primary btn-xs'
@@ -18,5 +18,5 @@
       %td#catalog-products-paginate.text-center{ colspan: 3 }
   %thead
     %tr
-      %th Название
+      %th Товар по сайту
   %tbody#catalog-products

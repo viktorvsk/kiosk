@@ -1,8 +1,26 @@
 [data-draggable="vendorProduct"]{
-  border: #aaa solid 2px;
+  border: #03C9A9 solid 2px;
   cursor: pointer;
-  padding: 2px;
+  padding: 1px;
+  border-radius: 5px;
+  z-index: 10;
+  background: #FFF;
+  text-align: center;
 }
 .test{
-  opacity: 0.5;
+  opacity: 0.8;
+  background: #19B5FE;
+  color: #FFF;
+  a{
+    color: #FFF;
+  }
+}
+[data-droppable="product"]{
+  ul{
+    list-style: none;
+    margin: 0;
+    li{
+      margin-top: 5px
+    }
+  }
 }

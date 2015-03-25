@@ -6,18 +6,17 @@
         = f.search_field :name_cont, class: 'form-control'
       .col-sm-4
         = f.label :vendor_mercant_id_eq, 'Поставщик'
-        = f.collection_select(:vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, {}, class: 'form-control')
+        = f.collection_select(:vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все поставщики' }, class: 'form-control')
       .col-sm-4
         .form-actions.text-right
           = f.submit 'Найти', class: 'btn btn-primary btn-xs'
 
-.table-responsive{ 'data-droppable' => 'vendorProductsTable'}
-  %table.table.table-striped.table-bordered.table-hover
-    %tfoot
-      %tr
-        %td#vendor-products-paginate.text-center{ colspan: 2 }
-    %thead
-      %tr
-        %th Название
-        %th Цена
-    %tbody#vendor-products
+.table-responsive
+%table.table.table-striped.table-bordered.table-hover{ 'data-droppable' => 'vendorProductsTable'}
+  %tfoot
+    %tr
+      %td#vendor-products-paginate.text-center{ colspan: 2 }
+  %thead
+    %tr
+      %th Товар по прайсу
+  %tbody#vendor-products

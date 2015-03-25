@@ -2,7 +2,17 @@
   %td
     %div{ 'data-droppable' => 'product', 'data-product-id' => product.id }
       = link_to product.name, product_path(product)
+      - if product.price.present?
+        %b
+          (
+          = product.price
+          грн. )
       %ul
-        - product.vendor_products.each do |v_product|
+        - product.vendor_products.sort_by(&:price).each do |v_product|
           %li{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => v_product.id }
             = v_product.name
+            %hr/
+            %b= "#{v_product.price} грн."
+            %i= v_product.merchant.name
+            - unless v_product.active?
+              %b Неактивный

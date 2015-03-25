@@ -4,6 +4,8 @@ Binding = {
 
     $(Binding.selector.product).droppable({
       hoverClass: 'test',
+      cursorAt: { top: -5, left: -5 },
+      disabled: false,
       drop: Binding.onBind
     });
 
@@ -43,6 +45,7 @@ Binding = {
         vendorProductId     = $vendorProductNode.data(Binding.data.vendorProductId);;
     Binding.unbind(Binding.url.unbinding(vendorProductId));
     $vendorProductNode.remove();
+    $("form").submit()
     Binding.init();
 
   },
@@ -52,16 +55,17 @@ Binding = {
         productId           = $productNode.data(Binding.data.productId),
         vendorProductId     = $vendorProductNode.data(Binding.data.vendorProductId);
 
-    $vendorProduct = $('<li>')
-                      .text($vendorProductNode.text())
-                      .attr('data-draggable', 'vendorProduct')
-                      .attr('data-vendor-product-id', vendorProductId);
-    $productNode
-      .find('ul')
-        .append($vendorProduct);
+    // $vendorProduct = $('<li>')
+    //                   .text($vendorProductNode.text())
+    //                   .attr('data-draggable', 'vendorProduct')
+    //                   .attr('data-vendor-product-id', vendorProductId);
+    // $productNode
+    //   .find('ul')
+    //     .append($vendorProduct);
 
     Binding.bind(Binding.url.binding(productId, vendorProductId));
     $vendorProductNode.remove();
+    $("form").submit()
     Binding.init();
 
   }
