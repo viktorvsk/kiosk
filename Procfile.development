@@ -1,0 +1,3 @@
+web: bundle exec rails server
+clockwork:
+resque: bundle exec rake resque:work QUEUE=pricelist_import VERBOSE=1 >> log/resque.log
