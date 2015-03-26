@@ -24,6 +24,7 @@ gem 'resque', '1.25.2'
 # gem 'mysql2', '~> 0.3.13'
 # gem 'thinking-sphinx', '~> 3.1.3'
 gem 'ransack'
+gem 'colorized'
 
 # Settings
 gem 'figaro'
@@ -113,7 +114,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'
-  gem 'colorized'
+  
   gem 'quiet_assets'
   gem 'bullet'
   # Works bad with js.erb render
