@@ -2,14 +2,26 @@ require 'csv'
 
 module Vendor
   class Pricelist
+    @queue            = :pricelist_import
     UPDATE_ATTRIBUTES = %w(uah usd eur rrc in_stock in_stock_kharkov in_stock_kiev price is_rrc)
     SELECT_ATTRIBUTES = %w( id articul price  )
     REAL_ATTRIBUTES   = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id)
     CSV_COLUMNS       = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
-    def initialize(merchant, file)
-      @file         = file
-      @merchant     = merchant
+    class << self
+      def async_import!(merchant_id, file_path)
+        Resque.enqueue(::Vendor::Pricelist, merchant_id, file_path)
+      end
+
+      def perform(merchant_id, file_path)
+        ::Vendor::Pricelist.new(merchant_id, file_path).import!
+      end
+
+    end
+
+    def initialize(merchant_id, file_path)
+      @file         = File.new(file_path)
+      @merchant     = ::Vendor::Merchant.find(merchant_id)
       @settings     = @merchant.to_activepricelist
       @parser_class = @merchant.parser_class.presence || 'Default'
     end
