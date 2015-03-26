@@ -7,7 +7,7 @@ gem 'puma'
 gem 'bower-rails', '~> 0.9.2'
 gem 'execjs'
 # Schedule
-# gem 'resque', '1.25.2'
+gem 'resque', '1.25.2'
 
 # Translations
 # gem 'russian', '~> 0.6.0'
@@ -60,8 +60,8 @@ gem 'devise'
 
 # ActivePricelist
 gem 'roo'
-gem 'simple_xlsx_reader'
 gem 'nokogiri'
+gem 'dullard', github: 'ablebeam/dullard'
 gem 'active_pricelist', github: 'ablebeam/active_pricelist'
 
 # Images
