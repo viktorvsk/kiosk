@@ -1,11 +1,19 @@
 namespace :vendor do
+
+  desc 'Reset and Seed Vendors and Vendor Products'
+  task reseed: :environment do
+    Rake::Task['vendor:reset'].invoke
+    Rake::Task['vendor:seed'].invoke
+    Rake::Task['vendor:product:seed'].invoke
+  end
+
   desc 'Create default Vendors'
   task seed: :environment do
     vendors_params = [
       {
         name: 'DC-link',
         email: 'email@dclink.com',
-        format: 'xls',
+        format: 'xlsx',
         f_start: '1',
         f_model: '2',
         f_name: '3',
@@ -86,7 +94,7 @@ namespace :vendor do
       {
         name: 'Швейка',
         email: 'email@shveika.com',
-        format: 'xls',
+        format: 'xlsx',
         currency_rates: {
           uah: 1,
           rrc: 1,
@@ -105,7 +113,7 @@ namespace :vendor do
         name: 'Акустика',
         email: 'email@akustika.ua',
         discount: '26',
-        format: 'xls',
+        format: 'xlsx',
         currency_rates: {
           uah: 1,
           rrc: 1,
@@ -122,7 +130,7 @@ namespace :vendor do
       {
         name: 'Техномастер',
         email: 'email@tm.ua',
-        format: 'xls',
+        format: 'xlsx',
         currency_rates: {
           uah: 1,
           rrc: 1,
@@ -179,7 +187,7 @@ namespace :vendor do
       {
         name: 'Юг Контракт',
         email: 'email@yugcontract.com',
-        format: 'xls',
+        format: 'xlsx',
         parser_class: 'Yug',
         currency_rates: {
           uah: 1,
@@ -200,12 +208,13 @@ namespace :vendor do
       }
     ]
     vendors = Vendor::Merchant.create!(vendors_params)
-    puts "Created #{vendors.count} new vendors."
+    puts "Created #{vendors.count.to_s.green} new vendors."
   end
 
   desc 'Destroy all Vendors'
   task reset: :environment do
     Vendor::Merchant.destroy_all
+    puts 'All Vendors destroyed'.green
   end
 
   namespace :product do
@@ -214,11 +223,12 @@ namespace :vendor do
     task seed: :environment do
       Vendor::Merchant.find_each do |merchant|
         file = File.new Rails.root.join('spec', 'support', "#{merchant.name}.#{merchant.format}")
-        puts "Started importing #{merchant.name} pricelist"
+        print "#{merchant.name.green} "
+        print ' '*(20 - merchant.name.size)
         t1 = Time.now
         Vendor::Pricelist.new(merchant, file).import!
         time = Time.now - t1
-        puts "Finished importing #{merchant.name} pricelist in #{time.to_i} seconds"
+        print " #{time.to_f.round(1)} sec\n".green
       end
     end
   end
