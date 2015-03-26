@@ -208,13 +208,13 @@ namespace :vendor do
       }
     ]
     vendors = Vendor::Merchant.create!(vendors_params)
-    puts "Created #{vendors.count.to_s.green} new vendors."
+    puts "Created #{vendors.count.to_s} new vendors."
   end
 
   desc 'Destroy all Vendors'
   task reset: :environment do
     Vendor::Merchant.destroy_all
-    puts 'All Vendors destroyed'.green
+    puts 'All Vendors destroyed'
   end
 
   namespace :product do
@@ -223,12 +223,12 @@ namespace :vendor do
     task seed: :environment do
       Vendor::Merchant.find_each do |merchant|
         file = File.new Rails.root.join('spec', 'support', "#{merchant.name}.#{merchant.format}")
-        print "#{merchant.name.green} "
+        print "#{merchant.name} "
         print ' '*(20 - merchant.name.size)
         t1 = Time.now
         Vendor::Pricelist.new(merchant, file).import!
         time = Time.now - t1
-        print " #{time.to_f.round(1)} sec\n".green
+        print " #{time.to_f.round(1)} sec\n"
       end
     end
   end
