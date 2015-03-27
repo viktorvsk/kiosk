@@ -222,11 +222,11 @@ namespace :vendor do
     desc 'Create default Vendor::Products'
     task seed: :environment do
       Vendor::Merchant.find_each do |merchant|
-        file = File.new Rails.root.join('spec', 'support', "#{merchant.name}.#{merchant.format}")
+        file_path = Rails.root.join('spec', 'support', "#{merchant.name}.#{merchant.format}")
         print "#{merchant.name} "
         print ' '*(20 - merchant.name.size)
         t1 = Time.now
-        Vendor::Pricelist.new(merchant, file).import!
+        Vendor::Pricelist.new(merchant.id, file_path).import!
         time = Time.now - t1
         print " #{time.to_f.round(1)} sec\n"
       end
