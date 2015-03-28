@@ -10,7 +10,7 @@ class Catalog::Product < ActiveRecord::Base
   class << self
     def recount
       transaction do
-        all.eager_load(:vendor_products).find_each do |product|
+        all.eager_load(:vendor_products, :category).find_each do |product|
           product.recount
         end
       end

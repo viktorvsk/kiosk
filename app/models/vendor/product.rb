@@ -38,7 +38,7 @@ class Vendor::Product < ActiveRecord::Base
     end
 
     def unbind
-       all.update_all( product: nil )
+       all.bound.update_all( catalog_product_id: nil )
     end
 
     def bind_to( catalog_product )
