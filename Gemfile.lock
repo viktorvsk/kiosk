@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ablebeam/active_pricelist.git
-  revision: 34924466beda277a116c542a779949108378e532
+  revision: db80207d279508587bdbcdc05bb066df8e1aae4d
   specs:
     active_pricelist (0.0.1)
       activesupport (~> 4.2)
