@@ -5,7 +5,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   # GET /admin/vendor/merchants
   # GET /admin/vendor/merchants.json
   def index
-    @merchants = ::Vendor::Merchant.all
+    @merchants = ::Vendor::Merchant.all.order('created_at DESC')
   end
 
   # GET /admin/vendor/merchants/1
@@ -65,7 +65,8 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
   # POST /admin/vendor/merchants/1/pricelist
   def pricelist
     ::Vendor::Pricelist.async_import!(@merchant.id, params[:vendor_merchant][:pricelist].path)
-    redirect_to admin_vendor_merchants_url, notice: "Прайс обработан"
+    @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
+    redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
   end
 
   private

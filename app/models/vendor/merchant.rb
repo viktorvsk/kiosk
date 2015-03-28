@@ -1,5 +1,5 @@
 class Vendor::Merchant < ActiveRecord::Base
-  store_accessor :info, :discount, :email, :description
+  store_accessor :info, :discount, :email, :description, :pricelist_state, :pricelist_error, :last_price_date
   store_accessor :settings, :f_start, :f_model, :f_name, :f_code, :f_usd, :f_uah, :f_rrc, :f_eur, :f_not_in_stock,
                             :encoding, :format, :parser_class,
                             :required, :currency_order, :currency_rates, :not_in_stock,
@@ -7,6 +7,7 @@ class Vendor::Merchant < ActiveRecord::Base
                             :f_brand, :f_warranty, :f_category
   validates :name, presence: true, uniqueness: true
   has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id, dependent: :delete_all
+  has_many :catalog_products, class_name: Catalog::Product, through: :products, source: :product
   CUSTOM = [
     %w( Обычный Default),
     %w( ERC Erc ),

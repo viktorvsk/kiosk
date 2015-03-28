@@ -27,20 +27,33 @@ module Vendor
     end
 
     def import!
-      GC.enable
-      GC.start
+      notify('Загружается прайслист')
       upload_pricelist
+      notify('Прайслист обрабатывается')
       parse_pricelist
-      GC.start
+      notify('Удаляются товары, которых нет в новом прайслисте')
       @products_names    = @merchant.products.pluck('vendor_products.name')
       @products_articuls = @merchant.products.pluck('vendor_products.articul')
       delete_not_in_pricelist
       batch_create_or_update
-      GC.start
+      notify('Пересчитывается цена товаров')
+      @merchant.catalog_products.recount
+      notify
       true
+    rescue Exception => e
+      notify("Произошла ошибка (#{e.class}): #{e.message}", true)
+      false
     end
 
   private
+
+    def notify(message = nil, error = false)
+      if message.present?
+        @merchant.update(pricelist_state: message, pricelist_error: error.to_s)
+      else
+        @merchant.update(pricelist_state: nil, pricelist_error: false, last_price_date: Time.now.strftime("%e.%m %X") )
+      end
+    end
 
     def delete_not_in_pricelist
       @to_delete = @products_articuls - @products.map{ |p| p['articul'] }
@@ -70,8 +83,9 @@ module Vendor
     def batch_create_or_update
       from_hash_to_update
       from_hash_to_create
+      notify('Обновляются существующие прайсы')
       batch_update( @to_update )
-      GC.start
+      notify('Создаются новые прайсы')
       batch_create( @to_create )
     end
 
