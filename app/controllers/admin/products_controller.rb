@@ -1,11 +1,15 @@
 class Admin::ProductsController < Admin::BaseController
-  before_action :set_product, only: [:edit, :update, :destroy, :bind, :unbind]
+  before_action :set_product, only: [:edit, :show, :update, :destroy, :bind, :unbind, :recount]
   after_action :set_vendor_product, :recount_product, only: [:bind, :unbind]
 
   # GET /admin/products
   # GET /admin/products.json
   def index
     @products = Catalog::Product.page(params[:page])
+  end
+
+  def show
+    render @product, layout: false
   end
 
   # GET /admin/products/new
@@ -59,15 +63,22 @@ class Admin::ProductsController < Admin::BaseController
 
   def search
     @q = ::Catalog::Product.ransack(params[:q])
-    @products = @q.result.page(params[:page])
+    @products = @q.result.order('updated_at DESC').page(params[:page])
   end
 
   def bind
     @product.bind(@vendor_product)
+    head 200
   end
 
   def unbind
     @product.unbind(@vendor_product)
+    head 200
+  end
+
+  def recount
+    @product.recount
+    head 200
   end
 
   private

@@ -6,9 +6,14 @@ class Admin::Vendor::ProductsController < Admin::BaseController
     @q_catalog_products = ::Catalog::Product.ransack(params[:q_catalog_products])
   end
 
+  def show
+    @product = ::Vendor::Product.find(params[:id])
+    respond_to :js
+  end
+
   def search
     @q_vendor_products = ::Vendor::Product.unbound.ransack(params[:q])
-    @products = @q_vendor_products.result.page(params[:page])
+    @products = @q_vendor_products.result.order('updated_at DESC').page(params[:page])
   end
 
 end

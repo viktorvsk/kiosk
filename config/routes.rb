@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     root 'products#index'
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
     delete 'binding/:vendor_product_id', to: 'binding#unbind'
-    resources :products,    except: [:show] do
+    resources :products do
       get :search, on: :collection
+      post :recount, on: :member
     end
     resources :categories,  except: [:show]
     resources :confs,       except: [:show]
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
     resources :orders,      except: [:show]
     resources :users,       except: [:show]
     namespace :vendor do
-      resources :products, only: [:index] do
+      resources :products, only: [:index, :show] do
         get :search, on: :collection
       end
       resources :merchants, except: [:show] do
