@@ -1,9 +1,11 @@
-%tr
-  %td
-    %div{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id }
-      = product.name
-      %hr/
-      %b= "#{product.price} грн."
-      %i= product.merchant.name
-      - unless product.active?
-        %b Неактивный
+%li{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id }
+  %span
+    = product.name
+  %hr/
+  %span
+    %b= "#{product.price} грн."
+    %i= product.merchant.name
+    - unless product.active?
+      %b Неактивный
+    - if product.is_rrc?
+      %b RRC

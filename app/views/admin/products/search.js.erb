@@ -1,3 +1,3 @@
-$('#catalog-products').html("<%= escape_javascript(render(@products)) %>");<%#  %>
-$('#catalog-products-paginate').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>");
+$('[data-catalog-products]').html("<%= escape_javascript(render(@products)) %>");<%#  %>
+$('[data-catalog-products-paginate]').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>");
 Binding.init();

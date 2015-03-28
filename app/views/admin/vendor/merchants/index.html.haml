@@ -5,12 +5,7 @@
   %h1= @merchants.present? ? 'Все поставщики' : 'Поставщики отсутствуют'
 
 - if @merchants.present?
-  .table-responsive
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th Название
-      %tbody
-        = render @merchants
+  .row
+    = render @merchants
 
 

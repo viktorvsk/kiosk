@@ -11,12 +11,6 @@
         .form-actions.text-right
           = f.submit 'Найти', class: 'btn btn-primary btn-xs'
 
-.table-responsive
-%table.table.table-striped.table-bordered.table-hover{ 'data-droppable' => 'vendorProductsTable'}
-  %tfoot
-    %tr
-      %td#vendor-products-paginate.text-center{ colspan: 2 }
-  %thead
-    %tr
-      %th Товар по прайсу
-  %tbody#vendor-products
+%ul{ 'data-droppable' => 'vendorProductsTable', 'data-vendor-products' => true }
+.text-center
+  %div{ 'data-vendor-products-paginate' => true }

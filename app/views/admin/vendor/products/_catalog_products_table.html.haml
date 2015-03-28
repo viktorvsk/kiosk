@@ -11,12 +11,6 @@
         .form-actions.text-right
           = f.submit 'Найти', class: 'btn btn-primary btn-xs'
 
-.table-responsive
-%table.table.table-striped.table-bordered.table-hover
-  %tfoot
-    %tr
-      %td#catalog-products-paginate.text-center{ colspan: 3 }
-  %thead
-    %tr
-      %th Товар по сайту
-  %tbody#catalog-products
+%ul{ 'data-catalog-products' => true }
+.text-center
+  %div{ 'data-catalog-products-paginate' => true }
