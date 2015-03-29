@@ -6,8 +6,21 @@ class Catalog::Product < ActiveRecord::Base
   belongs_to :category, class_name: Catalog::Category, foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :vendor_products, class_name: Vendor::Product, dependent: :nullify, foreign_key: :catalog_product_id
+  scope :bound, -> { joins(:vendor_products) }
 
   class << self
+    def unbound
+      joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id')
+        .where('vendor_products.catalog_product_id IS NULL')
+    end
+
+    def bound_with(number)
+      select('catalog_products.*')
+        .joins(:vendor_products)
+        .group('catalog_products.id')
+        .having('count(vendor_products.id) >=  ?', number)
+    end
+
     def recount
       transaction do
         all.eager_load(:vendor_products, :category).find_each do |product|

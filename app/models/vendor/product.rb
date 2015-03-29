@@ -42,7 +42,7 @@ class Vendor::Product < ActiveRecord::Base
     end
 
     def bind_to( catalog_product )
-      all.update_all( product: catalog_product )
+      all.update_all( catalog_product_id: catalog_product )
     end
 
     def select_rrc

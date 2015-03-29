@@ -36,6 +36,8 @@ module Vendor
       @products_articuls = @merchant.products.pluck('vendor_products.articul')
       delete_not_in_pricelist
       batch_create_or_update
+      notify('Привязываются товары')
+      Binder.perform
       notify('Пересчитывается цена товаров')
       @merchant.catalog_products.recount
       notify
