@@ -1,14 +1,6 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "jquery-ui": "latest",
-    "magnific-popup": "latest",
-    "nouislider": "latest",
-    "typehead.js": "latest",
-    "bxslider": "latest",
-    "masked-input": "latest",
-    "addresspicker": "latest",
-    "select2": "latest",
-    "juicy-ace-editor": "latest"
+    "jquery-ui": "latest"
   }
 }
