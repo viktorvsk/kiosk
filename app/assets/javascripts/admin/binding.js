@@ -70,15 +70,15 @@ function Binding() {
     var url = that.urlForBind(product.data(that.dataProductId), vendorProduct.data(that.dataVendorProductId)),
       oldProduct = that.productFor(vendorProduct);
 
-
     $.post(url, function (data) {
       if (that.bindFromProduct(vendorProduct)) {
 
         that.recountProduct(oldProduct);
       }
-      vendorProduct.remove();
+
       that.updateProduct(product);
     });
+
   };
 
   this.productFor = function (vendorProduct) {
@@ -116,7 +116,6 @@ function Binding() {
     $vendorProductNode
       .css({ top: 0, left: 0, right: 0, bottom: 0 })
       .prependTo($(that.vendorProductsTable));
-    // that.updateProduct($product);
     that.init();
   };
 
@@ -125,6 +124,8 @@ function Binding() {
       $vendorProductNode  = $(ui.draggable);
 
     that.bind($productNode, $vendorProductNode);
+    $vendorProductNode.appendTo($productNode.find('ul'));
+    //$vendorProductNode.remove();
     that.init();
   };
 
