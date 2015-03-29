@@ -46,7 +46,7 @@ class Vendor::Product < ActiveRecord::Base
     end
 
     def select_rrc
-      all.rrc.first
+      all.rrc.first.price
     end
   end
 
