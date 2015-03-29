@@ -9,7 +9,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def show
-    render @product, layout: false
+    render @product.reload, layout: false
   end
 
   # GET /admin/products/new

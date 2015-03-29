@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require jquery-ui
-//= require_tree .
-//= require_tree ./admin
-
+// require bootstrap
+//= require jquery-ui/ui/core
+//= require jquery-ui/ui/widget
+//= require jquery-ui/ui/mouse
+//= require jquery-ui/ui/draggable
+//= require jquery-ui/ui/droppable
+//= require admin/binding

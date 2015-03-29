@@ -1,9 +1,10 @@
 %li{ 'data-droppable' => 'product', 'data-product-id' => product.id }
   = link_to product.name, product_path(product)
+  %small= product.id
   - if product.price.present?
     %b
       (
       = product.price
       грн. )
   %ul
-    = render product.vendor_products.sort_by(&:price)
+    = render product.vendor_products.reload.sort_by(&:price)
