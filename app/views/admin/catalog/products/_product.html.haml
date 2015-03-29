@@ -1,10 +1,20 @@
 %li{ 'data-droppable' => 'product', 'data-product-id' => product.id }
-  = link_to product.name, product_path(product)
-  %small= product.id
-  - if product.price.present?
-    %b
-      (
-      = product.price
-      грн. )
-  %ul
-    = render product.vendor_products.reload.sort_by(&:price)
+  .row
+    .col-sm-4.text-center
+      %small= product.name
+      %br/
+      %small
+        = link_to 'Открыть', product_path(product)
+      %br/
+      %small
+        Артикул:
+        = product.id
+      %br/
+      - if product.price.present?
+        %b
+          Цена:
+          = product.price
+          грн.
+    .col-sm-8
+      %ul{ 'data-product-id' => product.id }
+        = render product.vendor_products.reload.sort_by(&:price)
