@@ -46,7 +46,7 @@ class Vendor::Product < ActiveRecord::Base
     end
 
     def select_rrc
-      all.rrc.first.try(:price)
+      all.active.rrc.first.try(:price)
     end
   end
 
@@ -54,11 +54,11 @@ class Vendor::Product < ActiveRecord::Base
     update!( product: catalog_product )
   end
 
-  def activate
-    create_state(name: 'inactive')
+  def deactivate
+    state ? true : create_state(name: 'inactive')
   end
 
-  def deactivate
+  def activate
     state ? state.destroy : true
   end
 

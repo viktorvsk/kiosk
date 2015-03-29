@@ -12,21 +12,26 @@ function Binding() {
   this.bindClass            = 'bind-to-product';
   this.unbindClass          = 'unbind-vendor-product';
   this.spinnerClass         = 'glyphicon glyphicon-refresh fa-spin';
+  this.activationClass      = '[data-activation-toggle]';
 
   this.urlForBind = function (product, vendorProduct) {
-    return ['/admin', 'binding', product, vendorProduct].join('/');
+    var url = ['/admin', 'binding', product, vendorProduct].join('/');
+    return url;
   };
 
   this.urlForUnbind = function (vendorProduct) {
-    return ['/admin', 'binding', vendorProduct].join('/');
+    var url = ['/admin', 'binding', vendorProduct].join('/');
+    return url;
   };
 
   this.urlForRecountProduct = function (id) {
-    return ['/admin', 'products', id, 'recount'].join('/');
+    var url = ['/admin', 'products', id, 'recount'].join('/');
+    return url;
   };
 
   this.urlForUpdateProduct = function (id) {
-    return ['/admin', 'products', id].join('/');
+    var url = ['/admin', 'products', id].join('/');
+    return url;
   };
 
   // this.findProduct = function (id) {
@@ -42,8 +47,8 @@ function Binding() {
       .prepend(spinner)
       .droppable('disable');
     $.get(url, function (data) {
-      console.log('Refreshing product with ID: ' + id);
-      // console.log(data);
+
+
       product.replaceWith(data);
       that.init();
     });
@@ -51,19 +56,18 @@ function Binding() {
   };
 
   this.bindFromProduct = function (vendorProduct) {
-    var product = vendorProduct.parent().parent();
-    if (product && product.size() && product.data('droppable')) {
-      return vendorProduct.parent().parent().data('droppable') === 'product';
-    }
-
-    return false;
-
+    var id = vendorProduct.parent().data('product-id');
+    return typeof id == 'undefined' ? false : true;
   };
 
   this.init = function () {
     $(that.vendorProduct).draggable(that.draggableConfig);
     $(that.product).droppable(that.droppableProductConfig);
     $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
+    // $(that.activationClass).on('ajax:success', function(evt, data, status, xhr) {
+    //   $(this).closest('li').addClass(data);
+    //   console.log(data);
+    // });
   };
 
   this.bind = function (product, vendorProduct) {
@@ -82,15 +86,19 @@ function Binding() {
   };
 
   this.productFor = function (vendorProduct) {
-    return vendorProduct.parent().parent();
+    var id = vendorProduct.data('vendor-product-id');
+
+    return $('li[data-product-id="' + id + '"]');
   };
 
   this.unbind = function (product, vendorProduct) {
+
     var url = that.urlForUnbind(vendorProduct);
     $.ajax({
       url: url,
       type: 'DELETE',
       success: function (data) {
+
         that.updateProduct(product);
       }
     });
@@ -103,12 +111,13 @@ function Binding() {
     var id = product.data(that.dataProductId),
       url = that.urlForRecountProduct(id);
     $.post(url, function () {
-      console.log('Recounted product with ID: ' + id);
+
       that.updateProduct(product);
     });
   };
 
   this.onUnbind = function (event, ui) {
+
     var $vendorProductNode = $(ui.draggable),
       vendorProductId = $vendorProductNode.data(that.dataVendorProductId),
       $product = that.productFor($vendorProductNode);

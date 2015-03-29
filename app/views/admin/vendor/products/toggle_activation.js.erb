@@ -1,0 +1,9 @@
+<% if @product.reload.active? %>
+  $('[data-vendor-product-id="<%= escape_javascript(@product.id.to_s) %>"]').removeClass("inactive");
+  console.log('active');
+<% else %>
+  $('[data-vendor-product-id="<%= escape_javascript(@product.id.to_s) %>"]')
+    .addClass("inactive");
+  console.log('inactive');
+<% end %>
+

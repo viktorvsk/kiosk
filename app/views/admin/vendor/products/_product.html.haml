@@ -1,4 +1,6 @@
-%li{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id }
+%li{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if !product.active?) }
+  .text-right
+    = link_to '×', toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true'
   %span
     = product.name
     %small= product.id

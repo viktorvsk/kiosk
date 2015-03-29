@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     namespace :vendor do
       resources :products, only: [:index, :show] do
         get :search, on: :collection
+        post :toggle_activation, on: :member
       end
       resources :merchants, except: [:show] do
         post :pricelist, on: :member

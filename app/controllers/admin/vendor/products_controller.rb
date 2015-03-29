@@ -16,4 +16,10 @@ class Admin::Vendor::ProductsController < Admin::BaseController
     @products = @q_vendor_products.result.order('updated_at DESC').page(params[:page])
   end
 
+  def toggle_activation
+    @product = ::Vendor::Product.find(params[:id])
+    @product.active? ? @product.deactivate : @product.activate
+    # render text: @product.state.try(:name)
+  end
+
 end
