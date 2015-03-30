@@ -86,9 +86,9 @@ function Binding() {
   };
 
   this.productFor = function (vendorProduct) {
-    var id = vendorProduct.data('vendor-product-id');
-
-    return $('li[data-product-id="' + id + '"]');
+    var id = vendorProduct.parent().data('product-id'),
+      product = $('li[data-product-id="' + id + '"]');
+    return product;
   };
 
   this.unbind = function (product, vendorProduct) {
