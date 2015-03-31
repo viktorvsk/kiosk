@@ -1,55 +1,57 @@
 - inactive = !product.active? or !product.in_stock?
 %li.row{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
-  .text-right
+  .text-right.col-xs-12
     = link_to '×', toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true'
-  %span.col-sm-6.text-left
-    %b= product.name
-    %hr/
-    Артикул:
-    %small= product.id
-    %hr/
-    Цена:
-    %b= "#{product.price} грн."
-  %span.col-sm-6.text-left
-    %b Поставщик:
-    %i= product.merchant.name
-    %hr/
-    - if product.is_rrc?
-      %b RRC:
-      %i= product.rrc.to_f
-      %br/
-    - if product.usd.to_f.present?
-      %b $:
-      %i= product.usd.to_f
-      %br/
-    - if product.eur.to_f.present?
-      %b €:
-      %i= product.eur.to_f
-      %br/
-    - if product.uah.to_f.present?
-      %b ₴:
-      %i= product.uah.to_f
-      %br/
-    - if !product.in_stock?
-      %b Нет в наличии
-    - unless product.in_stock_kiev.nil?
-      - if product.in_stock_kiev
-        %b Киев:
-        %i +
+  %small
+    %span.col-sm-6.text-left
+      %b= product.name
+      %hr/
+      Артикул:
+      %b= product.id
+      %hr/
+      Цена:
+      %b= "#{product.price} грн."
+  %small
+    %span.col-sm-6.text-left
+      %b Поставщик:
+      %i= product.merchant.name
+      %hr/
+      - if product.is_rrc?
+        %b RRC:
+        %i= product.rrc.to_f
         %br/
-      - if product.in_stock_kharkov
-        %b Харьков:
-        %i +
+      - if product.usd.to_i > 0
+        %b $:
+        %i= product.usd.to_f
         %br/
-      - if product.warranty.present?
-        %b Гарантия:
-        %i= product.warranty
+      - if product.eur.to_i > 0
+        %b €:
+        %i= product.eur.to_f
         %br/
-      - if product.category.present?
-        %b Категория:
-        %i= product.category
+      - if product.uah.to_i > 0
+        %b ₴:
+        %i= product.uah.to_f
         %br/
-      - if product.brand.present?
-        %b Бренд:
-        %i= product.brand
-        %br/
+      - if !product.in_stock?
+        %b Нет в наличии
+      - unless product.in_stock_kiev.nil?
+        - if product.in_stock_kiev
+          %b Киев:
+          %i +
+          %br/
+        - if product.in_stock_kharkov
+          %b Харьков:
+          %i +
+          %br/
+        - if product.warranty.present?
+          %b Гарантия:
+          %i= product.warranty
+          %br/
+        - if product.category.present?
+          %b Категория:
+          %i= product.category
+          %br/
+        - if product.brand.present?
+          %b Бренд:
+          %i= product.brand
+          %br/
