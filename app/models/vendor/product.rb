@@ -9,12 +9,22 @@ class Vendor::Product < ActiveRecord::Base
   belongs_to :merchant, class_name: Vendor::Merchant, foreign_key: :vendor_merchant_id
   belongs_to :catalog_category, class_name: Catalog::Category
   has_one :state, as: :stateable
-  scope :active,      ->{ joins('LEFT JOIN states ON states.stateable_id = vendor_products.id').where('states.stateable_id IS NULL') }
-  scope :not_active,  ->{ joins(:state).where(states: { name: 'inactive' }) }
   scope :bound,       ->{ where('vendor_products.catalog_product_id IS NOT NULL') }
   scope :unbound,     ->{ where('vendor_products.catalog_product_id IS NULL') }
   scope :rrc,         ->{ where(is_rrc: true) }
   class << self
+
+    def active
+      joins('LEFT JOIN states ON states.stateable_id = vendor_products.id')
+        .where('states.stateable_id IS NULL')
+        .where(in_stock: true)
+    end
+
+    def not_active
+      joins(:state)
+        .where('states.name = ? OR vendor_products.in_stock = ?', 'inactive', false)
+    end
+
     def to_csv
       all.map(&:to_csv).join("\n");
     end
