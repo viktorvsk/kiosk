@@ -1,7 +1,20 @@
-<% if @vendor_product.reload.active? %>
-  $('[data-vendor-product-id="<%= escape_javascript(@vendor_product.id.to_s) %>"]').removeClass("inactive");
-<% else %>
-  $('[data-vendor-product-id="<%= escape_javascript(@vendor_product.id.to_s) %>"]')
-    .addClass("inactive");
-<% end %>
+(function(){
+  var vendorProduct = $('[data-vendor-product-id="<%= escape_javascript(@vendor_product.id.to_s) %>"]'),
+    productId = vendorProduct.parent().data('product-id');
+
+  if (productId) {
+    product = $('li[data-product-id="' + productId + '"]');
+    console.log('HERE!');
+    Binding.updateProduct(product);
+  } else {
+    <% if @vendor_product.reload.active? %>
+      vendorProduct.removeClass("inactive");
+    <% else %>
+     vendorProduct.addClass("inactive");
+    <% end %>
+  }
+
+
+}());
+
 
