@@ -9,6 +9,14 @@ class Catalog::Product < ActiveRecord::Base
   scope :bound, -> { joins(:vendor_products) }
 
   class << self
+    def ransackable_scopes(auth_object = nil)
+      if auth_object.try(:admin?)
+        [:articul_cont]
+      else
+        [:articul_cont]
+      end
+    end
+
     def unbound
       joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id')
         .where('vendor_products.catalog_product_id IS NULL')
@@ -19,6 +27,10 @@ class Catalog::Product < ActiveRecord::Base
         .joins(:vendor_products)
         .group('catalog_products.id')
         .having('count(vendor_products.id) >=  ?', number)
+    end
+
+    def articul_cont(articul)
+      where("id::text ILIKE '%#{articul}%'")
     end
 
     def recount

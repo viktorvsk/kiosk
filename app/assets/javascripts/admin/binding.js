@@ -64,10 +64,6 @@ function Binding() {
     $(that.vendorProduct).draggable(that.draggableConfig);
     $(that.product).droppable(that.droppableProductConfig);
     $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
-    // $(that.activationClass).on('ajax:success', function(evt, data, status, xhr) {
-    //   $(this).closest('li').addClass(data);
-    //   console.log(data);
-    // });
   };
 
   this.bind = function (product, vendorProduct) {
@@ -123,7 +119,7 @@ function Binding() {
       $product = that.productFor($vendorProductNode);
     that.unbind($product, vendorProductId);
     $vendorProductNode
-      .css({ top: 0, left: 0, right: 0, bottom: 0 })
+      .css({ top: 0, left: 0, right: 0, bottom: 0, width: 'auto' })
       .prependTo($(that.vendorProductsTable));
     that.init();
   };

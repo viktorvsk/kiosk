@@ -1,20 +1,17 @@
-%li{ 'data-droppable' => 'product', 'data-product-id' => product.id }
-  .row
-    .col-sm-4.text-center
-      %small= product.name
+%li.panel.panel-default{ 'data-droppable' => 'product', 'data-product-id' => product.id }
+  .panel-heading
+    %small.panel-title
+      %i= product.name
       %br/
-      %small
-        = link_to 'Открыть', product_path(product)
-      %br/
-      %small
-        Артикул:
-        = product.id
-      %br/
+      = link_to 'Открыть', product_path(product)
+      Артикул:
+      = product.id
       - if product.price.present?
         %b
           Цена:
           = product.price
           грн.
-    .col-sm-8
-      %ul{ 'data-product-id' => product.id }
-        = render product.vendor_products.reload.sort_by(&:price)
+  .panel-body
+
+    %ul.list-group{ 'data-product-id' => product.id }
+      = render product.vendor_products.reload.sort_by(&:price)

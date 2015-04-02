@@ -1,8 +1,21 @@
-.page-header
-  %h1 Привязка
-.row
-  .col-sm-6
-    = render 'admin/vendor/products/catalog_products_table'
-  .col-sm-6
-    = render 'admin/vendor/products/vendor_products_table'
+.col-xs-12
+  .page-header
+    %h1 Привязка
+.col-sm-6
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Каталог
+    .panel-body
+      = render 'admin/vendor/products/catalog_products_list'
+    .panel-footer.text-center
+      %div{ 'data-catalog-products-paginate' => true }
+
+.col-sm-6
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Прайсы
+    .panel-body
+      = render 'admin/vendor/products/vendor_products_list'
+    .panel-footer.text-center
+      %div{ 'data-vendor-products-paginate' => true }
 

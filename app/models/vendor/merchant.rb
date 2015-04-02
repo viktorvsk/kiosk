@@ -20,6 +20,10 @@ class Vendor::Merchant < ActiveRecord::Base
     "admin/#{super}"
   end
 
+  def rates
+    JSON.parse(currency_rates).slice('usd', 'eur').map{ |k, v| "#{k}: #{v}" }.join(', ')
+  end
+
   def pricelist_path
     Rails.root.join('app', 'price_lists', "#{id}.#{format}")
   end

@@ -7,43 +7,45 @@
         = field_set_tag do
           %legend Информация
           .form-inputs
-            = field_for(f, :name)
-            = field_for(f, :discount, :number_field)
-            = field_for(f, :email, :email_field)
-            = select_field_for(f, :encoding, collection: ['UTF-8', 'Windows-1251'])
-            = select_field_for(f, :format, collection: %w(xlsx xls xml csv))
-            = field_for(f, :description, :text_area)
+            .col-sm-3= field_for(f, :name)
+            .col-sm-3= field_for(f, :discount, :number_field)
+            .col-sm-3= field_for(f, :email, :email_field)
+            .col-sm-3= select_field_for(f, :encoding, collection: ['UTF-8', 'Windows-1251'])
+            .col-sm-3= select_field_for(f, :format, collection: %w(xlsx xls xml csv))
+            .col-sm-9= field_for(f, :description, :text_area)
       .col-sm-6
         = field_set_tag do
           %legend Основные настройки полей
           .form-inputs
-            = field_for(f, :f_start)
-            = field_for(f, :f_model)
-            = field_for(f, :f_name)
-            = field_for(f, :f_code)
-            = field_for(f, :f_usd)
-            = field_for(f, :f_uah)
-            = field_for(f, :f_rrc)
-            = field_for(f, :f_eur)
-            = field_for(f, :f_not_in_stock)
-            = field_for(f, :f_category)
-            = field_for(f, :f_brand)
-            = field_for(f, :f_warranty)
+            .col-sm-3= field_for(f, :f_start)
+            .col-sm-3= field_for(f, :f_model)
+            .col-sm-3= field_for(f, :f_name)
+            .col-sm-3= field_for(f, :f_code)
+            .col-sm-3= field_for(f, :f_usd)
+            .col-sm-3= field_for(f, :f_uah)
+            .col-sm-3= field_for(f, :f_rrc)
+            .col-sm-3= field_for(f, :f_eur)
+            .col-sm-3= field_for(f, :f_not_in_stock)
+            .col-sm-3= field_for(f, :f_category)
+            .col-sm-3= field_for(f, :f_brand)
+            .col-sm-3= field_for(f, :f_warranty)
+      .col-sm-6
         = field_set_tag do
           %legend Индивидуальные настройки полей
-          = field_for(f, :f_uah_1)
-          = field_for(f, :f_uah_2)
-          = field_for(f, :f_monitor)
-          = field_for(f, :f_ddp)
-          = field_for(f, :f_stock_kharkov)
-          = field_for(f, :f_stock_kiev)
+          .col-sm-6= field_for(f, :f_uah_1)
+          .col-sm-6= field_for(f, :f_uah_2)
+          .col-sm-6= field_for(f, :f_monitor)
+          .col-sm-6= field_for(f, :f_ddp)
+          .col-sm-6= field_for(f, :f_stock_kharkov)
+          .col-sm-6= field_for(f, :f_stock_kiev)
+      .col-sm-6
         = field_set_tag do
           %legend Настройки рассчета
-          = select_field_for(f, :parser_class, collection: @custom_merchants)
-          = field_for(f, :not_in_stock)
-          = field_for(f, :required)
-          = field_for(f, :currency_order)
-          = field_for(f, :currency_rates)
+          .col-sm-6= select_field_for(f, :parser_class, collection: @custom_merchants)
+          .col-sm-6= field_for(f, :required)
+          .col-sm-6= field_for(f, :currency_rates)
+          .col-sm-6= field_for(f, :currency_order)
+          .col-sm-6= field_for(f, :not_in_stock)
   .form-actions
     - text = @merchant.new_record? ? "Создать" : "Сохранить"
     = button_tag(type: :submit, class: 'btn btn-success') do

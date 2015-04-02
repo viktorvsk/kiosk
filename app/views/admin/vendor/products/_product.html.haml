@@ -1,57 +1,13 @@
 - inactive = !product.active? or !product.in_stock?
-%li.row{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
-  .text-right.col-xs-12
-    = link_to '×', toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true'
-  %small
-    %span.col-sm-6.text-left
-      %b= product.name
-      %hr/
-      Артикул:
-      %b= product.id
-      %hr/
-      Цена:
-      %b= "#{product.price} грн."
-  %small
-    %span.col-sm-6.text-left
-      %b Поставщик:
-      %i= product.merchant.name
-      %hr/
-      - if product.is_rrc?
-        %b RRC:
-        %i= product.rrc.to_f
-        %br/
-      - if product.usd.to_i > 0
-        %b $:
-        %i= product.usd.to_f
-        %br/
-      - if product.eur.to_i > 0
-        %b €:
-        %i= product.eur.to_f
-        %br/
-      - if product.uah.to_i > 0
-        %b ₴:
-        %i= product.uah.to_f
-        %br/
-      - if !product.in_stock?
-        %b Нет в наличии
-      - unless product.in_stock_kiev.nil?
-        - if product.in_stock_kiev
-          %b Киев:
-          %i +
-          %br/
-        - if product.in_stock_kharkov
-          %b Харьков:
-          %i +
-          %br/
-        - if product.warranty.present?
-          %b Гарантия:
-          %i= product.warranty
-          %br/
-        - if product.category.present?
-          %b Категория:
-          %i= product.category
-          %br/
-        - if product.brand.present?
-          %b Бренд:
-          %i= product.brand
-          %br/
+%li.list-group-item.col-xs-12{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
+
+  = link_to '×', toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true', class: 'unselectable'
+  %span.col-xs-12.text-center
+    %b= product.name
+
+
+  %span.col-sm-6.text-left
+    = render 'admin/vendor/products/info', product: product
+
+  %span.col-sm-6.text-left
+    = render 'admin/vendor/products/additional_info', product: product
