@@ -19,3 +19,17 @@
 //= require jquery-ui/ui/draggable
 //= require jquery-ui/ui/droppable
 //= require admin/binding
+
+$(document).on('click', '[data-toggler]', function (event) {
+  var attr = $(this).data('toggler'),
+    selector = '[data-toggleable="' + attr + '"]',
+    $node = $(selector),
+    visible = $node.css('display') === 'block';
+  if (visible) {
+    $(this).text('Показать фильтры');
+  } else {
+    $(this).text('Скрыть фильтры');
+  }
+  $node.fadeToggle(100);
+  event.preventDefault();
+});

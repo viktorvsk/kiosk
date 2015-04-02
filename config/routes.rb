@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resource :user, only: [:edit, :update]
 
   namespace :admin do
-    root 'products#index'
+    root 'vendor/merchants#index'
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
     delete 'binding/:vendor_product_id', to: 'binding#unbind'
     resources :products do
