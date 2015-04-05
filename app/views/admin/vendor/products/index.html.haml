@@ -1,21 +1,23 @@
-.col-xs-12
-  .page-header
-    %h1 Привязка
-.col-sm-6
-  .panel.panel-primary
-    .panel-heading
-      %h3.panel-title Каталог
-    .panel-body
-      = render 'admin/vendor/products/catalog_products_list'
-    .panel-footer.text-center
-      %div{ 'data-catalog-products-paginate' => true }
+.row
+  .col-xs-12
+    .page-header
+      %h1 Привязка
+.row
+  .col-sm-6
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title Каталог
+      .panel-body
+        = render 'admin/vendor/products/catalog_products_list'
+      .panel-footer.text-center
+        %div{ 'data-catalog-products-paginate' => true }
 
-.col-sm-6
-  .panel.panel-primary
-    .panel-heading
-      %h3.panel-title Прайсы
-    .panel-body
-      = render 'admin/vendor/products/vendor_products_list'
-    .panel-footer.text-center
-      %div{ 'data-vendor-products-paginate' => true }
+  .col-sm-6
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title Прайсы
+      .panel-body
+        = render 'admin/vendor/products/vendor_products_list'
+      .panel-footer.text-center
+        %div{ 'data-vendor-products-paginate' => true }
 
