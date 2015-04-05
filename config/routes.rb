@@ -15,7 +15,13 @@ Rails.application.routes.draw do
       get :search, on: :collection
       post :recount, on: :member
     end
-    resources :categories,  except: [:show]
+    resources :categories,  except: [:show] do
+      resources :properties do
+        patch :reorder, on: :collection, to: 'categories#reorder'
+        post :reorder_all, on: :collection, to: 'categories#reorder_all'
+        delete :remove_property, on: :collection, to: 'categories#remove_property'
+      end
+    end
     resources :confs,       except: [:show]
     resources :markups,     except: [:show]
     resources :orders,      except: [:show]
