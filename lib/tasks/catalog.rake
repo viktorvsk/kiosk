@@ -13,13 +13,14 @@ namespace :catalog do
           products.each do |product|
             begin
               product.save!
-            rescue Exception
+            rescue ActiveRecord::RecordInvalid
               invalid += 1
             end
+            print '+'
           end
 
         end
-        puts "Imported #{products.count - invalid} products in #{(Time.now - t1).to_i } seconds"
+        puts "\nImported #{products.count - invalid} products in #{(Time.now - t1).to_i } seconds\n"
 
 
       end
@@ -27,8 +28,29 @@ namespace :catalog do
 
     desc 'Reset catalog'
     task reset: :environment do
-      Catalog::Product.destroy_all
+
+      Catalog::Product.transaction do
+        Catalog::Product.destroy_all
+      end
     end
 
+  end
+
+  namespace :category do
+
+    desc 'Create category properties from product properties'
+    task copy_properties: :environment do
+      puts 'started'
+      t1 = Time.now
+      products = Catalog::Product
+                     .joins(:properties, :category)
+                     .includes(category: :properties)
+                     .uniq
+                     .find_each do |product|
+        product.copy_properties_to_category
+        print '+'
+      end
+      puts = "Finished in #{(Time.now - t1).round(2)} seconds"
+    end
   end
 end
