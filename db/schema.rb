@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316102643) do
+ActiveRecord::Schema.define(version: 20150404182440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20150316102643) do
     t.integer  "catalog_property_id",              null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "position",            default: 0
   end
 
   add_index "catalog_product_properties", ["catalog_product_id", "catalog_property_id"], name: "product_properties_index", unique: true, using: :btree
