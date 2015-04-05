@@ -1,3 +1,4 @@
 $('[data-vendor-products]').html("<%= escape_javascript(render(@products)) %>");
 $('[data-vendor-products-paginate]').html("<%= escape_javascript(paginate(@products, format: :js, remote: true)) %>");
 Kiosk.BindingManager.init();
+$('body').removeClass('loading');
