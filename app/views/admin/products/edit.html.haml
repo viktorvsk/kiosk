@@ -2,9 +2,10 @@
   = link_to admin_products_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
     Назад
-  = link_to @product, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-info-sign
-    Show
-  %h1 Редактирование товара
+  Артикул:
+  %b= @product.id
+  %h1
+    = @product.name
+
 
 = render 'form'

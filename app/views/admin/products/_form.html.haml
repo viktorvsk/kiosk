@@ -1,27 +1,32 @@
-= simple_form_for(@product, url: admin_products_path) do |f|
+= simple_form_for(@product, url: @product.persisted? ? admin_product_path(@product) : admin_products_path ) do |f|
   = f.error_notification
-  =# render 'shared/error_messages', object: f.object
+  = render 'shared/error_messages', object: f.object
   .form-inputs.well.bs-component
-    .form-group{ class: ('has-error' if f.object.errors[:name].any?) }
-      = f.label :name
-      = f.text_field :name, class: 'form-control'
-      = f.error :name
-    .form-group{ class: ('has-error' if f.object.errors[:model].any?) }
-      = f.label :model
-      = f.text_field :model, class: 'form-control'
-      = f.error :model
-    .form-group{ class: ('has-error' if f.object.errors[:slug].any?) }
-      = f.label :slug
-      = f.text_field :slug, class: 'form-control'
-      = f.error :slug
-    .form-group{ class: ('has-error' if f.object.errors[:category].any?) }
-      = f.label :category
-      = f.text_field :category, class: 'form-control'
-      = f.error :category
-    .form-group{ class: ('has-error' if f.object.errors[:brand].any?) }
-      = f.label :brand
-      = f.text_field :brand, class: 'form-control'
-      = f.error :brand
+    = render 'admin/products/main_settings', f: f
+  .form-inputs.well.bs-component
+    .row
+      .col-xs-12
+        .form-group
+          = f.input :description, as: :text
+  .form-inputs.well.bs-component
+    .row
+      .col-sm-6
+        %h3.text-center Фильтры
+      .col-sm-6
+        %h3.text-center Характеристики
+        = render 'admin/products/product_properties', f: f
+  .form-inputs.well.bs-component
+    .row
+      .col-xs-12
+        %h3.text-center Изображения
+  .form-inputs.well.bs-component
+    .row
+      .col-sm-6
+        %h3.text-center Привязка
+      .col-sm-6
+        %h3.text-center Парсер
+
+
 
   .form-actions
-    = f.button :submit, 'Создать товар', class: 'btn btn-primary'
+    = f.button :submit, (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-primary'

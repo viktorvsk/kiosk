@@ -1,0 +1,5 @@
+%li.list-group-item{ 'data-position' => position, 'data-id' => property.id }
+  .pull-right
+    = link_to '#', 'data-destroy-property' => property.id do
+      %i.glyphicon.glyphicon-remove-circle
+  = property.name

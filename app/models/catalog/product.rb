@@ -1,13 +1,24 @@
 class Catalog::Product < ActiveRecord::Base
   # include Slugable
-  store_accessor :info, :video, :description, :accessories
+  store_accessor :info, :video, :description, :accessories,
+                        :newest, :homepage, :hit,
+                        :old_price, :main_name
   validates :name, :category, presence: true
   validates :model, :name, uniqueness: true
-  belongs_to :category, class_name: Catalog::Category, foreign_key: :catalog_category_id
+  belongs_to :category, class_name: Catalog::Category,
+                        foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
-  has_many :vendor_products, class_name: Vendor::Product, dependent: :nullify, foreign_key: :catalog_product_id
+  has_many :product_properties, class_name: Catalog::ProductProperty,
+                                foreign_key: :catalog_product_id
+  has_many :properties, through: :product_properties
+  has_many :vendor_products, class_name: Vendor::Product,
+                             dependent: :nullify,
+                             foreign_key: :catalog_product_id
+  has_one :seo, as: :seoable
   scope :bound, -> { joins(:vendor_products) }
-
+  accepts_nested_attributes_for :seo
+  accepts_nested_attributes_for :product_properties,
+                                reject_if: lambda { |p| p[:property_name].blank? }
   class << self
     def ransackable_scopes(auth_object = nil)
       if auth_object.try(:admin?)
@@ -64,10 +75,55 @@ class Catalog::Product < ActiveRecord::Base
     vendor_products.update_all(product: nil)
   end
 
+  def sync_properties_position
+    category_properties = category.category_properties.select(:catalog_property_id, :position)
+    product_properties.find_each do |product_property|
+      category_property = category_properties.detect{ |c_p| c_p.catalog_property_id == product_property.catalog_property_id }
+      if (pos = category_property.try(:position)) && pos != product_property.position
+        product_property.update(position: pos)
+      end
+    end
+
+  end
+
+  def set_property(property_name, property_value)
+    property_name, property_value = property_name.try(:strip), property_value.try(:strip)
+
+    property = Catalog::Property.where(name: property_name).first_or_create
+    if property.id.in? product_properties.pluck(:catalog_property_id)
+      if property_value.present?
+        product_properties.where(property: property)
+        .first
+        .update(name: property_value)
+      else
+        remove_property(property_name)
+      end
+    else
+      product_properties.create(property: property, name: property_value) if property_value.present?
+    end
+  end
+
+  def remove_property(property_name)
+    product_properties.joins(:property)
+    .where(catalog_properties: { name: property_name })
+    .destroy_all
+  end
+
   def filters=(values)
   end
 
   def properties=(values)
+    Catalog::Product.transaction do
+      values.uniq{ |hs| hs.keys.first }.each do |prop|
+        property = Catalog::Property
+                     .where(name: prop.keys.first)
+                     .first_or_create
+        p_p = Catalog::ProductProperty
+                .new(name: prop.values.first, property: property)
+
+        product_properties << p_p
+      end
+    end
   end
 
   def images=(values)
@@ -75,17 +131,22 @@ class Catalog::Product < ActiveRecord::Base
 
   def category=(value)
     case value
-      when String
-        cat = Catalog::Category.where(name: value).first_or_create
-        super(cat)
-      when Catalog::Category
-        super(value)
-      else
-        raise ArgumentError, 'Expected Category or category name'
-      end
+    when String
+      cat = Catalog::Category.where(name: value).first_or_create
+      super(cat)
+    when Catalog::Category
+      super(value)
+    else
+      raise ArgumentError, 'Expected Category or category name'
+    end
   end
 
   def brand=(value)
+  end
+
+  def copy_properties_to_category
+    to_add = properties - category.properties
+    category.properties << to_add
   end
 
 end

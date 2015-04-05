@@ -1,0 +1,7 @@
+= f.simple_fields_for :product_properties, f.object.product_properties.sort_by(&:position) do |f_pp|
+  .well.form-group
+    = f_pp.input :property_name, label: false
+    = f_pp.input :name, label: false
+    = f_pp.object.id
+    = f_pp.object.position
+

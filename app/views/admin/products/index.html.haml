@@ -8,14 +8,19 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Название
-        %th Модель
-
+        %th Артикул
+        %th Наименование
+        %th Цена
     %tbody
       - @products.each do |product|
         %tr
-          %td= product.name
-          %td= product.model
+          %td
+            = product.id
+            = product.vendor_products.count
+          %td
+            = link_to product.name, edit_admin_product_path(product)
+          %td
+            = product.price
     %tfoot
       %tr
         %td.text-center{ colspan: 2 }

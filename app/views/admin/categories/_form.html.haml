@@ -1,11 +1,22 @@
-.well
-  = simple_form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
-    = f.error_notification
+= simple_form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
+  .well
+    .row
 
-    .form-inputs
-      = field_for(f, :name)
-      = field_for(f, :tax_threshold)
-      = field_for(f, :tax)
-      = field_for(f, :tax_max)
-    .form-actions
-      = f.button :submit, f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
+      .col-xs-12
+        = f.error_notification
+      .col-sm-4
+        %h3 Основное
+        .form-inputs
+          = field_for(f, :name)
+          = field_for(f, :tax_threshold)
+          = field_for(f, :tax)
+          = field_for(f, :tax_max)
+      .col-sm-4
+        %h3 Характеристики
+        = render 'admin/categories/properties', category_properties: f.object.category_properties
+      .col-sm-4
+        %h3 Фильтры
+        =# render 'admin/categories/properties', category_properties: f.object.category_properties
+
+  .form-actions
+    = f.button :submit, f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
