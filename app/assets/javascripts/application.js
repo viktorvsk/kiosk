@@ -18,8 +18,11 @@
 //= require jquery-ui/ui/mouse
 //= require jquery-ui/ui/draggable
 //= require jquery-ui/ui/droppable
-//= require admin/binding
+//= require jquery-ui/ui/sortable
+//= require_tree ./admin
+//= require_self
 
+window.Kiosk = window.Kiosk || {};
 $(document).on('click', '[data-toggler]', function (event) {
   var attr = $(this).data('toggler'),
     selector = '[data-toggleable="' + attr + '"]',
@@ -32,4 +35,11 @@ $(document).on('click', '[data-toggler]', function (event) {
   }
   $node.fadeToggle(100);
   event.preventDefault();
+});
+
+$(document).on('ajax:beforeSend', '[data-remote="true"]', function () {
+  $('body').addClass('loading');
+});
+$(document).on('ajax:complete', '[data-remote="true"]', function () {
+  $('body').removeClass('loading');
 });
