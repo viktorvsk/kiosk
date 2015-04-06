@@ -1,0 +1,9 @@
+.row
+  .col-sm-6
+    %h3.text-center Фильтры
+  .col-sm-6
+    %h3.text-center Характеристики
+    - if @product.persisted?
+      = render 'admin/products/properties', product_properties: @product.product_properties
+    - else
+      = render 'admin/products/properties_attributes'

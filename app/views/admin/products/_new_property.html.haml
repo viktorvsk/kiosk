@@ -1,0 +1,7 @@
+%li.list-group-item
+  = form_for @product.product_properties.new, url: admin_product_product_properties_path(@product), method: :post, remote: true do |f|
+    = field_for f, :property_name
+    = field_for f, :name
+    .text-right
+      .formp-actions
+        = f.submit 'Добавить', class: 'btn btn-success'

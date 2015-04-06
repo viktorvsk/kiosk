@@ -1,77 +1,29 @@
-:erb
-  <%
-    options = {
-      category: {
-        collection: Catalog::Category.all,
-        label_method: :name,
-        value_method: :id,
-        include_blank: false,
-        selected: f.object.category.try(:id),
-        input_html: {
-          autocomplete: :off
-        }
-      },
-      brand: {
-        collection: Catalog::Brand.all,
-        label_method: :name,
-        value_method: :id,
-        include_blank: false,
-        selected: f.object.brand.try(:name),
-        input_html: {
-          autocomplete: :off
-        }
-      }
-    }
-  %>
 .row
+  .col-xs-12
+    %h3.text-center Основное
+  .col-sm-6
+    %ul.list-group
+      %li.list-group-item= field_for f, :name
+  .col-sm-6
+    %ul.list-group
+      %li.list-group-item= field_for f, :model
   .col-sm-3
-    .form-group{ class: ('has-error' if f.object.errors[:name].any?) }
-      = f.input :name
-      = f.error :name
-    .form-group{ class: ('has-error' if f.object.errors[:model].any?) }
-      = f.input :model
-      = f.error :model
-    .form-group{ class: ('has-error' if f.object.errors[:main_name].any?) }
-      = f.input :main_name
-      = f.error :main_name
+    %ul.list-group
+      %li.list-group-item= select_field_for f, :category, Catalog::Category.all.map{ |c| [c.name, c.id] }
+      %li.list-group-item= select_field_for f, :brand, Catalog::Brand.all.map{ |c| [c.name, c.id] }
+      %li.list-group-item= field_for f, :video
+
   .col-sm-2
-    .form-group{ class: ('has-error' if f.object.errors[:category].any?) }
-      = f.input :category, options[:category]
-    .form-group{ class: ('has-error' if f.object.errors[:brand].any?) }
-      = f.input :brand, options[:brand]
-      = f.error :brand
-    .form-group{ class: ('has-error' if f.object.errors[:video].any?) }
-      = f.input :video
-      = f.error :video
+    %ul.list-group
+      %li.list-group-item= field_for f, :price, :text_field, disabled: !f.object.fixed_price?
+      %li.list-group-item= field_for f, :old_price
+      %li.list-group-item= field_for f, :main_name
+  = render 'admin/products/seo', seo: @product.seo, f: f
   .col-sm-2
-    .form-group
-      = f.input :price, disabled: !f.object.fixed_price?
-      = f.error :price
-    .form-group
-      = f.input :old_price
-      = f.error :old_price
-  = f.simple_fields_for :seo, @product.seo do |f_seo|
-    .col-sm-2
-      .form-group
-        = f_seo.input :keywords
-      .form-group
-        = f_seo.input :title
-      .form-group{ class: ('has-error' if f.object.errors[:slug].any?) }
-        = f.input :slug
-        = f.error :slug
-    .col-sm-2
-      .form-group
-        = f_seo.input :description, as: :text, input_html: { rows: 8 }
-  .col-sm-1
-    .form-group
-      = f.input :fixed_price
-      = f.error :fixed_price
-    .form-group
-      = f.input :newest, as: :boolean
-      = f.error :newest
-    .form-group
-      = f.input :homepage, as: :boolean
-      = f.error :homepage
-    .form-group
-      = f.input :hit, as: :boolean
-      = f.error :hit
+    = field_for f, :fixed_price, :check_box
+    = field_for f, :newest, :check_box
+    = field_for f, :homepage, :check_box
+    = field_for f, :hit, :check_box
+  .col-xs-12
+    %ul.list-group
+      %li.list-group-item= field_for f, :description, :text_area

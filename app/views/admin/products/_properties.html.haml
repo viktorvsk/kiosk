@@ -1,0 +1,4 @@
+%ul.list-group{ 'data-sortable' => 'product-properties', 'data-product-id' => @product.id }
+  = render partial: 'admin/products/property', collection: product_properties.sort_by(&:position), as: :property
+%ul.list-group
+  = render 'admin/products/new_property'

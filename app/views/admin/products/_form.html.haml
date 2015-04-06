@@ -1,32 +1,9 @@
-= simple_form_for(@product, url: @product.persisted? ? admin_product_path(@product) : admin_products_path ) do |f|
-  = f.error_notification
+= form_for(@product, url: @product.persisted? ? admin_product_path(@product) : admin_products_path ) do |f|
   = render 'shared/error_messages', object: f.object
-  .form-inputs.well.bs-component
-    = render 'admin/products/main_settings', f: f
-  .form-inputs.well.bs-component
-    .row
-      .col-xs-12
-        .form-group
-          = f.input :description, as: :text
-  .form-inputs.well.bs-component
-    .row
-      .col-sm-6
-        %h3.text-center Фильтры
-      .col-sm-6
-        %h3.text-center Характеристики
-        = render 'admin/products/product_properties', f: f
-  .form-inputs.well.bs-component
-    .row
-      .col-xs-12
-        %h3.text-center Изображения
-  .form-inputs.well.bs-component
-    .row
-      .col-sm-6
-        %h3.text-center Привязка
-      .col-sm-6
-        %h3.text-center Парсер
-
-
-
+  = render 'images', f: f
+  = render 'main_settings', f: f
   .form-actions
-    = f.button :submit, (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-primary'
+    = f.submit (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-primary'
+- if @product.persisted?
+  = render 'filters_and_properties'
+  = render 'binding_and_parser'
