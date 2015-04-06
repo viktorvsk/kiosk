@@ -1,6 +1,6 @@
 
-= simple_form_for(@merchant, url: (@merchant.new_record? ? admin_vendor_merchants_path : admin_vendor_merchant_path(@merchant))) do |f|
-  = f.error_notification
+= form_for(@merchant, url: (@merchant.new_record? ? admin_vendor_merchants_path : admin_vendor_merchant_path(@merchant))) do |f|
+  =# f.error_notification
   .well.bs-component
     .row
       .col-sm-6

@@ -4,7 +4,6 @@
 
   if (productId) {
     product = $('li[data-product-id="' + productId + '"]');
-    console.log('HERE!');
     Kiosk.BindingManager.updateProduct(product);
   } else {
     <% if @vendor_product.reload.active? %>
@@ -13,8 +12,4 @@
      vendorProduct.addClass("inactive");
     <% end %>
   }
-
-
 }());
-
-
