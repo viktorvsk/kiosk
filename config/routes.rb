@@ -11,15 +11,37 @@ Rails.application.routes.draw do
     root 'vendor/merchants#index'
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
     delete 'binding/:vendor_product_id', to: 'binding#unbind'
+    namespace :autocomplete do
+      get :properties
+    end
     resources :products do
+      resources :product_properties, only: [:create, :update] do
+        member do
+          patch :update, to: 'properties#update_product_property', as: :update
+          delete :destroy, to: 'properties#destroy_product_property', as: :destroy
+        end
+        post :create, to: 'properties#create_product_property', on: :collection, as: :create
+
+      end
+      resources :properties, only: [:create, :destroy] do
+        collection do
+          patch :reorder_product
+        end
+      end
       get :search, on: :collection
       post :recount, on: :member
     end
     resources :categories,  except: [:show] do
-      resources :properties do
-        patch :reorder, on: :collection, to: 'categories#reorder'
-        post :reorder_all, on: :collection, to: 'categories#reorder_all'
-        delete :remove_property, on: :collection, to: 'categories#remove_property'
+      resources :properties, only: [] do
+        member do
+          delete :'destroy_category_property', as: :destroy
+        end
+        collection do
+          post :create_category_property, as: :create
+
+          patch :reorder_category
+          post :reorder_category_all
+        end
       end
     end
     resources :confs,       except: [:show]
