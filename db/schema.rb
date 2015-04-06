@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404182440) do
+ActiveRecord::Schema.define(version: 20150406211525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,7 +140,6 @@ ActiveRecord::Schema.define(version: 20150404182440) do
   add_index "catalog_products", ["catalog_brand_id"], name: "index_catalog_products_on_catalog_brand_id", using: :btree
   add_index "catalog_products", ["catalog_category_id"], name: "index_catalog_products_on_catalog_category_id", using: :btree
   add_index "catalog_products", ["fixed_price"], name: "index_catalog_products_on_fixed_price", using: :btree
-  add_index "catalog_products", ["model"], name: "index_catalog_products_on_model", unique: true, using: :btree
   add_index "catalog_products", ["name"], name: "index_catalog_products_on_name", using: :btree
   add_index "catalog_products", ["price"], name: "index_catalog_products_on_price", using: :btree
 
