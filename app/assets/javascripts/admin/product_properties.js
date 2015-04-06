@@ -1,18 +1,19 @@
 /*jslint browser:true*/
 (function () {
-  var containerSelector = '[data-sortable="category-properties"]';
+  var containerSelector = '[data-sortable="product-properties"]',
+    formInputSelector = containerSelector + ' form input';
 /*                              CONSTRUCTOR                                   */
-  function CategoryPropertyManager() {
+  function ProductPropertyManager() {
     var itemSelector = '[data-position]',
       delSelector = '[data-destroy-property]',
       newSelector = '#catalog_property_name',
       autocompletePath = '/admin/autocomplete/properties',
       that = this;
 
-    this.categoryId  = $(containerSelector).data('categoryId');
-    this.categoryURL = ['/admin/categories', this.categoryId].join('/');
-    this.reOderURL   = [this.categoryURL, 'properties/reorder_category'].join('/');
-    this.delURL      = [this.categoryURL, 'properties'].join('/');
+    this.productId  = $(containerSelector).data('productId');
+    this.productURL = ['/admin/products', this.productId].join('/');
+    this.reOderURL   = [this.productURL, 'properties/reorder_product'].join('/');
+    this.delURL      = [this.productURL, 'product_properties'].join('/');
     /*                              PRIVATE                                   */
 
     function reOrder(items) {
@@ -52,6 +53,9 @@
         }
       });
 
+      $(formInputSelector).on('change', function () {
+        $(this).closest('form').submit();
+      });
 
       $(delSelector).on('click', that.onDelete);
     };
@@ -66,7 +70,7 @@
     this.onDelete = function (event) {
       var id = $(this).data('destroy-property'),
         node = this,
-        url = [that.delURL, id, 'destroy_category_property'].join('/');
+        url = [that.delURL, id].join('/');
       $.ajax({
         url: url,
         method: 'DELETE',
@@ -77,11 +81,11 @@
   }
 /*                              EXPORTS                                       */
   window.Kiosk = window.Kiosk || {};
-  window.Kiosk.CategoryPropertyManager = new CategoryPropertyManager();
+  window.Kiosk.ProductPropertyManager = new ProductPropertyManager();
   $(document).ready(function () {
     if ($(containerSelector).size()) {
-      console.log('Initialized Category Properties Manager...');
-      window.Kiosk.CategoryPropertyManager.init();
+      console.log('Initialized Product Properties Manager...');
+      window.Kiosk.ProductPropertyManager.init();
     }
   });
 /*                              /EXPORTS                                      */

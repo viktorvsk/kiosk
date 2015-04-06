@@ -1,3 +1,4 @@
+/*jslint browser:true */
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -15,31 +16,18 @@
 //= require bootstrap
 //= require jquery-ui/ui/core
 //= require jquery-ui/ui/widget
+//= require jquery-ui/ui/position
+//= require jquery-ui/ui/menu
 //= require jquery-ui/ui/mouse
 //= require jquery-ui/ui/draggable
 //= require jquery-ui/ui/droppable
 //= require jquery-ui/ui/sortable
+
+//= require jquery-ui/ui/autocomplete
 //= require_tree ./admin
 //= require_self
 
 window.Kiosk = window.Kiosk || {};
-$(document).on('click', '[data-toggler]', function (event) {
-  var attr = $(this).data('toggler'),
-    selector = '[data-toggleable="' + attr + '"]',
-    $node = $(selector),
-    visible = $node.css('display') === 'block';
-  if (visible) {
-    $(this).text('Показать фильтры');
-  } else {
-    $(this).text('Скрыть фильтры');
-  }
-  $node.fadeToggle(100);
-  event.preventDefault();
-});
-
-$(document).on('ajax:beforeSend', '[data-remote="true"]', function () {
-  $('body').addClass('loading');
-});
-$(document).on('ajax:complete', '[data-remote="true"]', function () {
-  $('body').removeClass('loading');
-});
+$(document).on('click', '[data-toggler]', window.Kiosk.Common.toggler);
+$(document).on('ajaxSend', window.Kiosk.Common.startLoading);
+$(document).on('ajaxComplete', window.Kiosk.Common.finishLoading);
