@@ -1,22 +1,21 @@
-= simple_form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
-  .well
-    .row
+.well
+  .row
 
-      .col-xs-12
-        = f.error_notification
-      .col-sm-4
+    .col-sm-4
+      = form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
         %h3 Основное
-        .form-inputs
-          = field_for(f, :name)
-          = field_for(f, :tax_threshold)
-          = field_for(f, :tax)
-          = field_for(f, :tax_max)
-      .col-sm-4
-        %h3 Характеристики
-        = render 'admin/categories/properties', category_properties: f.object.category_properties
-      .col-sm-4
-        %h3 Фильтры
-        =# render 'admin/categories/properties', category_properties: f.object.category_properties
+        %ul.list-group
+          %li.list-group-item= field_for(f, :name)
+          %li.list-group-item= field_for(f, :tax_threshold)
+          %li.list-group-item= field_for(f, :tax)
+          %li.list-group-item= field_for(f, :tax_max)
+        .form-actions
+          = f.submit f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
+    .col-sm-4
+      %h3 Характеристики
+      = render 'admin/categories/properties', category_properties: @category.category_properties
 
-  .form-actions
-    = f.button :submit, f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
+    .col-sm-4
+      %h3 Фильтры
+
+

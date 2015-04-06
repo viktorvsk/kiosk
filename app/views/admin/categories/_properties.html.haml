@@ -1,3 +1,4 @@
 %ul.list-group{ 'data-sortable' => 'category-properties', 'data-category-id' => @category.id }
-  - category_properties.sort_by(&:position).each_with_index do |category_property, i|
-    = render 'admin/categories/property', property: category_property, position: i
+  = render partial: 'admin/categories/property', collection: category_properties.sort_by(&:position), as: :property
+%ul.list-group
+  = render 'admin/categories/new_property'
