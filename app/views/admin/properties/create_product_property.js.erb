@@ -1,0 +1,9 @@
+<% if @property.persisted? %>
+  (function (){
+    var partial = "<%= escape_javascript(render 'admin/products/property', property: @property) %>",
+      selector = window.Kiosk.ProductPropertyManager.getContainerSelector();
+    $(selector).append(partial);
+    window.Kiosk.ProductPropertyManager.init();
+
+  }());
+<% end %>

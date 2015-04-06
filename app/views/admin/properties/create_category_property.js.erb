@@ -1,0 +1,7 @@
+(function () {
+  var selector = window.Kiosk.CategoryPropertyManager.getContainerSelector(),
+    property = "<%= escape_javascript(render '/admin/categories/property', property: @property) %>";
+  $(selector).append(property);
+  window.Kiosk.CategoryPropertyManager.init();
+  window.Kiosk.CategoryPropertyManager.update();
+}());
