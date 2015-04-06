@@ -11,6 +11,12 @@ class Admin::Vendor::ProductsController < Admin::BaseController
     respond_to :js
   end
 
+  def update
+    @product = ::Vendor::Product.find(params[:id])
+    @product.update(product_params)
+    head 200
+  end
+
   def search
     @q_vendor_products = ::Vendor::Product.unbound.ransack(params[:q])
     @products = @q_vendor_products.result.order('updated_at DESC').page(params[:page])
@@ -21,6 +27,12 @@ class Admin::Vendor::ProductsController < Admin::BaseController
     @vendor_product.active? ? @vendor_product.deactivate : @vendor_product.activate
     @vendor_product.product.recount if @vendor_product.product
     # render text: @product.state.try(:name)
+  end
+
+  private
+
+  def product_params
+    params.require(:vendor_product).permit(:model)
   end
 
 end

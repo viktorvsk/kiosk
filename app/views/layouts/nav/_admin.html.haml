@@ -25,15 +25,13 @@
           %ul.dropdown-menu
             %li= link_to 'Товары', admin_products_path
             %li= link_to 'Категории', admin_categories_path
-            %li= link_to 'Характеристики', '#'
-            %li= link_to 'Фильтры', '#'
             %li= link_to 'Бренды', '#'
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-            Поставщики
+            Поставки
             %span.caret
           %ul.dropdown-menu
-            %li= link_to 'Прайсы', admin_vendor_merchants_path
+            %li= link_to 'Поставщики', admin_vendor_merchants_path
             %li= link_to 'Привязка', admin_vendor_products_path
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do

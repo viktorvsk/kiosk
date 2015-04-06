@@ -83,6 +83,19 @@ class Admin::ProductsController < Admin::BaseController
     head 200
   end
 
+  def search_marketplaces
+    @marketplaces = Catalog::Product.search_marketplaces_by_model(params[:model])
+  end
+
+  def create_from_marketplace
+    category = Catalog::Category.find(params[:category_id])
+    url = URI.decode params[:url]
+    model = URI.decode params[:model]
+    product = Catalog::Product.create_from_marketplace(url, category: category, model: model)
+    vendor_product = Vendor::Product.ransack(model_cont: model).result.bind_to(product)
+    head 200
+  end
+
   private
 
   def set_product

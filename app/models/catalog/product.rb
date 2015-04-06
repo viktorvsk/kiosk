@@ -1,15 +1,17 @@
 class Catalog::Product < ActiveRecord::Base
   # include Slugable
+  MARKETPLACES = %W(rozetka).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name
   validates :name, :category, presence: true
-  validates :model, :name, uniqueness: true
+  # validates :model, :name, uniqueness: true
   belongs_to :category, class_name: Catalog::Category,
                         foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :product_properties, class_name: Catalog::ProductProperty,
-                                foreign_key: :catalog_product_id
+                                foreign_key: :catalog_product_id,
+                                dependent: :destroy
   has_many :properties, through: :product_properties
   has_many :vendor_products, class_name: Vendor::Product,
                              dependent: :nullify,
@@ -20,6 +22,21 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
+
+    def create_from_marketplace(url, opts = {})
+      marketplace = MARKETPLACES.detect { |m| url =~ m::HOST }
+      raise StandardError, 'Unknown Marketplace' unless marketplace
+      params = marketplace.new(url).scrape.except(opts[:ignored_fields])
+      params[:category] = opts[:category] if opts[:category]
+      create(params)
+    end
+
+    def search_marketplaces_by_model(model)
+      MARKETPLACES.map do |m|
+        m.new(model).search
+      end.flatten
+    end
+
     def ransackable_scopes(auth_object = nil)
       if auth_object.try(:admin?)
         [:articul_cont]

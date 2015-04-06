@@ -14,6 +14,12 @@
     this.unbindClass          = 'unbind-vendor-product';
     this.spinnerClass         = 'glyphicon glyphicon-refresh fa-spin';
     this.activationClass      = '[data-activation-toggle]';
+    this.updateVendorModel    = 'form.edit_vendor_product input';
+    this.scrapeModal          = '#vendor-product-scraper-window';
+    this.searchMarketPath     = '/admin/products/search_marketplaces';
+    this.toScrapeSelector     = '[data-product-scraper]';
+    this.scrapeURL            = '/admin/products/create_from_marketplace';
+    this.modelSelector        = that.scrapeModal + ' h4'
 
     this.urlForBind = function (product, vendorProduct) {
       var url = ['/admin', 'binding', product, vendorProduct].join('/');
@@ -60,6 +66,46 @@
       $(that.vendorProduct).draggable(that.draggableConfig);
       $(that.product).droppable(that.droppableProductConfig);
       $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
+      $(document).on('click', that.toScrapeSelector, function (event) {
+        var url = $(this).data('url'),
+          category = $(this).closest('li').find('select').val(),
+          model = $(that.modelSelector).text();
+          console.log(model);
+        $.ajax({
+          url: that.scrapeURL,
+          method: 'POST',
+          data: {
+            category_id: category,
+            url: encodeURIComponent(url),
+            model: encodeURIComponent(model)
+          },
+          success: function () { $(that.scrapeModal).modal('hide'); }
+        });
+      });
+      $(document).ready(function () {
+        $(that.updateVendorModel).on('change', function () {
+          $(this).closest('form').submit();
+        });
+
+        $(that.scrapeModal).on('show.bs.modal', function (event) {
+          var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
+          $(this).find('h4').text(model);
+          $(this).find('.modal-body').text('...');
+        });
+
+        $(that.scrapeModal).on('shown.bs.modal', function (event) {
+          var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
+
+          $.ajax({
+            url: that.searchMarketPath,
+            method: 'GET',
+            type: 'script',
+            data: { model: encodeURIComponent(model) }
+          });
+
+
+        });
+      });
     };
 
     this.bind = function (product, vendorProduct) {
@@ -151,6 +197,8 @@
 
   window.Kiosk = window.Kiosk || {};
   window.Kiosk.BindingManager = new BindingManager();
+
+
 
 }());
 
