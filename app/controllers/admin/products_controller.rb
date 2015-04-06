@@ -5,7 +5,7 @@ class Admin::ProductsController < Admin::BaseController
   # GET /admin/products
   # GET /admin/products.json
   def index
-    @products = Catalog::Product.page(params[:page])
+    @products = Catalog::Product.includes(vendor_products: :product).page(params[:page])
   end
 
   def show

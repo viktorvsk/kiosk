@@ -4,7 +4,7 @@ class Admin::CategoriesController < Admin::BaseController
   # GET /admin/categories
   # GET /admin/categories.json
   def index
-    @categories = ::Catalog::Category.page(params[:page])
+    @categories = ::Catalog::Category.order(:name).page(params[:page])
   end
 
   # GET /admin/categories/new
@@ -52,25 +52,10 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
-  def reorder
-    @category = Catalog::Category.includes(:category_properties).find(params[:category_id])
-    @category.reorder(params[:properties])
-    head 200
-  end
-
-  def reorder_all
-    @category.reorder_all
-  end
-
-  def remove_property
-    @category.category_properties.find(params[:property_id]).destroy
-    head 200
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = ::Catalog::Category.includes(:properties).find(params[:id] || params[:category_id])
+      @category = ::Catalog::Category.includes(:properties).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
