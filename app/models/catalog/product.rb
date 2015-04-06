@@ -86,6 +86,14 @@ class Catalog::Product < ActiveRecord::Base
 
   end
 
+  def reorder(props)
+    product_properties.each do |property|
+      position = props[property.id.to_s].try(:fetch, 'position').to_i
+      property.position = position
+    end
+    self.save!
+  end
+
   def set_property(property_name, property_value)
     property_name, property_value = property_name.try(:strip), property_value.try(:strip)
 
