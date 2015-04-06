@@ -9,23 +9,21 @@ module SimpleFormHelper
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
     content_tag(:div, class: css_class) do
       f.label(attr_name) +
-      f.send(attr_type, attr_name, opts) +
-      f.error(attr_name)
+      f.send(attr_type, attr_name, opts)
     end
   end
 
-  def select_field_for(f, attr_name, opts = {})
-    opts[:input_html] ||= {}
-    if opts[:input_html][:class]
-      opts[:input_html][:class] << ' form-control'
+  def select_field_for(f, attr_name, collection, opts = {}, html = {})
+    if html[:class]
+      html[:class] << ' form-control'
     else
-      opts[:input_html][:class] = 'form-control'
+      html[:class] = 'form-control'
     end
     opts[:selected] = f.object.try(:send, attr_name)
+    html[:autocomplete] ||= :off
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
     content_tag(:div, class: css_class) do
-      f.send(:input, attr_name, opts) +
-      f.error(attr_name)
+      f.send(:select, attr_name, options_for_select(collection, f.object.try(attr_name).try(:name)), opts, html)
     end
   end
 

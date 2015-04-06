@@ -32,7 +32,6 @@ gem 'rails-settings-cached', '0.4.1'
 
 # Markup Helpers
 gem 'haml-rails'
-gem 'simple_form'
 
 # gem 'auto_html'
 # gem 'gretel'
@@ -114,7 +113,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'
-  
+
   gem 'quiet_assets'
   gem 'bullet'
   # Works bad with js.erb render
