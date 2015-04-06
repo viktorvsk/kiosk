@@ -15,21 +15,29 @@ Rails.application.routes.draw do
       get :properties
     end
     resources :products do
+      member do
+        post :recount
+      end
+      collection do
+        get :search
+        get :search_marketplaces
+        post :create_from_marketplace
+      end
       resources :product_properties, only: [:create, :update] do
         member do
           patch :update, to: 'properties#update_product_property', as: :update
           delete :destroy, to: 'properties#destroy_product_property', as: :destroy
         end
-        post :create, to: 'properties#create_product_property', on: :collection, as: :create
-
+        collection do
+          post :create, to: 'properties#create_product_property', as: :create
+        end
       end
       resources :properties, only: [:create, :destroy] do
         collection do
           patch :reorder_product
         end
       end
-      get :search, on: :collection
-      post :recount, on: :member
+
     end
     resources :categories,  except: [:show] do
       resources :properties, only: [] do
@@ -49,7 +57,7 @@ Rails.application.routes.draw do
     resources :orders,      except: [:show]
     resources :users,       except: [:show]
     namespace :vendor do
-      resources :products, only: [:index, :show] do
+      resources :products, only: [:index, :show, :update] do
         get :search, on: :collection
         post :toggle_activation, on: :member
       end

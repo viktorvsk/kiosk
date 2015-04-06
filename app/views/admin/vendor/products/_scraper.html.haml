@@ -1,0 +1,8 @@
+%span.col-xs-12.text-center{ 'data-vendor-scraper' => 'vendor-product' }
+  %hr/
+
+  = form_for product, url:  admin_vendor_product_path(product), remote: true do |f|
+    Модель:
+    = f.text_field :model, 'data-model' => true
+    = f.submit 'update', type: :hidden
+    = link_to 'Скачать', '#', class: 'btn btn-primary btn-xs', 'data-toggle' => 'modal', 'data-target' => '#vendor-product-scraper-window'
