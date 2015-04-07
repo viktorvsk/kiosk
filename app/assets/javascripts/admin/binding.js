@@ -88,26 +88,22 @@
           $(this).closest('form').submit();
         });
 
-        $(that.scrapeModal).on('show.bs.modal', function (event) {
-          var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
-          console.log(model + ' first');
-          $(this).find('h4').text(model);
-          $(this).find('.modal-body').text('...');
+        $(that.scrapeModal).on('hide.bs.modal', function () {
+          $(this).off('hide.bs.modal');
         });
 
-        $(that.scrapeModal).on('shown.bs.modal', function (event) {
+        $(that.scrapeModal).on('show.bs.modal', function (event) {
           var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
-          console.log(model + ' then');
-
+          $(this).find('h4').text(model);
+          $(this).find('.modal-body').text('...');
           $.ajax({
             url: that.searchMarketPath,
             method: 'GET',
             type: 'script',
             data: { model: encodeURIComponent(model) }
           });
-
-
         });
+
       });
     };
 
