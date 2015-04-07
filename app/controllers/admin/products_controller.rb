@@ -64,6 +64,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def search
+    params[:q].each_value do |v| v.strip! end
     @q = ::Catalog::Product.ransack(params[:q])
     @products = @q.result.order('updated_at DESC').page(params[:page])
   end

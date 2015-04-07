@@ -21,6 +21,36 @@
     this.scrapeURL            = '/admin/products/create_from_marketplace';
     this.modelSelector        = that.scrapeModal + ' h4'
 
+    this.createFromMarketPlace = function (event) {
+      var url = $(this).data('url'),
+        category = $(this).closest('li').find('select').val(),
+        model = $(that.modelSelector).text();
+        console.log(model);
+      $.ajax({
+        url: that.scrapeURL,
+        method: 'POST',
+        data: {
+          category_id: category,
+          url: encodeURIComponent(url),
+          model: encodeURIComponent(model)
+        },
+        success: function () { $(that.scrapeModal).modal('hide'); }
+      });
+    };
+
+    this.searchMarketPlace = function (event) {
+      var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
+      $(this).find('h4').text(model);
+      $(this).find('.modal-body').text('...');
+      $.ajax({
+        url: that.searchMarketPath,
+        method: 'GET',
+        type: 'script',
+        data: { model: encodeURIComponent(model) },
+        complete: function () { console.log('FUCK!') }
+      });
+    };
+
     this.urlForBind = function (product, vendorProduct) {
       var url = ['/admin', 'binding', product, vendorProduct].join('/');
       return url;
@@ -67,44 +97,14 @@
       $(that.product).droppable(that.droppableProductConfig);
       $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
 
-      $(document).on('click', that.toScrapeSelector, function (event) {
-        var url = $(this).data('url'),
-          category = $(this).closest('li').find('select').val(),
-          model = $(that.modelSelector).text();
-          console.log(model);
-        $.ajax({
-          url: that.scrapeURL,
-          method: 'POST',
-          data: {
-            category_id: category,
-            url: encodeURIComponent(url),
-            model: encodeURIComponent(model)
-          },
-          success: function () { $(that.scrapeModal).modal('hide'); }
-        });
-      });
-      $(document).ready(function () {
-        $(that.updateVendorModel).on('change', function () {
-          $(this).closest('form').submit();
-        });
+      $(document).off('click', that.toScrapeSelector, that.createFromMarketPlace);
+      $(document).off('show.bs.modal', that.scrapeModal, that.searchMarketPlace);
+      $(document).off('change', that.updateVendorModel, function () { $(this).closest('form').submit(); });
 
-        $(that.scrapeModal).on('hide.bs.modal', function () {
-          $(this).off('hide.bs.modal');
-        });
+      $(document).on('click', that.toScrapeSelector, that.createFromMarketPlace);
+      $(document).on('show.bs.modal', that.scrapeModal, that.searchMarketPlace);
+      $(document).on('change', that.updateVendorModel, function () { $(this).closest('form').submit(); });
 
-        $(that.scrapeModal).on('show.bs.modal', function (event) {
-          var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
-          $(this).find('h4').text(model);
-          $(this).find('.modal-body').text('...');
-          $.ajax({
-            url: that.searchMarketPath,
-            method: 'GET',
-            type: 'script',
-            data: { model: encodeURIComponent(model) }
-          });
-        });
-
-      });
     };
 
     this.bind = function (product, vendorProduct) {

@@ -35,7 +35,7 @@ class HotlineMarketplace < BasicMarketplace
     end.compact
     {
       name: page.at_css('h1.title-main').text.strip,
-      description: page.at_css('.description').inner_html.strip,
+      description: page.at_css('.description').try(:inner_html).to_s.strip,
       images: page.css('.hl-gallery-item').map { |i| full_url(i['src']) },
       properties: properties,
       category: page.at_css('.good-type').text.strip
