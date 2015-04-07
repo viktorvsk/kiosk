@@ -1,5 +1,6 @@
 (function () {
   var partial = "<%= escape_javascript(render 'admin/products/marketplaces', marketplaces: @marketplaces) %>",
     selector = '#vendor-product-scraper-window .modal-body';
+  console.log(selector);
   $(selector).html(partial);
 }());

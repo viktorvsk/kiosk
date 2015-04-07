@@ -66,6 +66,7 @@
       $(that.vendorProduct).draggable(that.draggableConfig);
       $(that.product).droppable(that.droppableProductConfig);
       $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
+
       $(document).on('click', that.toScrapeSelector, function (event) {
         var url = $(this).data('url'),
           category = $(this).closest('li').find('select').val(),
@@ -89,12 +90,14 @@
 
         $(that.scrapeModal).on('show.bs.modal', function (event) {
           var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
+          console.log(model + ' first');
           $(this).find('h4').text(model);
           $(this).find('.modal-body').text('...');
         });
 
         $(that.scrapeModal).on('shown.bs.modal', function (event) {
           var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
+          console.log(model + ' then');
 
           $.ajax({
             url: that.searchMarketPath,

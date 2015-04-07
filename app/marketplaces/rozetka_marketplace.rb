@@ -13,12 +13,17 @@ class RozetkaMarketplace < BasicMarketplace
   end
 
   def search_results_mapper(product)
-    {
+    res = {
       name: product.at_css('.g-i-list-title a').text.strip,
       url: product.at_css('.g-i-list-title a')['href'],
-      price: product.at_css('.g-price-uah').text.scan(/\d/).join.to_i,
       image: product.at_css('.g-i-list-img img')['src']
     }
+    res[:price] = if node = product.at_css('.g-price-uah') && node.present?
+      node.text.scan(/\d/).join.to_i
+    else
+      'Нет в наличии'
+    end
+    res
   end
 
   def product_page_scraper(page)
