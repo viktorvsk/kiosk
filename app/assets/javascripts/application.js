@@ -22,6 +22,7 @@
 //= require jquery-ui/ui/draggable
 //= require jquery-ui/ui/droppable
 //= require jquery-ui/ui/sortable
+//= require ckeditor/init
 
 //= require jquery-ui/ui/autocomplete
 //= require_tree ./admin

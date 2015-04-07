@@ -37,7 +37,7 @@ gem 'haml-rails'
 # gem 'gretel'
 
 # Assets
-# gem 'ckeditor'
+gem 'ckeditor'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 # gem 'ace-rails-ap'
@@ -65,8 +65,8 @@ gem 'dullard', github: 'ablebeam/dullard'
 gem 'active_pricelist', github: 'ablebeam/active_pricelist'
 
 # Images
-# gem 'mini_magick'
-# gem 'carrierwave'
+gem 'mini_magick'
+gem 'carrierwave'
 
 # gem 'file_browser'
 
