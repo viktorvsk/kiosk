@@ -4,7 +4,7 @@ require 'open-uri'
 class BasicMarketplace
   attr_reader :products
   def initialize(query)
-    @query = query
+    @query = URI.encode URI.decode query
   end
 
   def search

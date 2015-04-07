@@ -18,7 +18,7 @@ class RozetkaMarketplace < BasicMarketplace
       url: product.at_css('.g-i-list-title a')['href'],
       image: product.at_css('.g-i-list-img img')['src']
     }
-    res[:price] = if node = product.at_css('.g-price-uah') && node.present?
+    res[:price] = if (node = product.at_css('.g-price-uah')) && node.present?
       node.text.scan(/\d/).join.to_i
     else
       'Нет в наличии'

@@ -86,6 +86,7 @@ module Vendor
 
       def bind_to(catalog_product)
         all.update_all(catalog_product_id: catalog_product)
+        catalog_product.recount
       end
 
       def select_rrc
@@ -95,6 +96,7 @@ module Vendor
 
     def bind_to(catalog_product)
       update!(product: catalog_product)
+      catalog_product.recount
     end
 
     def deactivate

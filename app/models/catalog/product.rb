@@ -1,6 +1,6 @@
 class Catalog::Product < ActiveRecord::Base
   # include Slugable
-  MARKETPLACES = %W(rozetka).map{ |m| "#{m}Marketplace".classify.constantize }
+  MARKETPLACES = %W(rozetka hotline).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name
@@ -28,6 +28,7 @@ class Catalog::Product < ActiveRecord::Base
       raise StandardError, 'Unknown Marketplace' unless marketplace
       params = marketplace.new(url).scrape.except(opts[:ignored_fields])
       params[:category] = opts[:category] if opts[:category]
+      params[:model] = opts[:model] if opts[:model]
       create(params)
     end
 

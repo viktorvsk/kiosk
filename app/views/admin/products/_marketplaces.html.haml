@@ -6,10 +6,13 @@
           = link_to marketplace[:url] do
             = image_tag marketplace[:image], class: 'img-responsive'
         .col-sm-8
+          .pull-right
+            .label.label-info= URI.parse(marketplace[:url]).host
           = link_to marketplace[:name], marketplace[:url]
           %br/
           = marketplace[:price]
           грн.
+
           %hr/
           .col-sm-6
             = select_tag :category, options_for_select(Catalog::Category.all.map { |c| [c.name, c.id] }), class: 'form-control'
