@@ -23,6 +23,7 @@ module SimpleFormHelper
     html[:autocomplete] ||= :off
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
     content_tag(:div, class: css_class) do
+      f.label(attr_name) +
       f.send(:select, attr_name, options_for_select(collection, f.object.try(attr_name).try(:name)), opts, html)
     end
   end
