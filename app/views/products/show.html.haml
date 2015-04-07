@@ -6,13 +6,38 @@
     = @product.name
     %small
       = @product.category.try(:name)
-      ,
-      = @product.brand.try(:name)
+      - if @product.brand
+        ,
+        = @product.brand.name
 
 %dl.dl-horizontal
 
-= @product.description.try(:html_safe)
-Модель:
-= @product.model
-Цена:
-= @product.price
+.row
+  .col-sm-3
+    = render 'aside'
+  .col-sm-9
+    .jumbotron
+      .pull-right
+        Артикул:
+        %b= @product.id
+      - if @product.price.to_i > 0
+        Цена:
+        = @product.price
+      - else
+        %b Нет в наличии
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
+      %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
+      %li= link_to 'Отзывы', '#comments', 'data-toggle' => 'tab'
+      %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
+
+    .tab-content
+      #properties.tab-pane.active.fade.in
+        .jumbotrons= render 'product_properties', product_properties: @product.product_properties
+      #description.tab-pane.fade
+        .jumbotron
+          - if @product.video.present?
+            = @product.video
+          = @product.description.try(:html_safe)
+      #comments.tab-pane.fade
+      #accessories.tab-pane.fade

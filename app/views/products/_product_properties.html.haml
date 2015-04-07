@@ -1,0 +1,7 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Характеристика
+      %th Значение
+  %tbody
+    = render partial: 'product_property', collection: product_properties.sort_by(&:position), as: :product_property

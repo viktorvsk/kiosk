@@ -1,0 +1,26 @@
+- if current_user.admin?
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Информация о поставщиках
+    .panel-body
+      = render partial: 'admin/vendor/products/product', collection: @product.vendor_products, as: :product
+  .panel.panel-default
+    .panel-heading
+      .panel-title Цены конкурентов
+    .panel-body
+      &nbsp;
+.panel.panel-primary
+  .panel-heading
+    .panel-title Режим работы
+  .panel-body
+    &nbsp;
+.panel.panel-primary
+  .panel-heading
+    .panel-title Телефоны
+  .panel-body
+    &nbsp;
+.panel.panel-primary
+  .panel-heading
+    .panel-title Мы вконтакте
+  .panel-body
+    &nbsp;
