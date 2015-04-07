@@ -1,203 +1,186 @@
 /*jslint browser: true */
 
 (function () {
+
+  var vendorProduct      = '[data-draggable="vendorProduct"]',
+    productDroppable     = '[data-droppable="product"]',
+    vendorProductsTable  = '[data-droppable="vendorProductsTable"]',
+    productsTable        = '[data-catalog-products]',
+    dataVendorProductId  = 'vendor-product-id',
+    dataProductId        =  'product-id',
+    bindClass            = 'bind-to-product',
+    unbindClass          = 'unbind-vendor-product',
+    spinnerClass         = 'glyphicon glyphicon-refresh fa-spin',
+    // activationClass      = '[data-activation-toggle]',
+    updateVendorModel    = 'form.edit_vendor_product input',
+    scrapeModal          = '#vendor-product-scraper-window',
+    searchMarketPath     = '/admin/products/search_marketplaces',
+    toScrapeSelector     = '[data-product-scraper]',
+    scrapeURL            = '/admin/products/create_from_marketplace',
+    modelSelector        = scrapeModal + ' h4',
+    draggableConfig = {
+      revert: 'invalid',
+      cancel: 'span'
+    };
+
   function BindingManager() {
-    var that = this;
+    var that = this,
+      droppableProductConfig = {
+        hoverClass: bindClass,
+        cursorAt: { top: -5, left: -5 },
+        drop: onBind
+      },
+      droppableVendorProductConfig = {
+        hoverClass: unbindClass,
+        drop: onUnbind,
+        accept: productsTable + ' ' + 'li'
+      };
 
-    this.vendorProduct        = '[data-draggable="vendorProduct"]';
-    this.product              = '[data-droppable="product"]';
-    this.vendorProductsTable  = '[data-droppable="vendorProductsTable"]';
-    this.productsTable        = '[data-catalog-products]';
-    this.dataVendorProductId  = 'vendor-product-id';
-    this.dataProductId        =  'product-id';
-    this.bindClass            = 'bind-to-product';
-    this.unbindClass          = 'unbind-vendor-product';
-    this.spinnerClass         = 'glyphicon glyphicon-refresh fa-spin';
-    this.activationClass      = '[data-activation-toggle]';
-    this.updateVendorModel    = 'form.edit_vendor_product input';
-    this.scrapeModal          = '#vendor-product-scraper-window';
-    this.searchMarketPath     = '/admin/products/search_marketplaces';
-    this.toScrapeSelector     = '[data-product-scraper]';
-    this.scrapeURL            = '/admin/products/create_from_marketplace';
-    this.modelSelector        = that.scrapeModal + ' h4'
-
-    this.createFromMarketPlace = function (event) {
+    function createFromMarketPlace(event) {
       var url = $(this).data('url'),
         category = $(this).closest('li').find('select').val(),
-        model = $(that.modelSelector).text();
-        console.log(model);
+        model = $(modelSelector).text();
       $.ajax({
-        url: that.scrapeURL,
+        url: scrapeURL,
         method: 'POST',
         data: {
           category_id: category,
           url: encodeURIComponent(url),
           model: encodeURIComponent(model)
         },
-        success: function () { $(that.scrapeModal).modal('hide'); }
+        success: function () { $(scrapeModal).modal('hide'); }
       });
-    };
+      event.preventDefault();
+    }
 
-    this.searchMarketPlace = function (event) {
+    function searchMarketPlace(event) {
       var model = $(event.relatedTarget).closest('form').find('[data-model]').val();
       $(this).find('h4').text(model);
       $(this).find('.modal-body').text('...');
       $.ajax({
-        url: that.searchMarketPath,
+        url: searchMarketPath,
         method: 'GET',
         type: 'script',
-        data: { model: encodeURIComponent(model) },
-        complete: function () { console.log('FUCK!') }
+        data: { model: encodeURIComponent(model) }
       });
-    };
+    }
 
-    this.urlForBind = function (product, vendorProduct) {
+    function urlForBind(product, vendorProduct) {
       var url = ['/admin', 'binding', product, vendorProduct].join('/');
       return url;
-    };
+    }
 
-    this.urlForUnbind = function (vendorProduct) {
+    function urlForUnbind(vendorProduct) {
       var url = ['/admin', 'binding', vendorProduct].join('/');
       return url;
-    };
+    }
 
-    this.urlForRecountProduct = function (id) {
+    function urlForRecountProduct(id) {
       var url = ['/admin', 'products', id, 'recount'].join('/');
       return url;
-    };
+    }
 
-    this.urlForUpdateProduct = function (id) {
+    function urlForUpdateProduct(id) {
       var url = ['/admin', 'products', id].join('/');
       return url;
-    };
+    }
 
-    this.updateProduct = function (product) {
-      var spinner = $('<i/>').addClass(that.spinnerClass),
-        id = product.data(that.dataProductId),
-        url = that.urlForUpdateProduct(id);
-      product
-        .prepend(spinner)
-        .droppable('disable');
-      $.get(url, function (data) {
-
-
-        product.replaceWith(data);
-        that.init();
-      });
-
-    };
-
-    this.bindFromProduct = function (vendorProduct) {
+    function bindFromProduct(vendorProduct) {
       var id = vendorProduct.parent().data('product-id');
       return typeof id == 'undefined' ? false : true;
-    };
+    }
 
-    this.init = function () {
-      $(that.vendorProduct).draggable(that.draggableConfig);
-      $(that.product).droppable(that.droppableProductConfig);
-      $(that.vendorProductsTable).droppable(that.droppableVendorProductConfig);
-
-      $(document).off('click', that.toScrapeSelector, that.createFromMarketPlace);
-      $(document).off('show.bs.modal', that.scrapeModal, that.searchMarketPlace);
-      $(document).off('change', that.updateVendorModel, function () { $(this).closest('form').submit(); });
-
-      $(document).on('click', that.toScrapeSelector, that.createFromMarketPlace);
-      $(document).on('show.bs.modal', that.scrapeModal, that.searchMarketPlace);
-      $(document).on('change', that.updateVendorModel, function () { $(this).closest('form').submit(); });
-
-    };
-
-    this.bind = function (product, vendorProduct) {
-      var url = that.urlForBind(product.data(that.dataProductId), vendorProduct.data(that.dataVendorProductId)),
-        oldProduct = that.productFor(vendorProduct);
+    function bind(product, vendorProduct) {
+      var url = urlForBind(product.data(dataProductId), vendorProduct.data(dataVendorProductId)),
+        oldProduct = productFor(vendorProduct);
 
       $.post(url, function (data) {
-        if (that.bindFromProduct(vendorProduct)) {
-
-          that.recountProduct(oldProduct);
+        if (bindFromProduct(vendorProduct)) {
+          recountProduct(oldProduct);
         }
-
+        console.log(data);
         that.updateProduct(product);
       });
 
-    };
+    }
 
-    this.productFor = function (vendorProduct) {
+    function productFor(vendorProduct) {
       var id = vendorProduct.parent().data('product-id'),
         product = $('li[data-product-id="' + id + '"]');
       return product;
-    };
+    }
 
-    this.unbind = function (product, vendorProduct) {
-
-      var url = that.urlForUnbind(vendorProduct);
+    function unbind(product, vendorProduct) {
+      var url = urlForUnbind(vendorProduct);
       $.ajax({
         url: url,
         type: 'DELETE',
         success: function (data) {
-
           that.updateProduct(product);
+          console.log(data);
         }
       });
-    };
+    }
 
-    this.recountProduct = function (product) {
+    function recountProduct(product) {
       if (!product || !product.size()) {
         return;
       }
-      var id = product.data(that.dataProductId),
-        url = that.urlForRecountProduct(id);
+      var id = product.data(dataProductId),
+        url = urlForRecountProduct(id);
       $.post(url, function () {
 
         that.updateProduct(product);
       });
-    };
+    }
 
-    this.onUnbind = function (event, ui) {
-
+    function onUnbind(event, ui) {
+      console.log(event);
       var $vendorProductNode = $(ui.draggable),
-        vendorProductId = $vendorProductNode.data(that.dataVendorProductId),
-        $product = that.productFor($vendorProductNode);
-      that.unbind($product, vendorProductId);
+        vendorProductId = $vendorProductNode.data(dataVendorProductId),
+        $product = productFor($vendorProductNode);
+      unbind($product, vendorProductId);
       $vendorProductNode
         .css({ top: 0, left: 0, right: 0, bottom: 0, width: 'auto' })
-        .prependTo($(that.vendorProductsTable));
+        .prependTo($(vendorProductsTable));
       that.init();
-    };
+    }
 
-    this.onBind = function (event, ui) {
+    function onBind(event, ui) {
       var $productNode      = $(this),
         $vendorProductNode  = $(ui.draggable);
 
-      that.bind($productNode, $vendorProductNode);
+      bind($productNode, $vendorProductNode);
       $vendorProductNode.appendTo($productNode.find('ul'));
-      //$vendorProductNode.remove();
+      console.log(event);
       that.init();
+    }
+
+    this.updateProduct = function (product) {
+      var spinner = $('<i/>').addClass(spinnerClass),
+        id = product.data(dataProductId),
+        url = urlForUpdateProduct(id);
+      product
+        .prepend(spinner)
+        .droppable('disable');
+      $.get(url, function (data) {
+        product.replaceWith(data);
+        that.init();
+      });
     };
 
-    this.draggableConfig = {
-      revert: 'invalid',
-      cancel: 'span'
+    this.init = function () {
+      $(vendorProduct).draggable(draggableConfig);
+      $(productDroppable).droppable(droppableProductConfig);
+      $(vendorProductsTable).droppable(droppableVendorProductConfig);
     };
 
-    this.droppableProductConfig = {
-      hoverClass: that.bindClass,
-      cursorAt: { top: -5, left: -5 },
-      drop: that.onBind
-    };
-
-    this.droppableVendorProductConfig = {
-      hoverClass: that.unbindClass,
-      drop: that.onUnbind,
-      accept: that.productsTable + ' ' + 'li'
-    };
-
+    $(document).on('click', toScrapeSelector, createFromMarketPlace);
+    $(document).on('show.bs.modal', scrapeModal, searchMarketPlace);
+    $(document).on('change', updateVendorModel, function () { $(this).closest('form').submit(); });
   }
 
   window.Kiosk = window.Kiosk || {};
   window.Kiosk.BindingManager = new BindingManager();
 
-
-
 }());
-
