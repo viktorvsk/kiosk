@@ -31,11 +31,11 @@ body.loading{
   left: 50%;
   margin-left: -100px;
   background: #19B5FE;
-  z-index: 1000;
+  z-index: 999999999999999999;
   opacity: 0.88;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  box-shadow: 1px 5px 17px #86E2D5;
+  box-shadow: 0px 5px 10px #777;
 }
 
 .spinner {
@@ -82,3 +82,8 @@ body.loading{
     -webkit-transform: scale(1.0);
   }
 }
+
+.modal-backdrop {
+  z-index: -1!important;
+}
+
