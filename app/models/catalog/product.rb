@@ -3,7 +3,8 @@ class Catalog::Product < ActiveRecord::Base
   MARKETPLACES = %W(rozetka hotline).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
-                        :old_price, :main_name
+                        :old_price, :main_name,
+                        :url
   validates :name, :category, presence: true
   # validates :model, :name, uniqueness: true
   belongs_to :category, class_name: Catalog::Category,

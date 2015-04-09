@@ -37,7 +37,8 @@ class RozetkaMarketplace < BasicMarketplace
       description: page.at_css('#short_text').inner_html.strip,
       images: page.css('.detail-img-thumbs-l-i-link').map { |a| a['href'] },
       properties: properties,
-      category: page.at_css('.producers h2').text.strip
+      category: page.at_css('.producers h2').text.strip,
+      url: @query
     }
   end
 end
