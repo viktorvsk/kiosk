@@ -15,9 +15,9 @@ module SimpleFormHelper
 
   def select_field_for(f, attr_name, collection, opts = {}, html = {})
     if html[:class]
-      html[:class] << ' form-control'
+      html[:class] << ' form-control select2'
     else
-      html[:class] = 'form-control'
+      html[:class] = 'form-control select2'
     end
     html[:autocomplete] ||= :off
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
@@ -29,7 +29,6 @@ module SimpleFormHelper
       f.object.send(attr_name)
     end
     content_tag(:div, class: css_class) do
-
       f.label(attr_name) +
       f.send(:select, attr_name, options_for_select(collection, selected: selected), opts, html)
     end

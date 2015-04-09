@@ -25,6 +25,8 @@
 //= require ckeditor/init
 
 //= require jquery-ui/ui/autocomplete
+//= require select2
+//= require select2_locale_ru
 //= require_tree ./admin
 //= require_self
 

@@ -1,16 +1,21 @@
 %li.panel.panel-default{ 'data-droppable' => 'product', 'data-product-id' => product.id }
   .panel-heading
     %small.panel-title
+      .row
+        .col-xs-12
+          .pull-left
+            - if product.price.present?
+              %small.label.label-info
+                %b= product.price
+                грн.
+            &nbsp;
+            %small.label.label-info= product.id
+          .pull-right
+            = link_to product_path(product), target: :_blank, class: 'btn btn-xs btn-primary' do
+              %i.glyphicon.glyphicon-new-window
+            = link_to admin_product_path(product), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?', remote: true do
+              %i.glyphicon.glyphicon-remove
       %i= product.name
-      %br/
-      = link_to 'Открыть', product_path(product)
-      Артикул:
-      = product.id
-      - if product.price.present?
-        %b
-          Цена:
-          = product.price
-          грн.
   .panel-body
 
     %ul.list-group{ 'data-product-id' => product.id }

@@ -1,14 +1,18 @@
 - inactive = !product.active? or !product.in_stock?
 %li.list-group-item.col-xs-12{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
 
-  = link_to '×', toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true', class: 'unselectable'
-  %span.col-xs-12.text-center
-    %b= product.name
-
-
-  %span.col-sm-6.text-left
-    = render 'admin/vendor/products/info', product: product
-
-  %span.col-sm-6.text-left
-    = render 'admin/vendor/products/additional_info', product: product
-  = render 'admin/vendor/products/scraper', product: product
+  .col-xs-2
+    %a.btn.btn-xs.btn-success
+      %i.glyphicon.glyphicon-menu-hamburger
+  %span
+    .col-xs-2.col-xs-offset-8.text-right
+      = link_to toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true', class: 'unselectable btn btn-xs btn-default' do
+        %i.glyphicon.glyphicon-remove
+  %span
+    .col-xs-12.text-center
+      %b= product.name
+    .col-sm-6.text-left
+      = render 'admin/vendor/products/info', product: product
+    .col-sm-6.text-left
+      = render 'admin/vendor/products/additional_info', product: product
+    = render 'admin/vendor/products/scraper', product: product

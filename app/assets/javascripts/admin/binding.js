@@ -161,7 +161,9 @@
         id = product.data(dataProductId),
         url = urlForUpdateProduct(id);
       product
-        .prepend(spinner)
+        .find('.panel-heading')
+        .prepend(spinner);
+      product
         .droppable('disable');
       $.get(url, function (data) {
         product.replaceWith(data);

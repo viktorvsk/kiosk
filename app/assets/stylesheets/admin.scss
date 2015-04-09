@@ -2,6 +2,8 @@
 *= require_tree ./admin
 *= require_tree ./helpers
 *= require jquery-ui/themes/ui-darkness/jquery-ui
+*= require select2
+*= require select2-bootstrap
 */
 body{
   padding: 0;
@@ -85,6 +87,6 @@ body.loading{
 
 .modal-backdrop {
   z-index: -1!important;
-  display: none;
+  // display: none;
 }
 

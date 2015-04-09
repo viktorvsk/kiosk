@@ -40,6 +40,7 @@ gem 'haml-rails'
 gem 'ckeditor'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
+gem "select2-rails"
 # gem 'ace-rails-ap'
 # gem 'jquery-ui-rails'
 # gem 'select2-rails'

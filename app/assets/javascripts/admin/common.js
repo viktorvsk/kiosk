@@ -33,4 +33,7 @@
 
   window.Kiosk = window.Kiosk || {};
   window.Kiosk.Common = new Common();
+  $(document).ready(function () {
+    $('.select2').select2();
+  });
 }());

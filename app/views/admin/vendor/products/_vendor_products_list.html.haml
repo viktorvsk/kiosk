@@ -9,15 +9,15 @@
         .col-sm-4
           .form-group
             = f.label :vendor_merchant_id_eq, 'Поставщик'
-            = f.collection_select(:vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все' }, class: 'form-control')
+            = f.collection_select(:vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все' }, class: 'form-control select2')
         .col-sm-4
           .form-group
             = f.label :is_rrc_eq, 'RRC'
-            = f.select(:is_rrc_eq, [['да', true], ['нет', false]], { include_blank: 'Все' }, class: 'form-control')
+            = f.select(:is_rrc_eq, [['да', true], ['нет', false]], { include_blank: 'Все' }, class: 'form-control select2')
         .col-sm-4
           .form-group
             = f.label :in_stock_eq, 'Наличие'
-            = f.select(:in_stock_eq, [['да', true], ['нет', false]], { include_blank: 'Все' }, class: 'form-control')
+            = f.select(:in_stock_eq, [['да', true], ['нет', false]], { include_blank: 'Все' }, class: 'form-control select2')
         .col-sm-3
           .form-group
             = f.label :price_gteq, 'Цена от'

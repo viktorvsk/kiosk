@@ -71,6 +71,7 @@ class Admin::ProductsController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to admin_products_url, notice: 'Товар успешно удален.' }
       format.json { head :no_content }
+      format.js
     end
   end
 

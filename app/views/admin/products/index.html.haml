@@ -1,34 +1,37 @@
-.jumbotron.row
+.jumbotron
   = search_form_for @q, url: search_admin_products_path do |f|
     .row
       .col-sm-8.col-sm-offset-2.text-center
         .input-group
           = f.search_field :name_or_id_or_model_cont, class: 'form-control', placeholder: 'Название, модель или артикул'
           .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
-.row
-  .page-header
-    = link_to new_admin_product_path, :class => 'btn btn-primary' do
-      %span.glyphicon.glyphicon-plus
-      Новый товар
-    %h1 Товары
-.row
-  .table-responsive
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
+
+.page-header
+  = link_to new_admin_product_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новый товар
+  %h1 Товары
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Артикул
+        %th Наименование
+        %th Цена
+    %tbody
+      - @products.each do |product|
         %tr
-          %th Артикул
-          %th Наименование
-          %th Цена
-      %tbody
-        - @products.each do |product|
-          %tr
-            %td
-              = product.id
-            %td
-              = link_to product.name, edit_admin_product_path(product)
-            %td
-              = product.price
-      %tfoot
-        %tr
-          %td.text-center{ colspan: 2 }
-            = paginate @products
+          %td
+            = product.id
+          %td
+            = link_to product.name, edit_admin_product_path(product)
+          %td
+            = product.price
+          %td.text-center
+            = link_to admin_product_path(product), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?' do
+              %i.glyphicon.glyphicon-remove
+    %tfoot
+      %tr
+        %td.text-center{ colspan: 2 }
+          = paginate @products

@@ -35,12 +35,12 @@ ru:
       vendor/merchant:
         name: Название
         discount: Скидка
-        encoding: Кодировка прайса
+        encoding: Кодировка
         format: Формат прайса
         description: Описание
         f_start: Первое поле
         f_model: Модель
-        f_code: Код по поставщику
+        f_code: Код поставщика
         f_name: Название
         f_usd: Доллар
         f_uah: Гривна
