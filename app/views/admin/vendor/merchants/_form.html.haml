@@ -10,8 +10,8 @@
             .col-sm-3= field_for(f, :name)
             .col-sm-3= field_for(f, :discount, :number_field)
             .col-sm-3= field_for(f, :email, :email_field)
-            .col-sm-3= select_field_for(f, :encoding, collection: ['UTF-8', 'Windows-1251'])
-            .col-sm-3= select_field_for(f, :format, collection: %w(xlsx xls xml csv))
+            .col-sm-3= select_field_for(f, :encoding,['UTF-8', 'Windows-1251'])
+            .col-sm-3= select_field_for(f, :format, %w(xlsx xls xml csv))
             .col-sm-9= field_for(f, :description, :text_area)
       .col-sm-6
         = field_set_tag do
@@ -41,7 +41,7 @@
       .col-sm-6
         = field_set_tag do
           %legend Настройки рассчета
-          .col-sm-6= select_field_for(f, :parser_class, collection: @custom_merchants)
+          .col-sm-6= select_field_for(f, :parser_class, @custom_merchants)
           .col-sm-6= field_for(f, :required)
           .col-sm-6= field_for(f, :currency_rates)
           .col-sm-6= field_for(f, :currency_order)

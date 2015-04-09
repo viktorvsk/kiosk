@@ -8,7 +8,7 @@
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-inputs">
         <%= field_for f, :email %>
-        <%= field_for f, :password %>
+        <%= field_for f, :password, :password_field %>
         <% f.check_box :remember_me if devise_mapping.rememberable? %>
       </div>
 
