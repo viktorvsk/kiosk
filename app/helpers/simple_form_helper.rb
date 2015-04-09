@@ -19,12 +19,19 @@ module SimpleFormHelper
     else
       html[:class] = 'form-control'
     end
-    opts[:selected] = f.object.try(:send, attr_name)
     html[:autocomplete] ||= :off
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
+    selected = if opts[:selected]
+      opts[:selected]
+    elsif association_name = f.object.try(attr_name).try(:name)
+      association_name
+    else
+      f.object.send(attr_name)
+    end
     content_tag(:div, class: css_class) do
+
       f.label(attr_name) +
-      f.send(:select, attr_name, options_for_select(collection, f.object.try(attr_name).try(:name)), opts, html)
+      f.send(:select, attr_name, options_for_select(collection, selected: selected), opts, html)
     end
   end
 
