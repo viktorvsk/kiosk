@@ -21,6 +21,7 @@ class RozetkaMarketplace < BasicMarketplace
     res[:price] = if (node = product.at_css('.g-price-uah')) && node.present?
       node.text.scan(/\d/).join.to_i
     else
+      res[:do_not_show] = true
       'Нет в наличии'
     end
     res

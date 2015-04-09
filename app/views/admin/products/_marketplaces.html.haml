@@ -1,20 +1,25 @@
 %ul.list-group
   - marketplaces.each do |marketplace|
-    %li.list-group-item
-      .row
-        .col-sm-4
-          = link_to marketplace[:url] do
-            = image_tag marketplace[:image], class: 'img-responsive'
-        .col-sm-8
-          .pull-right
-            .label.label-info= URI.parse(marketplace[:url]).host
-          = link_to marketplace[:name], marketplace[:url]
-          %br/
-          = marketplace[:price]
-          грн.
+    - if marketplace[:do_not_show]
+      Не в наличии из источника
+      .pull-right
+        .label.label-info= URI.parse(marketplace[:url]).host
+    - else
+      %li.list-group-item
+        .row
+          .col-sm-4
+            = link_to marketplace[:url] do
+              = image_tag marketplace[:image], class: 'img-responsive'
+          .col-sm-8
+            .pull-right
+              .label.label-info= URI.parse(marketplace[:url]).host
+            = link_to marketplace[:name], marketplace[:url]
+            %br/
+            = marketplace[:price]
+            грн.
 
-          %hr/
-          .col-sm-6
-            = select_tag :category, options_for_select(Catalog::Category.all.map { |c| [c.name, c.id] }), class: 'form-control'
-          .col-sm-6
-            = link_to 'Добавить в каталог', '#', class: 'btn btn-primary', 'data-product-scraper' => true, 'data-url' => marketplace[:url]
+            %hr/
+            .col-sm-6
+              = select_tag :category, options_for_select(Catalog::Category.all.map { |c| [c.name, c.id] }), class: 'form-control'
+            .col-sm-6
+              = link_to 'Добавить в каталог', '#', class: 'btn btn-primary', 'data-product-scraper' => true, 'data-url' => marketplace[:url]
