@@ -13,7 +13,7 @@ set :domain,      'vvsk@terenkur.com'
 set :application, 'kiosk'
 set :server_name, 'kiosk.evotex.kh.ua'
 set :deploy_to,   '/home/vvsk/kiosk'
-set :repository,  'git@bitbucket.org:victorvsk/kiosk.git'
+set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      'master'
 
 
