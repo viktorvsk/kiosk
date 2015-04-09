@@ -2,11 +2,18 @@
 (function () {
   function Common() {
     this.startLoading = function () {
-      $('body').addClass('loading');
+      var $spinnerContainer = $('<div/>').attr('id', 'loader'),
+        $spinner = $('<div/>').addClass('spinner')
+                    .append($('<div/>').addClass('bounce1'))
+                    .append($('<div/>').addClass('bounce2'))
+                    .append($('<div/>').addClass('bounce3'));
+
+      $spinnerContainer.append($spinner);
+      $('body').prepend($spinnerContainer);
     };
 
     this.finishLoading = function () {
-      $('body').removeClass('loading');
+      $('#loader').remove();
     };
 
     this.toggler = function (event) {
