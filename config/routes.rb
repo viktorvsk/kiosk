@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
   root 'products#index'
+  get :admin, to: 'admin/vendor/merchants#index'
   devise_for :users
   mount Ckeditor::Engine => '/ckeditor'
-  resources :products,    only: [:index, :show]
+  resources :products,    only: [:index, :show] do
+    collection do
+      get :search
+    end
+  end
   resources :categories,  only: [:index, :show]
   resources :orders
   resource :user, only: [:edit, :update]
 
   namespace :admin do
-    root 'vendor/merchants#index'
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
     delete 'binding/:vendor_product_id', to: 'binding#unbind'
     namespace :autocomplete do
@@ -50,6 +54,9 @@ Rails.application.routes.draw do
           patch :reorder_category
           post :reorder_category_all
         end
+      end
+      collection do
+        get :search
       end
     end
     resources :confs,       except: [:show]

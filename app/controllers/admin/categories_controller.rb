@@ -4,7 +4,15 @@ class Admin::CategoriesController < Admin::BaseController
   # GET /admin/categories
   # GET /admin/categories.json
   def index
-    @categories = ::Catalog::Category.order(:name).page(params[:page])
+    @q = Catalog::Category.ransack
+    @categories = Catalog::Category.page(params[:page])
+  end
+
+  def search
+    params[:q].each_value do |v| v.strip! end if params[:q]
+    @q = Catalog::Category.ransack(params[:q])
+    @categories = @q.result.order('created_at DESC').page(params[:page])
+    render :index
   end
 
   # GET /admin/categories/new

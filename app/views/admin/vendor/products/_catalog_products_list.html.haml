@@ -3,21 +3,18 @@
     .row
       .col-sm-12
         .form-group
-          = f.label :name_cont, 'Название'
-          = f.search_field :name_cont, class: 'form-control'
+          = f.label :name_or_id_or_model_or_slug_cont, 'Название, артикул или модель'
+          = f.search_field :name_or_id_or_model_or_slug_cont, class: 'form-control'
       %div{ 'data-toggleable' => 'catalog-products-filters', style: 'display: none' }
-        .col-sm-4
-          .form-group
-            = f.label :articul_cont, 'Артикул'
-            = f.search_field :articul_cont, class: 'form-control'
-        .col-sm-4
-          .form-group
-            = f.label :model_cont, 'Модель'
-            = f.search_field :model_cont, class: 'form-control'
         .col-sm-4
           .form-group
             = f.label :catalog_category_id_eq, 'Категория'
             = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, { include_blank: 'Все категории' }, class: 'form-control')
+        .col-sm-4
+          .form-group
+            = f.label :vendor_products_vendor_merchant_id_eq, 'Поставщик'
+            = f.collection_select(:vendor_products_vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все поставщики' }, class: 'form-control')
+
       .col-sm-12
         .form-group
           .form-actions.text-right

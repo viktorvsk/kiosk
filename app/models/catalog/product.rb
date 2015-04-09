@@ -38,14 +38,6 @@ class Catalog::Product < ActiveRecord::Base
       end.flatten
     end
 
-    def ransackable_scopes(auth_object = nil)
-      if auth_object.try(:admin?)
-        [:articul_cont]
-      else
-        [:articul_cont]
-      end
-    end
-
     def unbound
       joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id')
         .where('vendor_products.catalog_product_id IS NULL')
@@ -56,10 +48,6 @@ class Catalog::Product < ActiveRecord::Base
         .joins(:vendor_products)
         .group('catalog_products.id')
         .having('count(vendor_products.id) >=  ?', number)
-    end
-
-    def articul_cont(articul)
-      where("id::text ILIKE '%#{articul}%'")
     end
 
     def recount
@@ -173,6 +161,13 @@ class Catalog::Product < ActiveRecord::Base
   def copy_properties_to_category
     to_add = properties - category.properties
     category.properties << to_add
+  end
+
+
+  private
+
+  ransacker :id do
+    Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
   end
 
 end

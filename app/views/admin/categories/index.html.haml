@@ -1,20 +1,30 @@
-.page-header
-  = link_to new_admin_category_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    Новая категория
-  %h1 Категории
+.jumbotron.row
+  = search_form_for @q, url: search_admin_categories_path do |f|
+    .row
+      .col-sm-8.col-sm-offset-2.text-center
+        .input-group
+          = f.search_field :name_cont, class: 'form-control', placeholder: 'Название'
+          .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th Название
-        %th Действия
+.row
+  .page-header
+    = link_to new_admin_category_path, :class => 'btn btn-primary' do
+      %span.glyphicon.glyphicon-plus
+      Новая категория
+    %h1 Категории
 
-    %tbody
-      = render @categories
-    - if @categories.respond_to?(:current_page)
-      %tfoot
+.row
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
-          %td.text-center
-            = paginate @categories
+          %th Название
+          %th Действия
+
+      %tbody
+        = render @categories
+      - if @categories.respond_to?(:current_page)
+        %tfoot
+          %tr
+            %td.text-center
+              = paginate @categories

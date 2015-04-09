@@ -19,6 +19,7 @@ module Vendor
     scope :category_cont, -> (name) { info_like(:category, name) }
     scope :model_cont,    -> (name) { info_like(:model, name) }
     scope :warranty_cont, -> (name) { info_like(:warranty, name) }
+
     class << self
       def ransackable_scopes(auth_object = nil)
         if auth_object.try(:admin?)
@@ -131,5 +132,6 @@ module Vendor
         info.to_json, is_rrc
       ]
     end
+
   end
 end
