@@ -13,6 +13,7 @@ ru:
       catalog/property:
         name: Название
       catalog/product:
+        id: Артикул
         name: Название
         model: Модель
         main_name: Короткое имя
