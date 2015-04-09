@@ -4,7 +4,7 @@ module Vendor
   class Pricelist
     @queue            = :pricelist_import
     UPDATE_ATTRIBUTES = %w(uah usd eur rrc in_stock in_stock_kharkov in_stock_kiev price is_rrc)
-    SELECT_ATTRIBUTES = %w( id articul price  )
+    # SELECT_ATTRIBUTES = %w(id articul price fixed_price)
     REAL_ATTRIBUTES   = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id)
     CSV_COLUMNS       = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
@@ -43,7 +43,8 @@ module Vendor
       notify
       true
     rescue Exception => e
-      notify("Произошла ошибка (#{e.class}): #{e.message}", true)
+      err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.join("\n")})
+      notify(err, true)
       false
     end
 

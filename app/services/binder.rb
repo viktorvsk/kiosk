@@ -30,13 +30,12 @@ class Binder
         bind_vendor_product(vendor_product)
       end
     end
-
   end
 
 private
   def set_catalog_products
     @catalog_products ||=  ::Catalog::Product
-      .select(:id, :model, :name)
+      .select(:id, :model, :name, :price, :fixed_price, :catalog_category_id)
       .all
       .select{ |product| product.model.present? }
       .map{ |product| clear_model(product) }
