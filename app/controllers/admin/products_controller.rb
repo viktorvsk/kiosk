@@ -13,7 +13,10 @@ class Admin::ProductsController < Admin::BaseController
     params[:q].each_value do |v| v.strip! end if params[:q]
     @q = Catalog::Product.ransack(params[:q])
     @products = @q.result.order('created_at DESC').page(params[:page])
-    render :index
+    respond_to do |format|
+      format.html { render :index }
+      format.js
+    end
   end
 
   def show
