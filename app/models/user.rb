@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   ROLES = %w(admin customer)
   scope :admins, -> { joins(:role).where(states: { name: 'admin' }) }
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
   has_one :role, as: :stateable, class_name: State
 
