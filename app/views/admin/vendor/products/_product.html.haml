@@ -1,5 +1,5 @@
 - inactive = !product.active? or !product.in_stock?
-%li.list-group-item.col-xs-12{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
+%li.list-group-item.col-xs-12.draggable-vendor-product{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
 
   .col-xs-2
     %a.btn.btn-xs.btn-success

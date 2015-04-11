@@ -1,15 +1,15 @@
-[data-draggable='vendorProduct']
+.draggable-vendor-product
 {
   z-index: 10;
   &.ui-draggable-dragging{
     z-index: 11;
-  }
+    }
   &:hover{
     background: #C5EFF7;
     cursor: pointer;
     color: #333;
+    }
   }
-}
 .inactive{
   opacity: 0.5;
   }
@@ -25,17 +25,16 @@
     opacity: 0;
     }
   }
-[data-droppable='product']
-
+.dropable-product
 {
   margin: 15px auto;
   [data-scraper-modal]{
     display: none;
-  }
+    }
 
 
   }
-[data-catalog-products], [data-vendor-products]
+.catalog-products-list,.vendor-products-list
 {
   list-style: none;
   padding: 5px!important;
@@ -48,7 +47,4 @@
     }
 
 
-  }
-.product-loading{
-  background: red;
   }
