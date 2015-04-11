@@ -2,6 +2,7 @@
   = link_to admin_vendor_merchants_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
     Назад
-  %h1= @merchant.name
+  %h1
+    = @merchant.name.presence || '&nbsp;'.html_safe
 
 = render 'form'

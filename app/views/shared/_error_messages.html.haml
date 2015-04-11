@@ -1,0 +1,9 @@
+- if object.errors.any?
+  #error_explanation
+    .well
+      .alert.alert-danger
+        #{pluralize(object.errors.count, "ошибка", "ошибок")}.
+      %ul.list-group
+        - object.errors.full_messages.each do |msg|
+          %li.list-group-item
+            * #{msg}

@@ -46,6 +46,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
         format.html { redirect_to admin_vendor_merchants_path, notice: 'Поставщик обновлен' }
         format.json { render :show, status: :ok, location: @merchant }
       else
+        set_custom_merchants
         format.html { render :edit }
         format.json { render json: @merchant.errors, status: :unprocessable_entity }
       end
