@@ -1,27 +1,27 @@
-.jumbotron.row
+.jumbotron
   = search_form_for @q, url: search_products_path do |f|
     .row
       .col-sm-8.col-sm-offset-2.text-center
         .input-group
           = f.search_field :name_or_id_or_model_cont, class: 'form-control', placeholder: 'Название, модель или артикул'
           .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
-.row
-  .page-header
-    %h1 Все товары
 
-.row
-  .table-responsive
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
+.page-header
+  %h1 Все товары
+
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Название
+        %th Модель
+    %tbody
+      - @products.each do |product|
         %tr
-          %th Название
-          %th Модель
-      %tbody
-        - @products.each do |product|
-          %tr
-            %td= link_to product.name, product_path(product)
-            %td= product.model
-      %tfooter
-        %tr
-          %td.text-center{ colspan: 2 }
-            = paginate @products
+          %td= link_to product.name, product_path(product)
+          %td= product.model
+    %tfooter
+      %tr
+        %td.text-center{ colspan: 2 }
+          = paginate @products

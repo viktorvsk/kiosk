@@ -21,10 +21,6 @@ body{
   display: inline!important;
 }
 
-body.loading{
-  opacity: 0.25;
-}
-
 #loader{
   position: fixed;
   width: 200px;
@@ -87,6 +83,6 @@ body.loading{
 
 .modal-backdrop {
   z-index: -1!important;
-  // display: none;
+  display: none;
 }
 
