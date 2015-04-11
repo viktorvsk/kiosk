@@ -25,5 +25,9 @@
             %span{:aria => {:hidden => "true"} } &times;
             %span.sr-only Закрыть
           = msg
+    .container
       = yield
+    %footer.jumbotron
+      .container
+        &copy; 2015
     = javascript_include_tag 'application'
