@@ -15,7 +15,7 @@ namespace :vendor do
         email: 'email@dclink.com',
         format: 'xlsx',
         f_start: '1',
-        f_model: '2',
+        f_model: '9',
         f_name: '3',
         f_code: '11',
         f_usd: '5',
@@ -24,8 +24,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json
 
       },
@@ -36,8 +36,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '1',
         f_model: '7',
@@ -53,11 +53,11 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '1',
-        f_model: '',
+        f_model: '3',
         f_name: '4',
         f_code: '2',
         f_category: '1',
@@ -76,8 +76,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '//goods',
         f_model: 'code/text()',
@@ -98,8 +98,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '1',
         f_model: '2',
@@ -117,8 +117,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '3',
         f_model: '8',
@@ -134,8 +134,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '9',
         f_model: '4',
@@ -151,11 +151,12 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '2',
         f_name: '3',
+        f_model: '3',
         f_code: '7',
         f_brand: '2',
         f_category: '1',
@@ -171,11 +172,12 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '2',
         f_name: '3',
+        f_model: '3',
         f_code: '7',
         f_uah_1: '3',
         f_uah_2: '4',
@@ -191,8 +193,8 @@ namespace :vendor do
         currency_rates: {
           uah: 1,
           rrc: 1,
-          usd: 24,
-          eur: 30
+          usd: 24.5,
+          eur: 26.5
         }.to_json,
         f_start: '1',
         f_model: '5',

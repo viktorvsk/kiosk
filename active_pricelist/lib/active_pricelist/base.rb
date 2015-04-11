@@ -55,6 +55,7 @@ module ActivePricelist
         end
 
         transform
+
         products << @product if valid_product?
       end
     end
@@ -75,9 +76,9 @@ module ActivePricelist
     def transform
       @currency_order.each do |curr|
         if @product[curr].to_f.ceil > 0
+          @product['price']  = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
           @product['is_rrc'] = true && break if curr == 'rrc'
           @product['price']  = (@product['price'].to_f * (100 - @discount.to_i) / 100).ceil
-          @product['price']  = @product['price'] + @product['delivery_tax'].to_i
           break
         end
       end
@@ -85,7 +86,9 @@ module ActivePricelist
     end
 
     def valid_product?
-      !@required.any? { |k| @product[k].blank? } &* @product['price'].present? && @product['price'].to_f.ceil > 0
+      !@required.any? { |k| @product[k].blank? } &&
+        @product['price'].present? &&
+        @product['price'].to_f.ceil > 0
     end
 
   end
