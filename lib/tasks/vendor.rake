@@ -148,7 +148,6 @@ namespace :vendor do
         name: 'Рейнколд',
         email: 'email@ranekold.com',
         format: 'xlsx',
-        parser_class: 'Ranecold',
         currency_rates: {
           uah: 1,
           rrc: 1,

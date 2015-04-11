@@ -1,6 +1,6 @@
 
 = form_for(@merchant, url: (@merchant.new_record? ? admin_vendor_merchants_path : admin_vendor_merchant_path(@merchant))) do |f|
-  =# f.error_notification
+  = render 'shared/error_messages', object: f.object
   .well.bs-component
     .row
       .col-sm-6
@@ -45,7 +45,8 @@
           .col-sm-6= field_for(f, :required)
           .col-sm-6= field_for(f, :currency_rates)
           .col-sm-6= field_for(f, :currency_order)
-          .col-sm-6= field_for(f, :not_in_stock)
+          .col-sm-8= field_for(f, :not_in_stock)
+          .col-sm-4= field_for(f, :f_delivery_tax)
   .form-actions
     - text = @merchant.new_record? ? "Создать" : "Сохранить"
     = button_tag(type: :submit, class: 'btn btn-success') do
