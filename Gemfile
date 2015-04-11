@@ -63,7 +63,7 @@ gem 'devise'
 gem 'roo'
 gem 'nokogiri'
 gem 'dullard', github: 'ablebeam/dullard'
-gem 'active_pricelist', github: 'ablebeam/active_pricelist'
+gem 'active_pricelist', path: 'active_pricelist'
 
 # Images
 gem 'mini_magick'
