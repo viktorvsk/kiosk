@@ -177,7 +177,7 @@ namespace :vendor do
         }.to_json,
         f_start: '2',
         f_name: '2',
-        f_model: '3',
+        f_model: '2',
         f_code: '7',
         f_uah_1: '3',
         f_uah_2: '4',
