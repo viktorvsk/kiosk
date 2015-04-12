@@ -176,7 +176,7 @@ namespace :vendor do
           eur: 26.5
         }.to_json,
         f_start: '2',
-        f_name: '3',
+        f_name: '2',
         f_model: '3',
         f_code: '7',
         f_uah_1: '3',
