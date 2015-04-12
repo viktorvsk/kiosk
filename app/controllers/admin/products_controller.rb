@@ -123,8 +123,10 @@ class Admin::ProductsController < Admin::BaseController
     params.require(:catalog_product)
       .permit(:name, :model, :category, :fixed_price, :main_name,
               :price, :old_price, :video, :brand, :slug, :description,
-              :newest, :homepage, :hit,
+              :newest, :homepage, :hit, :images_from_url,
               seo_attributes: [:id, :keywords, :description, :title],
-              product_properties_attributes: [:id, :name, :position, :property_name])
+              images_from_pc: [],
+              product_properties_attributes: [:id, :name, :position, :property_name],
+              images_attributes: [:id, :attachment, :_destroy])
   end
 end

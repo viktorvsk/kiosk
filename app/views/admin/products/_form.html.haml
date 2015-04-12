@@ -1,9 +1,11 @@
 = form_for(@product, url: @product.persisted? ? admin_product_path(@product) : admin_products_path ) do |f|
   = render 'shared/error_messages', object: f.object
-  = render 'images', f: f
   = render 'main_settings', f: f
+  - if f.object.persisted?
+    = render 'images', f: f
+  %hr/
   .form-actions
-    = f.submit (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-primary'
+    = f.submit (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-success'
 - if @product.persisted?
   = render 'filters_and_properties'
   = render 'binding_and_parser'

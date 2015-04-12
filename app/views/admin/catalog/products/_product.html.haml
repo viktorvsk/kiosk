@@ -2,7 +2,10 @@
   .panel-heading
     %small.panel-title
       .row
-        .col-xs-12
+        .col-xs-3
+          - if product.images.present?
+            = image_tag product.images.first.url, class: 'img-responsive thumbnail'
+        .col-xs-9
           .pull-left
             - if product.price.present?
               %small.label.label-info
@@ -15,7 +18,8 @@
               %i.glyphicon.glyphicon-new-window
             = link_to admin_product_path(product), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?', remote: true do
               %i.glyphicon.glyphicon-remove
-      %i= product.name
+          .pull-left
+            %i= product.name
   .panel-body
 
     %ul.list-group{ 'data-product-id' => product.id }

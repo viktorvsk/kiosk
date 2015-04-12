@@ -25,6 +25,10 @@
         = @product.price
       - else
         %b Нет в наличии
+      .row
+        .col-xs-12
+          .col-sm-6= render @product.images.first
+        = render partial: 'images/thumbs', collection: @product.images, as: :image
     %ul.nav.nav-tabs
       %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
       %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'

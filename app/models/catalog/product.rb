@@ -1,3 +1,4 @@
+require 'open-uri'
 class Catalog::Product < ActiveRecord::Base
   # include Slugable
   MARKETPLACES = %W(rozetka hotline).map{ |m| "#{m}Marketplace".classify.constantize }
@@ -14,18 +15,25 @@ class Catalog::Product < ActiveRecord::Base
                                 foreign_key: :catalog_product_id,
                                 dependent: :destroy
   has_many :properties, through: :product_properties
+  has_many :images, as: :imageable
   has_many :vendor_products, class_name: Vendor::Product,
                              dependent: :nullify,
                              foreign_key: :catalog_product_id
   has_one :seo, as: :seoable
   scope :bound, -> { joins(:vendor_products) }
   accepts_nested_attributes_for :seo
+  accepts_nested_attributes_for :images, allow_destroy: true
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
 
+    def marketplace_by_url(url)
+      host = URI.parse(url.to_s.strip).host.to_s
+      MARKETPLACES.detect { |m| m::HOST =~ host }
+    end
+
     def create_from_marketplace(url, opts = {})
-      marketplace = MARKETPLACES.detect { |m| url =~ m::HOST }
+      marketplace = marketplace_by_url(url)
       raise StandardError, 'Unknown Marketplace' unless marketplace
       params = marketplace.new(url).scrape.except(opts[:ignored_fields])
       params[:category] = opts[:category] if opts[:category]
@@ -142,6 +150,36 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def images=(values)
+    values.each { |v| scrape_image(v) }
+  end
+
+  def images_from_url
+  end
+
+  def images_from_pc
+  end
+
+  def images_from_url=(value)
+    return unless value.present?
+    url = URI.encode URI.decode value.strip
+    marketplace = Catalog::Product.marketplace_by_url(url)
+    img_urls = marketplace.new(url).scrape[:images]
+    img_urls.each do |img_url|
+      scrape_image(img_url)
+    end
+  end
+
+  def scrape_image(url)
+    img_url = URI.encode URI.decode url.to_s.strip
+    tempfile = Tempfile.new([File.basename(img_url), File.extname(img_url)])
+    tempfile.binmode
+    tempfile << open(img_url).read
+    tempfile.close
+    images << Image.new(attachment: tempfile)
+  end
+
+  def images_from_pc=(values)
+    values.each { |v| images << Image.new(attachment: v) }
   end
 
   def category=(value)
