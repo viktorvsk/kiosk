@@ -27,12 +27,22 @@ class Catalog::Category < ActiveRecord::Base
   end
 
   def reorder_all
-    transaction do
-      products
-        .joins(:properties)
-        .includes(:properties, category: :properties)
-        .find_each(&:sync_properties_position)
+    category_properties_ids = category_properties.pluck(:id)
+    products_ids = products.pluck(:id)
+    products_properties_groups = Catalog::ProductProperty.
+      joins(:product, :property, property: :category_properties).
+      includes(:property).
+      where('catalog_category_properties.id IN (?)', category_properties_ids).
+      where('catalog_products.id IN (?)', products_ids).
+      uniq.
+      group_by{ |pp| pp.property.id }
+
+    products_properties_groups.each do |prop_id, prod_props|
+      prod_props_ids = prod_props.map(&:id)
+      position = category_properties.where(catalog_property_id: prop_id).first.position
+      Catalog::ProductProperty.where(id: prod_props_ids).update_all(position: position)
     end
+
   end
 
 end

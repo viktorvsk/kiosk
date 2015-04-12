@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
     end
     resources :categories,  except: [:show] do
+      post :reorder_all
       resources :properties, only: [] do
         member do
           delete :'destroy_category_property', as: :destroy
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
       end
       collection do
         get :search
+
       end
     end
     resources :confs,       except: [:show]

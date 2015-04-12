@@ -60,6 +60,12 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
+  def reorder_all
+    @category = Catalog::Category.find(params[:category_id])
+    @category.reorder_all
+    head 200
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
