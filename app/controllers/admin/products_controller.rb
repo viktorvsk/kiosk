@@ -121,8 +121,8 @@ class Admin::ProductsController < Admin::BaseController
 
   def product_params
     params.require(:catalog_product)
-      .permit(:name, :model, :category, :fixed_price, :main_name,
-              :price, :old_price, :video, :brand, :slug, :description,
+      .permit(:name, :model, :catalog_category_id, :fixed_price, :main_name,
+              :price, :old_price, :video, :catalog_brand_id, :slug, :description,
               :newest, :homepage, :hit, :images_from_url,
               seo_attributes: [:id, :keywords, :description, :title],
               images_from_pc: [],

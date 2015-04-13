@@ -13,8 +13,8 @@
         = field_for f, :hit, :check_box
   .col-sm-3
     %ul.list-group
-      %li.list-group-item= select_field_for f, :category, Catalog::Category.all.map{ |c| [c.name, c.id] }, prompt: 'Выберите категорию'
-      %li.list-group-item= select_field_for f, :brand, Catalog::Brand.all.map{ |c| [c.name, c.id] }, prompt: 'Выберите бренд'
+      %li.list-group-item= select_field_for f, :catalog_category_id, Catalog::Category.all.map{ |c| [c.name, c.id] }, prompt: 'Выберите категорию'
+      %li.list-group-item= select_field_for f, :catalog_brand_id, Catalog::Brand.all.map{ |b| [b.name, b.id] }, prompt: 'Выберите бренд'
   .col-sm-2
     %ul.list-group
       %li.list-group-item= field_for f, :price, :text_field, disabled: !f.object.fixed_price?
