@@ -2,9 +2,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
   storage :file
-  process quality: 85
   #sprocess convert: :png
-  process :watermark
+
+  process quality: 85
+  process :watermark, if: :product?
+
+
   # Create different versions of your uploaded files:
   # version :large do
   #   process resize_to_fit: [200, 200]
@@ -60,6 +63,12 @@ class ImageUploader < CarrierWave::Uploader::Base
         i.geometry '+15+0'
       end
     end
+  end
+
+  protected
+
+  def product?(new_file)
+    model.class == Catalog::Product
   end
 
 end
