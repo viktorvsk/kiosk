@@ -1,0 +1,7 @@
+= f.fields_for :seo, seo do |f_seo|
+  %ul.list-group
+    %li.list-group-item= field_for f_seo, :keywords
+    %li.list-group-item= field_for f_seo, :title
+    %li.list-group-item= field_for f, :slug
+  %ul.list-group
+    %li.list-group-item= field_for f_seo, :description, :text_area, rows: 8

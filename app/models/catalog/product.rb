@@ -15,11 +15,11 @@ class Catalog::Product < ActiveRecord::Base
                                 foreign_key: :catalog_product_id,
                                 dependent: :destroy
   has_many :properties, through: :product_properties
-  has_many :images, as: :imageable
+  has_many :images, as: :imageable, dependent: :destroy
   has_many :vendor_products, class_name: Vendor::Product,
                              dependent: :nullify,
                              foreign_key: :catalog_product_id
-  has_one :seo, as: :seoable
+  has_one :seo, as: :seoable, dependent: :destroy
   scope :bound, -> { joins(:vendor_products) }
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :images, allow_destroy: true

@@ -7,9 +7,16 @@ module SimpleFormHelper
       opts[:class] = 'form-control'
     end
     css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
-    content_tag(:div, class: css_class) do
-      f.label(attr_name) +
-      f.send(attr_type, attr_name, opts)
+    css_class << ' checkbox' if attr_type == :check_box
+    input_node = f.send(attr_type, attr_name, opts)
+    label_node = f.label(attr_name)
+    result = if attr_type == :check_box
+      input_node + label_node
+    else
+      label_node + input_node
+    end
+    content_tag(:span, class: css_class) do
+      result
     end
   end
 

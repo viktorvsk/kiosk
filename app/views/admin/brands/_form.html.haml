@@ -1,0 +1,25 @@
+.well
+  .row
+    = form_for(@brand, url: @brand.persisted? ? admin_brand_path(@brand) : admin_brands_path) do |f|
+      .col-xs-12
+        = render 'shared/error_messages', object: f.object
+      .col-sm-6
+        %h3 Основное
+        %ul.list-group
+          %li.list-group-item= field_for(f, :name)
+          %li.list-group-item= field_for(f, :description, :text_area)
+          %li.list-group-item
+            - if @brand.image.attachment.present?
+              .thumbnail
+                = image_tag @brand.image.url, class: 'img-responsive'
+            = f.fields_for :image, f.object.image do |f_i|
+              .text-right
+                .btn.btn-default.btn-file
+                  Выбрать изображение
+                  = f_i.file_field :attachment
+      .col-sm-6
+        %h3 SEO
+        = render 'shared/seo_attributes', seo: @brand.seo, f: f
+      .col-xs-12
+        .form-actions
+          = f.submit f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'

@@ -1,8 +1,9 @@
 .well
   .row
-
-    .col-sm-4
-      = form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
+    = form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
+      .col-xs-12
+        = render 'shared/error_messages', object: f.object
+      .col-sm-4
         %h3 Основное
         %ul.list-group
           %li.list-group-item= field_for(f, :name)

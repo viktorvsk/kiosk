@@ -1,29 +1,31 @@
+
 .row
   .col-xs-12
     %h3.text-center Основное
-  .col-sm-6
+  .col-sm-5
     %ul.list-group
       %li.list-group-item= field_for f, :name
-  .col-sm-6
-    %ul.list-group
       %li.list-group-item= field_for f, :model
+      %li.list-group-item
+        = field_for f, :fixed_price, :check_box
+        = field_for f, :newest, :check_box
+        = field_for f, :homepage, :check_box
+        = field_for f, :hit, :check_box
   .col-sm-3
     %ul.list-group
-      %li.list-group-item= select_field_for f, :category, Catalog::Category.all.map{ |c| [c.name, c.id] }
-      %li.list-group-item= select_field_for f, :brand, Catalog::Brand.all.map{ |c| [c.name, c.id] }
-      %li.list-group-item= field_for f, :video
-
+      %li.list-group-item= select_field_for f, :category, Catalog::Category.all.map{ |c| [c.name, c.id] }, prompt: 'Выберите категорию'
+      %li.list-group-item= select_field_for f, :brand, Catalog::Brand.all.map{ |c| [c.name, c.id] }, prompt: 'Выберите бренд'
   .col-sm-2
     %ul.list-group
       %li.list-group-item= field_for f, :price, :text_field, disabled: !f.object.fixed_price?
       %li.list-group-item= field_for f, :old_price
-      %li.list-group-item= field_for f, :main_name
-  = render 'admin/products/seo', seo: @product.seo, f: f
   .col-sm-2
-    = field_for f, :fixed_price, :check_box
-    = field_for f, :newest, :check_box
-    = field_for f, :homepage, :check_box
-    = field_for f, :hit, :check_box
-  .col-xs-12
+    %li.list-group-item= field_for f, :main_name
+    %li.list-group-item= field_for f, :video
+
+.row
+  .col-sm-8
     %ul.list-group
       %li.list-group-item= field_for f, :description, :cktext_area, ckeditor: { language: :ru, toolbar: :mini }
+  .col-sm-4
+    = render 'shared/seo_attributes', seo: @product.seo, f: f

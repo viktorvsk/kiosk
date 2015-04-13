@@ -1,6 +1,10 @@
 ru:
   activerecord:
     attributes:
+      catalog/brand:
+        name: Название
+        description: Описание
+        slug: Ссылка
       seo:
         keywords: Ключевые слова
         description: Мета описание

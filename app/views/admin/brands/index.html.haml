@@ -1,0 +1,25 @@
+.jumbotron
+  = search_form_for @q, url: search_admin_brands_path do |f|
+    .row
+      .col-sm-8.col-sm-offset-2.text-center
+        .input-group
+          = f.search_field :name_cont, class: 'form-control', placeholder: 'Название'
+          .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
+
+.page-header
+  = link_to new_admin_brand_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новый бренд
+  %h1 Бренды
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Название
+    %tbody
+      = render @brands if @brands
+    - if @brands.respond_to?(:current_page)
+      %tfoot
+        %tr
+          %td.text-center
+            = paginate @brands

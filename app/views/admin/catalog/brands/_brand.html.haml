@@ -1,0 +1,6 @@
+%tr
+  %td
+    = link_to brand.name, edit_admin_brand_path(brand)
+  %td.text-center
+    = link_to admin_brand_path(brand), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
+      %i.glyphicon.glyphicon-remove

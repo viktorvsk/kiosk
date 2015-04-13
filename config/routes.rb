@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   get :admin, to: 'admin/vendor/merchants#index'
   devise_for :users
   mount Ckeditor::Engine => '/ckeditor'
-  resources :products,    only: [:index, :show] do
+  resources :products,     only: [:index, :show] do
     collection do
       get :search
     end
   end
-  resources :categories,  only: [:index, :show]
+  resources :categories, only: [:index, :show]
   resources :orders
   resource :user, only: [:edit, :update]
 
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       end
 
     end
-    resources :categories,  except: [:show] do
+    resources :categories, except: [:show] do
       post :reorder_all
       resources :properties, only: [] do
         member do
@@ -58,13 +58,18 @@ Rails.application.routes.draw do
       end
       collection do
         get :search
-
       end
     end
-    resources :confs,       except: [:show]
-    resources :markups,     except: [:show]
-    resources :orders,      except: [:show]
-    resources :users,       except: [:show]
+
+    resources :brands, except: [:show] do
+      collection do
+        get :search
+      end
+    end
+    resources :confs, except: [:show]
+    resources :markups, except: [:show]
+    resources :orders, except: [:show]
+    resources :users, except: [:show]
     namespace :vendor do
       resources :products, only: [:index, :show, :update] do
         get :search, on: :collection

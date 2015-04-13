@@ -1,0 +1,7 @@
+.page-header
+  = link_to admin_brands_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Все бренды
+  %h1= @brand.name
+
+= render 'form'

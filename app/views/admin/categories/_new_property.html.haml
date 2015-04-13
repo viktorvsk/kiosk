@@ -1,6 +1,6 @@
 %li.list-group-item
   = form_for @category.properties.new, url: create_admin_category_properties_path(@category), method: :post, remote: true do |f|
-    = field_for f, :name
-    .text-right
-      .formp-actions
+    .input-group
+      = f.text_field :name, class: 'form-control'
+      .input-group-btn
         = f.submit 'Добавить', class: 'btn btn-success'
