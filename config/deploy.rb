@@ -89,7 +89,7 @@ task :deploy => :environment do
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      invoke :'resque:restart_workers'
+      Rake::Task['resque:restart_workers'].invoke
       invoke :'puma:phased_restart'
     end
   end
