@@ -72,7 +72,7 @@ end
 
 desc "Restart Resque workers"
 task :restart_resque => :environment do
-  queue! %(rake resque:restart_workers)
+  queue! %(RAILS_ENV=production rake resque:restart_workers)
 end
 
 desc "Deploys the current version to the server."
@@ -86,10 +86,11 @@ task :deploy => :environment do
     invoke :'bower_install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
+    invoke :'restart_resque'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      invoke :'restart_resque'
+
       invoke :'puma:phased_restart'
     end
   end
