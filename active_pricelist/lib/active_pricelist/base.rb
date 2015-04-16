@@ -80,7 +80,7 @@ module ActivePricelist
           if curr == 'rrc'
             @product['is_rrc'] = true
           else
-            @product['price'] = (@product['price'].to_f * (100 - @discount.to_i) / 100).ceil
+            @product['price'] = (@product['price'].to_f * @rates[curr] * (100 - @discount.to_i) / 100).ceil
           end
           break
         end
