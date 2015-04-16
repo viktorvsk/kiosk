@@ -20,19 +20,15 @@ set :branch,      'master'
 
 set :shared_paths, [
   'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml', 'tmp',
-  'public/uploads', 'app/price_lists'
+  'public/uploads'
 ]
 
 task :environment do
   invoke :'rbenv:load'
   queue! %(export NODE_PATH="#{node_path}")
   queue! %(export PATH="#{node_path}:$PATH")
-
   queue! %[mkdir -p "#{deploy_to}/shared/public/uploads"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/uploads"]
-
-  queue! %[mkdir -p "#{deploy_to}/shared/app/price_lists"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/app/price_lists"]
 end
 
 task :setup => :environment do
