@@ -70,9 +70,9 @@ task :bower_install => :environment do
   queue! %(rake bower:install)
 end
 
-desc "test"
-task :tes => :environment do
-  invoke :'puma:start'
+desc "Restart Resque workers"
+task :restart_resque => :environment do
+  queue! %(rake resque:restart_workers)
 end
 
 desc "Deploys the current version to the server."
@@ -89,7 +89,7 @@ task :deploy => :environment do
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      Rake::Task['resque:restart_workers'].invoke
+      invoke :'restart_resque'
       invoke :'puma:phased_restart'
     end
   end
