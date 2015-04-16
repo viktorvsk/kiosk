@@ -16,7 +16,7 @@ class Vendor::Merchant < ActiveRecord::Base
   has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id, dependent: :delete_all
   has_many :catalog_products, class_name: Catalog::Product, through: :products, source: :product
   CUSTOM = [
-    %w( Обычный Default),
+    %w( Обычный Default ),
     %w( ERC Erc ),
     %w( Рейнколд Ranecold ),
     %w( Технотрейд Technotrade ),

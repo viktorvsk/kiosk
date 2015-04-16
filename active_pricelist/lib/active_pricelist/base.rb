@@ -76,9 +76,12 @@ module ActivePricelist
     def transform
       @currency_order.each do |curr|
         if @product[curr].to_f.ceil > 0
-          @product['price']  = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
-          @product['is_rrc'] = true && break if curr == 'rrc'
-          @product['price']  = (@product['price'].to_f * (100 - @discount.to_i) / 100).ceil
+          @product['price'] = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
+          if curr == 'rrc'
+            @product['is_rrc'] = true
+          else
+            @product['price'] = (@product['price'].to_f * (100 - @discount.to_i) / 100).ceil
+          end
           break
         end
       end

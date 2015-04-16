@@ -46,6 +46,8 @@ module Vendor
       err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.join("\n")})
       notify(err, true)
       false
+    ensure
+      FileUtils.rm @merchant.pricelist_path if File.file? @merchant.pricelist_path
     end
 
   private
