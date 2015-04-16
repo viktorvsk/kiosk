@@ -1,0 +1,9 @@
+%li.list-group-item{ 'data-position' => 'position', 'data-id' => filter.id }
+  .pull-right
+    = link_to '#', 'data-destroy-filter' => filter.id do
+      %i.glyphicon.glyphicon-remove-circle
+  %h4= filter.name
+  %hr/
+  %ul.list-group
+    - filter.values.each do |value|
+      %li.list-group-item= value.name

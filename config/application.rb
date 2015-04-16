@@ -25,7 +25,10 @@ module Kiosk
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
-    config.autoload_paths += %W(#{config.root}/app/vendors #{config.root}/app/marketplaces)
+    config.autoload_paths += %W(#{config.root}/app/vendors)
+    config.autoload_paths += %W(#{config.root}/app/marketplaces)
+    config.autoload_paths += %W(#{config.root}/app/validators)
+
 
   end
 end

@@ -7,6 +7,11 @@ class Catalog::Category < ActiveRecord::Base
                                  foreign_key: :catalog_category_id,
                                  autosave: true,
                                  dependent: :delete_all
+  has_many :category_filters, class_name: Catalog::CategoryFilter,
+                              foreign_key: :catalog_category_id,
+                              dependent: :delete_all,
+                              autosave: true
+  has_many :filters, through: :category_filters
   has_many :properties, through: :category_properties
 
   def tax_for(value)
