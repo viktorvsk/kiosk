@@ -13,8 +13,9 @@ class ErcParser < ::ActivePricelist::Base
         if @product['monitor'] == '1'
           @product['is_rrc'] = true
         else
-          @product['price'] = (@product['price'].to_f * (100 - @discount.to_i)/100).ceil
+          @product['price'] = (@product['price'].to_f * @rates[curr].to_f * (100 - @discount.to_i)/100).ceil
         end
+
         break
       end
     end

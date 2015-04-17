@@ -9,11 +9,11 @@ class TechnotradeParser < ::ActivePricelist::Base
 
     @currency_order.each do |curr|
       if @product[curr].present? and @product[curr].to_f.ceil > 0
-        @product['price'] = (@product[curr].to_f * @rates[curr].to_f).ceil
+        @product['price'] = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
         if curr == 'rrc'
           @product['is_rrc'] = true
         else
-          @product['price'] = (@product['price'].to_f * (100 - @discount.to_f.ceil)/100).ceil
+          @product['price'] = (@product['price'].to_f * @rates[curr].to_f * (100 - @discount.to_f.ceil)/100).ceil
         end
         break
       end
