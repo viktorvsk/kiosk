@@ -1,0 +1,5 @@
+%tr
+  %td= filter.name
+  %td
+    %small
+      = filter.values.map(&:name).join('<br>').html_safe

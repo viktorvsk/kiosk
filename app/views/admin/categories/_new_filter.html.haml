@@ -1,0 +1,6 @@
+%li.list-group-item
+  = form_for Catalog::Filter.new, url:  admin_category_add_filter_path(@category), method: :post, remote: true do |f|
+    .input-group
+      = f.text_field :name, class: 'form-control'
+      .input-group-btn
+        = f.submit 'Добавить', class: 'btn btn-success'

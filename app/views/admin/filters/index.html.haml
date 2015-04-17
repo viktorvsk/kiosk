@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_admin_filter_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новый фильтр
+  %h1 Фильтры
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Название
+        %th Значения
+
+    %tbody
+      = render @filters
+    - if @filters.respond_to?(:current_page)
+      %tfoot
+        %tr
+          %td.text-center
+            = paginate @filters

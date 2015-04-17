@@ -1,0 +1,7 @@
+%li.list-group-item
+  = form_for Catalog::FilterValue.new, url:  admin_category_add_filter_value_path(@category), method: :post, remote: true  do |f|
+    .input-group
+      = f.text_field :name, class: 'form-control'
+      = hidden_field :catalog_filter_value, :filter_id, value: filter.id
+      .input-group-btn
+        = f.submit 'Добавить значение', class: 'btn btn-success'

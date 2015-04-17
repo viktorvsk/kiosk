@@ -14,6 +14,9 @@ class Catalog::Product < ActiveRecord::Base
   has_many :product_properties, class_name: Catalog::ProductProperty,
                                 foreign_key: :catalog_product_id,
                                 dependent: :destroy
+  has_many :filters, class_name: Catalog::ProductFilterValue,
+                     foreign_key: :catalog_product_id,
+                     dependent: :destroy
   has_many :properties, through: :product_properties
   has_many :images, as: :imageable, dependent: :destroy
   has_many :vendor_products, class_name: Vendor::Product,
@@ -26,6 +29,25 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
+
+    def filter(fvalues_ids)
+      grouped = Catalog::FilterValue.where(id: fvalues_ids).to_group
+      query = []
+      grouped.each_value do |fvalues|
+        ids = fvalues.map(&:id).join(', ')
+        query << %(
+          SELECT catalog_products.id
+          FROM catalog_products
+          INNER JOIN
+            catalog_product_filter_values ON catalog_product_filter_values.catalog_product_id = catalog_products.id
+          WHERE
+            catalog_product_filter_values.catalog_filter_value_id IN (#{ids})
+        )
+      end
+      query = query.join("\nINTERSECT\n")
+      ids = ActiveRecord::Base.connection.execute(query).map{ |row| row['id'] }
+      where(id: ids)
+    end
 
     def marketplace_by_url(url)
       host = URI.parse(url.to_s.strip).host.to_s

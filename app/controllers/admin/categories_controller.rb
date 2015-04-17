@@ -66,6 +66,37 @@ class Admin::CategoriesController < Admin::BaseController
     head 200
   end
 
+  def add_filter
+    @category = Catalog::Category.find(params[:category_id])
+    filter = @category.add_filter(params[:catalog_filter][:name], @category.name)
+    render :refilter
+  end
+
+  def add_filter_value
+    @category = Catalog::Category.find(params[:category_id])
+    filter = Catalog::Filter.find(params[:catalog_filter_value][:filter_id])
+    filter.add_value(params[:catalog_filter_value][:name], filter.name)
+    render :refilter
+  end
+
+  def remove_filter
+    @category = Catalog::Category.find(params[:category_id])
+    category_filter = @category.category_filters.where(id: params[:filter_id].to_i).first
+    @filter_id = category_filter.id.to_s
+    category_filter.filter.destroy
+  end
+
+  def remove_filter_value
+    @category = Catalog::Category.find(params[:category_id])
+    filter_value = Catalog::FilterValue.where(id: params[:filter_value_id]).first
+    if filter_value
+      @filter_value_id = filter_value.id.to_s
+      filter_value.destroy
+    else
+      head 200
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category

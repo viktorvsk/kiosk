@@ -1,6 +1,11 @@
 .row
   .col-sm-6
     %h3.text-center Фильтры
+    - if @product.persisted?
+      %ul.list-group
+      - @product.category.category_filters.each do |cf|
+        %li.list-group-item
+          = select_tag :fvals, options_for_select(cf.values.map{ |cat_fil| [cat_fil.name, cat_fil.id] }), class: 'select2 form-control', prompt: cf.name
   .col-sm-6
     %h3.text-center Характеристики
     - if @product.persisted?

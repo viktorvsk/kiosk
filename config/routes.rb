@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     end
     resources :categories, except: [:show] do
       post :reorder_all
+      post :add_filter
+      post :add_filter_value
+      delete 'remove_filter/:filter_id', to: 'categories#remove_filter', as: :remove_filter
+      delete 'remove_filter_value/:filter_value_id', to: 'categories#remove_filter_value', as: :remove_filter_value
       resources :properties, only: [] do
         member do
           delete :'destroy_category_property', as: :destroy
@@ -65,6 +69,9 @@ Rails.application.routes.draw do
       collection do
         get :search
       end
+    end
+    resources :filters, except: [:show] do
+
     end
     resources :confs, except: [:show]
     resources :markups, except: [:show]

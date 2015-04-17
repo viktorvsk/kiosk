@@ -1,0 +1,5 @@
+%li.list-group-item{ 'data-filter-value-id' => filter_value.id }
+  .pull-right
+    = link_to admin_category_remove_filter_value_path(@category, filter_value), class: 'btn btn-xs btn-danger', remote: true, method: :delete do
+      %i.glyphicon.glyphicon-remove
+  = filter_value.name
