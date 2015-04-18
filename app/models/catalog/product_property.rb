@@ -1,7 +1,7 @@
 class Catalog::ProductProperty < ActiveRecord::Base
-  validates :name, :property, presence: true
+  validates :property, presence: true
   validates :product, presence: true, if: -> { product.present? }
-  validates :catalog_property_id, uniqueness: { scope: :catalog_product_id }
+  validates :catalog_product_id, uniqueness: { scope: [:catalog_property_id] }
   belongs_to :property, class_name: Catalog::Property,
                         foreign_key: :catalog_property_id
   belongs_to :product, class_name: Catalog::Product,
@@ -26,7 +26,7 @@ class Catalog::ProductProperty < ActiveRecord::Base
     prop_name_taken = product.product_properties.where(name: prop_name).present?
     return false if changes_prop_name && prop_name_taken
     return true if prop_val == name && !changes_prop_name
-    destroy! and return if prop_val.blank?
+    # destroy! and return if prop_val.blank?
     self.property = Catalog::Property.where(name: prop_name).first_or_create! if changes_prop_name
     self.name = prop_val
     save!

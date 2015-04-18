@@ -54,20 +54,24 @@ class Catalog::Category < ActiveRecord::Base
   def add_filter(filter_name, postfix = nil)
     return unless filter_name.present?
     filter_name.strip!
+    disp_name = filter_name
     filter_name = "#{filter_name} (#{postfix})" if postfix.present?
     filter_name_search = filter_name.mb_chars.downcase.to_s
     filter = Catalog::Filter.where('LOWER(name) = ?', filter_name_search).first
-    filter ||= Catalog::Filter.create(name: filter_name)
+    filter ||= Catalog::Filter.create(name: filter_name, display_name: disp_name)
     filters << filter
     filter
   end
 
-  def add_filter_value(filter_value)
-    filter_value.strip!
-    filter_value_search = filter_value.mb_chars.downcase.to_s
-    filter_value = Catalog::FilterValue.where('LOWER(name) = ?', filter_value_search).first
-    filter_value ||= Catalog::FilterValue.create(name: filter_value)
-    filter_values << filter_value
+  # def add_filter_value(filter_value)
+  #   filter_value.strip!
+  #   filter_value_search = filter_value.mb_chars.downcase.to_s
+  #   filter_value = Catalog::FilterValue.where('LOWER(name) = ?', filter_value_search).first
+  #   filter_value ||= Catalog::FilterValue.create(name: filter_value)
+  #   filter_values << filter_value
+  # end
+
+  def filter_values_for()
   end
 
 end

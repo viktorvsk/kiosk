@@ -1,5 +1,6 @@
 require 'open-uri'
 class Catalog::Product < ActiveRecord::Base
+  before_create :copy_properties_from_category
   # include Slugable
   MARKETPLACES = %W(rozetka hotline).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
@@ -14,7 +15,7 @@ class Catalog::Product < ActiveRecord::Base
   has_many :product_properties, class_name: Catalog::ProductProperty,
                                 foreign_key: :catalog_product_id,
                                 dependent: :destroy
-  has_many :filters, class_name: Catalog::ProductFilterValue,
+  has_many :product_filters, class_name: Catalog::ProductFilterValue,
                      foreign_key: :catalog_product_id,
                      dependent: :destroy
   has_many :properties, through: :product_properties
@@ -158,16 +159,9 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def properties=(values)
-    Catalog::Product.transaction do
-      values.uniq{ |hs| hs.keys.first }.each do |prop|
-        property = Catalog::Property
-                     .where(name: prop.keys.first)
-                     .first_or_create
-        p_p = Catalog::ProductProperty
-                .new(name: prop.values.first, property: property)
-
-        product_properties << p_p
-      end
+    values.uniq{ |hs| hs.keys.first }.each do |prop|
+      property = Catalog::Property.where(name: prop.keys.first).first_or_create
+      product_properties.new(name: prop.values.first, property: property)
     end
   end
 
@@ -224,6 +218,23 @@ class Catalog::Product < ActiveRecord::Base
     category.properties << to_add
   end
 
+  def copy_properties_from_category
+    # In case of parsing from external source - discard
+    return if product_properties.present?
+    category.category_properties.map do |category_property|
+      product_properties.new(property: category_property.property, position: category_property.position)
+    end
+    save if persisted?
+  end
+
+  def copy_filters_from_category
+    # In case of parsing from external source - discard
+    return if product_filters.present?
+    category.category_filters.map do |category_filter|
+      product_filters.new(filter: category_filter.filter)
+    end
+    save! if persisted?
+  end
 
   private
 

@@ -7,7 +7,5 @@ class Catalog::CategoryFilter < ActiveRecord::Base
                                 foreign_key: :catalog_category_id
   belongs_to :filter, class_name: Catalog::Filter,
                       foreign_key: :catalog_filter_id
-  delegate :name, :values, to: :filter
-
-
+  delegate :name, :values, :display_name, to: :filter
 end

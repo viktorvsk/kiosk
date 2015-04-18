@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417232458) do
+ActiveRecord::Schema.define(version: 20150418100503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,24 +89,28 @@ ActiveRecord::Schema.define(version: 20150417232458) do
     t.integer  "catalog_filter_id", null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "display_name"
   end
 
   add_index "catalog_filter_values", ["catalog_filter_id"], name: "index_catalog_filter_values_on_catalog_filter_id", using: :btree
   add_index "catalog_filter_values", ["name", "catalog_filter_id"], name: "index_catalog_filter_values_on_name_and_catalog_filter_id", unique: true, using: :btree
 
   create_table "catalog_filters", force: :cascade do |t|
-    t.string   "name",       default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",         default: "", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "display_name"
   end
 
   create_table "catalog_product_filter_values", force: :cascade do |t|
     t.integer  "catalog_product_id",      null: false
-    t.integer  "catalog_filter_value_id", null: false
+    t.integer  "catalog_filter_value_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "catalog_filter_id",       null: false
   end
 
+  add_index "catalog_product_filter_values", ["catalog_filter_id"], name: "index_catalog_product_filter_values_on_catalog_filter_id", using: :btree
   add_index "catalog_product_filter_values", ["catalog_filter_value_id"], name: "index_catalog_product_filter_values_on_catalog_filter_value_id", using: :btree
   add_index "catalog_product_filter_values", ["catalog_product_id", "catalog_filter_value_id"], name: "product_filter_values_index", unique: true, using: :btree
   add_index "catalog_product_filter_values", ["catalog_product_id"], name: "index_catalog_product_filter_values_on_catalog_product_id", using: :btree

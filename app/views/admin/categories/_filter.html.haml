@@ -2,7 +2,7 @@
   .pull-right
     = link_to admin_category_remove_filter_path(@category, filter), 'data-destroy-filter' => filter.id, method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
       %i.glyphicon.glyphicon-remove
-  %h4= filter.name
+  %h4= filter.display_name
   %hr/
   %ul.list-group
     = render filter.values

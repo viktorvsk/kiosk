@@ -41,7 +41,7 @@ class Admin::ProductsController < Admin::BaseController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to admin_products_path(@product), notice: 'Товар успешно создан.' }
+        format.html { redirect_to edit_admin_product_path(@product), notice: 'Товар успешно создан.' }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }

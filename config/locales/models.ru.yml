@@ -32,6 +32,8 @@ ru:
         video: Ссылка на видео
         category: Категория
         brand: Бренд
+        catalog_brand_id: Бренд
+        catalog_category_id: Категория
       catalog/product_property:
         property_name: Характеристика
         name: Значение
