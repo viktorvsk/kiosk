@@ -77,6 +77,7 @@ end
 
 desc "Disable ActiveAdmin before running migrations"
 task :disable_active_admin => environment do
+  queue! %(mkdir -p #{deploy_to}/current/app/admin/)
   queue! %(mv #{deploy_to}/current/app/admin/ #{deploy_to}/current/admin/ 2>/dev/null)
 end
 
