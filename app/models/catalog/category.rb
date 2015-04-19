@@ -14,6 +14,7 @@ class Catalog::Category < ActiveRecord::Base
   has_many :filters, through: :category_filters
   has_many :filter_values, through: :category_filter_values
   has_many :properties, through: :category_properties
+  belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id
 
   def tax_for(value)
     value = value.to_f.ceil

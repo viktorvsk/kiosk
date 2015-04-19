@@ -31,7 +31,7 @@ class Admin::CategoriesController < Admin::BaseController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to admin_categories_url, notice: 'Категория создана.' }
+        format.html { redirect_to aedit_dmin_eategory_url(@category), notice: 'Категория создана.' }
       else
         format.html { render :new }
       end
@@ -43,7 +43,7 @@ class Admin::CategoriesController < Admin::BaseController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to admin_categories_url, notice: 'Категория обновлена.' }
+        format.html { redirect_to edit_admin_category_url(@category), notice: 'Категория обновлена.' }
       else
         format.html { render :edit }
       end
@@ -111,7 +111,7 @@ class Admin::CategoriesController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:catalog_category).permit(:name, :tax, :tax_threshold, :tax_max)
+      params.require(:catalog_category).permit(:name, :tax, :tax_threshold, :tax_max, :catalog_taxon_id)
     end
 
 end
