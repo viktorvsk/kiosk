@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :validatable
   ROLES = %w(admin customer)
   scope :admins, -> { joins(:role).where(states: { name: 'admin' }) }
   devise :database_authenticatable,
@@ -17,6 +21,10 @@ class User < ActiveRecord::Base
 
   def customer?
     role.nil? or role.name == 'customer'
+  end
+
+  def is_admin?
+    role.try(:name) == 'admin'
   end
 
   def promote_to(role_name)

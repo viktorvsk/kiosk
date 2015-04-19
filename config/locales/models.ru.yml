@@ -1,6 +1,18 @@
 ru:
   activerecord:
+    models:
+      catalog/taxon:
+        one: Указатель
+        many: Указатели
+        other: Меню
+      user:
+        one: Пользователь
+        many: Пользователи
+        other: Пользователи
     attributes:
+      catalog/taxon:
+        name: Название
+        slug: Ссылка
       catalog/brand:
         name: Название
         description: Описание

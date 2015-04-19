@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'products#index'
   get :admin, to: 'admin/vendor/merchants#index'
   devise_for :users
+
   mount Ckeditor::Engine => '/ckeditor'
   resources :products,     only: [:index, :show] do
     collection do
@@ -92,5 +93,6 @@ Rails.application.routes.draw do
       end
     end
   end
+  ActiveAdmin.routes(self)
 
 end

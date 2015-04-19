@@ -11,11 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419082419) do
+ActiveRecord::Schema.define(version: 20150419151419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string   "namespace"
+    t.text     "body"
+    t.string   "resource_id",   null: false
+    t.string   "resource_type", null: false
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "aliases", force: :cascade do |t|
     t.string   "name",           null: false
@@ -38,13 +53,15 @@ ActiveRecord::Schema.define(version: 20150419082419) do
   add_index "catalog_brands", ["name"], name: "index_catalog_brands_on_name", unique: true, using: :btree
 
   create_table "catalog_categories", force: :cascade do |t|
-    t.string   "name",       default: "", null: false
-    t.string   "slug",       default: "", null: false
+    t.string   "name",             default: "", null: false
+    t.string   "slug",             default: "", null: false
     t.hstore   "info"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "catalog_taxon_id"
   end
 
+  add_index "catalog_categories", ["catalog_taxon_id"], name: "index_catalog_categories_on_catalog_taxon_id", using: :btree
   add_index "catalog_categories", ["name"], name: "index_catalog_categories_on_name", using: :btree
   add_index "catalog_categories", ["slug"], name: "index_catalog_categories_on_slug", using: :btree
 
@@ -153,6 +170,17 @@ ActiveRecord::Schema.define(version: 20150419082419) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "catalog_taxons", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "position"
+    t.string   "ancestry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "catalog_taxons", ["ancestry"], name: "index_catalog_taxons_on_ancestry", using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false

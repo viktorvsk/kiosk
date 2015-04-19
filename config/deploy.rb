@@ -75,6 +75,16 @@ task :restart_resque => :environment do
   queue! %(RAILS_ENV=production rake resque:restart_workers)
 end
 
+desc "Disable ActiveAdmin before running migrations"
+task :disable_active_admin => environment do
+  queue! %(mv #{deploy_to}/current/app/admin #{deploy_to}/current/admin)
+end
+
+desc "Enable ActiveAdmin after running migrations"
+task :disable_active_admin => environment do
+  queue! %(mv #{deploy_to}/current/admin #{deploy_to}/current/app/admin)
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
 
@@ -82,7 +92,9 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'disable_active_admin'
     invoke :'rails:db_migrate'
+    invoke :'enable_active_admin'
     invoke :'bower_install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'

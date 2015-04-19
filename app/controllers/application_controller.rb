@@ -12,4 +12,8 @@ private
     root_path_by_role = current_user.admin? ? admin_vendor_products_path : root_path
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path_by_role
   end
+
+  def authenticate_admin_user!
+    redirect_to new_user_session_path unless current_user.try(:is_admin?)
+  end
 end
