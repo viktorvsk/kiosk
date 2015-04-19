@@ -81,7 +81,7 @@ task :disable_active_admin => environment do
 end
 
 desc "Enable ActiveAdmin after running migrations"
-task :disable_active_admin => environment do
+task :enable_active_admin => environment do
   queue! %(mv #{deploy_to}/current/admin #{deploy_to}/current/app/admin)
 end
 
