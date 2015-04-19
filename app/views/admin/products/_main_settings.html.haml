@@ -5,7 +5,9 @@
   .col-sm-5
     %ul.list-group
       %li.list-group-item= field_for f, :name
-      %li.list-group-item= field_for f, :model
+      %li.list-group-item
+        = field_for f, :model
+        = link_to 'Парсить', update_from_marketplace_admin_product_path(@product), method: :post if @product.persisted?
       %li.list-group-item
         = field_for f, :fixed_price, :check_box
         = field_for f, :newest, :check_box

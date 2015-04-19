@@ -1,7 +1,8 @@
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:edit, :show, :update, :destroy, :bind,
                                     :unbind, :recount, :copy_filters,
-                                    :copy_properties, :update_product_filter_value]
+                                    :copy_properties, :update_product_filter_value,
+                                    :update_from_marketplace]
   after_action :set_vendor_product, :recount_product, only: [:bind, :unbind]
 
   # GET /admin/products
@@ -103,6 +104,15 @@ class Admin::ProductsController < Admin::BaseController
     product = Catalog::Product.create_from_marketplace(url, category: category, model: model)
     vendor_product = Vendor::Product.ransack(model_cont: model).result.bind_to(product)
     head 200
+  end
+
+  def update_from_marketplace
+    if @product.update_from_marketplace
+      @product.save
+      redirect_to edit_admin_product_url(@product), notice: 'Характеристики и описание обновлены'
+    else
+      redirect_to edit_admin_product_url(@product), error: 'Произошла ошибка'
+    end
   end
 
   def copy_filters

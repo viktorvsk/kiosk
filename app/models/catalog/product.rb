@@ -127,6 +127,16 @@ class Catalog::Product < ActiveRecord::Base
 
   end
 
+  def update_from_marketplace
+    found = self.class.search_marketplaces_by_model(model)
+    random_url = found.select{ |h| h[:price].to_i > 0 }.sample[:url]
+    result = self.class.marketplace_by_url(random_url).new(random_url).scrape.slice(:description, :properties)
+    self.description = result[:description] if result[:description].present?
+    self.properties = result[:properties] if result[:properties].present?
+  rescue Exception
+    nil
+  end
+
   def reorder(props)
     product_properties.each do |property|
       position = props[property.id.to_s].try(:fetch, 'position').to_i
@@ -163,8 +173,9 @@ class Catalog::Product < ActiveRecord::Base
 
   def properties=(values)
     values.uniq{ |hs| hs.keys.first }.each do |prop|
-      property = Catalog::Property.where(name: prop.keys.first).first_or_create
-      product_properties.new(name: prop.values.first, property: property)
+      set_property(prop.keys.first, prop.values.first)
+      #property = Catalog::Property.where(name: prop.keys.first).first_or_create
+      #product_properties.new(name: prop.values.first, property: property)
     end
   end
 

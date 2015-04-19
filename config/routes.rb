@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
     resources :products do
       member do
+        post :update_from_marketplace
         post :recount
         post :copy_filters
         post :copy_properties
