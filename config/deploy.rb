@@ -77,12 +77,12 @@ end
 
 desc "Disable ActiveAdmin before running migrations"
 task :disable_active_admin => environment do
-  queue! %(mv #{deploy_to}/current/app/admin #{deploy_to}/current/admin)
+  queue! %(mv #{deploy_to}/current/app/admin/ #{deploy_to}/current/admin/ 2>/dev/null)
 end
 
 desc "Enable ActiveAdmin after running migrations"
 task :enable_active_admin => environment do
-  queue! %(mv #{deploy_to}/current/admin #{deploy_to}/current/app/admin)
+  queue! %(mv #{deploy_to}/current/admin/ #{deploy_to}/current/app/admin/ 2>/dev/null)
 end
 
 desc "Deploys the current version to the server."
