@@ -9,6 +9,7 @@ gem 'execjs'
 # Schedule
 gem 'resque', '1.25.2'
 
+
 # Translations
 # gem 'russian', '~> 0.6.0'
 
@@ -23,8 +24,14 @@ gem 'resque', '1.25.2'
 # Search
 # gem 'mysql2', '~> 0.3.13'
 # gem 'thinking-sphinx', '~> 3.1.3'
+
+# Admin
+gem 'activeadmin', github: 'activeadmin'
+gem "active_admin-sortable_tree"
+gem 'activeadmin_hstore_editor'
 gem 'ransack'
-gem 'colorized'
+gem 'ancestry'
+gem 'kaminari'
 
 # Settings
 gem 'figaro'
@@ -32,6 +39,7 @@ gem 'rails-settings-cached', '0.4.1'
 
 # Markup Helpers
 gem 'haml-rails'
+
 
 # gem 'auto_html'
 # gem 'gretel'
@@ -42,8 +50,6 @@ gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem "select2-rails"
 # gem 'ace-rails-ap'
-# gem 'jquery-ui-rails'
-# gem 'select2-rails'
 
 # API
 gem 'jbuilder', '~> 2.0'
@@ -85,7 +91,7 @@ gem 'carrierwave'
 # gem 'foreigner'
 # gem 'activevalidators', '~> 3.0.0'
 # gem 'strip_attributes'
-gem 'kaminari'
+
 
 # ActiveRecord acts_as
 # gem 'paranoia', '~> 2.0'
@@ -107,7 +113,7 @@ gem 'kaminari'
 
 group :development do
   # Test coverage
-  gem 'coverband'
+  # gem 'coverband'
   gem 'bootstrap-generators', '~> 3.3.1'
 
   # Debug
@@ -116,12 +122,12 @@ group :development do
   gem 'awesome_print'
 
   gem 'quiet_assets'
-  gem 'bullet'
+  # gem 'bullet'
   # Works bad with js.erb render
   # gem 'rails_view_annotator'
   # gem 'xray-rails'
-  gem 'peek'
-  gem 'rack-livereload'
+  # gem 'peek'
+  # gem 'rack-livereload'
 
   # Watching
   # gem 'libnotify', require: false
@@ -129,46 +135,46 @@ group :development do
   # gem 'ruby_gntp'
   # gem 'uniform_notifier'
 
-  gem 'guard', '~> 2.8'
-  gem 'guard-rails'
-  gem 'guard-rspec'
-  gem 'guard-cucumber'
-  gem 'guard-minitest'
-  gem 'guard-rubocop'
-  gem 'guard-livereload'
-  gem 'spork-rails', github: 'sporkrb/spork-rails' # rubygems version not rails 4 compatible
-  gem 'guard-spork'
-  gem 'spork-testunit'
-  gem 'ruby-prof'
-  gem 'guard-brakeman'
+  # gem 'guard', '~> 2.8'
+  # gem 'guard-rails'
+  # gem 'guard-rspec'
+  # gem 'guard-cucumber'
+  # gem 'guard-minitest'
+  # gem 'guard-rubocop'
+  # gem 'guard-livereload'
+  # gem 'spork-rails', github: 'sporkrb/spork-rails' # rubygems version not rails 4 compatible
+  # gem 'guard-spork'
+  # gem 'spork-testunit'
+  # gem 'ruby-prof'
+  # gem 'guard-brakeman'
 
   # Deployment
   gem 'mina'
   gem 'mina-puma',  require: false
-  gem 'mina-nginx', require: false
-  gem 'mina-scp',   require: false
+  # gem 'mina-nginx', require: false
+  # gem 'mina-scp',   require: false
 end
 
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  gem 'spring'
-  gem 'letter_opener'
-  gem 'factory_girl_rails'
-  gem 'ffaker'
+  # gem 'spring'
+  # gem 'letter_opener'
+  # gem 'factory_girl_rails'
+  # gem 'ffaker'
   gem 'did_you_mean'
-  gem 'rails-footnotes', '~> 4.0'
-  gem 'zapata'
+  # gem 'rails-footnotes', '~> 4.0'
+  # gem 'zapata'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.0.0'
-  gem 'rspec-mocks'
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'database_cleaner'
-  gem 'cucumber-rails', require: false
-  gem 'shoulda-matchers', require: false
+  # gem 'rspec-rails', '~> 3.0.0'
+  # gem 'rspec-mocks'
+  # gem 'capybara'
+  # gem 'selenium-webdriver'
+  # gem 'database_cleaner'
+  # gem 'cucumber-rails', require: false
+  # gem 'shoulda-matchers', require: false
 end
 
 group :production do
