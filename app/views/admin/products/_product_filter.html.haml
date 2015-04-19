@@ -1,0 +1,4 @@
+- values = [pf.filter.values.sort_by(&:position).map{ |v| [v.display_name, v.id] }, pf.filter_value.try(:id)]
+%li.list-group-item
+  = label_tag "pfv_#{pf.id}", pf.filter.display_name
+  = select_tag "pfv_#{pf.id}", options_for_select(*values), class: 'select2 form-control', prompt: 'Выберите значение фильтра', 'data-pfv' => update_pfv_admin_product_path(pf.product, pf)

@@ -1,6 +1,7 @@
 require 'open-uri'
 class Catalog::Product < ActiveRecord::Base
   before_create :copy_properties_from_category
+  before_create :copy_filters_from_category
   # include Slugable
   MARKETPLACES = %W(rozetka hotline).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
@@ -14,10 +15,12 @@ class Catalog::Product < ActiveRecord::Base
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :product_properties, class_name: Catalog::ProductProperty,
                                 foreign_key: :catalog_product_id,
-                                dependent: :destroy
+                                dependent: :destroy,
+                                autosave: true
   has_many :product_filters, class_name: Catalog::ProductFilterValue,
                      foreign_key: :catalog_product_id,
-                     dependent: :destroy
+                     dependent: :destroy,
+                     autosave: true
   has_many :properties, through: :product_properties
   has_many :images, as: :imageable, dependent: :destroy
   has_many :vendor_products, class_name: Vendor::Product,
@@ -219,21 +222,23 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def copy_properties_from_category
-    # In case of parsing from external source - discard
-    return if product_properties.present?
-    category.category_properties.map do |category_property|
-      product_properties.new(property: category_property.property, position: category_property.position)
+    ids = product_properties.map(&:catalog_property_id)
+    category.category_properties.each do |category_property|
+      next if ids.include?(category_property.property.id)
+      params = { property: category_property.property, position: category_property.position }
+      new_or_create = new_record? ? :new : :create
+      product_properties.send(new_or_create, params)
     end
-    save if persisted?
   end
 
   def copy_filters_from_category
-    # In case of parsing from external source - discard
-    return if product_filters.present?
-    category.category_filters.map do |category_filter|
-      product_filters.new(filter: category_filter.filter)
+    ids = product_filters.map(&:catalog_filter_id)
+    category.category_filters.each do |category_filter|
+      next if ids.include?(category_filter.filter.id)
+      params = { filter: category_filter.filter }
+      new_or_create = new_record? ? :new : :create
+      product_filters.send(new_or_create, params)
     end
-    save! if persisted?
   end
 
   private

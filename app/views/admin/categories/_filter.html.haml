@@ -1,9 +1,15 @@
-%li.list-group-item{ 'data-position' => 'position', 'data-id' => filter.id }
+%li.list-group-item{ 'data-position' => filter.position, 'data-id' => filter.id, 'data-filter' => true }
   .pull-right
     = link_to admin_category_remove_filter_path(@category, filter), 'data-destroy-filter' => filter.id, method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
       %i.glyphicon.glyphicon-remove
-  %h4= filter.display_name
+  %h4
+    = filter.display_name
+    %sup
+      %i
+        [
+        = filter.name
+        ]
   %hr/
-  %ul.list-group
-    = render filter.values
-    = render 'admin/categories/new_filter_value', filter: filter.filter
+  %ul.list-group{ 'data-sortable' => 'filter-values' }
+    = render filter.values.sort_by(&:position)
+  = render 'admin/categories/new_filter_value', filter: filter.filter

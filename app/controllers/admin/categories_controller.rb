@@ -60,9 +60,9 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
-  def reorder_all
+  def reorder_all_properties
     @category = Catalog::Category.find(params[:category_id])
-    @category.reorder_all
+    @category.reorder_all_properties
     head 200
   end
 
@@ -97,6 +97,12 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
+  def reorder_filters
+    category = Catalog::Category.find(params[:category_id])
+    category.update(reorder_filter_values: params[:reorder_filter_values], reorder_filters: params[:reorder_filters])
+    head 200
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
@@ -107,4 +113,5 @@ class Admin::CategoriesController < Admin::BaseController
     def category_params
       params.require(:catalog_category).permit(:name, :tax, :tax_threshold, :tax_max)
     end
+
 end

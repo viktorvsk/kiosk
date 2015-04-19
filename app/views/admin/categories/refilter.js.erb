@@ -1,5 +1,5 @@
 (function () {
   var template = "<%= escape_javascript(render partial: 'admin/categories/filter', collection: @category.category_filters.sort_by(&:position), as: :filter) %>";
-  console.log(template.length);
   $('#filters').html(template);
+  window.Kiosk.CategoryFiltersManager.init();
 }());

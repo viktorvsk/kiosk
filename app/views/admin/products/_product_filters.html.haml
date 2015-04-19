@@ -1,7 +1,2 @@
-
 %ul.list-group
-  -product_filters.each do |pf|
-    - values = [pf.filter.values.map{ |v| [v.display_name, v.id] }, pf.filter_value.try(:id)]
-    %li.list-group-item
-      = label_tag :asd, pf.filter.display_name
-      = select_tag "pfv_#{pf.id}", options_for_select(*values), class: 'select2 form-control', prompt: 'Выберите значение фильтра', 'data-pfv' => pf.id
+  = render collection: product_filters.sort_by(&:position), partial: 'admin/products/product_filter', as: :pf

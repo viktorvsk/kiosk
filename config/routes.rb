@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :products do
       member do
         post :recount
-        patch 'product_filter_values/:pfv_id', to: 'products#update_product_filter_value'
+        post :copy_filters
+        post :copy_properties
+        patch 'product_filter_values/:pfv_id', to: 'products#update_product_filter_value', as: :update_pfv
       end
       collection do
         get :search
@@ -45,7 +47,8 @@ Rails.application.routes.draw do
 
     end
     resources :categories, except: [:show] do
-      post :reorder_all
+      post :reorder_all_properties
+      post :reorder_filters
       post :add_filter
       post :add_filter_value
       delete 'remove_filter/:filter_id', to: 'categories#remove_filter', as: :remove_filter

@@ -32,7 +32,7 @@ class Catalog::Category < ActiveRecord::Base
     self.save!
   end
 
-  def reorder_all
+  def reorder_all_properties
     category_properties_ids = category_properties.pluck(:id)
     products_ids = products.pluck(:id)
     products_properties_groups = Catalog::ProductProperty.
@@ -63,13 +63,20 @@ class Catalog::Category < ActiveRecord::Base
     filter
   end
 
-  # def add_filter_value(filter_value)
-  #   filter_value.strip!
-  #   filter_value_search = filter_value.mb_chars.downcase.to_s
-  #   filter_value = Catalog::FilterValue.where('LOWER(name) = ?', filter_value_search).first
-  #   filter_value ||= Catalog::FilterValue.create(name: filter_value)
-  #   filter_values << filter_value
-  # end
+  def reorder_filter_values=(values)
+    return unless values.present?
+    values.each do |filter_value_id, position_hash|
+      Catalog::FilterValue.find(filter_value_id).update(position_hash.permit(:position))
+    end
+  end
+
+  def reorder_filters=(values)
+    return unless values.present?
+
+    values.each do |filter_id, position_hash|
+      Catalog::CategoryFilter.find(filter_id).update(position_hash.permit(:position))
+    end
+  end
 
   def filter_values_for()
   end

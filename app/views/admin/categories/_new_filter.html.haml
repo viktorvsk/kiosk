@@ -1,4 +1,4 @@
-%li.list-group-item
+%li.list-group-item.active
   = form_for Catalog::Filter.new, url:  admin_category_add_filter_path(@category), method: :post, remote: true do |f|
     .input-group
       = f.text_field :name, class: 'form-control'

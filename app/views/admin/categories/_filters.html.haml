@@ -1,4 +1,4 @@
-%ul.list-group{ 'data-sortable' => 'category-filters', 'data-category-id' => category.id }
-  #filters= render partial: 'admin/categories/filter', collection: category.category_filters.sort_by(&:position), as: :filter
+%ul.list-group#filters{ 'data-sortable' => 'category-filters', 'data-url' => admin_category_reorder_filters_path(@category) }
+  = render partial: 'admin/categories/filter', collection: category.category_filters.sort_by(&:position), as: :filter
 %ul.list-group
   = render 'admin/categories/new_filter'

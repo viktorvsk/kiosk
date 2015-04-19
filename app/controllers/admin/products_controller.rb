@@ -1,5 +1,7 @@
 class Admin::ProductsController < Admin::BaseController
-  before_action :set_product, only: [:edit, :show, :update, :destroy, :bind, :unbind, :recount]
+  before_action :set_product, only: [:edit, :show, :update, :destroy, :bind,
+                                    :unbind, :recount, :copy_filters,
+                                    :copy_properties, :update_product_filter_value]
   after_action :set_vendor_product, :recount_product, only: [:bind, :unbind]
 
   # GET /admin/products
@@ -100,6 +102,21 @@ class Admin::ProductsController < Admin::BaseController
     model = URI.decode params[:model]
     product = Catalog::Product.create_from_marketplace(url, category: category, model: model)
     vendor_product = Vendor::Product.ransack(model_cont: model).result.bind_to(product)
+    head 200
+  end
+
+  def copy_filters
+    @product.copy_filters_from_category
+    redirect_to edit_admin_product_url(@product), notice: 'Фильтры скопированы'
+  end
+
+  def copy_properties
+    @product.copy_properties_from_category
+    redirect_to edit_admin_product_url(@product), notice: 'Характеристики скопированы'
+  end
+
+  def update_product_filter_value
+    @product.product_filters.find(params[:pfv_id]).update(catalog_filter_value_id: params[:new_id].to_i)
     head 200
   end
 

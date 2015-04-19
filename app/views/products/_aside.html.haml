@@ -1,4 +1,4 @@
-- if current_user.admin?
+- if current_user.try(:admin?)
   .panel.panel-default
     .panel-heading
       %h3.panel-title Информация о поставщиках
