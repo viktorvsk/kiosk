@@ -1,0 +1,19 @@
+.col-sm-4
+  .product.well
+    .text-right
+      .product_articul
+        Артикул:
+        = product.id
+    .text-center
+      - if product.images.present?
+        .product_image
+          .thumbnail
+            = link_to product_path(product) do
+              = image_tag product.images.first, class: 'img-responsive'
+      .product_name
+        = link_to product.name, product_path(product)
+      Добавить в сравнение
+      .product_price
+        = product.price
+        грн.
+

@@ -4,15 +4,21 @@ class ProductsController < CatalogController
   # GET /products
   # GET /products.json
   def index
-    @q = Catalog::Product.ransack
-    @products = Catalog::Product.page(params[:page])
+    @newest = Catalog::Product.top(:newest)
+    @homepage = Catalog::Product.top(:homepage)
+    @hit = Catalog::Product.top(:hit)
   end
 
   def search
-    params[:q].each_value do |v| v.strip! end if params[:q]
+    params[:q].each_value { |v| v.strip! } if params[:q]
     @q = Catalog::Product.ransack(params[:q])
-    @products = @q.result.order('created_at DESC').page(params[:page])
-    render :index
+    @all_products = @q.result.order('price ASC')
+    @products = @all_products.page(params[:page])
+    # TODO: hack the fuck
+    @grouped_hash = @all_products.select('catalog_products.*').group('price, catalog_category_id').count
+    @grouped_hash = @grouped_hash.map do |k,v|
+      [Catalog::Category.select(:name).find(k).name, v]
+    end
   end
 
   # GET /products/1

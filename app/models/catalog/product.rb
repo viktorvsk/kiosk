@@ -34,6 +34,10 @@ class Catalog::Product < ActiveRecord::Base
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
 
+    def top(top_name)
+      where("info->'#{top_name}' = '1'")
+    end
+
     def filter(fvalues_ids)
       grouped = Catalog::FilterValue.where(id: fvalues_ids).to_group
       query = []
