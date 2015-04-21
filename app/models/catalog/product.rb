@@ -162,7 +162,10 @@ class Catalog::Product < ActiveRecord::Base
         remove_property(property_name)
       end
     else
-      product_properties.create(property: property, name: property_value) if property_value.present?
+      if property_value.present?
+        product_properties.new(property: property, name: property_value)
+        save if persisted?
+      end
     end
   end
 
