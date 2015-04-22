@@ -76,9 +76,6 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :filters, except: [:show] do
-
-    end
     resources :confs, except: [:show]
     resources :markups, except: [:show]
     resources :orders, except: [:show]
