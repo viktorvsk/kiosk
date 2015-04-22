@@ -1,5 +1,5 @@
 class Catalog::Category < ActiveRecord::Base
-  store_accessor :info, :tax, :tax_max, :tax_threshold
+  store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
   has_many :vendor_products, through: :products, class_name: ::Vendor::Product
@@ -15,6 +15,7 @@ class Catalog::Category < ActiveRecord::Base
   has_many :filter_values, through: :category_filter_values
   has_many :properties, through: :category_properties
   belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id
+  has_one :seo, as: :seoable, dependent: :destroy
 
   def tax_for(value)
     value = value.to_f.ceil

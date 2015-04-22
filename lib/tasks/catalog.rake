@@ -8,25 +8,59 @@ namespace :catalog do
     puts 'Deleted poperties, category properties, product properties and property values'
   end
 
-  namespace :product do
+  desc 'Import Taxons from JSON file'
+  task import_taxons: :environment do
+    taxons = JSON.parse File.read Rails.root.join('tmp', 'taxons.json')
+    taxons.each do |taxon|
+      parent = if taxon['parent'].present?
+        Catalog::Taxon.where(name: taxon['parent']).first_or_create!
+      end
+      Catalog::Taxon.where(name: taxon['name']).first_or_create.update(parent: parent)
+      print '+'
+    end
+    print "\n"
+  end
 
-    desc 'Import only filters'
-    task import_filters: :environment do
-      files = Dir.glob Rails.root.join('tmp/products/*.json')
-      files.each do |file|
-        products = JSON.parse File.read file
-        products.map do |product|
-          next unless product['filters'].present?
-          begin
-            Catalog::Product.where(name: product['name']).first.update(filters: product['filters'])
+  desc 'Import Categories from JSON file'
+  task import_categories: :environment do
+    categories = JSON.parse File.read Rails.root.join('tmp', 'prototypes.json')
+    categories.each do |category|
+      cat = Catalog::Category.where(name: category['name']).first_or_create
+      if category['taxon'].present?
+        category['catalog_taxon_id'] = Catalog::Taxon.find_by_name(category['taxon']).id
+      end
+      cat.update(category.except('taxon', 'seo'))
+      cat.build_seo unless cat.seo
+      cat.seo.update(category['seo']) rescue nil
+      print '+'
+    end
+    print "\n"
+  end
+
+
+  desc 'Import only filters'
+  task import_filters: :environment do
+    files = Dir.glob Rails.root.join('tmp/products/*.json')
+    files.each do |file|
+      products = JSON.parse File.read file
+      products.map do |product|
+        next unless product['filters'].present?
+        begin
+          p = Catalog::Product.where(name: product['name']).first
+          if p.present?
+            p.update(filters: product['filters'])
             print '+'
-          rescue
-            print '-'
+          else
+            print '.'
           end
-
+        rescue
+          print '-'
         end
       end
     end
+  end
+
+  namespace :product do
 
     desc 'Import products from JSON files from tmp/products_json/*.json'
     task import: :environment do
@@ -58,6 +92,8 @@ namespace :catalog do
 
       end
     end
+
+
 
     desc 'Reset catalog'
     task reset: :environment do
