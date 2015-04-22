@@ -67,7 +67,7 @@ end
 
 desc "Install assets with bower."
 task :bower_install => :environment do
-  queue! %(rake bower:install)
+  queue! %(RAILS_ENV=production bundle exec rake bower:install)
 end
 
 desc "Restart Resque workers"

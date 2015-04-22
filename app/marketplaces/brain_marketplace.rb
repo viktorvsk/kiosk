@@ -38,7 +38,7 @@ class BrainMarketplace < BasicMarketplace
       description: page.at_css('.description').inner_html.strip,
       images: page.css('.thumbs_list a').map { |a| URI.join('http://brain.com.ua', a['href']).to_s },
       properties: properties,
-      category: page.at_css('.crumbs a')[1].text.strip,
+      category: page.css('.crumbs a')[1].text.strip,
       url: @query
     }
   end
