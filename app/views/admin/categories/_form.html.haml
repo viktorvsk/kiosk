@@ -3,7 +3,7 @@
     = form_for(@category, url: @category.persisted? ? admin_category_path(@category) : admin_categories_path) do |f|
       .col-xs-12
         = render 'shared/error_messages', object: f.object
-      .col-sm-4
+      .col-sm-3
         %h3 Основное
         %ul.list-group
           %li.list-group-item= field_for(f, :name)
@@ -12,14 +12,19 @@
           %li.list-group-item= field_for(f, :tax_threshold)
           %li.list-group-item= field_for(f, :tax)
           %li.list-group-item= field_for(f, :tax_max)
+      .col-sm-9
+        %h3 Описание
+        %ul.list-group
+          %li.list-group-item
+            = field_for f, :description, :cktext_area, ckeditor: { language: :ru, toolbar: :mini }
         .form-actions
           = link_to 'Обновить позиции', admin_category_reorder_all_properties_path(@category), class: 'btn btn-default', method: :post, remote: :true if @category.persisted?
           = f.submit f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
-    - if @category.persisted?
+  - if @category.persisted?
+    .row
       .col-sm-4
         %h3 Характеристики
         = render 'admin/categories/properties', category_properties: @category.category_properties
-
       .col-sm-4
         %h3 Фильтры
         = render 'admin/categories/filters', category: @category

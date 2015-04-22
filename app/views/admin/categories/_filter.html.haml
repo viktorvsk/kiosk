@@ -4,11 +4,6 @@
       %i.glyphicon.glyphicon-remove
   %h4
     = filter.display_name
-    %sup
-      %i
-        [
-        = filter.name
-        ]
   %hr/
   %ul.list-group{ 'data-sortable' => 'filter-values' }
     = render filter.values.sort_by(&:position)
