@@ -1,6 +1,7 @@
 ActiveAdmin.register Catalog::Taxon do
   actions :all, except: [:show]
   menu parent: 'Каталог'
+  filter :name
   sortable tree: true,
            max_levels: 0,               # infinite indent levels
            protect_root: false,         # allow root items to be dragged
@@ -15,6 +16,14 @@ ActiveAdmin.register Catalog::Taxon do
 
   index :as => :sortable do
     label :name # item content
+    actions
+  end
+
+  form do |f|
+    inputs 'Детали' do
+      input :name
+      input :slug
+    end
     actions
   end
 end

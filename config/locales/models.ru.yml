@@ -1,6 +1,22 @@
 ru:
   activerecord:
     models:
+      order:
+        one: Заказ
+        many: Заказ
+        other: Заказы
+      catalog/brand:
+        one: Бренд
+        many: Бренды
+        other: Бренды
+      catalog/product_property:
+        one: Характеристика товара
+        many: Характеристики товара
+        other: Характеристики товара
+      catalog/property:
+        one: Характеристика
+        many: Характеристики
+        other: Характеристики
       catalog/filter:
         one: Фильтр
         many: Фильтров
@@ -18,6 +34,15 @@ ru:
         many: Пользователи
         other: Пользователи
     attributes:
+      image:
+        attachment: Файл
+      catalog/filter:
+        name: Название
+        display_name: Отображаемое название
+      catalog/filter_value:
+        name: Название
+        display_name: Отображаемое название
+        filter: Фильтр
       catalog/taxon:
         name: Название
         slug: Ссылка
@@ -34,6 +59,8 @@ ru:
         tax: Наценка ниже
         tax_max: Наценка выше
         tax_threshold: Порог наценки
+        description: Описание
+        catalog_taxon_id: Меню
       catalog/property:
         name: Название
       catalog/product:
@@ -57,6 +84,8 @@ ru:
       catalog/product_property:
         property_name: Характеристика
         name: Значение
+        product: Товар
+        property: Характеристика
 
       vendor/merchant:
         name: Название
