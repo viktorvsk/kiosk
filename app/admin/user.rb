@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   permit_params :email, :password, :password_confirmation
-
+  menu priority: 1, parent: "CRM"
   index do
     selectable_column
     id_column

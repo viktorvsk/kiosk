@@ -1,6 +1,14 @@
 ru:
   activerecord:
     models:
+      catalog/filter:
+        one: Фильтр
+        many: Фильтров
+        other: Фильтры
+      catalog/filter_value:
+        one: Значение фильтра
+        many: Значения фильтров
+        other: Значения фильтров
       catalog/taxon:
         one: Указатель
         many: Указатели
