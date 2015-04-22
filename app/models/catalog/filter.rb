@@ -16,11 +16,11 @@ class Catalog::Filter < ActiveRecord::Base
 
   def add_value(val_name, postfix = nil)
     return unless val_name.present?
-    val_name.strip!
+    val_name = val_name.strip
     disp_name = val_name
     val_name = "#{val_name} (#{postfix})" if postfix.present?
     val_name_search = val_name.mb_chars.downcase
     value = Catalog::FilterValue.where('LOWER(name) = ?', val_name_search).first
-    values.create!(name: val_name, display_name: disp_name) unless value
+    value || values.create!(name: val_name, display_name: disp_name)
   end
 end

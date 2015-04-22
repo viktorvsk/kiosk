@@ -15,11 +15,11 @@ class Catalog::Product < ActiveRecord::Base
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :product_properties, class_name: Catalog::ProductProperty,
                                 foreign_key: :catalog_product_id,
-                                dependent: :destroy,
+                                dependent: :delete_all,
                                 autosave: true
   has_many :product_filters, class_name: Catalog::ProductFilterValue,
                      foreign_key: :catalog_product_id,
-                     dependent: :destroy,
+                     dependent: :delete_all,
                      autosave: true
   has_many :properties, through: :product_properties
   has_many :images, as: :imageable, dependent: :destroy
@@ -176,18 +176,28 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def filters=(values)
+    return if category.blank? || category.new_record?
+    values.uniq{ |hs| hs.keys.first }.each do |filter|
+      f_name = filter.keys.first
+      f_val = filter.values.first
+      f = category.add_filter(f_name, category.name)
+      f_v = f.add_value(f_val, f.name)
+      product_filters.new(filter_value: f_v, filter: f)
+    end
+    save if persisted?
   end
 
   def properties=(values)
     values.uniq{ |hs| hs.keys.first }.each do |prop|
       set_property(prop.keys.first, prop.values.first)
-      #property = Catalog::Property.where(name: prop.keys.first).first_or_create
-      #product_properties.new(name: prop.values.first, property: property)
     end
   end
 
   def images=(values)
     values.each { |v| scrape_image(v) }
+  end
+
+  def evotex_images=(values)
   end
 
   def images_from_url
@@ -227,7 +237,8 @@ class Catalog::Product < ActiveRecord::Base
     when Catalog::Category
       super(value)
     else
-      raise ArgumentError, 'Expected Category or category name'
+      errors.add(:catalog_category_id, 'Expected Category or category name')
+      # raise ArgumentError, 'Expected Category or category name'
     end
   end
 

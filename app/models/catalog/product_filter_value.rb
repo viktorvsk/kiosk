@@ -1,5 +1,5 @@
 class Catalog::ProductFilterValue < ActiveRecord::Base
-  validates :product, :filter, presence: true
+  validates :product, :filter, presence: true, if: -> { product.present? }
   validates :catalog_product_id, uniqueness: { scope: :catalog_filter_id }
   belongs_to :product, class_name: Catalog::Product,
                        foreign_key: :catalog_product_id
