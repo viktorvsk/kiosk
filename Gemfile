@@ -14,7 +14,7 @@ gem 'resque', '1.25.2'
 # gem 'russian', '~> 0.6.0'
 
 # Robust
-# gem 'parallel'
+gem 'parallel'
 # gem 'activerecord-import', '0.4.0'
 # gem 'benchmark-ips', require: false
 

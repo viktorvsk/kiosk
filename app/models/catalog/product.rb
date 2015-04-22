@@ -3,7 +3,7 @@ class Catalog::Product < ActiveRecord::Base
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
   # include Slugable
-  MARKETPLACES = %W(rozetka hotline brain).map{ |m| "#{m}Marketplace".classify.constantize }
+  MARKETPLACES = %W(rozetka hotline brain yugcontract).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name,
@@ -72,8 +72,8 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def search_marketplaces_by_model(model)
-      MARKETPLACES.map do |m|
-        m.new(model).search
+      Parallel.map(MARKETPLACES, in_processes: MARKETPLACES.count) do |marketplace|
+        marketplace.new(model).search
       end.flatten
     end
 
