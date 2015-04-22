@@ -71,9 +71,19 @@ class Catalog::Product < ActiveRecord::Base
       create(params)
     end
 
+    # def search_marketplaces_by_model(model)
+    #   MARKETPLACES.map do |m|
+    #     m.new(model).search
+    #   end.flatten
+    # end
+
     def search_marketplaces_by_model(model)
-      Parallel.map(MARKETPLACES, in_processes: MARKETPLACES.count) do |marketplace|
-        marketplace.new(model).search
+      Parallel.map(MARKETPLACES, in_threads: MARKETPLACES.count) do |marketplace|
+        begin
+          marketplace.new(model).search
+        rescue Exception
+          nil
+        end
       end.flatten
     end
 
