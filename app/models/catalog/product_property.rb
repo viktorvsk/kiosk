@@ -7,6 +7,7 @@ class Catalog::ProductProperty < ActiveRecord::Base
   belongs_to :product, class_name: Catalog::Product,
                        foreign_key: :catalog_product_id
   delegate :category, to: :product
+  scope :with_value, -> { where("name IS NOT NULL AND name != '' ") }
 
   def property_name
     property.try(:name)
