@@ -99,11 +99,16 @@ namespace :catalog do
     task reset: :environment do
 
       Catalog::Product.transaction do
-        print 'Deleting products...'
-        t1 = Time.now
+        puts 'Destroying products'
         Catalog::Product.destroy_all
-        t2 = (Time.now - t1).round(2)
-        print " Deleted in #{t2}.\n"
+        puts 'Destroying properties'
+        Catalog::Property.destroy_all
+        puts 'Destroying filters'
+        Catalog::Filter.destroy_all
+        puts 'Destroying categories'
+        Catalog::Category.destroy_all
+        puts 'Destroying taxons'
+        Catalog::Taxon.destroy_all
       end
     end
 
