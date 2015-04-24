@@ -1,0 +1,38 @@
+%nav.navbar.navbar-default.navbar-inverse.taxons
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#taxons"}, :aria => {:expanded => "false", :controls => "navbar"} }
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      .navbar-brand.hidden-lg Навигация
+    #taxons.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - Catalog::Taxon.includes(:category).roots.each do |root_taxon|
+          %li.dropdown
+            = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+              = root_taxon.name
+              .text-center
+                %span.caret
+            %ul.dropdown-menu
+              .container-fluid
+                - root_taxon.children.in_groups_of(4, false).each do |chapter_taxon_group|
+                  .row
+                    - chapter_taxon_group.each do |chapter_taxon|
+
+                      .col-sm-3
+                        %h4= chapter_taxon.name
+                        %ul
+                          - chapter_taxon.children.each do |category_taxon|
+                            %li
+                              - if category_taxon.category
+                                = link_to category_taxon.name, category_path(category_taxon.category)
+                              - else
+                                = category_taxon.name
+:erb
+  <style>
+    .taxons .dropdown{
+      width: <%= (100.0 / Catalog::Taxon.roots.count)%>%;
+    }
+  </style>

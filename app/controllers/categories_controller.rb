@@ -10,12 +10,13 @@ class CategoriesController < CatalogController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @products = @category.products.page(params[:page])
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = Category.find(params[:id])
+      @category = Catalog::Category.find(params[:id])
     end
 
 end

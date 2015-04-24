@@ -1,10 +1,16 @@
 .page-header
-  = link_to categories_path, :class => 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to edit_category_path(@category), :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show category
+  %h1= @category.name
+.row
+  .col-md-3
+    %h2 Фильтры
+    - @category.category_filters.sort_by(&:position).each do |filter|
+      %h5= filter.display_name
+      - filter.values.sort_by(&:position).each do |filter_value|
+        %label= check_box :filter, filter_value.id, class: 'category-filter', 'data-id' => filter_value.id
+        = filter_value.display_name
+        %br/
+      %hr/
 
-%dl.dl-horizontal
+  .col-md-9
+    %h2 Результат поиска
+    = render collection: @products, partial: 'products/search_card', as: :product

@@ -34,8 +34,16 @@ class Catalog::Product < ActiveRecord::Base
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
 
+    def ransackable_scopes(auth_object = nil)
+      [:filters_cont]
+    end
+
     def top(top_name)
       where("info->'#{top_name}' = '1'")
+    end
+
+    def filters_cont(filters_str)
+      filter(filters_str.split(',').compact)
     end
 
     def filter(fvalues_ids)

@@ -17,7 +17,7 @@ class ProductsController < CatalogController
     # TODO: hack the fuck
     @grouped_hash = @all_products.select('catalog_products.*').group('price, catalog_category_id').count
     @grouped_hash = @grouped_hash.map do |k,v|
-      [Catalog::Category.select(:name).find(k).name, v]
+      [Catalog::Category.select(:id, :name).find(k), v]
     end
   end
 
