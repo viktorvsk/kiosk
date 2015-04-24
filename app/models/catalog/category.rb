@@ -88,7 +88,6 @@ class Catalog::Category < ActiveRecord::Base
   private
 
   def recount_products
-    byebug
     Catalog::CategoryProductsUpdater.async_update(id) if info_changed?
   end
 
