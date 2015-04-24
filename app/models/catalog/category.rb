@@ -1,4 +1,5 @@
 class Catalog::Category < ActiveRecord::Base
+  after_save :recount_products
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
@@ -84,7 +85,11 @@ class Catalog::Category < ActiveRecord::Base
     end
   end
 
-  def filter_values_for()
+  private
+
+  def recount_products
+    byebug
+    Catalog::CategoryProductsUpdater.async_update(id) if info_changed?
   end
 
 end
