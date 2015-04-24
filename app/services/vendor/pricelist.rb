@@ -97,12 +97,13 @@ module Vendor
     def batch_update( products )
       sql = products.compact.map do |p|
         attributes_to_update = []
-        p.attributes.keys.select{ |q| q.in?(UPDATE_ATTRIBUTES) }.each do |att|
-          next unless p[att].to_s.present?
-          attributes_to_update << "#{att} = #{p[att]}"
-        end
-        attributes_to_update = attributes_to_update.join(", ")
-        expression = "UPDATE vendor_products SET #{attributes_to_update} WHERE articul = '#{p['articul']}';"
+        # p.attributes.keys.select{ |q| q.in?(UPDATE_ATTRIBUTES) }.each do |att|
+        #   next unless p[att].to_s.present?
+        #   attributes_to_update << "#{att} = #{p[att]}"
+        # end
+        # attributes_to_update = attributes_to_update.join(", ")
+        info_attrs = p.info.to_json
+        expression = %(UPDATE "vendor_products" SET "price" = #{p['price']}, "info" = '#{info_attrs}' WHERE "articul" = '#{p['articul']}';)
       end.join
       ActiveRecord::Base.connection.execute(sql)
     end
