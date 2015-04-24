@@ -91,7 +91,7 @@ module Vendor
       end
 
       def select_rrc
-        all.active.rrc.first.try(:price)
+        all.active.max_by(&:price).try(:price)
       end
     end
 

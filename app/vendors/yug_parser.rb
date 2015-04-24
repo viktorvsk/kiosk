@@ -1,13 +1,17 @@
 class YugParser < ::ActivePricelist::Base
-  def transform
 
+
+  private
+
+  def transform
     @currency_order.each do |curr|
-      if @product[curr].present? and @product[curr].to_f.ceil > 0
+      if @product[curr].present? && @product[curr].to_f.ceil > 0
         @product['price'] = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
         if curr == 'rrc'
+          @product['rrc'] = @product['price']
           @product['is_rrc'] = true
         else
-          @product['price'] = (@product['price'].to_f * @rates[curr].to_f * (100 - @discount.to_i)/100).ceil
+          @product['price'] = (@product['price'].to_f * @rates[curr].to_f * (100 - @discount.to_f.ceil)/100).ceil
         end
         break
       end
@@ -18,7 +22,5 @@ class YugParser < ::ActivePricelist::Base
       @product['in_stock_kiev']    = !@not_in_stock.any?{ |sign| @product['stock_kiev'] =~ /#{sign}/ }
       @product['in_stock']         = @product['in_stock_kharkov'] || @product['in_stock_kiev']
     end
-
-
   end
 end
