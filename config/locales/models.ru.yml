@@ -5,34 +5,42 @@ ru:
         one: Заказ
         many: Заказ
         other: Заказы
+        few: Заказа
       catalog/brand:
         one: Бренд
         many: Бренды
         other: Бренды
+        few: Бренда
       catalog/product_property:
         one: Характеристика товара
         many: Характеристики товара
         other: Характеристики товара
+        few: Характеристики товара
       catalog/property:
         one: Характеристика
         many: Характеристики
         other: Характеристики
+        few: Характеристики
       catalog/filter:
         one: Фильтр
         many: Фильтров
         other: Фильтры
+        few: Фильтра
       catalog/filter_value:
         one: Значение фильтра
         many: Значения фильтров
         other: Значения фильтров
+        few: Значения фильтров
       catalog/taxon:
         one: Указатель
         many: Указатели
+        few: Указателя
         other: Меню
       user:
         one: Пользователь
         many: Пользователи
         other: Пользователи
+        few: Пользователя
     attributes:
       image:
         attachment: Файл
