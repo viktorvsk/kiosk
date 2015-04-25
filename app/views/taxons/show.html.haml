@@ -1,0 +1,23 @@
+.row
+  .col-sm-2.col-md-1
+    = image_tag @taxon.image, class: 'img-responsive'
+  .col-sm-10.col-md-11
+    %h1= @taxon.name
+%ul.list-group
+  - @taxon.children.includes(:image, :category).joins(:category).each do |child_taxon|
+    %li.list-group-item
+      .row
+        .col-sm-2.col-md-1
+          = image_tag child_taxon.image, class: 'img-responsive'
+        .col-sm-10.col-md-11
+          - if child_taxon.children.present?
+            = link_to child_taxon.name, taxon_path(child_taxon)
+          - else
+            - if child_taxon.category.present?
+              = link_to child_taxon.category.name, category_path(child_taxon.category)
+              %hr/
+              = render partial: 'products/search_card', collection: child_taxon.category.products.includes(:images).order('RANDOM()').limit(3), as: :product
+            - else
+              = child_taxon.name
+
+

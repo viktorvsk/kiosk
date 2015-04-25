@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   devise_for :users
 
   mount Ckeditor::Engine => '/ckeditor'
-  resources :products,     only: [:index, :show] do
+  get '/p/:slug/:id', to: 'products#show', as: :p
+  resources :products, only: [:index, :show], path: 'p' do
     collection do
       get :search
     end
   end
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :show], path: 'c'
+  resources :taxons, only: [:show], path: 't'
   resources :orders
   resource :user, only: [:edit, :update]
 

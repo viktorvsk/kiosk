@@ -9,22 +9,22 @@
       .navbar-brand.hidden-lg Навигация
     #taxons.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        - Catalog::Taxon.includes(:category).roots.each do |root_taxon|
+        - @taxons.roots.includes(:image).sort_by(&:position).each do |root_taxon|
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+              = image_tag(root_taxon.image)
               = root_taxon.name
               .text-center
                 %span.caret
             %ul.dropdown-menu
               .container-fluid
-                - root_taxon.children.in_groups_of(4, false).each do |chapter_taxon_group|
+                - root_taxon.children.select{ |t| t.children.present? }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
                   .row
                     - chapter_taxon_group.each do |chapter_taxon|
-
                       .col-sm-3
-                        %h4= chapter_taxon.name
+                        %h4= link_to chapter_taxon.name, taxon_path(chapter_taxon)
                         %ul
-                          - chapter_taxon.children.each do |category_taxon|
+                          - chapter_taxon.children.joins(:category).includes(:category).sort_by(&:position).each do |category_taxon|
                             %li
                               - if category_taxon.category
                                 = link_to category_taxon.name, category_path(category_taxon.category)
