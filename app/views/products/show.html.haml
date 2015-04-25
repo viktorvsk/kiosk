@@ -39,7 +39,7 @@
 
     .tab-content
       #properties.tab-pane.active.fade.in
-        .jumbotrons= render 'product_properties', product_properties: @product.product_properties.with_value
+        .jumbotrons= render 'product_properties', product_properties: @product.product_properties.includes(:property).with_value
       #description.tab-pane.fade
         .jumbotron
           - if @product.video.present?

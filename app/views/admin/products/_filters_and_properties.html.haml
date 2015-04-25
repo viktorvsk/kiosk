@@ -1,11 +1,11 @@
 .row
   .col-sm-6
     %h3.text-center Фильтры
-    = render 'admin/products/product_filters', product_filters: @product.product_filters
+    = render 'admin/products/product_filters', product_filters: @product.product_filters.includes(:product, :filter_value, :filter => [:values])
     .text-right
       = link_to 'Скопировать с категории', copy_filters_admin_product_path(@product), class: 'btn btn-primary', method: :post
   .col-sm-6
     %h3.text-center Характеристики
-    = render 'admin/products/properties', product_properties: @product.product_properties
+    = render 'admin/products/properties', product_properties: @product.product_properties.includes(:product, :property)
     .text-right
       = link_to 'Скопировать с категории', copy_properties_admin_product_path(@product), class: 'btn btn-primary', method: :post
