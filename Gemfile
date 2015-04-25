@@ -11,7 +11,7 @@ gem 'resque', '1.25.2'
 
 
 # Translations
-# gem 'russian', '~> 0.6.0'
+gem 'russian', '~> 0.6.0'
 
 # Robust
 gem 'parallel'

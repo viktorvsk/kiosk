@@ -116,6 +116,10 @@ class Catalog::Product < ActiveRecord::Base
     end
   end
 
+  def slug
+    self[:slug].presence || Russian.translit(name).parameterize
+  end
+
   def recount
     return if fixed_price?
     rrc = vendor_products.select_rrc
