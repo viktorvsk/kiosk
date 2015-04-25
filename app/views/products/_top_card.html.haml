@@ -11,10 +11,10 @@
       - if product.images.present?
         .product_image
           .thumbnail
-            = link_to product_path(product) do
+            = link_to p_path(slug: product.slug, id: product.id) do
               = image_tag product.images.first, class: 'img-responsive'
       .product_name
-        = link_to product.name, product_path(product)
+        = link_to product.name, p_path(slug: product.slug, id: product.id)
       Добавить в сравнение
       .product_price
         = product.price

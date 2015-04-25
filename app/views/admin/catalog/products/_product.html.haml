@@ -14,7 +14,7 @@
             &nbsp;
             %small.label.label-info= product.id
           .pull-right
-            = link_to product_path(product), target: :_blank, class: 'btn btn-xs btn-primary' do
+            = link_to edit_admin_product_path(product), target: :_blank, class: 'btn btn-xs btn-primary' do
               %i.glyphicon.glyphicon-new-window
             = link_to admin_product_path(product), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?', remote: true do
               %i.glyphicon.glyphicon-remove

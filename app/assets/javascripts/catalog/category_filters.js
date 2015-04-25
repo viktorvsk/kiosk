@@ -1,21 +1,39 @@
 /*jslint browser:true*/
 (function () {
 
-  var checkBoxSelector;
-  checkBoxSelector = '.category-filter';
-
+  var anySelector, filterSelector, brandSelector;
+  anySelector = '[data-price-min], [data-price-max], [data-filter], [data-brand]';
+  filterSelector = '[data-filter]';
+  brandSelector = '[data-brand]';
   function CatalogCategoryFiltersManager() {
 
     function onFilter() {
-      var ids = [];
-      $(checkBoxSelector + ':checked').each(function (index, item) {
-        ids.push($(item).data('id'));
+      var filterIDs = [],
+        brandIDs = [],
+        args = [],
+        priceMin = $('[data-price-min]').val(),
+        priceMax = $('[data-price-max]').val();
+
+      $(filterSelector + ':checked').each(function (index, item) {
+        filterIDs.push($(item).data('filter'));
       });
-      console.log(ids.join(','));
+
+      $(brandSelector + ':checked').each(function (index, item) {
+        brandIDs.push($(item).data('brand'));
+      });
+
+      args.push(['f', filterIDs].join('='));
+      args.push(['b', brandIDs].join('='));
+      args.push(['min', priceMin].join('='));
+      args.push(['max', priceMax].join('='));
+
+      console.log(args.join('&'));
+
+
     }
 
     this.init = function () {
-      $(document).on('change', checkBoxSelector, onFilter);
+      $(document).on('change', anySelector, onFilter);
     };
   }
 
@@ -23,7 +41,7 @@
   window.Kiosk.CatalogCategoryFiltersManager = new CatalogCategoryFiltersManager();
 
   $(document).ready(function () {
-    if ($(checkBoxSelector).size()) {
+    if ($(anySelector).size()) {
 
       window.Kiosk.CatalogCategoryFiltersManager.init();
     }

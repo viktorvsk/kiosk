@@ -3,6 +3,7 @@ class Catalog::Category < ActiveRecord::Base
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
+  has_many :brands, through: :products
   has_many :vendor_products, through: :products, class_name: ::Vendor::Product
   has_many :category_properties, class_name: Catalog::CategoryProperty,
                                  foreign_key: :catalog_category_id,
