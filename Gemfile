@@ -122,7 +122,7 @@ group :development do
   gem 'awesome_print'
 
   gem 'quiet_assets'
-  # gem 'bullet'
+  gem 'bullet'
   # Works bad with js.erb render
   # gem 'rails_view_annotator'
   # gem 'xray-rails'
