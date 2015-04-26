@@ -11,15 +11,22 @@ class CategoriesController < CatalogController
   # GET /categories/1.json
   def show
     q = {
-      price_gteq: params[:price_min],
-      price_tteq: params[:price_max],
+      price_gteq: params[:min],
+      price_lteq: params[:max],
       name_cont: params[:name],
       brand_id_in: params[:b].to_s.split(','),
       filters_cont: params[:f]
     }
-    order = params[:o] == 'd' ? 'price DESC' : 'price ASC'
+    order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
+
     @all_products = @category.products.includes(:images).ransack(q).result(distinct: true)
     @products = @all_products.order(order).page(params[:page])
+    @filters_and_results_hash = {
+      filters: @category.category_filters.includes(filter: :values),
+      brands: @category.brands,
+      products: @products,
+      products_count: @all_products.count
+    }
   end
 
   private

@@ -2,7 +2,7 @@
 (function () {
 
   var anySelector, filterSelector, brandSelector;
-  anySelector = '[data-price-min], [data-price-max], [data-filter], [data-brand], [data-name]';
+  anySelector = '[data-price-min], [data-price-max], [data-filter], [data-brand], [data-name], [data-sort]';
   filterSelector = '[data-filter]';
   brandSelector = '[data-brand]';
 
@@ -15,6 +15,7 @@
         priceMin = $('[data-price-min]').val(),
         priceMax = $('[data-price-max]').val(),
         name = $('[data-name]').val(),
+        sort = $('[data-sort]').val(),
         url = $('h1').data('url');
 
       $(filterSelector + ':checked').each(function (index, item) {
@@ -30,6 +31,7 @@
       args.push(['min', priceMin].join('='));
       args.push(['max', priceMax].join('='));
       args.push(['name', name].join('='));
+      args.push(['o', sort].join('='));
 
       url = [url, args.join('&')].join('?');
 

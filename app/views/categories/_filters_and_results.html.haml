@@ -8,14 +8,29 @@
   %hr/
   %h5.text-center Цена
   .row
-    .col-sm-6= text_field :price_min, '', value: params[:price_min], class: 'form-control', 'data-price-min' => true
-    .col-sm-6= text_field :price_max, '', value: params[:price_max], class: 'form-control', 'data-price-max' => true
+    .col-sm-6
+      %label От
+      = text_field :price_min, '', value: params[:min], class: 'form-control', 'data-price-min' => true
+    .col-sm-6
+      %label До
+      = text_field :price_max, '', value: params[:max], class: 'form-control', 'data-price-max' => true
   %hr/
   %h5.text-center Производитель
   = render collection: brands, as: :brand, partial: 'categories/brand'
   = render collection: filters.sort_by(&:position), as: :filter, partial: 'categories/filter'
 .col-md-9
-  %h2 Результат поиска
+  .row
+    .col-md-8
+      %h2
+        Результат поиска
+        %small
+          (
+          = products_count
+          )
+    .col-md-4.text-right
+      Сортировать по цене:
+      = select_tag :o, options_for_select([['сначала самые дешевые','a'],['сначала самые дорогие','d']], params[:o]), 'data-sort' => true
+
   - if products.present?
     = render collection: products, partial: 'products/search_card', as: :product
   - else

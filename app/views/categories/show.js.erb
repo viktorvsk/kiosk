@@ -1,4 +1,4 @@
 (function(){
-  var partial = "<%= escape_javascript(render 'filters_and_results', filters: @category.category_filters.includes(filter: :values), brands: @category.brands, products: @products) %>"
+  var partial = "<%= escape_javascript(render 'filters_and_results', @filters_and_results_hash) %>"
   $('#filters_and_results').html(partial);
 })();
