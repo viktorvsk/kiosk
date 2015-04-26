@@ -3,23 +3,32 @@
 .row
   .col-md-3
     %h2 Фильтры
-    %h5 Цена
+    %hr/
+    %h5.text-center Название
     .row
-      .col-sm-6= text_field :price_min, '', class: 'form-control', 'data-price-min' => true
-      .col-sm-6= text_field :price_max, '', class: 'form-control', 'data-price-max' => true
-    %h5 Производитель
+      .col-xs-12
+        = text_field :name, '', class: 'form-control', 'data-name' => true, value: params[:name]
+    %hr/
+    %h5.text-center Цена
+    .row
+      .col-sm-6= text_field :price_min, '', value: params[:price_min], class: 'form-control', 'data-price-min' => true
+      .col-sm-6= text_field :price_max, '', value: params[:price_max], class: 'form-control', 'data-price-max' => true
+    %hr/
+    %h5.text-center Производитель
     - @category.brands.each do |brand|
+
       %label
-        = check_box :brand, brand.id, 'data-brand' => brand.id
+        = check_box :brand, brand.id, 'data-brand' => brand.id, checked: (params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b] )
         = brand.name
     - @category.category_filters.includes(filter: :values).sort_by(&:position).each do |filter|
-      %h5= filter.display_name
+      %hr/
+      %h5.text-center= filter.display_name
       - filter.values.sort_by(&:position).each do |filter_value|
         %label
-          = check_box :filter, filter_value.id, 'data-filter' => filter_value.id
+          = check_box :filter, filter_value.id, 'data-filter' => filter_value.id, checked: (params[:f].split(',').map(&:strip).include?(filter_value.id.to_s) if params[:f] )
           = filter_value.display_name
         %br/
-      %hr/
+
 
   .col-md-9
     %h2 Результат поиска

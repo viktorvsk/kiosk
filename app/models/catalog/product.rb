@@ -43,11 +43,11 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def filters_cont(filters_str)
-      filter(filters_str.split(',').compact)
+      filter(filters_str.to_s.split(',').compact)
     end
 
     def filter(fvalues_ids)
-      grouped = Catalog::FilterValue.where(id: fvalues_ids).to_group
+      grouped = Catalog::FilterValue.where(id: fvalues_ids.map(&:to_i)).to_group
       query = []
       grouped.each_value do |fvalues|
         ids = fvalues.map(&:id).join(', ')
@@ -60,6 +60,7 @@ class Catalog::Product < ActiveRecord::Base
             catalog_product_filter_values.catalog_filter_value_id IN (#{ids})
         )
       end
+
       query = query.join("\nINTERSECT\n")
       ids = ActiveRecord::Base.connection.execute(query).map{ |row| row['id'] }
       where(id: ids)

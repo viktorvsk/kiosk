@@ -1,3 +1,7 @@
+/*
+ *= require_tree ./catalog
+*/
+
 [data-vendor-scraper]{
   display: none;
 }
@@ -6,6 +10,9 @@ body{
   margin: 0;
   padding-top: 50px;
 }
+
+
+
 
 
 .taxons{
@@ -19,21 +26,35 @@ body{
     margin: auto;
 
   }
+
   .dropdown{
     position: static;
     text-align: center;
-    span{
+    vertical-align: middle!important;
 
-    }
   }
   .dropdown-menu{
     width: 100%;
     h4{
       border-bottom: #333 solid 1px;
+      font-weight: 800;
     }
     ul{
       list-style: none;
       padding: 0;
+    }
+
+
+
+
+  }
+
+  .taxon-name{
+    height: 3em;
+    span{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 
@@ -41,7 +62,40 @@ body{
     width: 100%;
   }
 
-  // @media (max-width: 1180px) {
+@media (max-width: 768px) {
+  & > ul{
+    margin: auto;
+    display: block;
+  }
+  .dropdown{
+      width: 100%!important;
+      display: block;
+      margin: auto;
+      text-align: left;
+      vertical-align: middle;
+      .taxon-img{
+        max-width: 100%;
+      }
+      img{
+        display: inline;
+        width: 100%;
+        vertical-align: middle;
+      }
+      .text-center, .taxon-name, .taxon-img{
+        display: inline!important;
+      }
+      h4{
+        text-align: center;
+        border: none;
+      }
+      a{
+        color: #fff;
+      }
+    }
+
+}
+
+  // @media (max-width: 960px) {
   //   .navbar-header {
   //       float: none;
   //   }

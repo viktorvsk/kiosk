@@ -6,14 +6,17 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      .navbar-brand.hidden-lg Навигация
+      .navbar-brand.hidden-md.hidden-lg Навигация
     #taxons.collapse.navbar-collapse
       %ul.nav.navbar-nav
         - @taxons.roots.includes(:image).sort_by(&:position).each do |root_taxon|
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-              = image_tag(root_taxon.image)
-              = root_taxon.name
+              .taxon-img= image_tag(root_taxon.image)
+              .taxon-name
+                %span= root_taxon.name
+              .hidden-xs
+                %br/
               .text-center
                 %span.caret
             %ul.dropdown-menu
