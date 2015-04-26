@@ -3,7 +3,7 @@ class Catalog::Product < ActiveRecord::Base
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
   # include Slugable
-  MARKETPLACES = %W(rozetka hotline brain yugcontract erc).map{ |m| "#{m}Marketplace".classify.constantize }
+  MARKETPLACES = %W(rozetka hotline brain erc).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name,
