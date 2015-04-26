@@ -9,7 +9,7 @@
     %ul.list-group
       - @grouped_hash.sort_by{ |arr| -arr.last.to_i }.each do |arr|
         %li.list-group-item
-          = link_to arr.first.name, category_path(arr.first.id, name: arr.first.name)
+          = link_to arr.first.name, category_path(arr.first.id, name: params[:q][:name_or_id_or_model_cont])
           %b= "(#{arr.last})"
   .col-sm-9
     = render collection: @products, partial: 'products/search_card', as: :product
