@@ -194,6 +194,10 @@ group :assets do
   # gem 'autoprefixer-rails'
 end
 
+group :profile do
+  gem 'ruby-prof'
+end
+
 # group :system_helpers do
 #   gem 'flog',                   require: false
 #   gem 'rubocop',                require: false

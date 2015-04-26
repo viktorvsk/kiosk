@@ -287,6 +287,7 @@ GEM
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-ole (1.2.11.8)
+    ruby-prof (0.15.6)
     ruby_parser (3.6.5)
       sexp_processor (~> 4.1)
     rubyzip (1.1.7)
@@ -385,6 +386,7 @@ DEPENDENCIES
   redis-rails
   resque (= 1.25.2)
   roo
+  ruby-prof
   russian (~> 0.6.0)
   sass-rails (~> 5.0)
   select2-rails
