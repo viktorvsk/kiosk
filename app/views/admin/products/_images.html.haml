@@ -3,7 +3,7 @@
     %h3.text-center Изображения
   .col-xs-12
     .row
-      = f.fields_for :images, f.object.images do |f_i|
+      = f.fields_for :images, f.object.images.includes(:imageable) do |f_i|
 
         - if f_i.object.persisted?
           .col-sm-2.col-md-2.col-lg-1
