@@ -1,4 +1,5 @@
 class Catalog::Taxon < ActiveRecord::Base
+  include Slugable
   before_create :set_position
   after_update :rerender_menu
   has_one :category, class_name: Catalog::Category, foreign_key: :catalog_taxon_id

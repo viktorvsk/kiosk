@@ -25,12 +25,12 @@
                   .row
                     - chapter_taxon_group.each do |chapter_taxon|
                       .col-sm-3
-                        %h4= link_to chapter_taxon.name, taxon_path(chapter_taxon)
+                        %h4= link_to chapter_taxon.name, t_path(id: chapter_taxon.id, slug: chapter_taxon.slug)
                         %ul
                           - chapter_taxon.children.joins(:category).includes(:category).sort_by(&:position).each do |category_taxon|
                             %li
                               - if category_taxon.category
-                                = link_to category_taxon.name, category_path(category_taxon.category)
+                                = link_to category_taxon.name, c_path(id: category_taxon.category.id, slug: category_taxon.slug)
                               - else
                                 = category_taxon.name
 :erb

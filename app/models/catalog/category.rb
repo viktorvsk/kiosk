@@ -1,4 +1,5 @@
 class Catalog::Category < ActiveRecord::Base
+  include Slugable
   after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true

@@ -14,7 +14,7 @@
             = link_to child_taxon.name, taxon_path(child_taxon)
           - else
             - if child_taxon.category.present?
-              = link_to child_taxon.category.name, category_path(child_taxon.category)
+              = link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category)
               %hr/
               = render partial: 'products/search_card', collection: child_taxon.category.products.includes(:images).order('RANDOM()').limit(3), as: :product
             - else

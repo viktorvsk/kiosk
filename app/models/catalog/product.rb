@@ -1,8 +1,9 @@
 require 'open-uri'
 class Catalog::Product < ActiveRecord::Base
+  include Slugable
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
-  # include Slugable
+  after_update :expire_homepage_tops_cache_fragment
   MARKETPLACES = %W(rozetka hotline brain erc).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
@@ -115,10 +116,6 @@ class Catalog::Product < ActiveRecord::Base
         end
       end
     end
-  end
-
-  def slug
-    self[:slug].presence || Russian.translit(name).parameterize
   end
 
   def recount
@@ -297,6 +294,10 @@ class Catalog::Product < ActiveRecord::Base
 
   ransacker :id do
     Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
+  end
+
+  def expire_homepage_tops_cache_fragment
+    ActionController::Base.new.expire_fragment 'homepage_tops'
   end
 
 end
