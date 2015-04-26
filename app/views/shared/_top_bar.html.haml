@@ -7,4 +7,6 @@
 .container-fluid
   .container
     .row
-      .col-xs-12= render 'shared/menu_bar'
+      .col-xs-12
+        - cache 'catalog_menu', skip_digest: true do
+          = render 'shared/menu_bar'

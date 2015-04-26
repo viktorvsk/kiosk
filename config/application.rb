@@ -28,6 +28,7 @@ module Kiosk
     config.autoload_paths += %W(#{config.root}/app/vendors)
     config.autoload_paths += %W(#{config.root}/app/marketplaces)
     config.autoload_paths += %W(#{config.root}/app/validators)
+    config.cache_store = :redis_store
 
 
   end

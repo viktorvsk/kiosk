@@ -15,6 +15,7 @@ gem 'russian', '~> 0.6.0'
 
 # Robust
 gem 'parallel'
+gem 'redis-rails'
 # gem 'activerecord-import', '0.4.0'
 # gem 'benchmark-ips', require: false
 
@@ -32,6 +33,7 @@ gem 'activeadmin_hstore_editor'
 gem 'ransack'
 gem 'ancestry'
 gem 'kaminari'
+
 
 # Settings
 gem 'figaro'

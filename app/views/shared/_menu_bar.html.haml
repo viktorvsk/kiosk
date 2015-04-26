@@ -21,7 +21,7 @@
                 %span.caret
             %ul.dropdown-menu
               .container-fluid
-                - root_taxon.children.select{ |t| t.children.present? }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
+                - root_taxon.children.select{ |t| t.children.present? && t.children.includes(:category).any?{ |c| c.category.present? } }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
                   .row
                     - chapter_taxon_group.each do |chapter_taxon|
                       .col-sm-3

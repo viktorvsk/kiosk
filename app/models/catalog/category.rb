@@ -1,5 +1,5 @@
 class Catalog::Category < ActiveRecord::Base
-  after_save :recount_products
+  after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
@@ -90,6 +90,10 @@ class Catalog::Category < ActiveRecord::Base
 
   def recount_products
     Catalog::CategoryProductsUpdater.async_update(id) if info_changed?
+  end
+
+  def rerender_menu
+    Catalog::Taxon.expire_menu_cache_fragment if catalog_taxon_id_changed?
   end
 
 end
