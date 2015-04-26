@@ -1,7 +1,6 @@
 class RozetkaMarketplace < BasicMarketplace
   HOST = /rozetka/
 
-
   private
 
   def search_query
@@ -13,33 +12,42 @@ class RozetkaMarketplace < BasicMarketplace
   end
 
   def search_results_mapper(product)
-    res = {
-      name: product.at_css('.g-i-list-title a').text.strip,
-      url: product.at_css('.g-i-list-title a')['href'],
-      image: product.at_css('.g-i-list-img img')['src']
-    }
-    res[:price] = if (node = product.at_css('.g-price-uah')) && node.present?
-      node.text.scan(/\d/).join.to_i
+    res = {}
+    res[:name]  = product.at_css('.g-i-list-title a').text.strip
+    res[:url]   = product.at_css('.g-i-list-title a')['href']
+    res[:image] = product.at_css('.g-i-list-img img')['src']
+    price_node  = product.at_css('.g-price-uah')
+
+    if price_node.present?
+      res[:price] = price_node.text.scan(/\d/).join.to_i
     else
       res[:do_not_show] = true
-      'Нет в наличии'
+      res[:price] = 'Нет в наличии'
     end
+
     res
+  rescue
+    nil
   end
 
   def product_page_scraper(page)
+    res = {}
     properties = page.css('.detail-chars-l-i').map do |row|
       {
         row.at_css('dt').text.strip => row.at_css('dd').text.strip
-      }
+      } rescue nil
     end
-    {
-      name: page.at_css('h1.detail-title').text.strip,
-      description: page.at_css('#short_text').inner_html.strip,
-      images: page.css('.detail-img-thumbs-l-i-link').map { |a| a['href'] },
-      properties: properties,
-      category: page.at_css('.producers h2').text.strip,
-      url: @query
-    }
+
+    res[:name]        = page.at_css('h1.detail-title').text.strip
+    res[:description] = page.at_css('#short_text').inner_html.strip rescue ''
+    res[:properties]  = properties.select(&:present?)
+    res[:url]         = @query
+    if URI.parse(@query).host =~ /bt/
+      res[:images]    = page.css('.detail-img-thumbs-l-i-link').map { |a| a['href'] } rescue []
+    end
+    # res[:category]    = page.at_css('.producers h2').text.strip
+
+    res
+
   end
 end
