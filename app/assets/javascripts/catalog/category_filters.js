@@ -2,9 +2,10 @@
 (function () {
 
   var anySelector, filterSelector, brandSelector;
-  anySelector = '[data-price-min], [data-price-max], [data-filter], [data-brand]';
+  anySelector = '[data-price-min], [data-price-max], [data-filter], [data-brand], [data-name]';
   filterSelector = '[data-filter]';
   brandSelector = '[data-brand]';
+
   function CatalogCategoryFiltersManager() {
 
     function onFilter() {
@@ -12,7 +13,9 @@
         brandIDs = [],
         args = [],
         priceMin = $('[data-price-min]').val(),
-        priceMax = $('[data-price-max]').val();
+        priceMax = $('[data-price-max]').val(),
+        name = $('[data-name]').val(),
+        url = $('h1').data('url');
 
       $(filterSelector + ':checked').each(function (index, item) {
         filterIDs.push($(item).data('filter'));
@@ -26,8 +29,15 @@
       args.push(['b', brandIDs].join('='));
       args.push(['min', priceMin].join('='));
       args.push(['max', priceMax].join('='));
+      args.push(['name', name].join('='));
 
-      console.log(args.join('&'));
+      url = [url, args.join('&')].join('?');
+
+      $.ajax({
+        url: url,
+        method: 'GET',
+        'dataType': 'script'
+      });
 
 
     }

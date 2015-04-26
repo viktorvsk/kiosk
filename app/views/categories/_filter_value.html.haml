@@ -1,0 +1,4 @@
+%label
+  = check_box :filter, filter_value.id, 'data-filter' => filter_value.id, checked: (params[:f].split(',').map(&:strip).include?(filter_value.id.to_s) if params[:f] )
+  = filter_value.display_name
+%br/

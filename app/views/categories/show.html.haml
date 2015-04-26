@@ -1,35 +1,4 @@
 .page-header
-  %h1= @category.name
-.row
-  .col-md-3
-    %h2 Фильтры
-    %hr/
-    %h5.text-center Название
-    .row
-      .col-xs-12
-        = text_field :name, '', class: 'form-control', 'data-name' => true, value: params[:name]
-    %hr/
-    %h5.text-center Цена
-    .row
-      .col-sm-6= text_field :price_min, '', value: params[:price_min], class: 'form-control', 'data-price-min' => true
-      .col-sm-6= text_field :price_max, '', value: params[:price_max], class: 'form-control', 'data-price-max' => true
-    %hr/
-    %h5.text-center Производитель
-    - @category.brands.each do |brand|
-
-      %label
-        = check_box :brand, brand.id, 'data-brand' => brand.id, checked: (params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b] )
-        = brand.name
-    - @category.category_filters.includes(filter: :values).sort_by(&:position).each do |filter|
-      %hr/
-      %h5.text-center= filter.display_name
-      - filter.values.sort_by(&:position).each do |filter_value|
-        %label
-          = check_box :filter, filter_value.id, 'data-filter' => filter_value.id, checked: (params[:f].split(',').map(&:strip).include?(filter_value.id.to_s) if params[:f] )
-          = filter_value.display_name
-        %br/
-
-
-  .col-md-9
-    %h2 Результат поиска
-    = render collection: @products, partial: 'products/search_card', as: :product
+  %h1{ 'data-url' => category_path(@category) }= @category.name
+.row#filters_and_results
+  = render 'filters_and_results', filters: @category.category_filters.includes(filter: :values), brands: @category.brands, products: @products

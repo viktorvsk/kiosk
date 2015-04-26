@@ -1,0 +1,3 @@
+%label
+  = check_box :brand, brand.id, 'data-brand' => brand.id, checked: (params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b] )
+  = brand.name
