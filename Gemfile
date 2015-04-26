@@ -10,6 +10,9 @@ gem 'execjs'
 gem 'resque', '1.25.2'
 
 
+# Scrape
+gem 'typhoeus'
+
 # Translations
 gem 'russian', '~> 0.6.0'
 

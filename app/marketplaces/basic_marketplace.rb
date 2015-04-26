@@ -1,5 +1,5 @@
 require 'nokogiri'
-require 'open-uri'
+require 'typhoeus'
 
 class BasicMarketplace
   attr_reader :products
@@ -8,8 +8,7 @@ class BasicMarketplace
   end
 
   def search
-    search_results = open(search_query)
-    html = search_results.read
+    html = Typhoeus.get(search_query, follow_location: true).body
     doc = Nokogiri::HTML(html)
     @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }
   end
