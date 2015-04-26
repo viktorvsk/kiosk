@@ -13,7 +13,7 @@ class ProductsController < CatalogController
     params[:q].each_value { |v| v.strip! } if params[:q]
     @q = Catalog::Product.includes(:images).ransack(params[:q])
     @all_products = @q.result
-    @products = @all_products.order('price ASC').page(params[:page])
+    @products = @all_products.zeros_last.order('price ASC').page(params[:page])
     # TODO: hack the fuck
     @grouped_hash = @all_products.select('catalog_products.id').group('catalog_category_id').count
     @grouped_hash = @grouped_hash.map do |k,v|

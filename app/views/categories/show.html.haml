@@ -1,4 +1,4 @@
 .page-header
-  %h1{ 'data-url' => category_path(@category) }= @category.name
+  %h1{ 'data-url' => c_path(id: @category.id, slug: @category.slug) }= @category.name
 .row#filters_and_results
   = render 'filters_and_results', @filters_and_results_hash

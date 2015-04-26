@@ -12,7 +12,8 @@
         - @taxons.roots.includes(:image).sort_by(&:position).each do |root_taxon|
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-              .taxon-img= image_tag(root_taxon.image)
+              - if root_taxon.image.present?
+                .taxon-img= image_tag(root_taxon.image)
               .taxon-name
                 %span= root_taxon.name
               .hidden-xs

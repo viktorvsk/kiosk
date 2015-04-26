@@ -29,6 +29,8 @@ class Catalog::Product < ActiveRecord::Base
                              foreign_key: :catalog_product_id
   has_one :seo, as: :seoable, dependent: :destroy
   scope :bound, -> { joins(:vendor_products) }
+  scope :zeros_last, -> { order('catalog_products.price = 0') }
+  scope :with_price, -> { where('price > 0') }
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :images, allow_destroy: true
   accepts_nested_attributes_for :product_properties,
@@ -37,6 +39,17 @@ class Catalog::Product < ActiveRecord::Base
 
     def ransackable_scopes(auth_object = nil)
       [:filters_cont]
+    end
+
+    def by_category_params(params)
+      q = {
+        price_gteq: params[:min],
+        price_lteq: params[:max],
+        name_cont: params[:name],
+        brand_id_in: params[:b].to_s.split(','),
+        filters_cont: params[:f]
+      }
+      all.ransack(q).result
     end
 
     def top(top_name)

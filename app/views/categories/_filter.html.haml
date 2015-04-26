@@ -1,3 +1,3 @@
 %hr/
 %h5.text-center= filter.display_name
-= render collection: filter.values.sort_by(&:position), partial: 'categories/filter_value', as: :filter_value
+= render collection: filter.values.sort_by(&:position), partial: 'categories/filter_value', as: :filter_value, locals: { products: products }

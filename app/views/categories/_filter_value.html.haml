@@ -1,4 +1,11 @@
+- filtered = params[:f].to_s.split(',').map(&:strip)
+- checked_state = filtered.include?(filter_value.id.to_s)
+- state, count_w_filter = Catalog::FilterValue.count_w(filter_value.id, params, products)
+- disabled = count_w_filter.to_i.abs == 0 && !checked_state
+
 %label
-  = check_box :filter, filter_value.id, 'data-filter' => filter_value.id, checked: (params[:f].split(',').map(&:strip).include?(filter_value.id.to_s) if params[:f] )
+  = check_box :filter, filter_value.id, 'data-filter' => filter_value.id, checked: checked_state, disabled: disabled
   = filter_value.display_name
+  - if !checked_state && !disabled
+    %small= "(#{count_w_filter})"
 %br/

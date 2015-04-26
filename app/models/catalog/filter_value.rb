@@ -7,6 +7,18 @@ class Catalog::FilterValue < ActiveRecord::Base
     def to_group
       all.group_by(&:catalog_filter_id)
     end
+
+    def count_w(id, params, products)
+      s = ''
+      init_count = products.count
+      p = Marshal.load(Marshal.dump(params))
+      filtered = p[:f].to_s.split(',').map(&:strip)
+      checked_state = filtered.include?(id)
+      action = checked_state ? :delete : :push
+      p[:f] = p[:f].to_s.split(',').map(&:strip).send(action, id).join(',')
+      count = products.unscoped.by_category_params(p).count
+      return [checked_state, count]
+    end
   end
 
   private

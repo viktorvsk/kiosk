@@ -8,15 +8,15 @@
 
   function CatalogCategoryFiltersManager() {
 
-    function onFilter() {
+    function serialize() {
       var filterIDs = [],
         brandIDs = [],
         args = [],
         priceMin = $('[data-price-min]').val(),
         priceMax = $('[data-price-max]').val(),
         name = $('[data-name]').val(),
-        sort = $('[data-sort]').val(),
-        url = $('h1').data('url');
+        sort = $('[data-sort]').val();
+
 
       $(filterSelector + ':checked').each(function (index, item) {
         filterIDs.push($(item).data('filter'));
@@ -33,12 +33,19 @@
       args.push(['name', name].join('='));
       args.push(['o', sort].join('='));
 
-      url = [url, args.join('&')].join('?');
+      return args.join('&');
+    }
 
+    function onFilter() {
+      var url = $('h1').data('url');
+      url = [url, serialize()].join('?');
       $.ajax({
         url: url,
         method: 'GET',
-        'dataType': 'script'
+        'dataType': 'script',
+        success: function () {
+          history.pushState(null, null, url);
+        }
       });
 
 
