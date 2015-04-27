@@ -1,2 +1,2 @@
 web: bundle exec rails server
-resque: bundle exec rake resque:work QUEUE=binder,pricelist_impor,category_products_updater >> log/resque.log
+resque: bundle exec rake resque:work QUEUE=binder,pricelist_import,category_products_updater >> log/resque.log
