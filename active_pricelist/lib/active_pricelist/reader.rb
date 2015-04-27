@@ -75,9 +75,7 @@ module ActivePricelist
         row = {}
         @columns.each do |k, v|
           val = rows[row_num - 1][v.to_i - 1]
-          if (k == 'articul') && (val.kind_of?(Float))
-            val = val.to_i
-          end
+          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
           row[k] = val.to_s.strip
         end
         @rows << row

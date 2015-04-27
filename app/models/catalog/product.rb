@@ -134,8 +134,7 @@ class Catalog::Product < ActiveRecord::Base
   def recount
     return if fixed_price?
     rrc = vendor_products.select_rrc
-    if rrc
-      # @TODO Log if more than one RRC present
+    if rrc > 0
       update(price: rrc)
     else
       prices = vendor_products.active.map do |vendor_product|

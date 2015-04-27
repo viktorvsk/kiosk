@@ -43,7 +43,7 @@ module Vendor
       notify
       true
     rescue Exception => e
-      err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.join("\n")})
+      err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.first(5).join("\n")})
       notify(err, true)
       false
     ensure
@@ -62,17 +62,16 @@ module Vendor
 
     def delete_not_in_pricelist
       @to_delete = @products_articuls - @products.map{ |p| p['articul'] }
-
-      @merchant.
-        products.
-        unbound.
-        where(vendor_products: { articul: @to_delete }).
-        delete_all
-      @merchant.
-        products.
-        bound.
-        where(vendor_products: { articul: @to_delete }).
-        deactivate
+      @merchant
+        .products
+        .unbound
+        .where(vendor_products: { articul: @to_delete })
+        .delete_all
+      @merchant
+        .products
+        .bound
+        .where(vendor_products: { articul: @to_delete })
+        .deactivate
     end
 
     def upload_pricelist
