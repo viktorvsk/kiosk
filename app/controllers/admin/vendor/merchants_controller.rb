@@ -65,9 +65,12 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
   # POST /admin/vendor/merchants/1/pricelist
   def pricelist
-    ::Vendor::Pricelist.async_import!(@merchant.id, params[:vendor_merchant][:pricelist].path)
-    @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
-    redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
+    if ::Vendor::Pricelist.async_import!(@merchant.id, params[:vendor_merchant][:pricelist].path)
+      @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
+      redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
+    else
+      redirect_to admin_vendor_merchants_url, error: "Произошла ошибка"
+    end
   end
 
   private
