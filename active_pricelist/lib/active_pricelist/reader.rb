@@ -47,7 +47,9 @@ module ActivePricelist
       doc.search(@start).each do |product|
         row = {}
         @columns.each_pair do |k, v|
-          row[k] = product.search(v).first.try(:to_s)
+          val = product.search(v).first
+          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
+          row[k] = val.to_s.strip
         end
         @rows << row
       end
@@ -57,7 +59,11 @@ module ActivePricelist
       spreadsheet = Roo::Spreadsheet.open(@file)
       @start.to_i.upto(spreadsheet.last_row) do |row_num|
         row = {}
-        @columns.each { |k, v| row[k] = spreadsheet.cell(row_num, v.to_i).to_s }
+        @columns.each do |k, v|
+          val = spreadsheet.cell(row_num, v.to_i)
+          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
+          row[k] = val.to_s.strip
+        end
         @rows << row
       end
     end
@@ -66,9 +72,15 @@ module ActivePricelist
       wb    = Dullard::Workbook.new(@file)
       rows  = wb.sheets.first.rows.to_a
       @start.to_i.upto(rows.count) do |row_num|
-        obj = {}
-        @columns.each { |k, v| obj[k] = rows[row_num - 1][v.to_i - 1].to_s }
-        @rows << obj
+        row = {}
+        @columns.each do |k, v|
+          val = rows[row_num - 1][v.to_i - 1]
+          if (k == 'articul') && (val.kind_of?(Float))
+            val = val.to_i
+          end
+          row[k] = val.to_s.strip
+        end
+        @rows << row
       end
     end
 
@@ -76,7 +88,11 @@ module ActivePricelist
       CSV.read(@file, "r:#{@encoding}", quote_char: "#{@csv_separator}", headers: @csv_headers).each_with_index do |csv_row, i|
         if @start - 1 <= i
           row = {}
-          @columns.each { |k, v| row[k] = csv_row[v.to_i - 1].to_s }
+          @columns.each do |k, v|
+            val = csv_row[v.to_i - 1]
+            val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
+            row[k] = val.to_s.strip
+          end
           @rows << row
         end
       end
