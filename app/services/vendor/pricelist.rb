@@ -103,7 +103,7 @@ module Vendor
         # end
         # attributes_to_update = attributes_to_update.join(", ")
         info_attrs = p.info.to_json
-        expression = %(UPDATE "vendor_products" SET "price" = #{p['price']}, "info" = '#{info_attrs}' WHERE "articul" = '#{p['articul']}';)
+        expression = %(UPDATE "vendor_products" SET "price" = #{p['price']}, "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
       end.join
       ActiveRecord::Base.connection.execute(sql)
     end

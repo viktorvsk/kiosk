@@ -37,13 +37,14 @@ class Vendor::Merchant < ActiveRecord::Base
 
   def to_activepricelist
     rates = currency_rates.kind_of?(String) ? JSON.parse(currency_rates) : currency_rates
+    order = currency_order.kind_of?(String) ? JSON.parse(currency_order) : currency_order
     settings = {
       'start'           => f_start,
       'format'          => format,
       'file'            => pricelist_path,
       'encoding'        => encoding,
       'rates'           => rates,
-      'currency_order'  => currency_order,
+      'currency_order'  => order,
       'required'        => required,
       'not_in_stock'    => not_in_stock,
       'discount'        => discount,
