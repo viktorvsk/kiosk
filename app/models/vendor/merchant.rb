@@ -10,7 +10,7 @@ class Vendor::Merchant < ActiveRecord::Base
    :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev,
    :f_brand, :f_warranty, :f_category
   validates :name, presence: true, uniqueness: true
-  validates :currency_rates, :required, :currency_order, :not_in_stock,
+  validates :currency_rates, :currency_order, :required, :currency_order, :not_in_stock,
     json: true,
     allow_blank: true
   has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id, dependent: :delete_all
@@ -36,15 +36,16 @@ class Vendor::Merchant < ActiveRecord::Base
   end
 
   def to_activepricelist
+    curr_order = currency_order.presence ||'[]'
+    curr_order_json = JSON.parse(curr_order)
     rates = currency_rates.kind_of?(String) ? JSON.parse(currency_rates) : currency_rates
-    order = currency_order.kind_of?(String) ? JSON.parse(currency_order) : currency_order
     settings = {
       'start'           => f_start,
       'format'          => format,
       'file'            => pricelist_path,
       'encoding'        => encoding,
       'rates'           => rates,
-      'currency_order'  => order,
+      'currency_order'  => curr_order_json,
       'required'        => required,
       'not_in_stock'    => not_in_stock,
       'discount'        => discount,
