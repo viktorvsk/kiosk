@@ -9,16 +9,17 @@ module Vendor
     belongs_to :merchant,
                class_name: Vendor::Merchant, foreign_key: :vendor_merchant_id
     belongs_to :catalog_category, class_name: Catalog::Category
-    has_one :state, as: :stateable
-    scope :bound,         -> { where('vendor_products.catalog_product_id IS NOT NULL') }
-    scope :unbound,       -> { where('vendor_products.catalog_product_id IS NULL') }
-    scope :rrc,           -> { where(is_rrc: true) }
+    scope :bound,         ->          { where('vendor_products.catalog_product_id IS NOT NULL') }
+    scope :unbound,       ->          { where('vendor_products.catalog_product_id IS NULL') }
+    scope :rrc,           ->          { where(is_rrc: true) }
     scope :usd_gt_or_eq,  -> (amount) { currency_from(:usd, amount) }
     scope :usd_lt_or_eq,  -> (amount) { currency_to(:usd, amount) }
-    scope :brand_cont,    -> (name) { info_like(:brand, name) }
-    scope :category_cont, -> (name) { info_like(:category, name) }
-    scope :model_cont,    -> (name) { info_like(:model, name) }
-    scope :warranty_cont, -> (name) { info_like(:warranty, name) }
+    scope :brand_cont,    -> (name)   { info_like(:brand, name) }
+    scope :category_cont, -> (name)   { info_like(:category, name) }
+    scope :model_cont,    -> (name)   { info_like(:model, name) }
+    scope :warranty_cont, -> (name)   { info_like(:warranty, name) }
+    scope :active,        ->          { where(in_stock: true, current_price: true, trashed: false) }
+    scope :not_active,    ->          { where('in_stock = false OR current_price = false OR trashed = true') }
 
     class << self
       def ransackable_scopes(auth_object = nil)
@@ -43,42 +44,16 @@ module Vendor
         where("nullif((info->>'#{currency}'), '')::float <= ?", amount.to_f)
       end
 
-      def active
-        joins('LEFT JOIN states ON states.stateable_id = vendor_products.id')
-          .where('states.stateable_id IS NULL')
-          .where(in_stock: true)
-      end
-
-      def not_active
-        joins(:state)
-          .where('states.name = ? OR vendor_products.in_stock = ?',
-                 'inactive', false)
-      end
-
       def to_csv
-        all
-          .map(&:to_csv)
-          .join("\n")
+        all.map(&:to_csv).join("\n")
       end
 
       def activate
-        ids = all.joins(:state).uniq.pluck(:id)
-        State
-          .where(stateable_id: ids, stateable_type: 'Vendor::Product')
-          .delete_all
+        all.update_all(current_price: true)
       end
 
       def deactivate
-        to_create = all.active.pluck(:id).map do |id|
-          {
-            stateable_id: id,
-            stateable_type: 'Vendor::Product',
-            name: 'inactive'
-          }
-        end
-        State.transaction do
-          State.create(to_create)
-        end
+        all.update_all(current_price: false)
       end
 
       def unbind
@@ -100,16 +75,8 @@ module Vendor
       catalog_product.recount
     end
 
-    def deactivate
-      state ? true : create_state(name: 'inactive')
-    end
-
-    def activate
-      state ? state.destroy : true
-    end
-
     def active?
-      !state.present?
+      current_price? && in_stock? && !trashed?
     end
 
     def bound?

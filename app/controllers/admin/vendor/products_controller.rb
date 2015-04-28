@@ -25,7 +25,7 @@ class Admin::Vendor::ProductsController < Admin::BaseController
 
   def toggle_activation
     @vendor_product = ::Vendor::Product.find(params[:id])
-    @vendor_product.active? ? @vendor_product.deactivate : @vendor_product.activate
+    @vendor_product.toggle!(:trashed)
     @vendor_product.product.recount if @vendor_product.product
   end
 

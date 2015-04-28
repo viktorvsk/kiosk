@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419151419) do
+ActiveRecord::Schema.define(version: 20150427234751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,16 +76,6 @@ ActiveRecord::Schema.define(version: 20150419151419) do
   add_index "catalog_category_brands", ["catalog_brand_id"], name: "index_catalog_category_brands_on_catalog_brand_id", using: :btree
   add_index "catalog_category_brands", ["catalog_category_id", "catalog_brand_id"], name: "category_brands_index", unique: true, using: :btree
   add_index "catalog_category_brands", ["catalog_category_id"], name: "index_catalog_category_brands_on_catalog_category_id", using: :btree
-
-  create_table "catalog_category_filter_values", force: :cascade do |t|
-    t.integer  "catalog_category_id",     null: false
-    t.integer  "catalog_filter_value_id", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "catalog_category_filter_values", ["catalog_category_id"], name: "index_catalog_category_filter_values_on_catalog_category_id", using: :btree
-  add_index "catalog_category_filter_values", ["catalog_filter_value_id"], name: "index_catalog_category_filter_values_on_catalog_filter_value_id", using: :btree
 
   create_table "catalog_category_filters", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false
@@ -330,14 +320,15 @@ ActiveRecord::Schema.define(version: 20150419151419) do
     t.boolean  "is_rrc",             default: false, null: false
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.boolean  "trashed",            default: false
+    t.boolean  "current_price",      default: true
   end
 
   add_index "vendor_products", ["articul"], name: "index_vendor_products_on_articul", using: :btree
   add_index "vendor_products", ["catalog_product_id"], name: "index_vendor_products_on_catalog_product_id", using: :btree
+  add_index "vendor_products", ["current_price"], name: "index_vendor_products_on_current_price", using: :btree
   add_index "vendor_products", ["in_stock"], name: "index_vendor_products_on_in_stock", using: :btree
   add_index "vendor_products", ["is_rrc"], name: "index_vendor_products_on_is_rrc", using: :btree
-  add_index "vendor_products", ["name", "vendor_merchant_id"], name: "products_vendor_index", unique: true, using: :btree
-  add_index "vendor_products", ["name"], name: "index_vendor_products_on_name", using: :btree
   add_index "vendor_products", ["price"], name: "index_vendor_products_on_price", using: :btree
   add_index "vendor_products", ["vendor_merchant_id"], name: "index_vendor_products_on_vendor_merchant_id", using: :btree
 
