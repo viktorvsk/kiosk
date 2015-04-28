@@ -1,6 +1,6 @@
 class Catalog::Category < ActiveRecord::Base
   include Slugable
-  after_update :recount_products, :rerender_menu
+  # after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
@@ -17,7 +17,7 @@ class Catalog::Category < ActiveRecord::Base
   has_many :filters, through: :category_filters
   has_many :filter_values, through: :category_filter_values
   has_many :properties, through: :category_properties
-  belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id
+  belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id, touch: true
   has_one :seo, as: :seoable, dependent: :destroy
 
   def tax_for(value)

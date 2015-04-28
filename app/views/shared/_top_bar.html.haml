@@ -8,5 +8,5 @@
   .container
     .row
       .col-xs-12
-        - cache 'catalog_menu', skip_digest: true do
+        - cache ['catalog_menu', Catalog::Taxon.all] do
           = render 'shared/menu_bar'

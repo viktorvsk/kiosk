@@ -3,7 +3,7 @@ class Catalog::Product < ActiveRecord::Base
   include Slugable
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
-  after_update :expire_homepage_tops_cache_fragment
+  # after_update :expire_homepage_tops_cache_fragment
   MARKETPLACES = %W(rozetka hotline brain erc).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,

@@ -1,7 +1,7 @@
 class Catalog::Taxon < ActiveRecord::Base
   include Slugable
   before_create :set_position
-  after_update :rerender_menu
+  # after_update :rerender_menu
   has_one :category, class_name: Catalog::Category, foreign_key: :catalog_taxon_id
   has_one :image, as: :imageable, dependent: :destroy
   validates :name, presence: true, uniqueness: { case_sensitive: false }
