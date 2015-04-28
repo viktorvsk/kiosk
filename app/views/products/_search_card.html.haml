@@ -1,7 +1,8 @@
 .col-sm-4
   .product.well
-    .text-right
-      .product_articul
+
+    .product_articul
+      .label.label-info
         Артикул:
         = product.id
     .text-center
@@ -13,7 +14,5 @@
       .product_name
         = link_to product.name, p_path(slug: product.slug, id: product.id)
       Добавить в сравнение
-      .product_price
-        = product.price
-        грн.
+      .product_price= price_for(product)
 

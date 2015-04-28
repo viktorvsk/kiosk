@@ -1,6 +1,6 @@
 - checked_state = params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b]
 - products_count = products.where(brand: brand).count
-- disabled = products_count == 0
+- disabled = products_count == 0 && !checked_state
 - css_class = ''
 - css_class << ' active' if checked_state
 - css_class << ' disabled' if disabled

@@ -131,6 +131,11 @@ class Catalog::Product < ActiveRecord::Base
     end
   end
 
+  def bound?
+    #vendor_products.active.present?
+    price.to_i > 0
+  end
+
   def recount
     return if fixed_price?
     rrc = vendor_products.select_rrc
