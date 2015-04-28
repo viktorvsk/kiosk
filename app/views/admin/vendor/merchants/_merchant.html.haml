@@ -27,8 +27,9 @@
           Привязано:
           %b= merchant.products.bound.count
           %br/
-          Формат:
-          %b= merchant.format
+          /
+            Формат:
+            %b= merchant.format
         .col-sm-8
           - if merchant.pricelist_state
             %pre{ class: ('error' if merchant.pricelist_error) }
