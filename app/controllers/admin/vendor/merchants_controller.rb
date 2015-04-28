@@ -91,7 +91,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
                                               :f_eur, :f_not_in_stock, :encoding,
                                               :format, :required, :currency_order,
                                               :currency_rates, :parser_class, :f_uah_1,
-                                              :f_uah_2, :f_monitor, :f_ddp,
+                                              :f_uah_2, :f_monitor, :f_ddp, :f_dclink_ddp,
                                               :f_stock_kharkov, :f_stock_kiev, :not_in_stock)
     end
 end

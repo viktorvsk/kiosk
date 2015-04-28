@@ -8,7 +8,7 @@ class Vendor::Merchant < ActiveRecord::Base
    :encoding, :format, :parser_class,
    :required, :currency_order, :currency_rates, :not_in_stock,
    :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev,
-   :f_brand, :f_warranty, :f_category
+   :f_dclink_ddp, :f_brand, :f_warranty, :f_category
   validates :name, presence: true, uniqueness: true
   validates :currency_rates, :currency_order, :required, :currency_order, :not_in_stock,
     json: true,
@@ -18,7 +18,7 @@ class Vendor::Merchant < ActiveRecord::Base
   CUSTOM = [
     %w( Обычный Default ),
     %w( ERC Erc ),
-    %w( Рейнколд Ranecold ),
+    %w( DC-Link Dclink ),
     %w( Технотрейд Technotrade ),
     %w( ЮГ-Контракт Yug )
   ]
@@ -49,6 +49,7 @@ class Vendor::Merchant < ActiveRecord::Base
       'required'        => required,
       'not_in_stock'    => not_in_stock,
       'discount'        => discount,
+      'dclink_ddp'      => f_dclink_ddp,
       'columns'         => {
         # Main
         'model'         => f_model,
@@ -67,6 +68,7 @@ class Vendor::Merchant < ActiveRecord::Base
         'ddp'           => f_ddp,
         'stock_kharkov' => f_stock_kharkov,
         'stock_kiev'    => f_stock_kiev
+
       }
     }
 

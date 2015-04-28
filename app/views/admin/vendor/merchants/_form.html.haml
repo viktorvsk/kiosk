@@ -25,7 +25,7 @@
             .col-sm-3= field_for(f, :f_uah)
             .col-sm-3= field_for(f, :f_rrc)
             .col-sm-3= field_for(f, :f_eur)
-            .col-sm-3= field_for(f, :f_not_in_stock)
+            / .col-sm-3= field_for(f, :f_not_in_stock)
             .col-sm-3= field_for(f, :f_category)
             .col-sm-3= field_for(f, :f_brand)
             .col-sm-3= field_for(f, :f_warranty)
@@ -38,14 +38,15 @@
           .col-sm-6= field_for(f, :f_ddp)
           .col-sm-6= field_for(f, :f_stock_kharkov)
           .col-sm-6= field_for(f, :f_stock_kiev)
+          .col-sm-6= field_for(f, :f_dclink_ddp)
       .col-sm-6
         = field_set_tag do
           %legend Настройки рассчета
-          .col-sm-6= field_for(f, :required)
+          / .col-sm-6= field_for(f, :required)
           .col-sm-6= field_for(f, :currency_rates)
           .col-sm-6= field_for(f, :currency_order)
           .col-sm-6= field_for(f, :f_delivery_tax)
-          .col-sm-7= field_for(f, :not_in_stock)
+          / .col-sm-7= field_for(f, :not_in_stock)
           .col-sm-5= select_field_for(f, :parser_class, @custom_merchants)
   .form-actions
     - text = @merchant.new_record? ? "Создать" : "Сохранить"

@@ -12,6 +12,8 @@ module ActivePricelist
       @columns    = opts['columns']
       @start      = opts['start']
 
+      @dclink_ddp_rate = opts['dclink_ddp']
+
       @rates            = opts['rates']
       @currency_order   = opts['currency_order'] || %w(rrc uah usd eur)
       @required         = opts['required']       || %w(name)

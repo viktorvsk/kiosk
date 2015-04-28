@@ -103,7 +103,8 @@ ru:
         description: Описание
         f_start: Первое поле
         f_model: Модель
-        f_code: Код поставщика
+        f_dclink_ddp: DDP (DC-Link)
+        f_code: Код
         f_name: Название
         f_usd: Доллар
         f_uah: Гривна
