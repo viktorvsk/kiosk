@@ -65,6 +65,8 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
 
   # POST /admin/vendor/merchants/1/pricelist
   def pricelist
+    fmt = File.extname(params[:vendor_merchant][:pricelist].path).delete(".")
+    @merchant.update(format: fmt)
     if ::Vendor::Pricelist.async_import!(@merchant.id, params[:vendor_merchant][:pricelist].path)
       @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
       redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
