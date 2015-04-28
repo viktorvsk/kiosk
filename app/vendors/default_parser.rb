@@ -5,7 +5,7 @@ class DefaultParser < ::ActivePricelist::Base
   def transform
     @currency_order.each do |curr|
       if @product[curr].to_f.ceil > 0
-        @product['price'] = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
+        @product['price'] = @product[curr].to_f.ceil
         if curr == 'rrc'
           @product['is_rrc'] = true
         else
@@ -14,6 +14,7 @@ class DefaultParser < ::ActivePricelist::Base
         break
       end
     end
+    @product['price'] += @product['delivery_tax'].to_i unless @product['is_rrc'] == true
     @product['in_stock'] = !@not_in_stock.any? { |sign| @product['not_in_stock'] =~ /#{sign}/ }
   end
 end

@@ -6,7 +6,7 @@ class ErcParser < ::ActivePricelist::Base
     @currency_order.each do |curr|
       if @product[curr].present? && @product[curr].to_f.ceil > 0
 
-        @product['price'] = (@product[curr].to_f * @rates[curr].to_f).ceil + @product['delivery_tax'].to_i
+        @product['price'] = (@product[curr].to_f * @rates[curr].to_f).ceil
 
         if @product['monitor'] == '1'
           @product['price']   = @product['uah'].to_f.ceil
@@ -25,9 +25,8 @@ class ErcParser < ::ActivePricelist::Base
         break
       end
     end
-     if @product['price'].present? && @product['price'].to_f.ceil > 1
-      @product['in_stock'] = !@not_in_stock.any? { |sign| @product['not_in_stock'] =~ /#{sign}/ }
-    end
+    @product['price'] +=  @product['delivery_tax'].to_i unless @product['is_rrc'] == true
+    @product['in_stock'] = !@not_in_stock.any? { |sign| @product['not_in_stock'] =~ /#{sign}/ }
 
   end
 end

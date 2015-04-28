@@ -11,7 +11,7 @@ class TechnotradeParser < ::ActivePricelist::Base
 
     @currency_order.each do |curr|
       if @product[curr].present? && @product[curr].to_f.ceil > 0
-        @product['price'] = @product[curr].to_f.ceil + @product['delivery_tax'].to_i
+        @product['price'] = @product[curr].to_f.ceil
         if curr == 'rrc'
           @product['rrc'] = @product['price']
           @product['is_rrc'] = true
@@ -21,12 +21,12 @@ class TechnotradeParser < ::ActivePricelist::Base
         break
       end
     end
+    @product['price'] +=  @product['delivery_tax'].to_i unless @product['is_rrc'] == true
 
-    if @product['price'].present? && @product['price'].to_f.ceil > 1
-      @product['in_stock_kharkov']  = (@product['uah_1'].to_f.ceil > 0)
-      @product['in_stock_kiev']     = (@product['uah_2'].to_f.ceil > 0)
-      @product['in_stock']          = @product['in_stock_kharkov'] || @product['in_stock_kiev']
-    end
+    @product['in_stock_kharkov']  = (@product['uah_1'].to_f.ceil > 0)
+    @product['in_stock_kiev']     = (@product['uah_2'].to_f.ceil > 0)
+    @product['in_stock']          = @product['in_stock_kharkov'] || @product['in_stock_kiev']
+
 
   end
 
