@@ -2,6 +2,7 @@
   "name": "dsl-generated dependencies",
   "dependencies": {
     "jquery-ui": "latest",
-    "jquery.ui.touch-punch.dk": "latest"
+    "jquery.ui.touch-punch.dk": "latest",
+    "nouislider": "latest"
   }
 }

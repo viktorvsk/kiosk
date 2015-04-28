@@ -3,6 +3,7 @@
   %head
     = render 'layouts/catalog_meta_bar'
     = render 'shared/head_assets'
+    = javascript_include_tag 'application', 'catalog'
     = csrf_meta_tags
   %body
     = render 'layouts/nav/catalog'
@@ -12,4 +13,4 @@
     .container
       = yield
     = render 'shared/footer_bar'
-    = javascript_include_tag 'application', 'catalog'
+

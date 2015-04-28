@@ -1,3 +1,13 @@
-%label
-  = check_box :brand, brand.id, 'data-brand' => brand.id, checked: (params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b] )
-  = brand.name
+- checked_state = params[:b].split(',').map(&:strip).include?(brand.id.to_s) if params[:b]
+- products_count = products.where(brand: brand).count
+- disabled = products_count == 0
+- css_class = ''
+- css_class << ' active' if checked_state
+- css_class << ' disabled' if disabled
+
+%li.list-group-item{ class: css_class }
+  %label
+    = check_box :brand, brand.id, 'data-brand' => brand.id, checked: checked_state, disabled: disabled
+    = brand.name
+    - if !disabled && !checked_state
+      %small= "(#{products_count})"

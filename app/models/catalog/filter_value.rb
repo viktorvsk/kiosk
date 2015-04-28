@@ -13,11 +13,23 @@ class Catalog::FilterValue < ActiveRecord::Base
       init_count = products.count
       p = Marshal.load(Marshal.dump(params))
       filtered = p[:f].to_s.split(',').map(&:strip)
+      siblings = Catalog::FilterValue.includes(filter: :values).find(id).filter.values.map(&:id).map(&:to_s)
       checked_state = filtered.include?(id)
       action = checked_state ? :delete : :push
       p[:f] = p[:f].to_s.split(',').map(&:strip).send(action, id).join(',')
+
       count = products.unscoped.by_category_params(p).count
-      return [checked_state, count]
+
+      if (filtered & siblings).present?
+        if count == init_count
+          count = 0
+        elsif count > init_count
+          count = count - init_count
+        end
+        s = '+'
+      end
+
+      return [checked_state, "#{s}#{count}"]
     end
   end
 

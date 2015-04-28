@@ -3,8 +3,8 @@
 
 asset 'jquery-ui'
 asset 'jquery.ui.touch-punch.dk'
+asset 'nouislider'
 # asset 'magnific-popup'
-# asset 'nouislider'
 # asset 'typehead.js'
 # asset 'bxslider'
 # asset 'masked-input'

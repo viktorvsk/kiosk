@@ -1,0 +1,22 @@
+<%- max_category = @category.products.maximum(:price).to_i  %>
+<%- min_category = @category.products.where('price > 0').minimum(:price).to_i %>
+<script>
+  $("#price-slider").noUiSlider({
+      start: [<%= params[:min].to_i %>, <%= params[:max] || max_category %>],
+      connect: true,
+
+      format: wNumb({
+        mark: '.',
+        decimals: 0
+      }),
+      range: {
+        'min': <%= min_category %>,
+        'max': <%= max_category %>
+      }
+    });
+
+  $('#price-slider').noUiSlider_pips({
+    mode: 'steps',
+    density: 5
+  });
+</script>
