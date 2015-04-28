@@ -4,7 +4,6 @@ module Vendor
   class Pricelist
     @queue            = :pricelist_import
     UPDATE_ATTRIBUTES = %w(uah usd eur rrc in_stock in_stock_kharkov in_stock_kiev price is_rrc)
-    # SELECT_ATTRIBUTES = %w(id articul price fixed_price)
     REAL_ATTRIBUTES   = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id)
     CSV_COLUMNS       = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
@@ -32,7 +31,7 @@ module Vendor
       notify('Прайслист обрабатывается')
       parse_pricelist
       notify('Удаляются товары, которых нет в новом прайслисте')
-      @products_names    = @merchant.products.pluck('vendor_products.name')
+      # @products_names    = @merchant.products.pluck('vendor_products.name')
       @products_articuls = @merchant.products.pluck('vendor_products.articul')
       delete_not_in_pricelist
       batch_create_or_update
@@ -91,16 +90,13 @@ module Vendor
       batch_update( @to_update )
       notify('Создаются новые прайсы')
       batch_create( @to_create )
+      actual_products = @to_create_articuls.try(:count).to_i + @to_update_articuls.try(:count).to_i
+      Vendor::Product.where(id: actual_products).activate
     end
 
     def batch_update( products )
       sql = products.compact.map do |p|
         attributes_to_update = []
-        # p.attributes.keys.select{ |q| q.in?(UPDATE_ATTRIBUTES) }.each do |att|
-        #   next unless p[att].to_s.present?
-        #   attributes_to_update << "#{att} = #{p[att]}"
-        # end
-        # attributes_to_update = attributes_to_update.join(", ")
         info_attrs = p.info.to_json
         expression = %(UPDATE "vendor_products" SET "price" = #{p['price']}, "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
       end.join
@@ -108,6 +104,7 @@ module Vendor
     end
 
     def batch_create( products )
+      @to_create_articuls = products.map(&:id)
       return if products.empty?
       csv_path = Rails.root.join('tmp','products_to_create.csv')
       ::CSV.open(csv_path, "wb") do |csv|
@@ -143,9 +140,9 @@ module Vendor
       @to_create.each{ |p| p['vendor_merchant_id'] = @merchant.id  }
       @to_create.map!{ |p| ::Vendor::Product.new(p.slice( *REAL_ATTRIBUTES )) }
       # @TODO manual validations
-      @to_create.uniq!{ |p| p.name }
+      # @to_create.uniq!{ |p| p.name }
       @to_create.uniq!{ |p| p.articul }
-      @to_create.reject!{ |p| p.articul.blank? or p.name.in?(@products_names) or p.articul.in?(@products_articuls) }
+      @to_create.reject!{ |p| p.articul.blank? || p.articul.in?(@products_articuls) } # or p.name.in?(@products_names)
     end
 
   end
