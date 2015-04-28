@@ -13,7 +13,7 @@ namespace :vendor do
       {
         name: 'DC-link',
         email: 'email@dclink.com',
-        format: 'xlsx',
+        format: 'xls',
         f_start: '1',
         f_model: '9',
         f_name: '3',
@@ -84,7 +84,7 @@ namespace :vendor do
         f_name: 'gname/text()',
         f_code: 'code/text()',
         f_usd: 'sprice/text()',
-        f_uah: 'rprce/text()',
+        f_uah: 'rprice/text()',
         f_warranty: 'warr/text()',
         f_not_in_stock: 'swh/text()',
         f_monitor: 'monitor/text()',
@@ -188,7 +188,7 @@ namespace :vendor do
       {
         name: 'Юг Контракт',
         email: 'email@yugcontract.com',
-        format: 'xlsx',
+        format: 'xls',
         parser_class: 'Yug',
         currency_rates: {
           uah: 1,
@@ -198,13 +198,12 @@ namespace :vendor do
         }.to_json,
         f_start: '1',
         f_model: '5',
-        f_name: '6',
+        f_name: '7',
         f_code: '4',
-        f_usd: '15',
-        f_uah: '16',
-        f_rrc: '32',
+        f_uah: '15',
+        f_rrc: '21',
         f_stock_kharkov: '9',
-        f_stock_kiev: '10'
+        f_stock_kiev: '11'
 
       }
     ]
