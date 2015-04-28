@@ -25,7 +25,7 @@ class ErcParser < ::ActivePricelist::Base
         break
       end
     end
-    @product['price'] +=  @product['delivery_tax'].to_i unless @product['is_rrc'] == true
+        @product['price'] += @product['delivery_tax'].to_i if !@product['is_rrc'] && (@product['price'].to_f.ceil > 0)
     @product['in_stock'] = !@not_in_stock.any? { |sign| @product['not_in_stock'] =~ /#{sign}/ }
 
   end

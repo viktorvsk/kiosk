@@ -16,7 +16,7 @@ class YugParser < ::ActivePricelist::Base
         break
       end
     end
-    @product['price'] +=  @product['delivery_tax'].to_i unless @product['is_rrc'] == true
+        @product['price'] += @product['delivery_tax'].to_i if !@product['is_rrc'] && (@product['price'].to_f.ceil > 0)
 
     @product['in_stock_kharkov'] = !@not_in_stock.any?{ |sign| @product['stock_kharkov'] =~ /#{sign}/ }
     @product['in_stock_kiev']    = !@not_in_stock.any?{ |sign| @product['stock_kiev'] =~ /#{sign}/ }
