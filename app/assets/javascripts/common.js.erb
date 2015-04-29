@@ -18,13 +18,15 @@
 
     this.toggler = function (event) {
       var attr = $(this).data('toggler'),
+        showMsg = $(this).data('show-msg'),
+        hideMsg = $(this).data('hide-msg'),
         selector = '[data-toggleable="' + attr + '"]',
         $node = $(selector),
         visible = $node.css('display') === 'block';
       if (visible) {
-        $(this).text('Показать фильтры');
+        $(this).text(showMsg);
       } else {
-        $(this).text('Скрыть фильтры');
+        $(this).text(hideMsg);
       }
       $node.fadeToggle(100);
       event.preventDefault();

@@ -1,6 +1,9 @@
-.panel.panel-info
+.filters-panel.panel.panel-info
   .panel-heading
-    %h4.panel-title= filter.display_name
-  .panel-body
+    %h4.panel-title
+      = filter.display_name
+      .pull-right{ 'data-toggler' => "filter_#{filter.id}", 'data-show-msg' => '+', 'data-hide-msg' => '-' }
+        \-
+  .panel-body{ 'data-toggleable' => "filter_#{filter.id}" }
     %ul.list-group
       = render collection: filter.values.sort_by(&:position), partial: 'categories/filter_value', as: :filter_value, locals: { products: products }

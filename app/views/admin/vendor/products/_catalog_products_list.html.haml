@@ -19,7 +19,7 @@
         .form-group
           .form-actions.text-right
             = link_to 'Сбросить', '#', 'onclick' => 'javascript:$(this).closest("form")[0].reset(); return false;', class: 'btn btn-default btn-small'
-            = link_to 'Показать фильтры', '#', 'data-toggler' => 'catalog-products-filters', class: 'btn btn-default btn-small'
+            = link_to 'Показать фильтры', '#', 'data-toggler' => 'catalog-products-filters', 'data-hide-msg' => 'Скрыть фильтры', 'data-show-msg' => 'Показать фильтры', class: 'btn btn-default btn-small'
             = f.submit 'Найти', class: 'btn btn-primary btn-small'
 
 %ul.list-group.catalog-products-list{ 'data-catalog-products' => true }
