@@ -29,8 +29,12 @@ namespace :catalog do
       products.select{ |p| p['images'].present? }.each do |product|
         prod = Catalog::Product.where(name: product['name']).first
         if prod.present? && prod.images.blank?
-          prod.update!(evotex_images: product['images'])
-          print '+'
+          begin
+            prod.update!(evotex_images: product['images'])
+            print '+'
+          rescue
+            print '-'
+          end
         end
       end
 

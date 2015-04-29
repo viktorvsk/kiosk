@@ -237,7 +237,7 @@ class Catalog::Product < ActiveRecord::Base
   def evotex_images=(values)
     values.each do |image_url|
       image_file = File.new Rails.root.join('tmp', image_url[1..-1].gsub(/\?.+/, ''))
-      images.create(attachment: image_file) rescue nil
+      images.create(attachment: image_file)
     end
   end
 
