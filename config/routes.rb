@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show], path: 'c'
   resources :taxons, only: [:show], path: 't'
   resources :orders
-  resource :user, only: [:edit, :update]
+  resource :user, only: [:show, :update, :create]
 
   namespace :admin do
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'

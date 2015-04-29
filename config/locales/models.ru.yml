@@ -42,6 +42,11 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      user:
+        name: Имя
+        phone: Телефон
+        password: Пароль
+        password_confirmation: Подтверждение пароля
       image:
         attachment: Файл
       catalog/filter:

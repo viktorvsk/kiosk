@@ -9,7 +9,9 @@
     = render 'layouts/nav/catalog'
     = render 'shared/top_bar'
     .container
-      = render 'shared/flash_bar'
+      .row
+        .col-sm-6.col-sm-offset-3
+          = render 'shared/flash_bar'
     .container
       = yield
     = render 'shared/footer_bar'

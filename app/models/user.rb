@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable
   ROLES = %w(admin customer)
   scope :admins, -> { joins(:role).where(states: { name: 'admin' }) }
-  devise :database_authenticatable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :role, as: :stateable, class_name: State
 

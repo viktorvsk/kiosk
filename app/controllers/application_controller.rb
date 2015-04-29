@@ -9,7 +9,7 @@ private
   end
 
   def after_sign_in_path_for(resource)
-    root_path_by_role = current_user.admin? ? admin_vendor_products_path : root_path
+    root_path_by_role = current_user.admin? ? admin_vendor_products_path : user_path
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path_by_role
   end
 
