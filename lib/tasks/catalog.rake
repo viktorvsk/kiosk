@@ -26,10 +26,10 @@ namespace :catalog do
     files = Dir.glob Rails.root.join('tmp/products/*.json')
     files.each do |file|
       products = JSON.parse File.read file
-      products.each do |product|
+      products.select{ |p| p['images'].present? }.each do |product|
         prod = Catalog::Product.where(name: product['name']).first
-        if prod.present?
-          prod.update!(evotex_images: product['images']) if prod.present?
+        if prod.present? && prod.images.blank?
+          prod.update!(evotex_images: product['images'])
           print '+'
         end
       end
