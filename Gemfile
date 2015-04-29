@@ -79,6 +79,7 @@ gem 'active_pricelist', path: 'active_pricelist'
 # Images
 gem 'mini_magick'
 gem 'carrierwave'
+gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp/all'
 
 # gem 'file_browser'
 

@@ -235,6 +235,10 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def evotex_images=(values)
+    values.each do |image_url|
+      image_url = URI.join('http://evotex.kh.ua', image_url).to_s
+      images.create(remote_attachment_url: image_url)
+    end
   end
 
   def images_from_url

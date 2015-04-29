@@ -9,3 +9,14 @@ module CarrierWave
     end
   end
 end
+
+CarrierWave.configure do |config|
+  config.sftp_host = Figaro.env.carrierwave_sftp_host
+  config.sftp_user = Figaro.env.carrierwave_sftp_user
+  config.sftp_folder = Figaro.env.carrierwave_sftp_folder
+  config.sftp_url = Figaro.env.carrierwave_sftp_url
+  config.sftp_options = {
+    :password => Figaro.env.carrierwave_sftp_password,
+    :port     => Figaro.env.carrierwave_sftp_port
+  }
+end

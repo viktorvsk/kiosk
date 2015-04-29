@@ -1,11 +1,11 @@
 class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
-  storage :file
+  storage :sftp
   #sprocess convert: :png
 
   process quality: 85
-  process :watermark, if: :product?
+  process :watermark, if: :watermarkable?
 
 
   # Create different versions of your uploaded files:
@@ -67,8 +67,11 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   protected
 
-  def product?(new_file)
-    model.class == Catalog::Product
+  def watermarkable?(new_file)
+    is_product = model.imageable.class == Catalog::Product
+    scraped_host = new_file.file.instance_variable_get("@uri").try(:host)
+    is_not_evotex_image = scraped_host ? !(scraped_host =~ /evotex/) : false
+    is_product && is_not_evotex_image
   end
 
 end

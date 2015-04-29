@@ -21,6 +21,23 @@ namespace :catalog do
     print "\n"
   end
 
+  desc 'Import Images from JSON file'
+  task import_images: :environment do
+    files = Dir.glob Rails.root.join('tmp/products/*.json')
+    files.each do |file|
+      products = JSON.parse File.read file
+      products.each do |product|
+        prod = Catalog::Product.where(name: product['name']).first
+        if prod.present?
+          prod.update!(evotex_images: product['images']) if prod.present?
+          print '+'
+        end
+      end
+
+    end
+    print "\n"
+  end
+
   desc 'Import Categories from JSON file'
   task import_categories: :environment do
     categories = JSON.parse File.read Rails.root.join('tmp', 'prototypes.json')
