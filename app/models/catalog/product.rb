@@ -238,7 +238,7 @@ class Catalog::Product < ActiveRecord::Base
     values.each do |image_path|
       image_path = image_path[1..-1]
       image_path.gsub!(/\?.+/, '')
-      image_path.gsub!(/product/, 'original')
+      image_path.gsub!(/\.product\./, '.original.')
       image_file = File.new Rails.root.join('tmp', image_path)
       images.create(attachment: image_file)
     end
