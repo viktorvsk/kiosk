@@ -3,16 +3,16 @@
     %h2 Хиты продаж
     %hr/
     .row
-      = render collection: @hit, partial: 'products/top_card', as: :product, locals: { css: 'label-success', name: 'Хит продаж' }
+      = render collection: @hit.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'label-success', name: 'Хит продаж' }
   .jumbotron
     %h2 Новинки
     %hr/
     .row
-      = render collection: @newest, partial: 'products/top_card', as: :product, locals: { css: 'label-danger', name: 'Новинка' }
+      = render collection: @newest.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'label-danger', name: 'Новинка' }
   .jumbotron
     %h2 Популярное
     %hr/
     .row
-      = render collection: @homepage, partial: 'products/top_card', as: :product, locals: { css: 'label-info', name: 'Популярное' }
+      = render collection: @homepage.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'label-info', name: 'Популярное' }
 .well.well-sm
   = Conf['ck.homepage_seo'].html_safe
