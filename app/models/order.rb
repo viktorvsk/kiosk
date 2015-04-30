@@ -4,11 +4,17 @@ class Order < ActiveRecord::Base
   belongs_to :user
 
   def add_product(product, quantity=1)
-    if already_added = line_items.detect{ |li| li.product == product }
-      already_added.increment! :quantity, quantity
+    product = product.kind_of?(Catalog::Product) ? product : Catalog::Product.where(id: product).first
+    if product
+      if already_added = line_items.detect{ |li| li.product == product }
+        already_added.increment! :quantity, quantity
+      else
+        line_items.create(product: product, quantity: quantity)
+      end
     else
-      line_items.create(product: product, quantity: quantity)
+      false
     end
+
   end
 
   def total_sum

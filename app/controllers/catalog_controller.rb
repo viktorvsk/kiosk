@@ -6,7 +6,7 @@ class CatalogController < ApplicationController
   def set_current_order
     if !current_user
       if session[:order_id]
-        @current_order = Order.find(session[:order_id])
+        @current_order = Order.where(id: session[:order_id]).first || Order.create
       else
         @current_order = Order.create!
         session[:order_id] = @current_order.id

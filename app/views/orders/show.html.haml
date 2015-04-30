@@ -4,11 +4,26 @@
   .col-sm-3
     = render 'products/aside'
   .col-xs-9
-    %table.table.table-bordered.table-striped
-      %tbody
-        %tr
-          %th Товар
-          %th Количество
-          %th Сумма
-        - @current_order.line_items.includes(product: :images).each do |li|
-          = render 'products/order_card', product: li.product, quantity: li.quantity, li_id: li.id
+    - if @current_order.products.present?
+      %table.table.table-bordered.table-striped
+        %tbody
+          %tr
+            %th Товар
+            %th Количество
+            %th Сумма
+          - @current_order.line_items.includes(product: :images).each do |li|
+            = render 'products/order_card', product: li.product, quantity: li.quantity, li_id: li.id
+      %hr/
+      .text-right
+        = "#{@current_order.total_sum} грн."
+      .form-actions
+        = link_to (request.referrer ? request.referrer : root_path) do
+          .btn.btn-default Продолжить покупки
+        .btn.btn-warning Оформить заказ
+
+    - else
+      %p Вы еще не добавили ни одного товара
+      .form-actions
+        = link_to (request.referrer ? request.referrer : root_path) do
+          .btn.btn-default Продолжить покупки
+

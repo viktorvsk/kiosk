@@ -8,8 +8,13 @@
     .product_price= price_for(product)
   %td
     .product_name
-      = link_to product.name, p_path(slug: product.slug, id: product.id)
+      = link_to p_path(slug: product.slug, id: product.id) do
+        = product.name
+      = link_to remove_product_order_path(product), method: :delete do
+        .pull-right
+          %i.glyphicon.glyphicon-remove-circle.text-danger
   %td{ width: 100 }
     .product_price= price_for(product, quantity)
     .product-quantity
-      = number_field "order[line_items][#{li_id}]", :quantity, value: quantity, class: 'form-control'
+      = form_tag order_path, remote: false, 'data-autoupdate' => true, method: :patch do
+        = number_field "line_items[#{li_id}]", :quantity, value: quantity, class: 'form-control'

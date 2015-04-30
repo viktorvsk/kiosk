@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   end
   resources :categories, only: [:index, :show], path: 'c'
   resources :taxons, only: [:show], path: 't'
-  resource :order, only: [:show, :update]
+  resource :order, only: [:show, :update] do
+    post 'add_product/:product_id', to: 'orders#add_product', as: :add_product
+    delete 'remove_product/:product_id', to: 'orders#remove_product', as: :remove_product
+  end
   resource :user, only: [:show, :update, :create]
 
   namespace :admin do

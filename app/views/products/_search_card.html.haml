@@ -15,4 +15,5 @@
         = link_to product.name, p_path(slug: product.slug, id: product.id)
       Добавить в сравнение
       .product_price= price_for(product)
+      = render 'products/order_buttons', product: product
 
