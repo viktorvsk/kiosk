@@ -1,10 +1,18 @@
 class CatalogController < ApplicationController
-  before_action :set_menu_taxons
+  before_action :set_current_order
 
   private
 
-  def set_menu_taxons
-    @taxons = Catalog::Taxon.eager_load(:category)
+  def set_current_order
+    if !current_user
+      if session[:order_id]
+        @current_order = Order.find(session[:order_id])
+      else
+        @current_order = Order.create!
+        session[:order_id] = @current_order.id
+      end
+    else
+      @current_order = current_user.current_order || current_user.create_current_order
+    end
   end
-
 end

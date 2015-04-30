@@ -1,5 +1,5 @@
 module ProductsHelper
-  def price_for(product)
-    product.bound? ?  "#{product.price} грн." : "Нет в наличии"
+  def price_for(product, quantity=1)
+    product.bound? ?  "#{product.price * quantity} грн." : "Нет в наличии"
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427234751) do
+ActiveRecord::Schema.define(version: 20150430125831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,15 +237,14 @@ ActiveRecord::Schema.define(version: 20150427234751) do
   add_index "markups", ["name"], name: "index_markups_on_name", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.string   "code",         limit: 10, default: "", null: false
-    t.integer  "user_id",                              null: false
+    t.integer  "user_id"
     t.hstore   "info"
     t.datetime "completed_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "state",        default: "in_cart"
   end
 
-  add_index "orders", ["code"], name: "index_orders_on_code", unique: true, using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "seos", force: :cascade do |t|
@@ -272,32 +271,23 @@ ActiveRecord::Schema.define(version: 20150427234751) do
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
 
-  create_table "states", force: :cascade do |t|
-    t.string   "name",           default: "", null: false
-    t.integer  "stateable_id",                null: false
-    t.string   "stateable_type",              null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "states", ["name"], name: "index_states_on_name", using: :btree
-  add_index "states", ["stateable_type", "stateable_id"], name: "index_states_on_stateable_type_and_stateable_id", using: :btree
-
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: "", null: false
-    t.string   "phone",                  default: "", null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "name",                   default: "",     null: false
+    t.string   "phone",                  default: "",     null: false
+    t.string   "email",                  default: "",     null: false
+    t.string   "encrypted_password",     default: "",     null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role",                   default: "user", null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["phone"], name: "index_users_on_phone", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["role"], name: "index_users_on_role", using: :btree
 
   create_table "vendor_merchants", force: :cascade do |t|
     t.string   "name",       null: false

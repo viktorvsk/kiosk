@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   resources :categories, only: [:index, :show], path: 'c'
   resources :taxons, only: [:show], path: 't'
-  resources :orders
+  resource :order, only: [:show, :update]
   resource :user, only: [:show, :update, :create]
 
   namespace :admin do

@@ -1,0 +1,15 @@
+%tr
+  %td
+    - if product.images.present?
+      .product_image
+        .thumbnail
+          = link_to p_path(slug: product.slug, id: product.id) do
+            = image_tag product.images.includes(:imageable).first, class: 'img-responsive', size: '48'
+    .product_price= price_for(product)
+  %td
+    .product_name
+      = link_to product.name, p_path(slug: product.slug, id: product.id)
+  %td{ width: 100 }
+    .product_price= price_for(product, quantity)
+    .product-quantity
+      = number_field "order[line_items][#{li_id}]", :quantity, value: quantity, class: 'form-control'

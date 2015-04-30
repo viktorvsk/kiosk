@@ -1,0 +1,14 @@
+.page-header
+  %h1 Корзина
+.row
+  .col-sm-3
+    = render 'products/aside'
+  .col-xs-9
+    %table.table.table-bordered.table-striped
+      %tbody
+        %tr
+          %th Товар
+          %th Количество
+          %th Сумма
+        - @current_order.line_items.includes(product: :images).each do |li|
+          = render 'products/order_card', product: li.product, quantity: li.quantity, li_id: li.id

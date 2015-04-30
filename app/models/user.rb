@@ -2,36 +2,24 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   ROLES = %w(admin customer)
-  scope :admins, -> { joins(:role).where(states: { name: 'admin' }) }
+  scope :admins, -> { where(role: 'admin') }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :role, as: :stateable, class_name: State
+  has_one :current_order, -> { where(state: 'in_cart') }, class_name: Order
+  has_many :orders, -> { where.not(state: 'in_cart') }
 
   ROLES.each do |role_name|
     define_method "#{role_name}?" do
-      role.present? && role.name == role_name.to_s
+      role_name == role
     end
   end
 
-  def role_name
-    role.name
-  end
-
-  def customer?
-    role.nil? or role.name == 'customer'
-  end
-
   def is_admin?
-    role.try(:name) == 'admin'
+    role == 'admin'
   end
 
   def promote_to(role_name)
     fail ArgumentError, "Invalid role. Use one of: #{ROLES.join(', ')}" unless role_name.to_s.in?( ROLES )
-    if role.present?
-      role.update(name: role_name.to_s) unless role.name == role_name.to_s
-    else
-      create_role(name: role_name)
-    end
-    role_name
+    update(role: role_name) unless role_name == role
   end
 end

@@ -19,6 +19,7 @@ class Catalog::Product < ActiveRecord::Base
   belongs_to :category, class_name: Catalog::Category,
                         foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
+  has_many :line_items, dependent: :destroy, foreign_key: :catalog_product_id
   has_many :product_properties, class_name: Catalog::ProductProperty,
                                 foreign_key: :catalog_product_id,
                                 dependent: :delete_all,
