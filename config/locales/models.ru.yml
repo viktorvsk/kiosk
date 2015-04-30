@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      conf:
+        one: Настройка
+        many: Настройки
+        other: Настройки
+        few: Настроек
       order:
         one: Заказ
         many: Заказ
@@ -42,6 +47,9 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      conf:
+        var: Название
+        value: Значение
       user:
         name: Имя
         phone: Телефон
