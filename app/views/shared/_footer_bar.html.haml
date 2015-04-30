@@ -1,3 +1,9 @@
 %footer.jumbotron
-  .container
-    &copy; 2015
+  .container-fluid
+    .row
+      .col-sm-4
+        = Conf['ck.footer1'].html_safe
+      .col-sm-4
+        = Conf['ck.footer2'].html_safe
+      .col-sm-4
+        = Conf['ck.footer3'].html_safe

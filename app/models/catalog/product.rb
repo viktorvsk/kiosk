@@ -1,6 +1,11 @@
 require 'open-uri'
 class Catalog::Product < ActiveRecord::Base
   include Slugable
+  SEO_MAPPER = {
+    'название' => :name,
+    'цена' => :price
+  }
+  SEO_ATTRS = %w(название цена).join('|')
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
   # after_update :expire_homepage_tops_cache_fragment
@@ -134,6 +139,10 @@ class Catalog::Product < ActiveRecord::Base
   def bound?
     #vendor_products.active.present?
     price.to_i > 0
+  end
+
+  def seo_template(attribute)
+    Conf[:seo_template_product].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) }
   end
 
   def recount

@@ -28,6 +28,6 @@
 .row
   .col-sm-8
     %ul.list-group
-      %li.list-group-item= field_for f, :description, :cktext_area, ckeditor: { language: :ru, toolbar: :mini }
+      %li.list-group-item= field_for f, :description, :cktext_area, ckeditor: { language: :ru }
   .col-sm-4
     = render 'shared/seo_attributes', seo: @product.seo, f: f

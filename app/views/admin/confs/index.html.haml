@@ -1,20 +1,14 @@
 .page-header
-  = link_to new_admin_conf_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Conf
-  %h1 Listing admin_confs
+  %h1 Настройки
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th
-        %th
-        %th
+.jumbotron
+  %ul.list-group
 
-    %tbody
-      - @admin_confs.each do |admin_conf|
-        %tr
-          %td= link_to 'Show', admin_conf
-          %td= link_to 'Edit', edit_admin_conf_path(admin_conf)
-          %td= link_to 'Destroy', admin_conf, :data => { confirm: 'Are you sure?' }, :method => :delete
+    - @confs.each do |conf|
+      %li.list-group-item
+        %h4= t("settings.#{conf.var}")
+        = form_tag admin_conf_path(conf), method: :patch, remote: true,'data-autoupdate' => true do |f|
+          = send( conf_type(conf), :conf, :value, value: conf.value, class: 'form-control', id: "conf_#{conf.id}", rows: 10, ckeditor: { language: :ru })
+          - if conf_type(conf) == :cktext_area
+            .form-actions= submit_tag 'Сохранить', class: 'btn btn-info btn-xs'
+

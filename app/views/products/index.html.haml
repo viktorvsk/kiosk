@@ -14,3 +14,5 @@
     %hr/
     .row
       = render collection: @homepage, partial: 'products/top_card', as: :product, locals: { css: 'label-info', name: 'Популярное' }
+.well.well-sm
+  = Conf['ck.homepage_seo'].html_safe

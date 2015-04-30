@@ -2,11 +2,17 @@
 .jumbotron
   .container-fluid
     .row
-      .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
+      .col-sm-4
+        = Conf['ck.logo'].html_safe
+      .col-sm-4
+        = Conf['ck.phones'].html_safe
         = render 'shared/main_search_bar'
+      .col-sm-4
+        %h2 Режим работы
+        = Conf['ck.mode'].html_safe
 .container-fluid
   .container
     .row
       .col-xs-12
-        - cache ['catalog_menu', Catalog::Taxon.all] do
+        - cache ['catalog_menu', Catalog::Taxon.pluck(:updated_at).map(&:to_i)] do
           = render 'shared/menu_bar'

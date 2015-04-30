@@ -1,3 +1,7 @@
+- @meta_title = @category.seo.try(:title)
+- @meta_keywords = @category.seo.try(:keywords)
+- @meta_description = @category.seo.try(:description)
+
 .page-header
   %h1{ 'data-url' => c_path(id: @category.id, slug: @category.slug) }= @category.name
 .row#filters_and_results

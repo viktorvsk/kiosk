@@ -52,4 +52,7 @@
           По текущему запросу товары не найдены
         .col-xs-12.text-center
           = paginate products, remote: true if products.respond_to?(:current_page)
+  .well-sm.well
+    %small
+      = @category.description.html_safe
 = render 'price_slider'

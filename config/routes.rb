@@ -82,7 +82,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :confs, except: [:show]
+    resources :confs, only: [:index, :update]
     resources :markups, except: [:show]
     resources :orders, except: [:show]
     resources :users, except: [:show]

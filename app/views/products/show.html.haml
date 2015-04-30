@@ -1,3 +1,6 @@
+- @meta_title = @product.seo.try(:title).presence || @product.seo_template(:title)
+- @meta_keywords = @product.seo.try(:keywords)
+- @meta_description = @product.seo.try(:description)
 .page-header
   = link_to products_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
@@ -29,8 +32,8 @@
         .row
           .col-xs-12
             .col-sm-6
-              = render @product.images.first
-          = render partial: 'images/thumbs', collection: @product.images, as: :image
+              = render @product.images.includes(:imageable).first
+          = render partial: 'images/thumbs', collection: @product.images.includes(:imageable), as: :image
     %ul.nav.nav-tabs
       %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
       %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
