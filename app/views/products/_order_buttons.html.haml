@@ -1,3 +1,4 @@
-.btn.btn-success.btn-xs
-  = link_to 'Купить', add_product_order_path(product), method: :post
-.btn.btn-info.btn-xs Купить в 1 клик
+- if product.bound?
+  .btn.btn-success.btn-xs
+    = link_to 'Купить', add_product_order_path(product), method: :post
+  .btn.btn-info.btn-xs Купить в 1 клик
