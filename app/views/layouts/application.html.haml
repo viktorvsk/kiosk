@@ -4,6 +4,7 @@
     = render 'layouts/catalog_meta_bar'
     = render 'shared/head_assets'
     = javascript_include_tag 'application', 'catalog'
+    %style= Conf['txt.css']
     = csrf_meta_tags
   %body
     = render 'layouts/nav/catalog'
@@ -15,4 +16,5 @@
     .container
       = yield
     = render 'shared/footer_bar'
+    %script= Conf['txt.js']
 

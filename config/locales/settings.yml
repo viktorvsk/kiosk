@@ -2,6 +2,9 @@ ru:
   settings:
     seo_template_product: Шаблон заголовка страницы в карточке товара
     site_name: Название сайта
+    txt:
+      js: Javascript
+      css: CSS
     ck:
       mode: Режим работы
       logo: Логотип
