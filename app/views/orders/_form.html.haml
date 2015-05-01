@@ -1,10 +1,11 @@
-= form_for order, url: order_path, remote: true, data: { autoupdate: true } do |f|
-  = render 'shared/error_messages', object: f.object
-  = field_for f, :name
-  = field_for f, :phone, :phone_field
-  = field_for f, :address
-  = field_for f, :comment, :text_area
-.form-actions
-  - css_class = 'btn btn-warning'
-  - css_class << ' disabled' unless order.ready?
-  = link_to 'Оформить заказ', checkout_order_path, class:  css_class, method: :post
+.well.well-sm
+  = form_for order, url: order_path, remote: true, data: { autoupdate: true } do |f|
+    = render 'shared/error_messages', object: f.object
+    = field_for f, :name
+    = field_for f, :phone, :phone_field
+    = field_for f, :address
+    = field_for f, :comment, :text_area
+  .form-actions
+    - css_class = 'btn btn-warning'
+    - css_class << ' disabled' unless order.ready?
+    = link_to 'Оформить заказ', checkout_order_path, class:  css_class, method: :post

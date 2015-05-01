@@ -3,20 +3,22 @@
 .row
   .col-sm-3
     = render 'products/aside'
-  .col-xs-9
+  .col-sm-9
     - if @current_order.products.present?
-      %table.table.table-bordered.table-striped
+      %table.table.table-bordered.product_table
         %tbody
           %tr
             %th Товар
             %th Количество
-            %th Сумма
-          - @current_order.line_items.includes(product: :images).each do |li|
+          - @current_order.line_items.order(:created_at).includes(product: :images).each do |li|
             = render 'products/order_card', product: li.product, quantity: li.quantity, li_id: li.id
-      %hr/
-      .text-right
-        = "#{@current_order.total_sum} грн."
-      .order-form= render 'orders/form', order: @current_order, product: nil
+
+      %h2.text-right
+        Всего:
+        .label.label-info= "#{@current_order.total_sum} грн."
+      %br/
+      .order-form
+        = render 'orders/form', order: @current_order, product: nil
     - else
       %p Вы еще не добавили ни одного товара
     = link_to (request.referrer ? request.referrer : root_path) do

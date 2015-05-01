@@ -2,13 +2,23 @@
   clear: none!important;
 }
 
+.product_table{
+  td, tr{
+    vertical-align: middle;
+  }
+  .product_image{
+    height: 75px;
+  }
+  .product_quntity{
+    vertical-align: middle;
+  }
+}
+
 .product{
 
   &:nth-of-type(3n+1){
     clear: left;
   }
-
-
 
   &_wrapper{
 
