@@ -47,6 +47,11 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      order:
+        name: Имя
+        phone: Телефон
+        address: Адрес
+        comment: Комментарий
       conf:
         var: Название
         value: Значение

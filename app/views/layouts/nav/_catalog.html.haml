@@ -10,10 +10,10 @@
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         %li= link_to 'Корзина', order_path
+        %li= link_to 'Личный кабинет', user_path
         - if current_user
           - if current_user.admin?
             %li= link_to 'Админ', admin_path
-          %li= link_to 'Личный кабинет', user_path
           %li= link_to 'Выйти', destroy_user_session_path, method: :delete
         - else
           %li= link_to 'Зарегистрироваться', new_user_registration_path

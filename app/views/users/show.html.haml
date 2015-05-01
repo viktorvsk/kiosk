@@ -1,14 +1,15 @@
 .row
-  .col-md-3
-    .well.well-sm
-      %h3 Профиль
-      = form_for @user, url: user_path do |f|
-        = field_for f, :name
-        = field_for f, :phone, :phone_field
-        = field_for f, :email, :email_field
-        = field_for f, :password, :password_field
-        = field_for f, :password_confirmation, :password_field
-        .form-actions
-          = f.submit (@user.persisted? ? 'Обновить' : 'Зарегистрироваться'), class: 'btn btn-info btn-xs'
+  - if current_user
+    .col-md-3
+      .well.well-sm
+        %h3 Профиль
+        = form_for @user, url: user_path do |f|
+          = field_for f, :name
+          = field_for f, :phone, :phone_field
+          = field_for f, :email, :email_field
+          = field_for f, :password, :password_field
+          = field_for f, :password_confirmation, :password_field
+          .form-actions
+            = f.submit (@user.persisted? ? 'Обновить' : 'Зарегистрироваться'), class: 'btn btn-info btn-xs'
   .col-md-9
     = render @orders

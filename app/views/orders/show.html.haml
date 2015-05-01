@@ -4,7 +4,6 @@
   .col-sm-3
     = render 'products/aside'
   .col-xs-9
-    = "<h1>#{@current_order.id}</h1>#{session[:order_id]}".html_safe if Rails.env.development?
     - if @current_order.products.present?
       %table.table.table-bordered.table-striped
         %tbody
@@ -17,7 +16,7 @@
       %hr/
       .text-right
         = "#{@current_order.total_sum} грн."
-      #order-form= render 'orders/form', order: @current_order
+      .order-form= render 'orders/form', order: @current_order, product: nil
     - else
       %p Вы еще не добавили ни одного товара
     = link_to (request.referrer ? request.referrer : root_path) do

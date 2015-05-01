@@ -1,22 +1,21 @@
-.col-sm-3
-  .product.well
-    - if css.present?
-      .pull-right
-        .product_top.label{ class: css }= name
-    .product_articul
-      .label.label-info
-        Артикул:
-        = product.id
-    .text-center
-      %br
-      - if product.images.present?
+.product.no_clear
+  .product_wrapper
+    .col-md-3
+      .product_inner{ class: css }
+        .product_special
+          .product_top.label{ class: "label-#{css}" }= name
+        .product_articul
+          .label.label-warning
+            Код:
+            = product.id
         .product_image
-          .thumbnail
-            = link_to p_path(slug: product.slug, id: product.id) do
-              = image_tag product.images.includes(:imageable).first, class: 'img-responsive'
-      .product_name
-        = link_to product.name, p_path(slug: product.slug, id: product.id)
-      Добавить в сравнение
-      .product_price= price_for(product)
-      = render 'products/order_buttons', product: product
+          = link_to p_path(slug: product.slug, id: product.id) do
+            = image_tag product.preview_path, class: 'img-responsive'
+        .product_name
+          = link_to product.name, p_path(slug: product.slug, id: product.id)
+        .product_compare
+          Добавить в сравнение
+        .product_price
+          = price_for(product)
+        = render 'products/order_buttons', product: product
 

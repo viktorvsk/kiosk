@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   has_many :products, through: :line_items
 
   PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
-  validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_nil: true
+  validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
   before_validation :strip_phone
 
   scope :in_cart, -> { where(state: 'in_cart') }
@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
   end
 
   def ready?
-    %w(name phone address).all?{ |field| self.send(field).present? }
+    valid? && %w(name phone address).all?{ |field| self.send(field).present? }
   end
 
   def total_sum
@@ -45,8 +45,7 @@ class Order < ActiveRecord::Base
   private
 
   def strip_phone
-    return if new_record?
-    p = self[:info]["phone"].to_s
+    return if new_record? || (p = self[:info]["phone"].to_s).blank?
     p.gsub!(/[^\d]/, '')
     unless p =~ /\A38/
       p = "38#{p}"

@@ -11,7 +11,7 @@ class CategoriesController < CatalogController
   # GET /categories/1.json
   def show
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
-    @all_products = @category.products.includes(:images).by_category_params(params)
+    @all_products = @category.products.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])
     @filters_and_results_hash = {
       filters: @category.category_filters.includes(filter: :values),

@@ -142,6 +142,10 @@ class Catalog::Product < ActiveRecord::Base
     price.to_i > 0
   end
 
+  def preview_path
+    images.includes(:imageable).first.try(:to_s) || "product_missing.png"
+  end
+
   def seo_template(attribute)
     Conf[:seo_template_product].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) }
   end

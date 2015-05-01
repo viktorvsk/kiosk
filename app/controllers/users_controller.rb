@@ -2,7 +2,11 @@ class UsersController < CatalogController
   before_action :set_user
 
   def show
-    @orders = @user.persisted? ? @user.orders.includes(:line_items).includes(:line_items) : Order.find(session[:ordered].split)
+    if @user.persisted?
+      @orders = @user.orders.includes(:line_items)
+    else
+      @orders = session[:ordered] ? Order.find(session[:ordered].to_s.split) : Order.none
+    end
   end
 
   def create

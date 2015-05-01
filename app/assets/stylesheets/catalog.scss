@@ -226,3 +226,10 @@ body{
   width: 15px;
 }
 
+
+.modal-backdrop {
+  z-index: -1!important;
+  display: none;
+}
+
+

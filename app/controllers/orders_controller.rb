@@ -18,6 +18,12 @@ class OrdersController < CatalogController
   def show
   end
 
+  def instant_checkout
+    @current_order.line_items.destroy_all
+    @current_order.add_product(params[:product_id])
+    redirect_to checkout_order_url
+  end
+
   def checkout
     head 422 and return unless @current_order.ready?
     pass = Devise.friendly_token
@@ -31,15 +37,6 @@ class OrdersController < CatalogController
       session[:ordered] = @current_order.id.to_s
     end
     redirect_to user_path, notice: "Заказ успешно оформлен. Номер заказа: #{@current_order.id}"
-    # if user.present?
-    #   redirect_to order_path, error: 'Пользователь с таким телефоном уже зарегистрирован, пожалуйста, '
-    # else
-    #   user.create(phone: @current_order.phone, email: "#{@current_order.phone}@kiosk.evotex.kh.ua")
-    #   @current_order.update(state: 'checkout', user: user)
-    #   sign_in(:user, user)
-    #   redirect_to user_path
-    # end
-
   end
 
   def update_lineitem_count
@@ -74,7 +71,13 @@ class OrdersController < CatalogController
   private
 
   def order_params
-    params[:order].permit(:name, :phone, :address, :comment)
+    if params[:order][:phone].blank?
+      params[:order][:phone] = nil
+      params[:order].permit(:name, :address, :phone, :comment)
+    else
+      params[:order].permit(:name, :phone, :address, :comment)
+    end
+
   end
 
 end

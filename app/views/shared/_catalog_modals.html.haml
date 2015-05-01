@@ -1,0 +1,13 @@
+.modal.fade{ id: 'instant-checkout', tabindex: -1, 'data-backdrop' => 'static', 'data-keyboard' => 'false' }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ 'data-dismiss' => 'modal', type: :button } &times;
+        %h4.modal-title loading...
+      .modal-body
+        .row
+          .col-sm-6
+            .product_instant-modal
+          .col-sm-6
+            .order-form
+              \...
