@@ -30,8 +30,8 @@
                         %ul
                           - chapter_taxon.children.includes(:category).sort_by(&:position).each do |category_taxon|
                             %li
-                              - if category_taxon.category
-                                = link_to category_taxon.name, c_path(id: category_taxon.category.id, slug: category_taxon.slug)
+                              - if (cat = category_taxon.category) && cat.products.present?
+                                = link_to category_taxon.name, c_path(id: cat.id, slug: category_taxon.slug)
                               - else
                                 = category_taxon.name
 :erb

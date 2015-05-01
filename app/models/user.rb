@@ -3,6 +3,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   ROLES = %w(admin customer)
   scope :admins, -> { where(role: 'admin') }
+
+  PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
+  validates :phone,
+    format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ },
+    uniqueness: true
+  before_validation :strip_phone
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :current_order, -> { where(state: 'in_cart') }, class_name: Order
@@ -22,4 +29,16 @@ class User < ActiveRecord::Base
     fail ArgumentError, "Invalid role. Use one of: #{ROLES.join(', ')}" unless role_name.to_s.in?( ROLES )
     update(role: role_name) unless role_name == role
   end
+
+  private
+
+  def strip_phone
+    p = self[:phone].to_s
+    p.gsub!(/[^\d]/, '')
+    unless p =~ /\A38/
+      p = "38#{p}"
+    end
+    self.phone = p
+  end
+
 end

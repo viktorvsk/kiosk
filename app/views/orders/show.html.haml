@@ -4,6 +4,7 @@
   .col-sm-3
     = render 'products/aside'
   .col-xs-9
+    = "<h1>#{@current_order.id}</h1>#{session[:order_id]}".html_safe if Rails.env.development?
     - if @current_order.products.present?
       %table.table.table-bordered.table-striped
         %tbody
@@ -16,14 +17,9 @@
       %hr/
       .text-right
         = "#{@current_order.total_sum} грн."
-      .form-actions
-        = link_to (request.referrer ? request.referrer : root_path) do
-          .btn.btn-default Продолжить покупки
-        .btn.btn-warning Оформить заказ
-
+      #order-form= render 'orders/form', order: @current_order
     - else
       %p Вы еще не добавили ни одного товара
-      .form-actions
-        = link_to (request.referrer ? request.referrer : root_path) do
-          .btn.btn-default Продолжить покупки
+    = link_to (request.referrer ? request.referrer : root_path) do
+      .btn.btn-default Продолжить покупки
 

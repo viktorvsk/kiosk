@@ -2,6 +2,7 @@ class UsersController < CatalogController
   before_action :set_user
 
   def show
+    @orders = @user.persisted? ? @user.orders.includes(:line_items).includes(:line_items) : Order.find(session[:ordered].split)
   end
 
   def create
@@ -9,10 +10,10 @@ class UsersController < CatalogController
   end
 
   def update
-    if @user.update!(user_params)
+    if @user.update(user_params)
       redirect_to :back, notice: 'Профиль успешно обновлен'
     else
-      redirect_to :back, error: 'При обновлении профиля произошла ошибка'
+      redirect_to user_url, alert: 'При обновлении профиля произошла ошибка'
     end
   end
 

@@ -16,5 +16,5 @@
   %td{ width: 100 }
     .product_price= price_for(product, quantity)
     .product-quantity
-      = form_tag order_path, remote: false, 'data-autoupdate' => true, method: :patch do
+      = form_tag update_lineitem_count_order_path, remote: false, 'data-autoupdate' => true, method: :patch do
         = number_field "line_items[#{li_id}]", :quantity, value: quantity, class: 'form-control', min: 1

@@ -59,7 +59,7 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def top(top_name)
-      where("info->'#{top_name}' = '1'")
+      where("catalog_products.info->'#{top_name}' = '1'")
     end
 
     def filters_cont(filters_str)
@@ -157,6 +157,10 @@ class Catalog::Product < ActiveRecord::Base
       end
       update(price: prices.min)
     end
+  end
+
+  def in_price
+    (vendor_products.rrc.active.max_by(&:price).try(:rrc) || vendor_products.active.min_by(&:price).try(:price)).to_f.ceil
   end
 
   def bind(vendor_product)

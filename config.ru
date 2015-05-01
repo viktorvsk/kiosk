@@ -3,6 +3,6 @@
 require ::File.expand_path('../config/environment', __FILE__)
 run Rails.application
 
-if Rails.env.profile?
-  use Rack::RubyProf, :path => '/home/victorvsk/dev/profile/kiosk'
-end
+# if Rails.env.profile?
+#   use Rack::RubyProf, :path => '/home/victorvsk/dev/profile/kiosk'
+# end

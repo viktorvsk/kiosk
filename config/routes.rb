@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show], path: 'c'
   resources :taxons, only: [:show], path: 't'
   resource :order, only: [:show, :update] do
+    post :checkout
+    patch 'update_lineitem_count', to: 'orders#update_lineitem_count', as: :update_lineitem_count
     post 'add_product/:product_id', to: 'orders#add_product', as: :add_product
     delete 'remove_product/:product_id', to: 'orders#remove_product', as: :remove_product
   end
