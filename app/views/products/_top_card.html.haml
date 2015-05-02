@@ -1,21 +1,23 @@
-.product.no_clear
+.product.product_top-card
   .product_wrapper
-    .col-md-3
-      .product_inner{ class: css }
-        .product_special
-          .product_top.label{ class: "label-#{css}" }= name
-        .product_articul
-          .label.label-warning
-            Код:
-            = product.id
-        .product_image
-          = link_to p_path(slug: product.slug, id: product.id) do
-            = image_tag product.preview_path, class: 'img-responsive'
-        .product_name
-          = link_to product.name, p_path(slug: product.slug, id: product.id)
-        .product_compare
-          Добавить в сравнение
-        .product_price
-          = price_for(product)
-        = render 'products/order_buttons', product: product
+    .product_inner{ class: css }
+      .product_special
+        .product_top.label{ class: "label-#{css}" }= name
+      .product_articul
+        .label.label-warning
+          Код:
+          = product.id
+      .product_image
+        = link_to p_path(slug: product.slug, id: product.id) do
+          = image_tag product.preview_path, class: 'img-responsive'
+      .product_name
+        = link_to product.name, p_path(slug: product.slug, id: product.id)
+      .product_compare
+        Добавить в сравнение
+      .product_price
+        = price_for(product)
+      = render 'products/order_buttons', product: product
+      .product_properties
+        = product_properties_for(product)
+
 

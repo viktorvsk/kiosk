@@ -30,28 +30,25 @@
           = render collection: brands, as: :brand, partial: 'categories/brand', locals: { products: all_products }
   = render collection: filters.sort_by(&:position), as: :filter, partial: 'categories/filter',locals: { products: all_products }
 .col-md-9#filter-results
-  .well.well-sm
-    .container-fluid
-      .row
-        .col-md-8.col-sm-9.col-xs-12
-          %h3
-            Результат поиска
-            %small
-              (
-              = products_count
-              )
-
-      .row
-        .col-sm-4.col-sm-offset-8
-          = select_tag :o, options_for_select([['сначала самые дешевые','a'],['сначала самые дорогие','d']], params[:o]), 'data-sort' => true, class: 'form-control'
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        Результат поиска
+        %small
+          (
+          = products_count
+          )
+          .pull-right
+            = select_tag :o, options_for_select([['сначала самые дешевые','a'],['сначала самые дорогие','d']], params[:o]), 'data-sort' => true, class: 'form-control'
       %br/
-      .row
-        - if products.present?
-          = render collection: products, partial: 'products/search_card', as: :product
-        - else
-          По текущему запросу товары не найдены
-        .col-xs-12.text-center
-          = paginate products, remote: true if products.respond_to?(:current_page)
+    .panel-body
+      - if products.present?
+        = render collection: products, partial: 'products/search_card', as: :product
+      - else
+        По текущему запросу товары не найдены
+    .panel-footer
+      .text-center
+        = paginate products, remote: true if products.respond_to?(:current_page)
   .well-sm.well
     %small
       = @category.description.html_safe

@@ -1,18 +1,18 @@
 - cache ['homepage_tops', @hit, @newest, @homepage] do
-  .jumbotron
-    %h2 Хиты продаж
-    %hr/
-    .row
+  .panel.panel-success
+    .panel-heading
+      %h4.panel-title Хиты продаж
+    .panel-body
       = render collection: @hit.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'success', name: 'Хит продаж' }
-  .jumbotron
-    %h2 Новинки
-    %hr/
-    .row
+  .panel.panel-warning
+    .panel-heading
+      %h4.panel-title Новинки
+    .panel-body
       = render collection: @newest.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'danger', name: 'Новинка' }
-  .jumbotron
-    %h2 Популярное
-    %hr/
-    .row
+  .panel.panel-primary
+    .panel-heading
+      %h4.panel-title Популярное
+    .panel-body
       = render collection: @homepage.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'info', name: 'Популярное' }
 .well.well-sm
   = Conf['ck.homepage_seo'].html_safe
