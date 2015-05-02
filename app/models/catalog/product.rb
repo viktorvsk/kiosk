@@ -8,7 +8,7 @@ class Catalog::Product < ActiveRecord::Base
   SEO_ATTRS = %w(название цена).join('|')
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
-  # after_update :expire_homepage_tops_cache_fragment
+  after_save :recount_unfixed
   MARKETPLACES = %W(rozetka hotline brain erc).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
@@ -152,15 +152,7 @@ class Catalog::Product < ActiveRecord::Base
 
   def recount
     return if fixed_price?
-    rrc = vendor_products.select_rrc
-    if rrc > 0
-      update(price: rrc)
-    else
-      prices = vendor_products.active.map do |vendor_product|
-        vendor_product.price + category.tax_for(vendor_product.price)
-      end
-      update(price: prices.min)
-    end
+    update(price: price_to_recount)
   end
 
   def in_price
@@ -334,12 +326,26 @@ class Catalog::Product < ActiveRecord::Base
 
   private
 
-  ransacker :id do
-    Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
+
+  def price_to_recount
+    rrc = vendor_products.select_rrc
+    if rrc > 0
+      rrc
+    else
+      prices = vendor_products.active.map do |vendor_product|
+        vendor_product.price + category.tax_for(vendor_product.price)
+      end
+      prices.min
+    end
   end
 
-  def expire_homepage_tops_cache_fragment
-    ActionController::Base.new.expire_fragment 'homepage_tops'
+  def recount_unfixed
+    return if fixed_price? || !fixed_price_changed?
+    update_column(:price, price_to_recount)
+  end
+
+  ransacker :id do
+    Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
   end
 
 end
