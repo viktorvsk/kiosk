@@ -1,15 +1,18 @@
 .row
   - if current_user
     .col-md-3
-      .well.well-sm
-        %h3 Профиль
+      .panel.panel-info
+        .panel-heading
+          %h4.panel-title  Профиль
         = form_for @user, url: user_path do |f|
-          = field_for f, :name
-          = field_for f, :phone, :phone_field
-          = field_for f, :email, :email_field
-          = field_for f, :password, :password_field
-          = field_for f, :password_confirmation, :password_field
-          .form-actions
+          .panel-body
+            = render 'shared/error_messages', object: f.object
+            = field_for f, :name
+            = field_for f, :phone, :phone_field
+            = field_for f, :email, :email_field
+            = field_for f, :password, :password_field
+            = field_for f, :password_confirmation, :password_field
+          .panel-footer.text-right
             = f.submit (@user.persisted? ? 'Обновить' : 'Зарегистрироваться'), class: 'btn btn-info btn-xs'
   .col-md-9
     = render @orders

@@ -9,8 +9,18 @@
       = link_to Conf[:site_name], root_path, :class => "navbar-brand"
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        %li= link_to 'Корзина', order_path
-        %li= link_to 'Личный кабинет', user_path
+        %li
+          = link_to order_path do
+            %i.glyphicon.glyphicon-shopping-cart
+            Корзина:
+            - if @current_order.products.present?
+              = "(#{@current_order.items_count}) #{@current_order.total_sum} грн."
+            - else
+              пусто
+        %li
+          = link_to user_path do
+            %i.glyphicon.glyphicon-user
+            Личный кабинет
         - if current_user
           - if current_user.admin?
             %li= link_to 'Админ', admin_path

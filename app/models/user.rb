@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
   validates :phone,
     format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ },
+    allow_blank: true,
     uniqueness: true
   before_validation :strip_phone
 
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
 
   def strip_phone
     p = self[:phone].to_s
+    return if p.blank?
     p.gsub!(/[^\d]/, '')
     unless p =~ /\A38/
       p = "38#{p}"

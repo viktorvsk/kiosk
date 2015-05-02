@@ -26,6 +26,10 @@ class Order < ActiveRecord::Base
 
   end
 
+  def items_count
+    line_items.map(&:quantity).sum
+  end
+
   def ready?
     valid? && %w(name phone address).all?{ |field| self.send(field).present? }
   end

@@ -9,12 +9,14 @@
         %tbody
           %tr
             %th Товар
+            %th Цена
             %th Количество
+            %th Сумма
           - @current_order.line_items.order(:created_at).includes(product: :images).each do |li|
             = render 'products/order_card', product: li.product, quantity: li.quantity, li_id: li.id
 
       %h2.text-right
-        Всего:
+        К оплате:
         .label.label-info= "#{@current_order.total_sum} грн."
       %br/
       .order-form

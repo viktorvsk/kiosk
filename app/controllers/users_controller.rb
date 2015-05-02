@@ -17,7 +17,8 @@ class UsersController < CatalogController
     if @user.update(user_params)
       redirect_to :back, notice: 'Профиль успешно обновлен'
     else
-      redirect_to user_url, alert: 'При обновлении профиля произошла ошибка'
+      @orders = @user.orders.includes(:line_items)
+      render :show
     end
   end
 

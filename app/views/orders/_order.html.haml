@@ -1,12 +1,15 @@
-.well.well-sm
-  %h3
-    Заказ №
-    = order.id
-  Товаров:
-  %b= order.products.count
-  Сумма:
-  %b
-    = order.total_sum
-    грн.
-  Дата:
-  %b= I18n.l(order.completed_at, format: "%e %b, %Y")
+.panel.panel-default
+  .panel-heading
+    %h4.panel-title
+      Заказ №
+      = order.id
+  .panel-body
+    Товаров:
+    %b= order.items_count
+    Сумма:
+    %b
+      = order.total_sum
+      грн.
+  .panel-footer
+    .text-right
+      %b= I18n.l(order.completed_at, format: "%e %b, %Y")
