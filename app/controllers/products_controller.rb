@@ -4,9 +4,9 @@ class ProductsController < CatalogController
   # GET /products
   # GET /products.json
   def index
-    @newest = Catalog::Product.bound.top(:newest).uniq
-    @homepage = Catalog::Product.bound.top(:homepage).uniq
-    @hit = Catalog::Product.bound.top(:hit).uniq
+    @newest = Catalog::Product.with_price.top(:newest).uniq
+    @homepage = Catalog::Product.with_price.top(:homepage).uniq
+    @hit = Catalog::Product.with_price.top(:hit).uniq
   end
 
   def search
