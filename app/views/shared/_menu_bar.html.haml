@@ -22,18 +22,17 @@
                 %span.caret
             %ul.dropdown-menu
               .container-fluid
-                - root_taxon.children.select{ |t| t.children.present? && t.children.includes(:category).any?{ |c| c.category.present? } }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
+                - root_taxon.children.select{ |t| t.children.present? && t.children.includes(:category).any?{ |c| c.category.present? && c.category.products.with_price.present? } }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
                   .row
                     - chapter_taxon_group.each do |chapter_taxon|
                       .col-sm-3
                         %h4= link_to chapter_taxon.name, t_path(id: chapter_taxon.id, slug: chapter_taxon.slug)
                         %ul
                           - chapter_taxon.children.includes(:category).sort_by(&:position).each do |category_taxon|
+                            - next unless (cat = category_taxon.category) && cat.products.with_price.present?
                             %li
-                              - if (cat = category_taxon.category) && cat.products.present?
-                                = link_to category_taxon.name, c_path(id: cat.id, slug: category_taxon.slug)
-                              - else
-                                = category_taxon.name
+                              = link_to category_taxon.name, c_path(id: cat.id, slug: category_taxon.slug)
+
 :erb
   <style>
     .taxons .dropdown{

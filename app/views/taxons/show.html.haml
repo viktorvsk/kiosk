@@ -9,7 +9,7 @@
   .panel-body
     %ul.list-group
       - @taxon.children.includes(:image, :category).joins(:category).each do |child_taxon|
-        - next if child_taxon.category.products.blank?
+        - next if child_taxon.category.products.with_price.blank?
         %li.list-group-item
           .row
             .col-sm-2.col-md-1
