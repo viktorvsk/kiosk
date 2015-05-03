@@ -80,6 +80,8 @@
     -ms-transform: translatez(0);
     -o-transform: translatez(0);
     transform: translatez(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
 
   }
 
