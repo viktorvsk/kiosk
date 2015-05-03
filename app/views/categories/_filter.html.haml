@@ -2,7 +2,7 @@
   .panel-heading
     %h4.panel-title
       = filter.display_name
-      .pull-right{ 'data-toggler' => "filter_#{filter.id}", 'data-show-msg' => '+', 'data-hide-msg' => '-' }
+      .pull-right.btn.btn-xs.btn-info{ 'data-toggler' => "filter_#{filter.id}", 'data-show-msg' => '+', 'data-hide-msg' => '-' }
         \-
   .panel-body{ 'data-toggleable' => "filter_#{filter.id}" }
     %ul.list-group

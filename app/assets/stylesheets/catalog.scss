@@ -5,6 +5,18 @@
  *= require_tree ./catalog
 */
 
+// *{
+//   -webkit-transform: translatez(0);
+//   -moz-transform: translatez(0);
+//   -ms-transform: translatez(0);
+//   -o-transform: translatez(0);
+//   transform: translatez(0);
+//   -webkit-backface-visibility: hidden;
+//   -webkit-perspective: 1000;
+//   backface-visibility: hidden;
+//   perspective: 1000;
+// }
+
 [data-vendor-scraper]{
   display: none;
 }

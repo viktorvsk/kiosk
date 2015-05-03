@@ -3,6 +3,12 @@
   clear: none!important;
 }
 
+.modal{
+  .product{
+    width: 100%;
+  }
+}
+
 .product_table{
   th{
     text-align: center;
@@ -70,25 +76,19 @@
     width: 100%;
     padding: 1em;
     margin: auto;
+    height: 400px;
     display: block;
     position: relative;
-    height: 400px;
+    border-radius: 7px;
     padding: 0;
     margin: 0;
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
-    transform: translatez(0);
-    -webkit-backface-visibility: hidden;
-    -webkit-perspective: 1000;
-
   }
 
   &_inner{
     background: #fff;
     border-radius: 7px;
     padding: 1em;
+    min-height: 390px;
     margin-bottom: 1em;
     position: relative;
     border: #eee solid 1px;

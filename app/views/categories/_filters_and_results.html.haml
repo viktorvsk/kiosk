@@ -1,34 +1,34 @@
-.col-md-3.well.well-sm
+.col-md-3
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title
+        Фильтры
+        %br/
+        = link_to c_path(slug: @category.slug, id: @category.id), remote: true do
+          .btn.btn-info.btn-xs.pull-right
+            Сбросить
+    .panel-body
+      %h4 Название
+      .row
+        .col-xs-12
+          = text_field :name, '', class: 'form-control', 'data-name' => true, value: params[:name]
+      %h4 Цена
+      .row
+        .col-xs-6= text_field :price_min, '', value: params[:min], class: 'form-control', 'data-price-min' => true
+        .col-xs-6= text_field :price_max, '', value: params[:max], class: 'form-control', 'data-price-max' => true
+        .col-xs-12
+          .col-xs-12
+            #price-slider{ 'data-price' => true }
 
-  %h3
-    Фильтры
-  = link_to c_path(slug: @category.slug, id: @category.id), remote: true do
-    .btn.btn-info.btn-xs.pull-right
-      Сбросить
 
-  %hr/
-  %h4 Название
-  .row
-    .col-xs-12
-      = text_field :name, '', class: 'form-control', 'data-name' => true, value: params[:name]
-  %hr/
-  %h4 Цена
-  .row
-    .col-xs-6= text_field :price_min, '', value: params[:min], class: 'form-control', 'data-price-min' => true
-    .col-xs-6= text_field :price_max, '', value: params[:max], class: 'form-control', 'data-price-max' => true
-    .col-xs-12
-      .col-xs-12
-        #price-slider{ 'data-price' => true }
-
-
-  - if brands.present?
-    .panel.panel-info
-      .panel-heading
-        %h4.panel-title Производитель
-      .panel-body
-        %ul.list-group
-          = render collection: brands, as: :brand, partial: 'categories/brand', locals: { products: all_products }
-  = render collection: filters.sort_by(&:position), as: :filter, partial: 'categories/filter',locals: { products: all_products }
+      - if brands.present?
+        .panel.panel-info
+          .panel-heading
+            %h4.panel-title Производитель
+          .panel-body
+            %ul.list-group
+              = render collection: brands, as: :brand, partial: 'categories/brand', locals: { products: all_products }
+      = render collection: filters.sort_by(&:position), as: :filter, partial: 'categories/filter',locals: { products: all_products }
 .col-md-9#filter-results
   .panel.panel-default
     .panel-heading
@@ -38,18 +38,20 @@
           (
           = products_count
           )
-          .pull-right
-            = select_tag :o, options_for_select([['сначала самые дешевые','a'],['сначала самые дорогие','d']], params[:o]), 'data-sort' => true, class: 'form-control'
-      %br/
     .panel-body
       - if products.present?
+        .row
+          .col-sm-5.col-sm-offset-7.col-md-3.col-md-offset-9.text-right
+            = select_tag :o, options_for_select([['сначала дешевые','a'],['сначала дорогие','d']], params[:o]), 'data-sort' => true, class: 'form-control'
+            %br/
         = render collection: products, partial: 'products/search_card', as: :product
       - else
         По текущему запросу товары не найдены
     .panel-footer
       .text-center
         = paginate products, remote: true if products.respond_to?(:current_page)
-  .well-sm.well
-    %small
-      = @category.description.html_safe
+  - if @category.description.present?
+    .well.well-sm
+      %small
+        = @category.description.html_safe
 = render 'price_slider'
