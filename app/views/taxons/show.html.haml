@@ -1,23 +1,26 @@
-.row
-  .col-sm-2.col-md-1
-    = image_tag @taxon.image, class: 'img-responsive'
-  .col-sm-10.col-md-11
-    %h1= @taxon.name
-%ul.list-group
-  - @taxon.children.includes(:image, :category).joins(:category).each do |child_taxon|
-    %li.list-group-item
-      .row
-        .col-sm-2.col-md-1
-          = image_tag child_taxon.image, class: 'img-responsive'
-        .col-sm-10.col-md-11
-          - if child_taxon.children.present?
-            = link_to child_taxon.name, taxon_path(child_taxon)
-          - else
-            - if child_taxon.category.present?
-              = link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category)
-              %hr/
-              = render partial: 'products/search_card', collection: child_taxon.category.products.with_price.includes(:images).order('RANDOM()').limit(3), as: :product
-            - else
-              = child_taxon.name
+.panel.panel-default
+  .panel-heading
+    .row
+      .col-xs.3.col-sm-1
+        - cache ['super_category_image', @taxon] do
+          = image_tag @taxon.children_image_path, class: 'img-responsive thumbnail'
+      .col-xs-9.col-sm-11
+        %h1= @taxon.name
+  .panel-body
+    %ul.list-group
+      - @taxon.children.includes(:image, :category).joins(:category).each do |child_taxon|
+        - next if child_taxon.category.products.blank?
+        %li.list-group-item
+          .row
+            .col-sm-2.col-md-1
+              - cache ['category_image', child_taxon] do
+                = image_tag child_taxon.category_image_path, class: 'img-responsive thumbnail'
+            .col-sm-10.col-md-11
+              - if child_taxon.children.present?
+                = link_to child_taxon.name, taxon_path(child_taxon)
+              - else
+
+                %h3= link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category)
+                = render partial: 'products/search_card', collection: child_taxon.category.products.with_price.includes(:images).order('RANDOM()').limit(3), as: :product
 
 

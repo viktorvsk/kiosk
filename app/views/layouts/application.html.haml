@@ -4,15 +4,13 @@
     = render 'layouts/catalog_meta_bar'
     = render 'shared/head_assets'
     = javascript_include_tag 'application', 'catalog'
+    = favicon_link_tag '/favicon.ico'
     %style= Conf['txt.css']
     = csrf_meta_tags
   %body
     = render 'layouts/nav/catalog'
     = render 'shared/top_bar'
-    .container
-      .row
-        .col-sm-6.col-sm-offset-3
-          = render 'shared/flash_bar'
+    = render 'shared/flash_bar'
     .container
       = yield
     = render 'shared/footer_bar'

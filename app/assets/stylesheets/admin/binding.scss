@@ -3,28 +3,27 @@
   z-index: 10;
   &.ui-draggable-dragging{
     z-index: 11;
-    }
+  }
   &:hover{
     background: #C5EFF7;
     cursor: pointer;
     color: #333;
-    }
   }
+}
 .inactive{
   opacity: 0.5;
-  }
+}
 .bind-to-product
 {
   background: #19b5fe!important;
-
-  }
+}
 .unbind-vendor-product
 {
   background: #F64747;
   li{
     opacity: 0;
-    }
   }
+}
 .dropable-product
 {
   .panel-title{
@@ -33,11 +32,10 @@
   margin: 15px auto;
   [data-scraper-modal]{
     display: none;
-    }
-
-
   }
-.catalog-products-list,.vendor-products-list
+}
+.catalog-products-list,
+.vendor-products-list
 {
   list-style: none;
   padding: 5px!important;
@@ -46,8 +44,5 @@
   ul{
     padding: 0;
     margin: 0;
-
-    }
-
-
   }
+}

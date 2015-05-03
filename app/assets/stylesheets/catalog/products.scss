@@ -13,7 +13,8 @@
   th{
     text-align: center;
   }
-  td, tr{
+  td,
+  tr{
     vertical-align: middle!important;
   }
   .product_image{
@@ -144,7 +145,6 @@
       padding: 8px;
       vertical-align: top;
     }
-
   }
 
   &_price{
@@ -171,5 +171,4 @@
       display: block;
     }
   }
-
 }

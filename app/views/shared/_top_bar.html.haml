@@ -1,6 +1,10 @@
 - @q ||= Catalog::Product.ransack
-.jumbotron
+
+.jumbotron.bg-main-color.top-bar
+  #animated-header.hidden-xs
+    %canvas#animated-header-canvas
   .container-fluid
+
     .row
       .col-sm-4
         = Conf['ck.logo'].html_safe
@@ -10,9 +14,7 @@
       .col-sm-4
         %h2 Режим работы
         = Conf['ck.mode'].html_safe
-.container-fluid
-  .container
-    .row
-      .col-xs-12
-        - cache ['catalog_menu', Catalog::Taxon.pluck(:updated_at).map(&:to_i)] do
-          = render 'shared/menu_bar'
+.container.taxons-container
+
+  - cache ['catalog_menu', Catalog::Taxon.pluck(:updated_at).map(&:to_i)] do
+    = render 'shared/menu_bar'

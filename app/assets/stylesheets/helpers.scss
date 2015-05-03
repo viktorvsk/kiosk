@@ -1,0 +1,147 @@
+@import "variables.scss";
+
+.bg-main-color{
+  background: $ksk_main_color;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+#loader{
+  position: fixed;
+  width: 220px;
+  padding: 25px 0;
+  top: 0;
+  left: 50%;
+  margin-left: -100px;
+  background: #19B5FE;
+
+  z-index: 999999999999999999;
+  opacity: 0.88;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0px 5px 10px #777;
+}
+
+.spinner {
+  margin: 0 auto 0;
+  width: 220px;
+  height: 20px;
+  text-align: center;
+  background: image-url('spinner.gif');
+}
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.fa-rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+:root .fa-rotate-90,
+:root .fa-rotate-180,
+:root .fa-rotate-270,
+:root .fa-flip-horizontal,
+:root .fa-flip-vertical {
+  filter: none;
+}
+
+
+/********************************** Fixes /************************************/
+#price-slider{
+  margin: 25px 0 50px 0;
+}
+
+.page-header{
+  padding-top: 0;
+  margin-top: 0;
+}
+
+body > footer.jumbotron{
+  margin-bottom: 0;
+  margin-top: 2em;
+}
+
+.form-actions{
+  text-align: right;
+  margin-top: 1em;
+}
+.button_to{
+  display: inline;
+}
+.form-inline{
+  display: inline;
+  input[type="file"]{
+    // display: none
+  }
+}
+.img-responsive{
+  display: block;
+  margin: auto;
+}
+
+.navbar{
+  hr{
+    padding: 3px 0;
+    margin: 3px 0;
+  }
+}
+
+/******************************** Workarounds ********************************/
+.accelerated{
+  -webkit-transform: translatez(0);
+  -moz-transform: translatez(0);
+  -ms-transform: translatez(0);
+  -o-transform: translatez(0);
+  transform: translatez(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+.modal-backdrop {
+  z-index: -1!important;
+  display: none;
+}
+

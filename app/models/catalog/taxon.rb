@@ -13,6 +13,18 @@ class Catalog::Taxon < ActiveRecord::Base
     ActionController::Base.new.expire_fragment 'catalog_menu'
   end
 
+  def children_image_path
+    image || super_category_random_image
+  rescue
+    'product_missing.png'
+  end
+
+  def category_image_path
+    image || category_random_image
+  rescue
+    'product_missing/png'
+  end
+
   private
 
   def rerender_menu
@@ -22,4 +34,18 @@ class Catalog::Taxon < ActiveRecord::Base
   def set_position
     self.position = siblings.count + 1
   end
+
+  def super_category_random_image
+    taxon_id = children.sample.id
+    random_image_for_taxon(taxon_id)
+  end
+
+  def category_random_image
+    random_image_for_taxon(id)
+  end
+
+  def random_image_for_taxon(taxon_id)
+    Catalog::Product.joins(category: :taxon).where(catalog_taxons: { id: taxon_id }).order("RANDOM()").joins(:images).first.images.includes(:imageable).sample
+  end
+
 end
