@@ -1,14 +1,13 @@
 .page-header
   %h1 Настройки
 
-.jumbotron
-  %ul.list-group
-
-    - @confs.each do |conf|
-      %li.list-group-item
-        %h4= t("settings.#{conf.var}")
-        = form_tag admin_conf_path(conf), method: :patch, remote: true,'data-autoupdate' => true do |f|
-          = send( conf_type(conf), :conf, :value, value: conf.value, class: 'form-control', id: "conf_#{conf.id}", rows: 10, ckeditor: { language: :ru })
-          - if conf_type(conf) == :cktext_area
-            .form-actions= submit_tag 'Сохранить', class: 'btn btn-info btn-xs'
-
+.row
+  .col-md-4
+    %ul.list-group
+      = render @confs.reject{ |c| c.var =~ /(^txt\.)|(^ck\.)/ }.sort_by(&:created_at)
+  .col-md-8
+    %ul.list-group
+      = render @confs.select{ |c| c.var =~ /^txt\./ }.sort_by(&:created_at)
+  .col-md-12
+    %ul.list-group
+      = render @confs.select{ |c| c.var =~ /^ck\./ }.sort_by(&:created_at)

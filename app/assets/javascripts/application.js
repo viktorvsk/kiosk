@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require magnific-popup
 //= require common
 //= require_self
 

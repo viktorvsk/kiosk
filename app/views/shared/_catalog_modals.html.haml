@@ -2,12 +2,13 @@
   .modal-dialog
     .modal-content
       .modal-header
-        %button.close{ 'data-dismiss' => 'modal', type: :button } &times;
+        %button.close{ 'data-dismiss' => 'modal', type: :button }
+          %i.glyphicon.glyphicon-remove-circle
         %h4.modal-title Загрузка...
       .modal-body
         .row
-          .col-sm-6
+          .col-sm-12
             .product_instant-modal
-          .col-sm-6
+          .col-sm-12
             .order-form
               Пожалуйста, подождите

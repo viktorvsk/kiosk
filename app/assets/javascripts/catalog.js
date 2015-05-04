@@ -4,4 +4,3 @@
 //= require animated-header/demo-1
 //= require animated-header/TweenLite.min
 //= require animated-header/EasePack.min
-

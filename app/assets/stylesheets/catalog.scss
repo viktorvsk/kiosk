@@ -15,6 +15,10 @@ body{
   font-family: 'Exo 2'
 }
 
+.table{
+  background: #fff;
+}
+
 #animated-header {
   top: 0;
   position: absolute;
@@ -46,12 +50,24 @@ body{
   box-shadow: 1px 3px 9px #555;
 }
 
+#properties{
+  th{
+    text-align: center;
+  }
+  table, th{
+    border: none;
+  }
+  th:first-of-type{
+    border-left: #ddd solid 1px;
+  }
+}
+
 .taxons-container{
-  top: -50px;
+  margin-top: -50px;
   position: relative;
   z-index: 2;
   @media (max-width: 768px){
-    top: -25px;
+    margin-top: -25px;
     li{
       color: #86E2D5;
     }

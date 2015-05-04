@@ -3,10 +3,13 @@
     .panel-heading
       %h3.panel-title Информация о поставщиках
     .panel-body
-      - if vp = @product.vendor_products.includes(:merchant) && vp.present?
+      - if (vp = @product.vendor_products.includes(:merchant)) && vp.present?
         = render partial: 'admin/vendor/products/product', collection: vp, as: :product
       - else
-        Товар не привязан
+        Товар не привязан.
+    - if @product.fixed_price
+      .panel-footer
+        %b Цена товара зафиксирована.
 .panel.panel-success
   .panel-heading
     .panel-title Режим работы

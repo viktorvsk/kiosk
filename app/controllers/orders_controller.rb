@@ -21,6 +21,7 @@ class OrdersController < CatalogController
   def instant_checkout
     @current_order.line_items.destroy_all
     @current_order.add_product(params[:product_id])
+    @current_order.update(status: 'instant_checkout')
     redirect_to checkout_order_url
   end
 
@@ -73,9 +74,9 @@ class OrdersController < CatalogController
   def order_params
     if params[:order][:phone].blank?
       params[:order][:phone] = nil
-      params[:order].permit(:name, :address, :phone, :comment)
+      params[:order].permit(:name, :address, :phone, :comment, :delivery_type, :payment_type)
     else
-      params[:order].permit(:name, :phone, :address, :comment)
+      params[:order].permit(:name, :phone, :address, :comment, :delivery_type, :payment_type)
     end
 
   end

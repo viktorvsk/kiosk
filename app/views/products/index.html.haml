@@ -2,17 +2,17 @@
   .panel.panel-success
     .panel-heading
       %h4.panel-title Хиты продаж
-    .panel-body
+    .panel-body.text-center
       = render collection: @hit.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'success', name: 'Хит продаж' }
   .panel.panel-warning
     .panel-heading
       %h4.panel-title Новинки
-    .panel-body
+    .panel-body.text-center
       = render collection: @newest.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'danger', name: 'Новинка' }
   .panel.panel-primary
     .panel-heading
       %h4.panel-title Популярное
-    .panel-body
+    .panel-body.text-center
       = render collection: @homepage.includes(:images), partial: 'products/top_card', as: :product, locals: { css: 'info', name: 'Популярное' }
 .well.well-sm
   = Conf['ck.homepage_seo'].html_safe

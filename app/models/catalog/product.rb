@@ -196,6 +196,12 @@ class Catalog::Product < ActiveRecord::Base
     self.save!
   end
 
+  def similars(delta=0.25,number=4)
+    delta_price = price * delta
+    similar_price = price-delta_price..price+delta_price
+    category.products.where(price: similar_price).order("RANDOM()").limit(number).sort_by(&:price)
+  end
+
   def set_property(property_name, property_value)
     property_name, property_value = property_name.try(:strip), property_value.try(:strip)
 

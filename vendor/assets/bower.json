@@ -3,6 +3,7 @@
   "dependencies": {
     "jquery-ui": "latest",
     "jquery.ui.touch-punch.dk": "latest",
-    "nouislider": "latest"
+    "nouislider": "latest",
+    "magnific-popup": "latest"
   }
 }

@@ -5,6 +5,8 @@ ru:
     txt:
       js: Javascript
       css: CSS
+      delivery_types: Способы доставки
+      payment_types: Способы оплаты
     ck:
       mode: Режим работы
       logo: Логотип

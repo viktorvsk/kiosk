@@ -15,4 +15,7 @@
           .panel-footer.text-right
             = f.submit (@user.persisted? ? 'Обновить' : 'Зарегистрироваться'), class: 'btn btn-info btn-xs'
   .col-md-9
-    = render @orders
+    - if @orders.present?
+      = render @orders
+    - else
+      Вы еще не оформили ни один заказ.

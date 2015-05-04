@@ -1,0 +1,39 @@
+%h1= @product.name
+.product_card
+  .product_articul
+    .label.label-warning
+      Код:
+      %b= product.id
+  .row
+    .col-sm-4
+      = link_to product.preview_path, class: 'product-cover' do
+        = image_tag product.preview_path, class: 'thumbnail img-responsive'
+    .col-sm-4
+      .product_price= price_for product
+      = render 'products/order_buttons', product: product
+      = Conf['ck.social_card']
+    .col-sm-4
+      = Conf['ck.delivery_card']
+  .row
+    - if product.images.present?
+      .images-thumbs
+        = render partial: 'images/thumbs', collection: product.images.includes(:imageable), as: :image
+  %ul.nav.nav-tabs
+    %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
+    %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
+    %li= link_to 'Отзывы', '#comments', 'data-toggle' => 'tab'
+    %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
+
+  .tab-content
+    #properties.tab-pane.active.fade.in
+      = render 'product_properties', product_properties: product.product_properties.includes(:property).with_value
+      %small Характеристики и комплектация могут изменяться производителем без уведомления.
+    #description.tab-pane.fade
+      - if product.video.present?
+        = product.video
+      - if product.description.present?
+        = product.description.html_safe
+      - else
+        Описание отсутствует
+    #comments.tab-pane.fade
+    #accessories.tab-pane.fade

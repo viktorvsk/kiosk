@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
-  store_accessor :info, :phone, :name, :address, :comment
+  store_accessor :info, :phone, :name, :address, :comment,
+    :payment_type, :delivery_type, :status
   has_many :line_items, dependent: :destroy
   has_many :products, through: :line_items
 
@@ -10,6 +11,16 @@ class Order < ActiveRecord::Base
 
   scope :in_cart, -> { where(state: 'in_cart') }
   belongs_to :user
+
+  class << self
+    def payment_types
+      Conf['txt.payment_types'].split("\n").map(&:strip)
+    end
+
+    def delivery_types
+      Conf['txt.delivery_types'].split("\n").map(&:strip)
+    end
+  end
 
 
   def add_product(product, quantity=1)

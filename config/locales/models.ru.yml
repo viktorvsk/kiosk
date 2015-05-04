@@ -8,9 +8,9 @@ ru:
         few: Настроек
       order:
         one: Заказ
-        many: Заказ
+        many: Заказов
         other: Заказы
-        few: Заказа
+        few: Заказов
       catalog/brand:
         one: Бренд
         many: Бренды
@@ -52,6 +52,8 @@ ru:
         phone: Телефон
         address: Адрес
         comment: Комментарий
+        payment_type: Cпособ оплаты
+        delivery_type: Споособ доставки
       conf:
         var: Название
         value: Значение

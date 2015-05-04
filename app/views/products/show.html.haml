@@ -1,52 +1,16 @@
 - @meta_title = @product.seo.try(:title).presence || @product.seo_template(:title)
 - @meta_keywords = @product.seo.try(:keywords)
 - @meta_description = @product.seo.try(:description)
-.page-header
-  = link_to products_path, :class => 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Все товары
-  %h1
-    = @product.name
-    %small
-      = @product.category.try(:name)
-      - if @product.brand
-        ,
-        = @product.brand.name
-
-%dl.dl-horizontal
-
 .row
   .col-sm-3
     = render 'aside'
   .col-sm-9
-    .jumbotron
-      .pull-right
-        Артикул:
-        %b= @product.id
-      - if @product.price.to_i > 0
-        Цена:
-        = @product.price
-      - else
-        %b Нет в наличии
-      -  if @product.images.present?
-        .row
-          .col-xs-12
-            .col-sm-6
-              = render @product.images.includes(:imageable).first
-          = render partial: 'images/thumbs', collection: @product.images.includes(:imageable), as: :image
-    %ul.nav.nav-tabs
-      %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
-      %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
-      %li= link_to 'Отзывы', '#comments', 'data-toggle' => 'tab'
-      %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
-
-    .tab-content
-      #properties.tab-pane.active.fade.in
-        .jumbotrons= render 'product_properties', product_properties: @product.product_properties.includes(:property).with_value
-      #description.tab-pane.fade
-        .jumbotron
-          - if @product.video.present?
-            = @product.video
-          = @product.description.try(:html_safe)
-      #comments.tab-pane.fade
-      #accessories.tab-pane.fade
+    = render 'products/product_card', product: @product
+.row
+  .col-xs-12
+    .panel.panel-warning
+      .panel-heading
+        %h4.panel-title
+          Товары, похожие на <b>#{@product.name}</b>
+      .panel-body.text-center
+        = render collection: @product.similars(Conf['delta'].to_f), partial: 'products/top_card', as: :product, locals: { css: 'info', name: 'Похожий товар' }
