@@ -1,4 +1,5 @@
 module ProductsHelper
+  include AutoHtml
   def price_for(product, quantity=1)
     price = product.bound? ? (product.price * quantity) : 0
     return "Нет в наличии" if price.to_f.ceil == 0
@@ -22,6 +23,15 @@ module ProductsHelper
       .map{ |pp| "<b>#{pp.property_name}</b>: #{pp.name};" }
       .join('<br/>')
       .html_safe
+  end
+
+  def video_for(url)
+    auto_html(url) do
+      html_escape
+      youtube
+      vimeo
+      google_video
+    end
   end
 
 end

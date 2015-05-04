@@ -30,7 +30,7 @@
       %small Характеристики и комплектация могут изменяться производителем без уведомления.
     #description.tab-pane.fade
       - if product.video.present?
-        = product.video
+        .text-center= video_for product.video
       - if product.description.present?
         = product.description.html_safe
       - else

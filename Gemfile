@@ -46,7 +46,7 @@ gem 'rails-settings-cached', '0.4.1'
 gem 'haml-rails'
 
 
-# gem 'auto_html'
+gem 'auto_html'
 # gem 'gretel'
 
 # Assets
