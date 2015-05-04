@@ -7,7 +7,7 @@ default_settings = {
   'txt.delivery_types'    => '',
   'txt.payment_types'     => '',
   'ck.logo'               => 'Логотип',
-  'ck.logo_min'           => 'Логотип в хедере',
+  'ck.logo_min'           => '<img align="top" alt="" src="http://evotex.kh.ua/logo_min.png" style="width: 60px; height: 20px; display: inline; padding: 0; margin: 0" />',
   'ck.delivery_card'      => 'Оплата\Доставка в карточке товара',
   'ck.social_card'        => 'Кнопки соцсетей (карточка товара)',
   'ck.social_footer'      => 'Кнопки соцсетей (футер)',

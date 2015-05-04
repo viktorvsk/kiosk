@@ -6,7 +6,9 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to Conf[:site_name], root_path, :class => "navbar-brand"
+      = link_to root_path, :class => "navbar-brand" do
+        = Conf['ck.logo_min'].html_safe
+        = Conf[:site_name]
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         %li
