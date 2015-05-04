@@ -6,11 +6,12 @@
     = render 'aside'
   .col-sm-9
     = render 'products/product_card', product: @product
-.row
-  .col-xs-12
-    .panel.panel-warning
-      .panel-heading
-        %h4.panel-title
-          Товары, похожие на <b>#{@product.name}</b>
-      .panel-body.text-center
-        = render collection: @product.similars(Conf['delta'].to_f), partial: 'products/top_card', as: :product, locals: { css: 'info', name: 'Похожий товар' }
+- if (similars = @product.similars(Conf['delta'].to_f) ) && similars.present?
+  .row
+    .col-xs-12
+      .panel.panel-warning
+        .panel-heading
+          %h4.panel-title
+            Товары, похожие на <b>#{@product.name}</b>
+        .panel-body.text-center
+          = render collection: @product.similars(Conf['delta'].to_f), partial: 'products/top_card', as: :product, locals: { css: 'info', name: 'Похожий товар' }

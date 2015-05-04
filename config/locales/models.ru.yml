@@ -109,6 +109,7 @@ ru:
         brand: Бренд
         catalog_brand_id: Бренд
         catalog_category_id: Категория
+        accessories: Аксессуары
       catalog/product_property:
         property_name: Характеристика
         name: Значение

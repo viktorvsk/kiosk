@@ -142,6 +142,11 @@ class Catalog::Product < ActiveRecord::Base
     price.to_i > 0
   end
 
+  def accessories_products
+    return unless accessories.present?
+    self.class.where(id: accessories.split).with_price.uniq
+  end
+
   def preview_path
     images.includes(:imageable).first.try(:to_s) || "product_missing.png"
   end

@@ -150,7 +150,7 @@ class Admin::ProductsController < Admin::BaseController
     params.require(:catalog_product)
       .permit(:name, :model, :catalog_category_id, :fixed_price, :main_name,
               :price, :old_price, :video, :catalog_brand_id, :slug, :description,
-              :newest, :homepage, :hit, :images_from_url,
+              :newest, :homepage, :hit, :images_from_url, :accessories,
               seo_attributes: [:id, :keywords, :description, :title],
               images_from_pc: [],
               product_properties_attributes: [:id, :name, :position, :property_name],
