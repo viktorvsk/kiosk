@@ -34,4 +34,35 @@ module ProductsHelper
     end
   end
 
+  def breadcrumbs_for_product(product)
+    top_taxon = product.category.taxon.parent
+    category = product.category
+    brand_link = link_to(product.brand.name, c_path(slug: category.slug, id: category, b: product.brand.id)) rescue nil
+    [
+      link_to(Conf[:site_name], root_path),
+      link_to(top_taxon.name, t_path(slug: top_taxon.slug, id: top_taxon)),
+      link_to(category.name, c_path(slug: category.slug, id: category)),
+      brand_link,
+      product.name
+    ].compact.join(' > ').html_safe
+  rescue
+    nil
+  end
+
+  def breadcrumbs_for_taxon(taxon)
+    [
+      link_to(Conf[:site_name], root_path),
+      taxon.name
+    ].compact.join(' > ').html_safe
+  end
+
+  def breadcrumbs_for_category(category)
+    top_taxon = category.taxon.parent
+    [
+      link_to(Conf[:site_name], root_path),
+      link_to(top_taxon.name, t_path(slug: top_taxon.slug, id: top_taxon)),
+      category.name
+    ].compact.join(' > ').html_safe
+  end
+
 end

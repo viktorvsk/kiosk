@@ -4,5 +4,6 @@
 
 .page-header
   %h1{ 'data-url' => c_path(id: @category.id, slug: @category.slug) }= @category.name
+  = breadcrumbs_for_category(@category)
 .row#filters_and_results
   = render 'filters_and_results', @filters_and_results_hash

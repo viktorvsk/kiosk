@@ -1,3 +1,4 @@
+= breadcrumbs_for_product(@product)
 %h1= @product.name
 .product_card
   .product_articul
@@ -29,6 +30,7 @@
       = render 'product_properties', product_properties: product.product_properties.includes(:property).with_value
       %small Характеристики и комплектация могут изменяться производителем без уведомления.
     #description.tab-pane.fade
+      %br/
       - if product.video.present?
         .text-center= video_for product.video
       - if product.description.present?

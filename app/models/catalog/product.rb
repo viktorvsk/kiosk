@@ -16,7 +16,8 @@ class Catalog::Product < ActiveRecord::Base
                         :url
   validates :name, :category, presence: true
   # validates :model, :name, uniqueness: true
-  belongs_to :category, class_name: Catalog::Category,
+  belongs_to :category, -> { includes(:taxon) },
+                        class_name: Catalog::Category,
                         foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :line_items, dependent: :destroy, foreign_key: :catalog_product_id
