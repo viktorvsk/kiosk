@@ -8,6 +8,7 @@ ru:
       css: CSS
       delivery_types: Способы доставки
       payment_types: Способы оплаты
+      robots: robots.txt
     ck:
       mode: Режим работы
       logo: Логотип

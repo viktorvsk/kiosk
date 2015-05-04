@@ -3,6 +3,7 @@ default_settings = {
   'delta'                 => '0.2',
   'seo_template_product'  => '{{название}} за {{цена}} грн. в Харькове',
   'txt.js'                => '',
+  'txt.robots'                => '',
   'txt.css'               => '',
   'txt.delivery_types'    => '',
   'txt.payment_types'     => '',

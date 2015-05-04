@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'robots.txt', to: 'application#robots'
   root 'products#index'
   get :admin, to: 'admin/vendor/merchants#index'
   devise_for :users
