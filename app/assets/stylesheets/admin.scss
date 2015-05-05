@@ -20,6 +20,19 @@ body{
   display: inline!important;
 }
 
+.ace_editor{
+  height: 100px!important;
+  width: 100%;
+}
+
+.vendor_pre{
+  background: #fff;
+  padding: 0.5em;
+  max-height: 200px;
+  width: 100%;
+  overflow: scroll;
+}
+
 .modal-backdrop {
   z-index: -1!important;
   display: none;

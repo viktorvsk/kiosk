@@ -38,11 +38,15 @@ body{
 .top-bar{
   margin-bottom: 0;
   padding-bottom: 5em;
+  color: #fff;
   background: $ksk_main_color;
 
   @media (min-width: 768px){
     background: image-url('abstr.jpg') no-repeat center top;
     background-size: 100% ;
+  }
+  h1,h2,h3,h4,h5,h6{
+    color: #fff;
   }
 }
 

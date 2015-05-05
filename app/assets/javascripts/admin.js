@@ -10,10 +10,30 @@
 //= require ckeditor/init
 
 //= require jquery-ui/ui/autocomplete
+//= require ace/ace
+//= require ace/worker-html
+//= require ace/theme-monokai
+//= require ace/mode-json
 //= require select2
 //= require select2_locale_ru
 //= require_tree ./admin
 
 $(document).ready(function () {
   $('.select2').select2();
+  $('.editor').each(function (index, item) {
+    var lang       = 'json',
+      editor     = ace.edit(item),
+      $textarea  = $(item).parent().find('textarea'),
+      v = JSON.parse($textarea.text()),
+      pretty = JSON.stringify(v, null, 2);
+
+    editor.setValue(pretty);
+
+    $textarea.hide();
+    editor.getSession().setMode('ace/mode/' + lang);
+    editor.getSession().on('change', function () {
+      var val = editor.getSession().getValue();
+      $textarea.text(val);
+    });
+  });
 });

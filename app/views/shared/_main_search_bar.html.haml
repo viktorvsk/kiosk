@@ -1,5 +1,6 @@
 = search_form_for @q, url: search_products_path do |f|
   .input-group
-    = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...'
+    = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...', required: true
     .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
-
+  Например:
+  = link_to @random_search_word, '#', class: 'search-example'

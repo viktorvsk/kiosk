@@ -32,7 +32,7 @@
             %b= merchant.format
         .col-sm-8
           - if merchant.pricelist_state
-            %pre{ class: ('error' if merchant.pricelist_error) }
+            %pre.vendor_pre{ class: ('error' if merchant.pricelist_error) }
               = merchant.pricelist_state
 
       .panel-footer
