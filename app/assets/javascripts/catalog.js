@@ -11,4 +11,9 @@ $(document).ready(function () {
     $(this).closest('form').submit();
     event.preventDefault();
   });
+
+  $(document).on('click', '[data-product-view]', function (event) {
+    Kiosk.Common.switchView($(this).data('product-view'));
+    event.preventDefault();
+  });
 });

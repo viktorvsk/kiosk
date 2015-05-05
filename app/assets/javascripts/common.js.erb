@@ -31,6 +31,14 @@
       $node.fadeToggle(100);
       event.preventDefault();
     };
+
+    this.switchView = function (view) {
+      var oldView = view === 'grid' ? 'list' : 'grid'
+      $('[data-product-view="'+ view +'"]').addClass('btn-primary').removeClass('btn-default');
+      $('[data-product-view="'+ oldView +'"]').removeClass('btn-primary').addClass('btn-default');
+      localStorage.setItem('product-view', view);
+      $('.product').addClass(view).removeClass(oldView);
+    };
   }
 
   window.Kiosk = window.Kiosk || {};

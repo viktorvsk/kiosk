@@ -38,6 +38,11 @@
           (
           = products_count
           )
+        .pull-right
+          = link_to '#', class: 'btn btn-default btn-xs', data: { 'product-view' => :grid } do
+            %i.glyphicon.glyphicon-th
+          = link_to '#', class: 'btn btn-default btn-xs', data: { 'product-view' => :list } do
+            %i.glyphicon.glyphicon-th-list
     .panel-body.text-center
       - if products.present?
         .row
@@ -55,3 +60,4 @@
       %small
         = @category.description.html_safe
 = render 'price_slider'
+= render 'product_view'
