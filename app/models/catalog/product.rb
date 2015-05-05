@@ -204,8 +204,9 @@ class Catalog::Product < ActiveRecord::Base
 
   def similars(delta=25,number=4)
     delta = delta / 100
-    delta_price = price * delta
-    similar_price = price - delta_price..price + delta_price
+    p = price.to_i
+    delta_price = p * delta
+    similar_price = p - delta_price..p + delta_price
     category.products.where(price: similar_price).where.not(id: id).order("RANDOM()").limit(number).sort_by(&:price)
   end
 
