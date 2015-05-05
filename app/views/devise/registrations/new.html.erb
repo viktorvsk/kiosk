@@ -1,26 +1,27 @@
-<div class='col-sm-4 col-sm-offset-4'>
-  <div class='panel panel-primary'>
-    <div class='panel-heading'>
-      <h3 class='panel-title'>Регистрация</h3>
-    </div>
-     <div class='panel-body'>
-        <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
-        <%#= f.error_notification %>
+<div class="row">
+  <div class='col-sm-4 col-sm-offset-4'>
+    <div class='panel panel-primary'>
+      <div class='panel-heading'>
+        <h3 class='panel-title'>Регистрация</h3>
+      </div>
+       <div class='panel-body'>
+          <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
+          <%#= f.error_notification %>
 
-        <div class="form-inputs">
-          <%= field_for f, :email, :text_field, required: true, autofocus: true %>
-          <%= field_for f, :password, :password_field, required: true, hint: ("Не менее #{@minimum_password_length} символов" if @validatable) %>
-          <%= field_for f, :password_confirmation, :password_field, required: true %>
-        </div>
+          <div class="form-inputs">
+            <%= field_for f, :email, :text_field, required: true, autofocus: true %>
+            <%= field_for f, :password, :password_field, required: true, hint: ("Не менее #{@minimum_password_length} символов" if @validatable) %>
+            <%= field_for f, :password_confirmation, :password_field, required: true %>
+          </div>
 
-        <div class="form-actions">
-          <%= f.submit "Зарегистрироваться", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
+          <div class="form-actions">
+            <%= f.submit "Зарегистрироваться", class: 'btn btn-primary' %>
+          </div>
+        <% end %>
 
-      <%= render "devise/shared/links" %>
+        <%= render "devise/shared/links" %>
 
+      </div>
     </div>
   </div>
 </div>
-

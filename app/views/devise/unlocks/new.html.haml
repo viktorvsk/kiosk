@@ -1,0 +1,14 @@
+.row
+  .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+    .panel.panel-primary
+      .panel-heading
+        %h4.panel-title Инструкции по разблокировке
+      .panel-body
+        = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+          = devise_error_messages!
+          .field
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'form-control'
+          .form-actions
+            = f.submit "Получить", class: 'btn btn-primary'
+        = render "devise/shared/links"
