@@ -1,4 +1,6 @@
 (function(){
   var partial = "<%= escape_javascript(render 'filters_and_results', @filters_and_results_hash) %>"
+  var url = "<%= request.url %>";
   $('#filters_and_results').html(partial);
+  history.pushState(null, null, url);
 })();
