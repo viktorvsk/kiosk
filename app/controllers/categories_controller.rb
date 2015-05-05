@@ -10,6 +10,9 @@ class CategoriesController < CatalogController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    if params[:slug] != @category.slug
+      redirect_to c_path(slug: @category.slug, id: @category), status: 301
+    end
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
     @all_products = @category.products.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])

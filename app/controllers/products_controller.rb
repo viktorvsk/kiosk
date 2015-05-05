@@ -24,6 +24,9 @@ class ProductsController < CatalogController
   # GET /products/1
   # GET /products/1.json
   def show
+    if params[:slug] != @product.slug
+      redirect_to p_path(slug: @product.slug, id: @product), status: 301
+    end
   end
 
   private
