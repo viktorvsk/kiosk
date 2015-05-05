@@ -1,0 +1,8 @@
+%ul.list-inline
+  %li
+    = link_to 'Главная', root_path, class: 'btn btn-xs btn-info'
+  - Markup.pages.each do |page|
+    %li
+      = link_to page.name, static_page_path(slug: page.slug, id: page.id), class: 'btn btn-xs btn-info'
+  %li
+    = link_to 'Помощь', help_pages_path, class: 'btn btn-xs btn-info'

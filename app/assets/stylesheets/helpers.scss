@@ -86,10 +86,37 @@
   filter: none;
 }
 
+.h-100{
+  height: 100%;
+
+}
+
 
 /********************************** Fixes /************************************/
+.slides-panel{
+  height: 240px;
+  padding: 0!important;
+
+  .carousel{
+    height: 100%;
+  }
+  .carousel-indicators{
+    li{ background: #afaf88 }
+  }
+}
+
+.articles-bar{
+  overflow-y: scroll;
+}
+
 #price-slider{
   margin: 25px 0 50px 0;
+}
+
+.list-inline{
+  li{
+    margin-bottom: 1em;
+  }
 }
 
 .page-header{

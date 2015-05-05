@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430125831) do
+ActiveRecord::Schema.define(version: 20150504150047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,17 +224,19 @@ ActiveRecord::Schema.define(version: 20150430125831) do
   add_index "line_items", ["vendor_price"], name: "index_line_items_on_vendor_price", using: :btree
 
   create_table "markups", force: :cascade do |t|
-    t.string   "name",            default: "", null: false
-    t.text     "body",                         null: false
+    t.string   "name",        default: "",    null: false
+    t.text     "body",                        null: false
     t.hstore   "info"
-    t.integer  "markupable_id",                null: false
-    t.string   "markupable_type",              null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "slug"
+    t.boolean  "active",      default: false
+    t.string   "markup_type"
   end
 
-  add_index "markups", ["markupable_type", "markupable_id"], name: "index_markups_on_markupable_type_and_markupable_id", using: :btree
+  add_index "markups", ["markup_type"], name: "index_markups_on_markup_type", using: :btree
   add_index "markups", ["name"], name: "index_markups_on_name", unique: true, using: :btree
+  add_index "markups", ["slug"], name: "index_markups_on_slug", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"

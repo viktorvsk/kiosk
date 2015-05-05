@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      markup:
+        one: Разметка
+        many: Разметки
+        few: Разметок
+        other: Разметки
       conf:
         one: Настройка
         many: Настройки
@@ -47,6 +52,26 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      markup:
+        name: Заголовок
+        body: Текст
+        slug: Ссылка
+        active: Активно
+        markup_type: Тип
+        created_at: Создано
+        updated_at: Обновлено
+        types:
+          page: Страница
+          article: Статья
+          help: Страница помощи
+          callback: Коллбэк
+          slide: Слайд
+          pages: Страницы
+          articles: Статьи
+          helps: Страницы помощи
+          callbacks: Коллбэки
+          slides: Слайды
+          active: Активные
       order:
         name: Имя
         phone: Телефон

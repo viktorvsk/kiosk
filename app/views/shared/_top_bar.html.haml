@@ -3,15 +3,16 @@
 .jumbotron.bg-main-color.top-bar
   #animated-header.hidden-xs
     %canvas#animated-header-canvas
-  .container-fluid
+  .container
 
     .row
-      .col-sm-4
+      .col-sm-3
         = Conf['ck.logo'].html_safe
-      .col-sm-4
+      .col-sm-6
+        = render 'shared/pages_menu'
         = Conf['ck.phones'].html_safe
         = render 'shared/main_search_bar'
-      .col-sm-4
+      .col-sm-3
         %h2 Режим работы
         = Conf['ck.mode'].html_safe
 .container.taxons-container

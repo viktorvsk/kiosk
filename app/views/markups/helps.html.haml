@@ -1,0 +1,11 @@
+.row
+  .col-sm-3
+    %ul.list-group
+      - @pages.each do |page|
+        %li.list-group-item{ class: ('active' if page == @page) }
+          - if page == @page
+            = page.name
+          - else
+            = link_to page.name, help_page_path(slug: page.slug, id: page)
+  .col-sm-9
+    = render 'markups/page', page: @page

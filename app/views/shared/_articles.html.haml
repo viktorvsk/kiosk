@@ -1,0 +1,3 @@
+%ul.list-group
+  - Markup.active.articles.each do |article|
+    %li.list-group-item= link_to article.name, static_page_path(slug: article.slug, id: article)
