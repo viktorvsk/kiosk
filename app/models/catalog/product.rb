@@ -106,6 +106,7 @@ class Catalog::Product < ActiveRecord::Base
       marketplace = marketplace_by_url(url)
       raise StandardError, 'Unknown Marketplace' unless marketplace
       params = marketplace.new(url).scrape.except(opts[:ignored_fields])
+      params[:properties].reverse!
       params[:category] = opts[:category] if opts[:category]
       params[:model] = opts[:model] if opts[:model]
       create(params)
