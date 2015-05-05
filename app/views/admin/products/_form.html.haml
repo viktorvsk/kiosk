@@ -1,11 +1,8 @@
 = form_for(@product, url: @product.persisted? ? admin_product_path(@product) : admin_products_path , remote: true, data: { autoupdate: true }) do |f|
   = render 'shared/error_messages', object: f.object
   = render 'main_settings', f: f
-  - if f.object.persisted?
-    = render 'images', f: f
-  %hr/
-  .form-actions
-    = f.submit (@product.persisted? ? 'Сохранить' : 'Создать'), class: 'btn btn-success'
 - if @product.persisted?
+  = form_for(@product, url: admin_product_path(@product) ) do |f|
+    = render 'images', f: f
+
   = render 'filters_and_properties'
-  =# render 'binding_and_parser'

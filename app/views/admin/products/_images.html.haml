@@ -11,10 +11,11 @@
             = f_i.label :_destroy, 'Удалить'
             .thumbnail= image_tag f_i.object.attachment, class: 'img-responsive'
     .row
-      .col-sm-3.col-sm-offset-6
+      .col-sm-3.col-sm-offset-3
         = f.text_field :images_from_url, class: 'form-control', placeholder: 'Ссылка для скачивания'
       .col-sm-3.text-right
         .btn.btn-default.btn-file
           Добавить изображения с компьютера
-
           = f.file_field :images_from_pc, multiple: true, class: 'form-control'
+      .col-sm-3.text-right
+        = f.submit 'Обновить изображения', class: 'btn btn-success form-control'
