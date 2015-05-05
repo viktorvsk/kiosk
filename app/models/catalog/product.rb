@@ -45,18 +45,28 @@ class Catalog::Product < ActiveRecord::Base
   class << self
 
     def ransackable_scopes(auth_object = nil)
-      [:filters_cont]
+      [:filters_cont, :main_search]
     end
 
     def by_category_params(params)
       q = {
         price_gteq: params[:min],
         price_lteq: params[:max],
-        name_cont: params[:name],
+        main_search: params[:name],
         brand_id_in: params[:b].to_s.split(','),
         filters_cont: params[:f]
       }
       all.ransack(q).result
+    end
+
+    def main_search(str)
+      str = str.to_s.strip
+      q = [
+        %{to_char(id, '99999999') ILIKE :name},
+        %{name ILIKE :name},
+        %{name ILIKE :translit_name}
+      ].join(" OR ")
+      all.where(q, name: "%#{str}%", translit_name: "%#{Russian.translit(str)}%")
     end
 
     def top(top_name)

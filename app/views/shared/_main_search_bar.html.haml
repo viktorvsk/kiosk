@@ -1,5 +1,5 @@
 = search_form_for @q, url: search_products_path do |f|
   .input-group
-    = f.search_field :name_or_id_or_model_cont, class: 'form-control', placeholder: 'Поиск по сайту...'
+    = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...'
     .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
 

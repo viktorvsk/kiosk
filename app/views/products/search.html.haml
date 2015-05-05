@@ -2,7 +2,7 @@
 .page-header
   %h1
     Поиск по запросу
-    %b= params[:q][:name_or_id_or_model_cont]
+    %b= params[:q][:main_search]
 
 .row
   .col-sm-3
@@ -14,7 +14,7 @@
           - @grouped_hash.sort_by{ |arr| -arr.last.to_i }.each do |arr|
             - total += arr.last
             %li.list-group-item
-              = link_to arr.first.name, c_path(slug: arr.first.slug, id: arr.first.id, name: params[:q][:name_or_id_or_model_cont])
+              = link_to arr.first.name, c_path(slug: arr.first.slug, id: arr.first.id, name: params[:q][:main_search])
               %b= "(#{arr.last})"
   .col-sm-9
     .panel.panel-default
