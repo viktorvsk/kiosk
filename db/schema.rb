@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504150047) do
+ActiveRecord::Schema.define(version: 20150506062922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,17 +31,6 @@ ActiveRecord::Schema.define(version: 20150504150047) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
-
-  create_table "aliases", force: :cascade do |t|
-    t.string   "name",           null: false
-    t.integer  "aliasable_id",   null: false
-    t.string   "aliasable_type", null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "aliases", ["aliasable_type", "aliasable_id"], name: "index_aliases_on_aliasable_type_and_aliasable_id", using: :btree
-  add_index "aliases", ["name"], name: "index_aliases_on_name", using: :btree
 
   create_table "catalog_brands", force: :cascade do |t|
     t.string   "name",       default: "", null: false
