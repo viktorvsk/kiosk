@@ -18,7 +18,7 @@ class CategoriesController < CatalogController
     @products = @all_products.zeros_last.order(order).page(params[:page])
     @filters_and_results_hash = {
       filters: @category.category_filters.includes(filter: :values),
-      brands: @category.brands,
+      brands: @category.brands.uniq,
       products: @products,
       products_count: @all_products.count,
       all_products: @all_products
