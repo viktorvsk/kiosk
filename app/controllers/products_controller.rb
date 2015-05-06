@@ -29,10 +29,20 @@ class ProductsController < CatalogController
     end
   end
 
+  def add_comment
+    product = Catalog::Product.find(params[:product_id])
+    product.comments.create(comment_params)
+    redirect_to :back, notice: 'Спасибо, Ваш отзыв успешно добавлен. Он будет отображен на сайте после проверки модератором'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Catalog::Product.find(params[:id])
+    end
+
+    def comment_params
+      params[:catalog_comment].permit(:body)
     end
 
 end

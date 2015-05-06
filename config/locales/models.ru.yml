@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      catalog/comment:
+        one: Отзыв
+        many: Отзывы
+        few: Отзывов
+        other: Отзывы
       callback:
         one: Коллбэк
         many: Коллбэки
@@ -57,6 +62,13 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      catalog/comment:
+        name: Заголовок
+        created_at: Дата
+        body: Текст отзыва
+        user: Автор
+        commentable: Объект отзыва
+        active: Проверен
       callback:
         name: Имя
         phone: Телефон

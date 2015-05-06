@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/c/:slug/:id', to: 'categories#show', as: :c
 
   resources :products, only: [:index, :show], path: 'p' do
+    post :comment, to: 'products#add_comment', as: :comment
     collection do
       get :search
     end

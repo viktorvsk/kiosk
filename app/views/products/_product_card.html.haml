@@ -22,7 +22,7 @@
   %ul.nav.nav-tabs
     %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
     %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
-    %li= link_to 'Отзывы', '#comments', 'data-toggle' => 'tab'
+    %li= link_to "Отзывы (#{product.comments.olds.count})", '#comments', 'data-toggle' => 'tab'
     %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
 
   .tab-content
@@ -38,6 +38,24 @@
       - else
         Описание отсутствует
     #comments.tab-pane.fade
+      %br/
+      - if product.comments.olds.present?
+        %h3 Отзывы о товаре
+        = render product.comments.olds
+      - else
+        Никто еще не оставил отзыв об этом товаре.
+      %br/
+      %br/
+      = form_for product.comments.new, url: product_comment_path(product) do |f|
+        .panel.panel-default
+          .panel-heading
+            %h4.panel-title Отзыв о товаре
+          .panel-body
+            = field_for f, :body, :text_area, required: true
+
+          .panel-footer
+            .text-right
+              = f.submit 'Оставить отзыв', class: 'btn btn-warning'
     #accesories.tab-pane.fade
       %br/
       - if product.accessories_products.present?
