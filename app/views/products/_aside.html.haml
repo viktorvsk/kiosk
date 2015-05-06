@@ -3,7 +3,7 @@
     .panel-heading
       %h3.panel-title Информация о поставщиках
     .panel-body
-      - if (vp = @product.vendor_products.includes(:merchant)) && vp.present?
+      - if (vp = @product.vendor_products.active.includes(:merchant)) && vp.present?
         = render partial: 'admin/vendor/products/product', collection: vp, as: :product
       - else
         Товар не привязан.
