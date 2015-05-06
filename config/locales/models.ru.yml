@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      callback:
+        one: Коллбэк
+        many: Коллбэки
+        few: Коллбэков
+        other: Коллбэки
       markup:
         one: Разметка
         many: Разметки
@@ -52,6 +57,13 @@ ru:
         other: Пользователи
         few: Пользователя
     attributes:
+      callback:
+        name: Имя
+        phone: Телефон
+        created_at: Дата
+        body: Сообщение
+        active: Обработан
+        user: Клиент
       markup:
         name: Заголовок
         body: Текст

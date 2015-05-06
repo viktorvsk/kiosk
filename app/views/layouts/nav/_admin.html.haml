@@ -14,10 +14,10 @@
             CRM
             %span.caret
           %ul.dropdown-menu
-            %li= link_to 'Заказы', '#'
-            %li= link_to 'Клиенты', '#'
+            %li= link_to 'Заказы', admin_orders_path
+            %li= link_to 'Клиенты', admin_users_path
             %li= link_to 'Комментарии', '#'
-            %li= link_to 'Коллбеки', '#'
+            %li= link_to 'Коллбеки', admin_callbacks_path
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
             Каталог
@@ -46,9 +46,7 @@
             %span.caret
           %ul.dropdown-menu
             %li= link_to 'Основные', admin_confs_path
-            %li= link_to 'Страницы', '#'
-            %li= link_to 'Блоки', '#'
-            %li= link_to 'Слайды', '#'
+            %li= link_to 'Страницы, Статьи, Помощь, Слайды', admin_markups_path
       %ul.nav.navbar-nav.navbar-right
         %li= link_to current_user.name, '#'
         %li= link_to 'В магазин', root_path

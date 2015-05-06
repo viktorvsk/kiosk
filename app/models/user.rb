@@ -13,8 +13,9 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :current_order, -> { where(state: 'in_cart') }, class_name: Order
-  has_many :orders, -> { where.not(state: 'in_cart') }
+  has_one :current_order, -> { where(state: 'in_cart') }, class_name: Order, dependent: :destroy
+  has_many :orders, -> { where.not(state: 'in_cart') }, dependent: :destroy
+  has_many :callbacks, dependent: :destroy
 
   ROLES.each do |role_name|
     define_method "#{role_name}?" do

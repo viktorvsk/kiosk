@@ -12,3 +12,17 @@
           .col-sm-12
             .order-form
               Пожалуйста, подождите
+.modal.fade{ id: 'callback', tabindex: -1 }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ 'data-dismiss' => 'modal', type: :button }
+          %i.glyphicon.glyphicon-remove-circle
+        %h4.modal-title Обратный звонок
+      = form_for Callback.new(name: current_user.try(:name), phone: current_user.try(:phone) ), url: callback_user_path do |f|
+        .modal-body
+          = field_for f, :name, :text_field, required: true
+          = field_for f, :phone, :text_field, required: true
+          = field_for f, :body, :text_area, rows: 10, required: true
+        .modal-footer
+          .text-right= f.submit 'Заказать обратный звонок', class: 'btn btn-warning'

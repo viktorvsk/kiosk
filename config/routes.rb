@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     post 'add_product/:product_id', to: 'orders#add_product', as: :add_product
     delete 'remove_product/:product_id', to: 'orders#remove_product', as: :remove_product
   end
-  resource :user, only: [:show, :update, :create]
+  resource :user, only: [:show, :update] do
+    post :callback
+  end
 
   namespace :admin do
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'

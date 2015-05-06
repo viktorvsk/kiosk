@@ -5,6 +5,6 @@
         - flash.each do |name, msg|
           = content_tag :div, :class => "alert alert-#{name == 'alert' ? "danger" : "success" } alert-dismissable", :role => "alert" do
             %button.close{:type => "button", :data => {:dismiss => "alert"} }
-              %span{:aria => {:hidden => "true"} } &times;
+              %i.glyphicon.glyphicon-remove-circle
               %span.sr-only Закрыть
             = msg
