@@ -11,3 +11,5 @@ Rails.application.config.assets.version = '1.1'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( ckeditor/* admin.css catalog.css admin.js catalog.js )
+ACE_WORKERS = %w(json)
+Rails.application.config.assets.precompile += ACE_WORKERS.map {|w| "ace/worker-#{w}.js"}

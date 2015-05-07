@@ -17,7 +17,9 @@ module ProductsHelper
   end
 
   def product_properties_for(product)
-    product.product_properties.includes(:property)
+    product.product_properties
+      .where("catalog_product_properties.name != '' AND catalog_product_properties.name IS NOT NULL")
+      .includes(:property)
       .sort_by(&:position)
       .first(15)
       .map{ |pp| "<b>#{pp.property_name}</b>: #{pp.name};" }
