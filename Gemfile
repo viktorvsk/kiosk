@@ -157,8 +157,8 @@ group :development do
   # Deployment
   gem 'mina'
   gem 'mina-puma',  require: false
-  # gem 'mina-nginx', require: false
-  # gem 'mina-scp',   require: false
+  gem 'mina-nginx', require: false
+  gem 'mina-scp',   require: false
 end
 
 group :development, :test do

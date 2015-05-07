@@ -18,7 +18,7 @@ module ProductsHelper
 
   def product_properties_for(product)
     product.product_properties
-      .where("catalog_product_properties.name != '' AND catalog_product_properties.name IS NOT NULL")
+      .with_value
       .includes(:property)
       .sort_by(&:position)
       .first(15)
