@@ -1,6 +1,6 @@
 class CatalogController < ApplicationController
   def static_page
-    @page = Markup.pages.find(params[:id])
+    @page = Markup.pages_and_articles.find(params[:id])
     render 'markups/_page', locals: { page: @page }
   end
 

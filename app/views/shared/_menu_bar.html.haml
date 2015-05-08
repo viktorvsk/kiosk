@@ -6,7 +6,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      .navbar-brand.hidden-md.hidden-lg Навигация
+      .navbar-brand.hidden-md.hidden-lg Категории товаров
     #taxons.collapse.navbar-collapse
       %ul.nav.navbar-nav
         - Catalog::Taxon.roots.includes(:image).sort_by(&:position).each do |root_taxon|

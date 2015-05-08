@@ -1,35 +1,37 @@
 %nav.navbar.navbar-default.navbar-fixed-top.catalog-navbar{:role => "navigation"}
   .container
-    .navbar-header
-      %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to root_path, :class => "navbar-brand" do
-        = Conf['ck.logo_min'].html_safe
-    #navbar.collapse.navbar-collapse
-      %ul.nav.navbar-nav.navbar-right
-        %li
-          = link_to order_path do
-            %i.glyphicon.glyphicon-shopping-cart
-            Корзина:
-            - if @current_order.products.present?
-              = "(#{@current_order.items_count}) #{@current_order.total_sum} грн."
+    .row
+      .col-xs-12
+        .navbar-header
+          %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to root_path, :class => "navbar-brand" do
+            = Conf['ck.logo_min'].html_safe
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              = link_to order_path do
+                %i.glyphicon.glyphicon-shopping-cart
+                Корзина:
+                - if @current_order.products.present?
+                  = "(#{@current_order.items_count}) #{@current_order.total_sum} грн."
+                - else
+                  пусто
+            %li
+              = link_to user_path do
+                %i.glyphicon.glyphicon-user
+                Личный кабинет
+            %li
+              = link_to '#', 'data-toggle' => 'modal', 'data-target' => '#callback' do
+                %i.glyphicon.glyphicon-earphone
+                Перезвонить мне
+            - if current_user
+              - if current_user.admin?
+                %li= link_to 'Админ', admin_path
+              %li= link_to 'Выйти', destroy_user_session_path, method: :delete
             - else
-              пусто
-        %li
-          = link_to user_path do
-            %i.glyphicon.glyphicon-user
-            Личный кабинет
-        %li
-          = link_to '#', 'data-toggle' => 'modal', 'data-target' => '#callback' do
-            %i.glyphicon.glyphicon-earphone
-            Перезвонить мне
-        - if current_user
-          - if current_user.admin?
-            %li= link_to 'Админ', admin_path
-          %li= link_to 'Выйти', destroy_user_session_path, method: :delete
-        - else
-          %li= link_to 'Зарегистрироваться', new_user_registration_path
-          %li= link_to 'Войти', new_user_session_path
+              %li= link_to 'Зарегистрироваться', new_user_registration_path
+              %li= link_to 'Войти', new_user_session_path
