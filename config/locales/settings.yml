@@ -3,6 +3,7 @@ ru:
     seo_template_product: Шаблон заголовка страницы в карточке товара
     site_name: Название сайта
     delta: Разница похожих товаров, %
+    similar_distance: Процент схожести названий
     txt:
       js: Javascript
       css: CSS
@@ -23,3 +24,5 @@ ru:
       footer3: Футер справа
       vk_group: Группа вконтакте (карточка товара)
       phones_and_mode: Режим работы (карточка товара)
+    b:
+      search_with_similars: Искать похожие названия (t значит искать)
