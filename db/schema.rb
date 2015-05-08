@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508202803) do
+ActiveRecord::Schema.define(version: 20150508205520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,10 +215,11 @@ ActiveRecord::Schema.define(version: 20150508202803) do
 
   create_table "images", force: :cascade do |t|
     t.string   "attachment"
-    t.integer  "imageable_id",   null: false
-    t.string   "imageable_type", null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "imageable_id",               null: false
+    t.string   "imageable_type",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "position",       default: 0
   end
 
   add_index "images", ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id", using: :btree
@@ -247,6 +248,7 @@ ActiveRecord::Schema.define(version: 20150508202803) do
     t.string   "slug"
     t.boolean  "active",      default: false
     t.string   "markup_type"
+    t.integer  "position",    default: 0
   end
 
   add_index "markups", ["markup_type"], name: "index_markups_on_markup_type", using: :btree

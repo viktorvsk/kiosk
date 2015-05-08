@@ -18,7 +18,7 @@
   .row
     - if product.images.present?
       .images-thumbs
-        = render partial: 'images/thumbs', collection: product.images.includes(:imageable).where.not(id: product.images.first.id), as: :image
+        = render partial: 'images/thumbs', collection: product.images.includes(:imageable).where.not(id: product.images.sort_by(&:position).first.id).sort_by(&:position), as: :image
   %ul.nav.nav-tabs
     %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
     %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'

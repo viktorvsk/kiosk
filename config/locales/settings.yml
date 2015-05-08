@@ -3,7 +3,7 @@ ru:
     seo_template_product: Шаблон заголовка страницы в карточке товара
     site_name: Название сайта
     delta: Разница похожих товаров, %
-    similar_distance: Процент схожести названий
+    similar_distance: Порог схожести названий
     txt:
       js: Javascript
       css: CSS

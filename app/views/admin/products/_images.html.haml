@@ -3,13 +3,14 @@
     %h3.text-center Изображения
   .col-xs-12
     .row
-      = f.fields_for :images, f.object.images.includes(:imageable) do |f_i|
+      = f.fields_for :images, f.object.images.includes(:imageable).sort_by(&:position) do |f_i|
 
         - if f_i.object.persisted?
           .col-sm-2.col-md-2.col-lg-1
             = f_i.check_box :_destroy
             = f_i.label :_destroy, 'Удалить'
             .thumbnail= image_tag f_i.object.attachment, class: 'img-responsive'
+            = field_for f_i, :position
     .row
       .col-sm-3.col-sm-offset-3
         = f.text_field :images_from_url, class: 'form-control', placeholder: 'Ссылка для скачивания'

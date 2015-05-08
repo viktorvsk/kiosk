@@ -84,6 +84,7 @@ ru:
         markup_type: Тип
         created_at: Создано
         updated_at: Обновлено
+        position: Позиция
         types:
           page: Страница
           article: Статья
@@ -113,6 +114,7 @@ ru:
         password_confirmation: Подтверждение пароля
       image:
         attachment: Файл
+        position: Позиция
       catalog/filter:
         name: Название
         display_name: Отображаемое название

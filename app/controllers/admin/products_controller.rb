@@ -154,6 +154,6 @@ class Admin::ProductsController < Admin::BaseController
               seo_attributes: [:id, :keywords, :description, :title],
               images_from_pc: [],
               product_properties_attributes: [:id, :name, :position, :property_name],
-              images_attributes: [:id, :attachment, :_destroy])
+              images_attributes: [:id, :attachment, :position, :_destroy])
   end
 end
