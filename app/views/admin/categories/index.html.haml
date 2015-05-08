@@ -19,11 +19,15 @@
     %thead
       %tr
         %th Название
+        %th Наценка менее
+        %th Порог
+        %th Наценка более
+        %th Товаров
 
     %tbody
       = render @categories
     - if @categories.respond_to?(:current_page)
       %tfoot
         %tr
-          %td.text-center
+          %td.text-center{ colspan: 6 }
             = paginate @categories

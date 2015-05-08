@@ -7,6 +7,7 @@
         %h3 Основное
         %ul.list-group
           %li.list-group-item= field_for(f, :name)
+          %li.list-group-item= field_for(f, :s_name)
           %li.list-group-item
             = select_field_for f, :catalog_taxon_id, Catalog::Taxon.all.map{ |t| [t.name, t.id] }, prompt: 'Выберите меню'
           %li.list-group-item= field_for(f, :tax_threshold)

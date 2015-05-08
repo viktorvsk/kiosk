@@ -1,6 +1,10 @@
 %tr
   %td
     = link_to category.name, edit_admin_category_path(category)
+  %td= category.tax
+  %td= category.tax_threshold
+  %td= category.tax_max
+  %td= category.products.count
   %td.text-center
     = link_to admin_category_path(category), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
       %i.glyphicon.glyphicon-remove

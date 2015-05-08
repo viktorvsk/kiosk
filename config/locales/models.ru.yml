@@ -140,6 +140,7 @@ ru:
         tax_threshold: Порог наценки
         description: Описание
         catalog_taxon_id: Меню
+        s_name: Имя в единственном числе
       catalog/property:
         name: Название
       catalog/product:

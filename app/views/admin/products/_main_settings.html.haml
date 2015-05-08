@@ -29,6 +29,8 @@
 .row
   .col-sm-8
     %ul.list-group
-      %li.list-group-item= field_for f, :description, :cktext_area, ckeditor: { language: :ru }
+      %li.list-group-item
+        = field_for f, :description, :cktext_area, ckeditor: { language: :ru }
+        .form-actions= f.submit 'Сохранить', class: 'btn btn-xs btn-info'
   .col-sm-4
     = render 'shared/seo_attributes', seo: @product.seo, f: f
