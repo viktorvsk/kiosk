@@ -61,13 +61,44 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def main_search(str)
+      ids = all.tpl_search(str).pluck(:id) + all.words_search(str).pluck(:id)
+
+      if ids.size < 10
+        similars = all.similarity_search(str)
+        ids += similars.pluck(:id) if similars
+      end
+
+      ids.uniq!
+      all.where(id: ids)
+    end
+
+    def tpl_search(str)
       str = str.to_s.strip
       q = [
-        %{to_char(id, '99999999') ILIKE :name},
+        %{to_char(catalog_products.id, '99999999') ILIKE :name},
         %{name ILIKE :name},
         %{name ILIKE :translit_name}
       ].join(" OR ")
       all.where(q, name: "%#{str}%", translit_name: "%#{Russian.translit(str)}%")
+    end
+
+    def words_search(str)
+      words = str.to_s.strip.split
+      translit_words = words.map{ |w| Russian.translit(w) }.uniq
+      search_str = translit_words.join(' & ')
+      query = "to_tsvector('english', name) @@ :q"
+      all.where(query, q: search_str)
+    end
+
+    def similarity_search(str)
+      return if str =~ /((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/
+      return if str =~ /\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/
+      return if str =~ /(\%27)|(\')|(\-\-)|(\%23)|(#)/
+
+      all
+          .where("similarity(name, :q) > 0.05", q: str)
+          .order("similarity(name, '#{str}')")
+          .limit(10)
     end
 
     def top(top_name)
