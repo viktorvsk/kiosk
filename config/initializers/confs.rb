@@ -20,7 +20,7 @@ default_settings = {
   'ck.phones'             => '+380931234567',
   'ck.phones_and_mode'    => 'выходные',
   'ck.homepage_seo'       => 'Интернет-магазин ...',
-  'ck.mode'               => '<h1>Режим работы</h1>'
+  'ck.mode'               => '<h1>Режим работы</h1>',
   'b.search_with_similars'=> 't'
 }
 
