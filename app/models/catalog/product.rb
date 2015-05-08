@@ -62,10 +62,10 @@ class Catalog::Product < ActiveRecord::Base
 
     def main_search(str)
       ids = all.tpl_search(str).pluck(:id) + all.words_search(str).pluck(:id)
-      # if ids.size < 10
-      #   similars = all.similarity_search(str)
-      #   ids += similars.pluck(:id) if similars
-      # end
+      if ids.size < 10
+        similars = all.similarity_search(str)
+        ids += similars.pluck(:id) if similars
+      end
       ids.uniq!
       all.where(id: ids)
     end
