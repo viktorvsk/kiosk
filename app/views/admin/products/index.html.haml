@@ -25,7 +25,9 @@
   = link_to new_admin_product_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
     Новый товар
-  %h1 Товары
+  %h1
+    Товары
+    %small (#{@all_products.to_a.count})
 
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
@@ -33,8 +35,8 @@
       %tr
         %th Код
         %th Информация
-        %th Входная цена
         %th Наименование
+        %th Входная цена
         %th Цена на продажу
     %tbody
       - @products.each do |product|
