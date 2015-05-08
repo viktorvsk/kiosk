@@ -62,9 +62,11 @@ class Catalog::Product < ActiveRecord::Base
 
     def main_search(str)
       ids = all.tpl_search(str).pluck(:id) + all.words_search(str).pluck(:id)
-      if ids.size < 10
-        similars = all.similarity_search(str)
-        ids += similars.pluck(:id) if similars
+      if Conf['b.search_with_similars'] == 't'
+        if ids.size < 10
+          similars = all.similarity_search(str)
+          ids += similars.pluck(:id) if similars
+        end
       end
       ids.uniq!
       all.where(id: ids)
@@ -94,7 +96,7 @@ class Catalog::Product < ActiveRecord::Base
       return if str =~ /(\%27)|(\')|(\-\-)|(\%23)|(#)/
 
       all
-          .where("similarity(name, :q) > 0.05", q: str)
+          .where("similarity(name, :q) > :similar_distance", q: str, similar_distance: Conf['similar_distance'].to_f)
           .order("similarity(name, '#{str}')")
           .limit(10)
     end

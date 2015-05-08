@@ -1,6 +1,7 @@
 default_settings = {
   'site_name'             => 'Киоск',
   'delta'                 => '0.2',
+  'similar_distance'      => '0.15',
   'seo_template_product'  => '{{название}} за {{цена}} грн. в Харькове',
   'txt.js'                => '',
   'txt.robots'                => '',
@@ -20,6 +21,7 @@ default_settings = {
   'ck.phones_and_mode'    => 'выходные',
   'ck.homepage_seo'       => 'Интернет-магазин ...',
   'ck.mode'               => '<h1>Режим работы</h1>'
+  'b.search_with_similars'=> 't'
 }
 
 default_settings.each do |k, v|
