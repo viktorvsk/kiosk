@@ -39,6 +39,7 @@ class Catalog::Product < ActiveRecord::Base
   scope :bound, -> { joins(:vendor_products) }
   scope :zeros_last, -> { order('catalog_products.price = 0') }
   scope :with_price, -> { where('price > 0') }
+
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :images, allow_destroy: true
   accepts_nested_attributes_for :product_properties,
@@ -46,7 +47,7 @@ class Catalog::Product < ActiveRecord::Base
   class << self
 
     def ransackable_scopes(auth_object = nil)
-      [:filters_cont, :main_search]
+      [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound]
     end
 
     def by_category_params(params)
@@ -58,6 +59,30 @@ class Catalog::Product < ActiveRecord::Base
         filters_cont: params[:f]
       }
       all.ransack(q).result
+    end
+
+    def with_filters(val)
+      if val == 'y'
+        all.joins(:product_filters).uniq
+      elsif val == 'n'
+        all.joins('LEFT JOIN catalog_product_filter_values ON catalog_product_filter_values.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(catalog_product_filter_values.id) = 0')
+      end
+    end
+
+    def with_properties(val)
+      if val == 'y'
+        all.joins(:product_properties).uniq
+      elsif val == 'n'
+        all.joins('LEFT JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(catalog_product_properties.id) = 0')
+      end
+    end
+
+    def with_bound(val)
+      if val == 'y'
+        all.joins(:vendor_products).uniq
+      elsif val == 'n'
+        all.joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(vendor_products.id) = 0')
+      end
     end
 
     def main_search(str)

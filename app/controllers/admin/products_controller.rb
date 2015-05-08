@@ -15,7 +15,7 @@ class Admin::ProductsController < Admin::BaseController
   def search
     params[:q].each_value do |v| v.strip! end if params[:q]
     @q = Catalog::Product.ransack(params[:q])
-    @products = @q.result.order('created_at DESC').page(params[:page])
+    @products = @q.result(distinct: true).order('created_at DESC').page(params[:page])
     respond_to do |format|
       format.html { render :index }
       format.js

@@ -1,10 +1,25 @@
 .jumbotron
   = search_form_for @q, url: search_admin_products_path do |f|
     .row
-      .col-sm-8.col-sm-offset-2.text-center
-        .input-group
+      .col-xs-12
+        .form-group
+          = f.select :category_id_eq, options_for_select(Catalog::Category.all.map{ |c| [c.name, c.id] }, params[:q].try(:fetch, :category_id_eq)), {include_blank: false, prompt: 'Выберите категорию'}, class: 'form-control select2'
+        .form-group
           = f.search_field :name_or_id_or_model_cont, class: 'form-control', placeholder: 'Название, модель или артикул'
-          .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
+    .row
+      .col-sm-4
+        .form-group
+          = f.select :with_filters, options_for_select([['С фильтрами','y'], ['Без фильтров','n']], params[:q].try(:fetch, :with_filters)), {}, class: 'form-control'
+      .col-sm-4
+        .form-group
+          = f.select :with_properties, options_for_select([['С характеристиками','y'], ['Без Характеристик','n']], params[:q].try(:fetch, :with_properties)), {}, class: 'form-control'
+      .col-sm-4
+        .form-group
+          = f.select :with_bound, options_for_select([['Привязанные','y'], ['Не привязанные','n']], params[:q].try(:fetch, :with_bound)), {},class: 'form-control'
+    .row
+      .col-xs-12
+        .form-actions
+          = f.submit 'Найти', class: 'btn btn-success'
 
 .page-header
   = link_to new_admin_product_path, :class => 'btn btn-primary' do
@@ -16,22 +31,38 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Артикул
+        %th Код
+        %th Информация
+        %th Входная цена
         %th Наименование
-        %th Цена
+        %th Цена на продажу
     %tbody
       - @products.each do |product|
         %tr
-          %td
+          %td{ width: 50 }
             = product.id
+            %br/
+            = image_tag product.preview_path, class: 'thumbnail img-responsive', size: '50x50'
+          %td
+
+            Фильтров:
+            = product.product_filters.count
+            %br/
+            Характеристик:
+            = product.product_properties.count
+            %br
+              Привязано:
+              = product.vendor_products.count
           %td
             = link_to product.name, edit_admin_product_path(product)
           %td
-            = product.price
+            = product.in_price
+          %td
+            = "#{product.price.to_i} (#{product.price.to_i - product.in_price.to_i})"
           %td.text-center
             = link_to admin_product_path(product), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?' do
               %i.glyphicon.glyphicon-remove
     %tfoot
       %tr
-        %td.text-center{ colspan: 2 }
+        %td.text-center{ colspan: 6 }
           = paginate @products
