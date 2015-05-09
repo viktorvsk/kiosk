@@ -10,15 +10,15 @@
               %i.glyphicon.glyphicon-refresh.fa-spin
           = merchant.name
         %span.pull-right
-          - if merchant.pricelist_error == 'true' or !merchant.pricelist_state
-            = file_field_tag 'vendor_merchant[pricelist]', required: true, class: 'inline'
-            - if merchant.pricelist_error == 'true' or !merchant.pricelist_state
-              = button_tag type: :submit, class: 'btn btn-xs btn-success' do
-                Загрузить
-              = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-default' do
-                %i.glyphicon.glyphicon-pencil
-              = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
-                %i.glyphicon.glyphicon-remove
+          -# if merchant.pricelist_error == 'true' or !merchant.pricelist_state
+          = file_field_tag 'vendor_merchant[pricelist]', required: true, class: 'inline'
+          -# if merchant.pricelist_error == 'true' or !merchant.pricelist_state
+          = button_tag type: :submit, class: 'btn btn-xs btn-success' do
+            Загрузить
+          = link_to edit_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-default' do
+            %i.glyphicon.glyphicon-pencil
+          = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
+            %i.glyphicon.glyphicon-remove
       .panel-body
         .col-sm-4
           Прайсов:
