@@ -6,4 +6,8 @@ class Catalog::Property < ActiveRecord::Base
   has_many :category_properties, class_name: Catalog::CategoryProperty,
                                 foreign_key: :catalog_property_id,
                                 dependent: :delete_all
+  def self.warranty
+    where("name = 'гарантия' OR name = 'Гарантия'").first
+  end
+
 end

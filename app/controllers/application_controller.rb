@@ -4,10 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_current_order
 
-  def robots
-    render text: Conf['txt.robots']
-  end
-
 private
   def authorize_admin!
     redirect_to root_path, notice: 'Только для администраторов' if !current_user.admin?

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get 'robots.txt', to: 'application#robots'
+  get 'robots.txt', to: 'catalog#robots'
+  get 'sitemap.xml', to: 'catalog#sitemap'
+  get 'price.xml', to: 'catalog#price'
   root 'products#index'
   get :admin, to: 'admin/vendor/merchants#index'
   devise_for :users

@@ -1,0 +1,10 @@
+%offer{:available => "true", :id => product.id}
+  %url= "http://evotex.kh.ua/products/p/#{product.slug}/#{product.id}"
+  %price= product.price.to_f
+  %currencyid UAH
+  %categoryid{:type => "Own"}= category.id
+  %picture= URI.join 'http://evotex.kh.ua', product.preview_path
+  %name product.name
+  - if (warr = product.warranty(warranty_id)) && warr.name.to_i > 0
+    %manufacturer_warranty true
+    %param{:name => "Гарантия"}= warr.name.to_i

@@ -1,0 +1,15 @@
+!!! XML
+%yml_catalog{:date => Time.now}
+  %shop
+    %name Интернет-магазин электроники Эвотех
+    %company Evotex
+    %url evotex.kh.ua
+    %currencies
+      %currency#UAH{:rate => "1"}
+    %categories
+      - @categories.each do |category|
+        %category{:id => category.id}= category.name
+    %offers
+      - warranty_id = Catalog::Property.warranty.try(:id)
+      - @categories.find_each do |category|
+        = render collection: category.products.includes(:product_properties, {images: [:imageable]}).bound.with_price.uniq, partial: 'price_offer', locals: { category: category, warranty_id: warranty_id }, as: :product

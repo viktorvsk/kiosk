@@ -38,8 +38,7 @@ class Catalog::Product < ActiveRecord::Base
   has_one :seo, as: :seoable, dependent: :destroy
   scope :bound, -> { joins(:vendor_products) }
   scope :zeros_last, -> { order('catalog_products.price = 0') }
-  scope :with_price, -> { where('price > 0') }
-
+  scope :with_price, -> { where('catalog_products.price > 0') }
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :images, allow_destroy: true
   accepts_nested_attributes_for :product_properties,
@@ -59,6 +58,10 @@ class Catalog::Product < ActiveRecord::Base
         filters_cont: params[:f]
       }
       all.ransack(q).result
+    end
+
+    def with_warranty
+      joins(:product_properties).where(catalog_product_properties: { catalog_property_id: Catalog::Property.warranty.id })
     end
 
     def with_filters(val)
@@ -217,7 +220,7 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def preview_path
-    images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "product_missing.png"
+    images.sort_by(&:position).first.try(:to_s) || "product_missing.png"
   end
 
   def seo_template(attribute)
@@ -276,6 +279,12 @@ class Catalog::Product < ActiveRecord::Base
     delta_price = p * delta
     similar_price = p - delta_price..p + delta_price
     category.products.where(price: similar_price).where.not(id: id).order("RANDOM()").limit(number).sort_by(&:price)
+  end
+
+  def warranty(warranty_id=nil)
+    warranty_id ||= Catalog::Property.warranty.try(:id)
+    return unless warranty_id
+    product_properties.where("catalog_property_id = :w AND name != '' AND name IS NOT NULL", w: warranty_id).first
   end
 
   def set_property(property_name, property_value)

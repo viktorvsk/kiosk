@@ -1,0 +1,13 @@
+- root_url ||= "http://kiosk.evotex.kh.ua/"
+- time = lambda { Time.now }.call
+<?xml version="1.0" encoding="UTF-8"?>
+%urlset{ "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9", "xsi:schemaLocation" => "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" }
+  %url
+    %loc= root_url
+    %lastmod= time
+    %priority 1
+  = render collection: @categories, partial: 'catalog/sitemap_resource', as: :resource, locals: { priority: 0.8, url_prefix: :c }
+  = render collection: @products, partial: 'catalog/sitemap_resource', as: :resource, locals: { priority: 0.7, url_prefix: :p }
+  = render collection: @pages, partial: 'catalog/sitemap_resource', as: :resource, locals: { priority: 0.6, url_prefix: :pages }
+  = render collection: @helps, partial: 'catalog/sitemap_resource', as: :resource, locals: { priority: 0.6, url_prefix: :helps }
+
