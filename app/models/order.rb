@@ -10,6 +10,9 @@ class Order < ActiveRecord::Base
   before_validation :strip_phone
 
   scope :in_cart, -> { where(state: 'in_cart') }
+  scope :unknown, -> { where(user: nil) }
+  scope :completed, -> { where('completed_at IS NOT NULL') }
+  scope :checkout, -> { where(state: 'checkout') }
   belongs_to :user
 
   class << self

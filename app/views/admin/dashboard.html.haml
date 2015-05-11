@@ -1,0 +1,59 @@
+.page-header
+  %h1 Статистика
+
+.row
+  .table-responsive.col-md-4
+    %table.table.table-striped.table-bordered.table-hover
+      %tr
+        %td{ colspan: 2 }
+          %b Товары
+      = td('Всего', Catalog::Product.count)
+      = td('Привязано', Catalog::Product.bound.uniq.count)
+      = td('Не привязано', Catalog::Product.count - Catalog::Product.bound.uniq.count)
+      = td('С ценой', Catalog::Product.with_price.count)
+      = td('С фиксированной ценой', Catalog::Product.where(fixed_price: true).count)
+      = td('Изображений товаров', Image.where(imageable_type: Catalog::Product).count)
+      = td('Категорий', Catalog::Category.count)
+      = td('Указателей', Catalog::Taxon.count)
+      = td('Брендов', Catalog::Brand.count)
+      = td('Характеристик', Catalog::Property.count)
+      = td('Характеристик товаров', Catalog::ProductProperty.count)
+      = td('Типов фильтров', Catalog::Filter.count)
+      = td('Значений фильтров', Catalog::FilterValue.count)
+      = td('Фильтров товаров', Catalog::ProductFilterValue.count)
+      = td('С фильтрами', Catalog::Product.with_filters("y").count)
+      = td('С характеристиками', Catalog::Product.with_properties("y").count)
+      = td('Без фильтров', Catalog::Product.with_filters("n").count.count)
+      = td('Без характеристик', Catalog::Product.with_properties("n").count.count)
+
+  .table-responsive.col-md-4
+    %table.table.table-striped.table-bordered.table-hover
+      %tr
+        %td{ colspan: 2 }
+          %b Поставщики
+      = td('Всего позиций товаров', Vendor::Product.count)
+      = td('Привязано', Vendor::Product.bound.count)
+      = td('Не привязано', Vendor::Product.count - Vendor::Product.bound.count)
+      = td('Активных', Vendor::Product.active.count)
+      = td('Неактивных', Vendor::Product.not_active.count)
+      = td('Поставщиков', Vendor::Merchant.count)
+      = td('Поставщиков с авто обновлением прайса', Vendor::Merchant.auto_updateable.count)
+      = td('Специальных поставщиков', Vendor::Merchant.special.count)
+      = td('Давний прайс', I18n.l(Vendor::Merchant.oldest_price, format: "%e %b, %X"))
+      = td('Новый прайс', I18n.l(Vendor::Merchant.newest_price, format: "%e %b, %X"))
+
+  .table-responsive.col-md-4
+    %table.table.table-striped.table-bordered.table-hover
+      %tr
+        %td{ colspan: 2 }
+          %b CRM
+      = td('Пользователей всего', User.count)
+      = td('Пользователей клиентов', User.count - User.admins.count)
+      = td('Пользователей админов', User.admins.count)
+      = td('Заказов всего', Order.count)
+      = td('Заказов незавершенных', Order.unknown.count)
+      = td('Заказов ожидающих обработки', Order.checkout.count)
+      = td('Заказов обработанных', Order.completed.count)
+      = td('Коллбэков', Callback.count)
+      = td('Комментариев', Catalog::Comment.count)
+

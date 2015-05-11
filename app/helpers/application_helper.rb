@@ -8,4 +8,10 @@ module ApplicationHelper
     return :cktext_area if conf.var =~ /^ck\./
     :text_field
   end
+
+  def td(name, value)
+    content_tag(:tr) do
+      content_tag(:td) { name } + content_tag(:td, class: 'text-center'){ value.to_s }
+    end
+  end
 end

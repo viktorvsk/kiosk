@@ -26,7 +26,7 @@ namespace :catalog do
 
   desc 'Auto upadte prices'
   task auto_update_prices: :environment do
-    merchants = Vendor::Merchant.all.select{ |m| "#{m.parser_class}Parser".classify.constantize.respond_to?(:auto_update) rescue false }
+    merchants = Vendor::Merchant.auto_updateable
     merchants.each do |m|
       klass = "#{m.parser_class}Parser".classify.constantize
       klass.auto_update(m.id)

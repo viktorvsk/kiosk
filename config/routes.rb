@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'sitemap.xml', to: 'catalog#sitemap'
   get 'price.xml', to: 'catalog#price'
   root 'products#index'
-  get :admin, to: 'admin/vendor/merchants#index'
+  get :admin, to: 'admin/base#dashboard'
   devise_for :users
 
   mount Ckeditor::Engine => '/ckeditor'

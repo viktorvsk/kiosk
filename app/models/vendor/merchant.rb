@@ -25,6 +25,24 @@ class Vendor::Merchant < ActiveRecord::Base
     %w( Akustika(XML) Akustikaxml )
   ]
 
+  def self.auto_updateable
+    ids = all.select{ |m| "#{m.parser_class}Parser".classify.constantize.respond_to?(:auto_update) rescue false }.map(&:id)
+    where(id: ids)
+  end
+
+  def self.oldest_price
+    all.map{ |m| DateTime.parse(m.last_price_date) rescue nil }.compact.sort.first
+  end
+
+  def self.newest_price
+    all.map{ |m| DateTime.parse(m.last_price_date) rescue nil }.compact.sort.last
+  end
+
+  def self.special
+    ids = all.select{ |m| m.parser_class != 'Default' }
+    where(id: ids)
+  end
+
   def to_partial_path
     "admin/#{super}"
   end
