@@ -1,5 +1,5 @@
 $(function() {
     <% ACE_WORKERS.each do |w| %>
-    ace.config.setModuleUrl('ace/mode/<%= w %>_worker', <%= asset_path("ace/worker-#{w}").inspect %>);
+    ace.config.setModuleUrl('ace/mode/<%= w %>_worker', <%= asset_path("ace/worker-#{w}.js").inspect %>);
     <% end %>
 });
