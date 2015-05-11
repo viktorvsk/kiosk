@@ -1,0 +1,44 @@
+<% unless FileBrowser.select_only %>
+  <h1><%= @current_directory %></h1>
+
+  <fieldset id="upload-forms">
+    <legend>Добавить файл</legend>
+
+    <%= uploaded_file_form_tag do %>
+      <label for="file_data">Upload File</label>
+      <%= file_field_tag :data, :id => 'file_data' %>
+      <%= submit_tag 'Загрузить', class: 'btn btn-primary btn-xs' %>
+    <% end %>
+
+    <%= uploaded_file_form_tag do %>
+      <label for="directory_data">Создать директорию</label>
+      <%= text_field_tag :data, nil, :id => 'directory_data', class: 'form-control' %>
+      <div class='form-actions'>
+        <%= submit_tag 'Создать', class: 'btn btn-success btn-xs' %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <%= link_to_up "&laquo; Вернуться ?" %>
+<% end %>
+
+<ul id="directory-index" class="<%= 'clickable' if params[:integration] %>">
+  <% for directory in @directories %>
+    <li class="directory">
+      <%= image_tag "file_browser/folder.png", :alt => '' %>
+      <%= link_to_directory directory %>
+      <%= link_to_destroy directory %>
+    </li>
+  <% end %>
+  <% for file in @uploaded_files %>
+    <li class="file">
+      <%= image_tag icon_for(file), :alt => '' %>
+      <%= link_to_uploaded_file file %>
+      <%= link_to_destroy file.path %>
+    </li>
+  <% end %>
+</ul>
+
+<% content_for :file_browser_footer do %>
+  <%= javascript_include_tag params[:integration] %>
+<% end if params[:integration] %>

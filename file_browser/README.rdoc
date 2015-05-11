@@ -1,0 +1,68 @@
+= DESCRIPTION
+
+A rails plugin that provides a basic file browser. The primary use
+case for this plugin is:
+
+* To manage a directory of files includes subdirectories
+* To integration with products like CKEditor for selecting files.
+
+Guiding Principals:
+
+* No database required
+* Pluggable backends (filesystem, S3, etc.) - Filesystem only currently
+* Pluggable integration with 3rd party products such as CKEditor
+
+Possible Future Features:
+
+* Launcher can specify only certain file types to show
+  (images only, only certain extensions, etc.)
+* Allow basic image manipulation (resize, crop, etc.)
+* File upload progress monitoring (for large files)
+
+= SETUP
+
+First, your app needs to be using jQuery as it's JavaScript framework.
+This dependency might be removed at some future point but it is
+required for now. In your Gemfile add:
+
+    gem 'file_browser'
+
+In an initializer add:
+
+    FileBrowser.storages[:local] =
+      FilesystemStorage.new Rails.root.join('public/uploaded_files')
+
+Change the above path to be wherever you want to write files. Also make
+sure that directory is writable by the application.
+
+Finally point your browser to /local/uploaded_files/index and start
+managing your files via the web.
+
+= CKEditor Integration
+
+CKEditor integration is provided out of the box. When configuring
+CKEditor make sure to provide the following attributes:
+
+    filebrowserBrowseUrl: '/local/uploaded_files/select/ck_browser',
+    filebrowserUploadUrl: '/local/uploaded_files/drop/ck_browser',
+
+This assumes your storage is named "local", if you name it something
+else then change the above configuration. Then add "ck_browser" to
+your asset pipeline.
+
+= CONFIGURATION
+
+By default the app will use the "file_browser" layout. Obviously your
+can override that in your application if you want. If you want it to
+use the same layout as your main layout simply symlink
+file_browser.html.erb to your application.html.erb file. If you use
+your own layout make sure that it includes the jQuery library and
+that it yields to the symbol :file_browser_footer.
+
+You can have multiple storage repositories that can be registered and
+accessed. See FileBrowser#storages for more info.
+
+= CREDIT
+
+This gem was developed by Eric Anderson (http://pixelwareinc.com) while
+developing projects under Red Tusk Studios (http://redtusk.com).

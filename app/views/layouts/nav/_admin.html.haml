@@ -46,6 +46,7 @@
             %span.caret
           %ul.dropdown-menu
             %li= link_to 'Основные', admin_confs_path
+            %li= link_to 'Файловый менеджер', uploaded_files_path(:root)
             %li= link_to 'Страницы, Статьи, Помощь, Слайды', admin_markups_path
       %ul.nav.navbar-nav.navbar-right
         %li= link_to current_user.name, '#'
