@@ -41,6 +41,7 @@ gem 'kaminari'
 # Settings
 gem 'figaro'
 gem 'rails-settings-cached', '0.4.1'
+gem 'whenever', require: false
 
 # Markup Helpers
 gem 'haml-rails'
