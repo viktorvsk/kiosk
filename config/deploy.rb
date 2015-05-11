@@ -1,5 +1,6 @@
-#require 'mina/bundler'
-#require 'mina/rails'
+require 'mina/bundler'
+require 'mina/rails'
+require 'mina/whenever'
 require 'mina/git'
 require 'mina/rbenv'
 require 'mina/puma'
@@ -166,6 +167,7 @@ task :deploy => :environment do
     invoke :'enable_active_admin'
     invoke :'bower_install'
     invoke :'rails_patched:assets_precompile'
+    invoke :'whenever:write'
     invoke :'deploy:cleanup'
     invoke :'restart_resque'
 
