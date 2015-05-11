@@ -36,7 +36,7 @@ module Vendor
       delete_not_in_pricelist
       batch_create_or_update
       notify('Привязываются товары')
-      Binder.perform
+      # Binder.perform
       notify('Пересчитывается цена товаров')
       @merchant.catalog_products.recount
       notify
