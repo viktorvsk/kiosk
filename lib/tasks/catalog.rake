@@ -2,18 +2,26 @@ namespace :catalog do
 
   desc 'Update Sitemap nad Site pricelist'
   task :hourly_update => :environment do
+    Rake::Task['catalog:update_sitemap'].invoke
+    Rake::Task['catalog:update_pricelist'].invoke
+    Rake::Task['catalog:auto_update_prices'].invoke
+  end
+
+  desc 'Update Sitemap'
+  task :update_sitemap => :environment do
     categories = Catalog::Category.select(:id, :slug, :updated_at, :name)
     products = Catalog::Product.bound.with_price.select(:id, :name, :slug, :updated_at).uniq
     pages = Markup.active.pages_and_articles.select(:id, :name, :slug, :updated_at)
     helps = Markup.active.helps.select(:id, :name, :slug, :updated_at)
     sitemap = ActionController::Base.new.render_to_string("catalog/sitemap", locals: { categories: categories, products: products, helps: helps, pages: pages })
     File.open(Rails.public_path.join('sitemap.xml'), 'w'){ |f| f.puts sitemap }
+  end
 
+  desc 'Update Pricelist'
+  task update_pricelist: :environment do
     categories = Catalog::Category.select(:id, :name).includes(:products)
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories })
     File.open(Rails.public_path.join('price.xml'), 'w'){ |f| f.puts pricelist }
-
-
   end
 
   desc 'Auto upadte prices'
