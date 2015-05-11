@@ -1,5 +1,5 @@
 require 'mina/bundler'
-require 'mina/rails'
+#require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
 require 'mina/puma'
@@ -20,15 +20,15 @@ set :branch,      'master'
 
 set :shared_paths, [
   'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml', 'tmp',
-  'public/uploads'
+  'public'
 ]
 
 task :environment do
   invoke :'rbenv:load'
   queue! %(export NODE_PATH="#{node_path}")
   queue! %(export PATH="#{node_path}:$PATH")
-  queue! %[mkdir -p "#{deploy_to}/shared/public/uploads"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/uploads"]
+  queue! %[mkdir -p "#{deploy_to}/shared/public"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public"]
 end
 
 task :setup => :environment do
@@ -108,11 +108,3 @@ task :deploy => :environment do
     end
   end
 end
-
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
-
