@@ -155,7 +155,7 @@ group :development do
   # gem 'guard-brakeman'
 
   # Deployment
-  gem 'mina'
+  gem 'mina',       require: false
   gem 'mina-puma',  require: false
   gem 'mina-nginx', require: false
   gem 'mina-scp',   require: false
