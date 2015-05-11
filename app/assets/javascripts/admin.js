@@ -20,16 +20,26 @@
 //= require_tree ./admin
 
 $(document).ready(function () {
+  var defaultRates;
+  defaultRates = {
+    uah: 1,
+    usd: 25,
+    eur: 30,
+    rrc: 1
+  }
+  defaultRates = JSON.stringify(defaultRates);
   $('.select2').select2();
+
   $('.editor').each(function (index, item) {
     var lang       = 'json',
       editor     = ace.edit(item),
       $textarea  = $(item).parent().find('textarea'),
-      v = JSON.parse($textarea.text()),
+      v = JSON.parse($textarea.text() || defaultRates),
       pretty = JSON.stringify(v, null, 2);
 
     editor.setValue(pretty);
 
+    console.log($textarea);
     $textarea.hide();
     editor.getSession().setMode('ace/mode/' + lang);
     editor.getSession().on('change', function () {

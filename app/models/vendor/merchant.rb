@@ -20,7 +20,8 @@ class Vendor::Merchant < ActiveRecord::Base
     %w( ERC Erc ),
     %w( DC-Link Dclink ),
     %w( Технотрейд Technotrade ),
-    %w( ЮГ-Контракт Yug )
+    %w( ЮГ-Контракт Yug ),
+    %w( DCLinkXML Dclinkxml )
   ]
 
   def to_partial_path

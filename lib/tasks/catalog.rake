@@ -12,6 +12,18 @@ namespace :catalog do
     categories = Catalog::Category.select(:id, :name).includes(:products)
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories })
     File.open(Rails.public_path.join('price.xml'), 'w'){ |f| f.puts pricelist }
+
+
+  end
+
+  desc 'Auto upadte prices'
+  task auto_update_prices: :environment do
+    merchants = Vendor::Merchant.all.select{ |m| "#{m.parser_class}Parser".classify.constantize.respond_to?(:auto_update) rescue false }
+    merchants.each do |m|
+      klass = "#{m.parser_class}Parser".classify.constantize
+      klass.auto_update(m.id)
+      puts "Done #{m.name}"
+    end
   end
 
   desc 'Reset secondary data'
