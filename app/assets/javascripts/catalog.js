@@ -34,8 +34,8 @@ var typeWatcher = typewatch();
 
 $(document).ready(function () {
   $('.search-example').click(function (event) {
-    $(this).closest('form').find('input[type="search"]').val($(this).text());
-    $(this).closest('form').submit();
+    $('#q_main_search').closest('form').find('input[type="search"]').val($(this).text());
+    $('#q_main_search').closest('form').submit();
     event.preventDefault();
   });
 
