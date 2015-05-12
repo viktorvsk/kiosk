@@ -42,7 +42,6 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    ace-rails-ap (3.0.2)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)
@@ -361,7 +360,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ace-rails-ap
   active_admin-sortable_tree
   active_pricelist!
   activeadmin!

@@ -7,12 +7,14 @@
         = field_set_tag do
           %legend Информация
           .form-inputs
-            .col-sm-3= field_for(f, :name)
-            .col-sm-3= field_for(f, :discount, :number_field)
-            .col-sm-3= field_for(f, :email, :email_field)
-            .col-sm-3= select_field_for(f, :encoding,['UTF-8', 'Windows-1251'])
+            .col-sm-6= field_for(f, :name)
+            .col-sm-6
+              = field_for(f, :discount, :number_field)
+              %small Цена = Цена - (Цена &times; Скидка   &#247; 100)
+            .col-sm-6= field_for(f, :email, :email_field)
+            .col-sm-6= select_field_for(f, :encoding,['UTF-8', 'Windows-1251'])
             / .col-sm-3= select_field_for(f, :format, %w(xlsx xls xml csv))
-            .col-sm-9= field_for(f, :description, :text_area)
+            .col-sm-12= field_for(f, :description, :text_area, rows: 10)
       .col-sm-6
         = field_set_tag do
           %legend Основные настройки полей
@@ -44,16 +46,14 @@
           %legend Настройки рассчета
           / .col-sm-6= field_for(f, :required)
           .col-sm-6
-            = f.label :currency_rates
-            .editor
-            = f.text_area :currency_rates
+            = field_for( f, :currency_rates, :text_area)
+            %small { "rrc": 1, "uah": 1, "usd": 22.5, "eur": 25.3 }
           .col-sm-6
-            = f.label :currency_order
-            .editor
-            = f.text_area :currency_order
+            = field_for( f, :currency_order, :text_area)
+            %small ["rrc", "uah", "usd", "eur"]
           .col-sm-6= field_for(f, :f_delivery_tax)
           / .col-sm-7= field_for(f, :not_in_stock)
-          .col-sm-5= select_field_for(f, :parser_class, @custom_merchants)
+          .col-sm-6= select_field_for(f, :parser_class, @custom_merchants)
   .form-actions
     - text = @merchant.new_record? ? "Создать" : "Сохранить"
     = button_tag(type: :submit, class: 'btn btn-success') do

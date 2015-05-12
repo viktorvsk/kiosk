@@ -56,7 +56,7 @@ gem 'ckeditor'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem "select2-rails"
-gem 'ace-rails-ap'
+# gem 'ace-rails-ap'
 
 # API
 gem 'jbuilder', '~> 2.0'
