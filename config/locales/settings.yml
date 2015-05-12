@@ -12,6 +12,7 @@ ru:
       robots: robots.txt
     ck:
       mode: Режим работы
+      mode_product_card: Режим работы (карточка товара)
       logo: Логотип
       logo_min: Логотип в хедере
       delivery_card: Доставка\Оплата в карточке товара

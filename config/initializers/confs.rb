@@ -21,6 +21,7 @@ default_settings = {
   'ck.phones_and_mode'    => 'выходные',
   'ck.homepage_seo'       => 'Интернет-магазин ...',
   'ck.mode'               => '<h1>Режим работы</h1>',
+  'ck.mode_product_card'  => '<h1>Режим работы</h1> Карточка товара',
   'b.search_with_similars'=> 't'
 }
 
