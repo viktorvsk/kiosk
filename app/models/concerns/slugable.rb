@@ -3,7 +3,7 @@ module Slugable
     base.class_eval do
 
       def slug
-        self[:slug].presence || Russian.translit(name).parameterize
+        self[:slug].presence || Russian.translit(name.to_s).parameterize
       end
 
     end
