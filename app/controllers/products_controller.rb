@@ -14,11 +14,20 @@ class ProductsController < CatalogController
     @q = Catalog::Product.includes(:images).ransack(params[:q])
     @all_products = @q.result
     @products = @all_products.zeros_last.order('price ASC').page(params[:page])
-    # TODO: hack the fuck
-    @grouped_hash = @all_products.select('catalog_products.id').group('catalog_category_id').count
-    @grouped_hash = @grouped_hash.map do |k,v|
-      [Catalog::Category.select(:id, :name, :slug).find(k), v]
+    respond_to do |format|
+      format.html do
+        # TODO: hack the fuck
+        @grouped_hash = @all_products.select('catalog_products.id').group('catalog_category_id').count
+        @grouped_hash = @grouped_hash.map do |k,v|
+          [Catalog::Category.select(:id, :name, :slug).find(k), v]
+        end
+      end
+      format.js do
+        @products = @products.limit(5)
+        render text: render_to_string(partial: 'products/autocomplete_all', locals: { products: @products, query: params[:q]['main_search'] })
+      end
     end
+
   end
 
   # GET /products/1

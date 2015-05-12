@@ -1,6 +1,8 @@
-= search_form_for @q, url: search_products_path do |f|
+= search_form_for @q, url: search_products_path, id: 'main_search_form' do |f|
   .input-group
-    = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...', required: true
+    = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...', required: true, autocomplete: :off
     .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
-  Например:
-  = link_to @random_search_word, '#', class: 'search-example'
+.product_autocomplete
+  .product_autocomplete_inner{ 'data-search-autocomplete' => true }
+Например:
+= link_to @random_search_word, '#', class: 'search-example'

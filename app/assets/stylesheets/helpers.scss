@@ -154,6 +154,10 @@ body > footer.jumbotron{
   }
 }
 
+#main_search_form{
+  input{ border-radius: 0!important; }
+}
+
 /******************************** Workarounds ********************************/
 .accelerated{
   -webkit-transform: translatez(0);

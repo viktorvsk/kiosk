@@ -1,0 +1,6 @@
+= render collection: products, partial: 'products/autocomplete', as: :product
+.autocomplete_text
+  - if products.present?
+    = link_to 'Перейти ко всем результатам', search_products_path(q: { main_search: query }), class: 'btn btn-info btn-xs pull-right'
+  - else
+    %span.text-center Товары не найдены

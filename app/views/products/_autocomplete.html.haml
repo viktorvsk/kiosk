@@ -1,0 +1,19 @@
+.product
+  .col-xs-3
+
+    .product_image
+      = link_to p_path(slug: product.slug, id: product.id) do
+        = image_tag product.preview_path, class: 'img-responsive'
+  .col-xs-6
+    .product_name
+      = link_to product.name, p_path(slug: product.slug, id: product.id)
+
+    .product_price
+      = price_for(product)
+  .col-xs-3
+    .product_articul.pull-right
+      .label.label-warning
+        Код:
+        = product.id
+    = render 'products/order_buttons', product: product
+
