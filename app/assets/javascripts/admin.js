@@ -11,8 +11,8 @@
 
 //= require jquery-ui/ui/autocomplete
 //= require ace/ace
-// require ace/worker-html
-// require ace/worker-json
+//= require ace/worker-html
+//= require ace/worker-json
 //= require ace/theme-monokai
 //= require ace/mode-json
 //= require select2

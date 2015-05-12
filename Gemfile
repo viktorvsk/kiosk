@@ -52,6 +52,7 @@ gem 'auto_html'
 
 # Assets
 gem 'ckeditor'
+#gem 'ckeditor_rails'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem "select2-rails"
