@@ -1,5 +1,5 @@
 class CategoriesController < CatalogController
-  before_action :set_category, only: [:show]
+  before_action :set_category, only: [:show, :compare, :add_to_compare]
 
   # GET /categories
   # GET /categories.json
@@ -23,6 +23,29 @@ class CategoriesController < CatalogController
       products_count: @all_products.count,
       all_products: @all_products
     }
+  end
+
+  def compare
+    @products =  Catalog::Product.includes(:category).find(session[:comparing_ids].to_s.split)
+    @products.select!{ |product| product.category == @category }
+  end
+
+  def add_to_compare
+    @product = Catalog::Product.find(params[:product_id])
+    comparing = @comparing_products
+    comparing << @product.id.to_s
+    session[:comparing_ids] = comparing.uniq.join(' ')
+    set_comparing_products
+    render 'categories/update_compare_button'
+  end
+
+  def remove_from_compare
+    @product = Catalog::Product.find(params[:product_id])
+    comparing = @comparing_products
+    comparing = comparing - [@product.id.to_s]
+    session[:comparing_ids] = comparing.uniq.join(' ')
+    set_comparing_products
+    render 'categories/update_compare_button'
   end
 
   private

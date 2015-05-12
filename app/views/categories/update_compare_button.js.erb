@@ -1,0 +1,6 @@
+(function () {
+  var selector = '#compare_' + '<%= escape_javascript(@product.id.to_s) %>';
+  var partial = "<%= escape_javascript(render partial: 'products/compare_button', locals: { product: @product, cp: @comparing_products }) %>";
+  var $node = $(selector).closest('.product_compare');
+  $node.replaceWith(partial);
+}());

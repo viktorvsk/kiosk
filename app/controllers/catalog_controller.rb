@@ -1,4 +1,6 @@
 class CatalogController < ApplicationController
+  before_action :set_comparing_products
+
   def static_page
     @page = Markup.pages_and_articles.find(params[:id])
     render 'markups/_page', locals: { page: @page }
@@ -35,6 +37,10 @@ class CatalogController < ApplicationController
   def price
     categories = Catalog::Category.select(:id, :name).includes(:products)
     render 'catalog/price.xml', layout: false, locals: { categories: categories }
+  end
+
+  def set_comparing_products
+    @comparing_products = session[:comparing_ids].to_s.split.map(&:to_s)
   end
 
 end

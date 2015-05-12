@@ -14,7 +14,10 @@ Rails.application.routes.draw do
 
   get '/p/:slug/:id', to: 'products#show', as: :p
   get '/t/:slug/:id', to: 'taxons#show', as: :t
+  get '/c/:id/compare', to: 'categories#compare', as: :compare
   get '/c/:slug/:id', to: 'categories#show', as: :c
+  post '/c/:id/compare/:product_id', to: 'categories#add_to_compare', as: :add_to_compare
+  delete '/c/:id/compare/:product_id', to: 'categories#remove_from_compare', as: :remove_from_compare
 
   resources :products, only: [:index, :show], path: 'p' do
     post :comment, to: 'products#add_comment', as: :comment
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
-  resources :categories, only: [:index, :show], path: 'c'
+  resources :categories, only: [:index, :show], path: 'c', id: /\d+/
   resources :taxons, only: [:show], path: 't'
   resource :order, only: [:show, :update] do
     post :checkout

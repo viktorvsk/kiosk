@@ -1,0 +1,13 @@
+- cp = @comparing_products || cp
+- checked_state = cp.include?(product.id.to_s)
+- action = checked_state ? :remove_from_compare_path : :add_to_compare_path
+- method = checked_state ? :delete : :post
+.product_compare
+  = form_tag send(action, id: product.catalog_category_id, product_id: product.id), remote: true, 'data-autoupdate' => true, method: method do |f|
+    .form-group.checkbox
+      %label
+        = check_box_tag "compare[#{product.id}]", checked_state, checked_state, class: 'form-control', 'data-compare-id' => product.id
+        - if checked_state
+          = link_to 'Перейти к сравнению', compare_path(id: product.catalog_category_id)
+        - else
+          Добавить к сравнению

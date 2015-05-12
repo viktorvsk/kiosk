@@ -12,8 +12,7 @@
           = image_tag product.preview_path, class: 'img-responsive'
       .product_name
         = link_to product.name, p_path(slug: product.slug, id: product.id)
-      .product_compare
-        Добавить в сравнение
+      = render 'products/compare_button', product: product
       .product_price
         = price_for(product)
       = render 'products/order_buttons', product: product

@@ -11,6 +11,7 @@
         = image_tag product.preview_path, class: 'thumbnail img-responsive'
     .col-sm-4
       .product_price= price_for product
+      = render 'products/compare_button', product: product
       = render 'products/order_buttons', product: product
       = Conf['ck.social_card'].try(:html_safe)
     .col-sm-4
