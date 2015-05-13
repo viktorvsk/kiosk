@@ -11,7 +11,7 @@ class ProductsController < CatalogController
 
   def search
     params[:q].each_value { |v| v.strip! } if params[:q]
-    @q = Catalog::Product.includes(:images).ransack(params[:q])
+    @q = Catalog::Product.ransack(params[:q])
     @all_products = @q.result
     @products = @all_products.zeros_last.order('price ASC').page(params[:page])
     respond_to do |format|
