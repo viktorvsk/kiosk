@@ -5,6 +5,9 @@
   .col-md-4
     %ul.list-group
       = render @confs.reject{ |c| c.var =~ /(^txt\.)|(^ck\.)/ }.sort_by(&:created_at)
+      %h2 SEO-шаблон
+      - Catalog::Product::SEO_MAPPER.keys.each do |key|
+        %li.list-group-item= key
   .col-md-8
     %ul.list-group
       = render @confs.select{ |c| c.var =~ /^txt\./ }.sort_by(&:created_at)
