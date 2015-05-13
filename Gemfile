@@ -126,6 +126,7 @@ group :development do
 
   # Debug
   gem 'lol_dba'
+  gem 'rails_best_practices'
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'
