@@ -16,6 +16,7 @@ class CategoriesController < CatalogController
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
     @all_products = @category.products.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])
+    @brand = Catalog::Brand.where(id: params[:b]).first
     @filters_and_results_hash = {
       filters: @category.category_filters.includes(filter: :values),
       brands: @category.brands.uniq,

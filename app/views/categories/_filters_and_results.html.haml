@@ -56,8 +56,14 @@
       .text-center
         = paginate products, remote: true if products.respond_to?(:current_page)
   - if @category.description.present?
-    .well.well-sm
+    .panel-material
       %small
         = @category.description.html_safe
+  - if @brand.present?
+    %h2
+      = @category.name
+      = @brand.name
+    .panel-material
+      = @brand.description
 = render 'price_slider', min_categopy: @category.products.where('price > 0').minimum(:price).to_i , max_category: @category.products.maximum(:price).to_i + 100
 = render 'product_view'
