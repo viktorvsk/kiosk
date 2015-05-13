@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
 
   scope :in_cart, -> { where("orders.state = 'in_cart' AND user_id IS NOT NULL") }
   scope :unknown, -> { where(user: nil) }
-  scope :completed, -> { where('completed_at IS NOT NULL') }
+  scope :completed, -> { where("orders.completed_at IS NOT NULL AND orders.state = 'payd'") }
   scope :checkout, -> { where(state: 'checkout') }
   belongs_to :user
 
