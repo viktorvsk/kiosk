@@ -19,7 +19,7 @@
               = render 'shared/articles'
 .row
   .col-xs-12
-    - cache ['homepage_tops', @hit, @newest, @homepage] do
+    - cache ['homepage_tops', @hit, @newest, @homepage, session[:comparing_ids]] do
       .panel.panel-success
         .panel-heading
           %h4.panel-title Хиты продаж

@@ -26,8 +26,7 @@ class CategoriesController < CatalogController
   end
 
   def compare
-    @products =  Catalog::Product.includes(:category).find(session[:comparing_ids].to_s.split)
-    @products.select!{ |product| product.category == @category }
+    @products =  Catalog::Product.includes(:category, product_properties: :property).where(id: session[:comparing_ids].to_s.split, category: @category)
   end
 
   def add_to_compare
@@ -45,7 +44,10 @@ class CategoriesController < CatalogController
     comparing = comparing - [@product.id.to_s]
     session[:comparing_ids] = comparing.uniq.join(' ')
     set_comparing_products
-    render 'categories/update_compare_button'
+    respond_to do |format|
+      format.js { render 'categories/update_compare_button' }
+      format.html { redirect_to :back }
+    end
   end
 
   private

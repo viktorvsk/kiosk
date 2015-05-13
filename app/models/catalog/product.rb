@@ -133,6 +133,10 @@ class Catalog::Product < ActiveRecord::Base
       where("catalog_products.info->'#{top_name}' = '1'")
     end
 
+    def all_properties
+      all.map(&:product_properties).map{ |p| p.map(&:property) }.flatten.uniq
+    end
+
     def filters_cont(filters_str)
       filter(filters_str.to_s.split(',').compact)
     end
@@ -207,6 +211,8 @@ class Catalog::Product < ActiveRecord::Base
         end
       end
     end
+
+
   end
 
   def bound?

@@ -1,3 +1,11 @@
+- if @comparing_products.present?
+  .panel-material
+    Вы сейчас сравниваете
+    %ul
+      - @comparing_products.map{ |id| Catalog::Product.find(id) rescue nil }.compact.group_by(&:catalog_category_id).each do |category_id, products|
+        - category = Catalog::Category.find(category_id) rescue nil
+        - next unless category
+        %li= link_to "#{category.name} (#{products.count})", compare_path(id: category_id)
 .row
   - if current_user
     .col-md-3

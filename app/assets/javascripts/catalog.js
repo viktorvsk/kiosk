@@ -56,4 +56,28 @@ $(document).ready(function () {
     typeWatcher(mainSearchPerform, 500);
 
   });
+
+  $('[data-compare]').click(function (event) {
+    var action;
+    $('[data-compare]').removeClass('btn btn-primary');
+    $(this).addClass('btn btn-primary');
+    if ($(this).data('compare') === 'all') {
+      $('[data-compare="tr"]').show('slow');
+    } else {
+      $('[data-compare="tr"]').each(function (index, item) {
+        var values = [];
+        $(item).find('.product_compare_property').each(function (p_index, p_item) {
+          var txt = $.trim($(p_item).text());
+          if ($.inArray(txt, values) === -1) {
+            values.push(txt);
+          }
+        });
+        if (values.length === 1) {
+          $(item).hide('slow');
+        }
+      });
+    }
+
+    event.preventDefault();
+  });
 });

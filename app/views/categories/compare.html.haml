@@ -1,5 +1,36 @@
 - if @products.present?
-  = render collection: @products, partial: 'products/search_card', as: :product
+  - properties = @products.all_properties
+  .table-responsive
+    %table.table.table-bordered.table-hover.table-striped
+      %tr
+        %td{ width: '20%' }
+          = link_to 'Все', '#', class: 'btn btn-primary', 'data-compare' => :all
+          %br/
+          = link_to 'Только отличия', '#', class: '', 'data-compare' => :diff
+        - @products.sort_by(&:price).each do |product|
+          %td.product_compare_td{ width: "#{80 / @products.count}%" }
+            .pull-left
+              = form_tag remove_from_compare_path(id: product.catalog_category_id, product_id: product.id), method: :delete do |f|
+                %button.btn-sm.btn-danger{ type: :submit }
+                  %i.glyphicon.glyphicon-remove-circle
+            .product_articul
+              .label.label-warning
+                Код:
+                = product.id
+            .product_image
+              = link_to p_path(slug: product.slug, id: product.id) do
+                = image_tag product.preview_path, class: 'img-responsive'
+            .product_name
+              = link_to product.name, p_path(slug: product.slug, id: product.id)
+            .product_price
+              = price_for(product)
+            = render 'products/order_buttons', product: product
+      - properties.each do |property|
+        %tr{ 'data-compare' => 'tr' }
+          %td= property.name
+          - @products.sort_by(&:price).each do |product|
+            %td.product_compare_property
+              = product.product_properties.where(property: property).first.try(:name) || "&mdash;".html_safe
 - else
-  Вы еще не добавили на сравнение ни одного товара из категории
-  %b= @category.name
+  .panel-material
+    Добавьте в сравнение хотя бы 1 товара.
