@@ -7,4 +7,13 @@ class LineItem < ActiveRecord::Base
     update(price: product.price, vendor_price: product.in_price)
   end
 
+  def income
+    if order.state == 'checkout'
+      (price - vendor_price) * quantity
+    else
+      (product.price - product.in_price) * quantity
+    end
+
+  end
+
 end

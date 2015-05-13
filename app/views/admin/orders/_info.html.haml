@@ -1,0 +1,17 @@
+%i
+  %b
+    %center= order.id
+%b Сумма:
+= "#{order.total_sum} грн."
+%br/
+%b Имя:
+= order.name
+%br/
+- if order.phone.present?
+  %b телефон
+  = number_to_phone(order.phone[3..-1], country_code: 380)
+%br/
+%b Адрес:
+= order.address
+%br/
+%center= I18n.l(order.created_at, format: "%e %b, %Y")

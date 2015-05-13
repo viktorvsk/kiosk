@@ -101,6 +101,10 @@ ru:
         name: Имя
         phone: Телефон
         address: Адрес
+        id: Номер заказа
+        created_at: Создан
+        completed_at: Завершен
+        user: Клиент
         comment: Комментарий
         payment_type: Cпособ оплаты
         delivery_type: Споособ доставки

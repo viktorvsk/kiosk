@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
   validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
   before_validation :strip_phone
 
-  scope :in_cart, -> { where(state: 'in_cart') }
+  scope :in_cart, -> { where("orders.state = 'in_cart' AND user_id IS NOT NULL") }
   scope :unknown, -> { where(user: nil) }
   scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :checkout, -> { where(state: 'checkout') }
@@ -49,11 +49,15 @@ class Order < ActiveRecord::Base
   end
 
   def total_sum
-    if state == 'in_cart'
-      line_items.map{ |li| li.product.price * li.quantity }.sum
+    if state == 'checkout'
+      line_items.includes(:product).map{ |li| li.price * li.quantity }.sum
     else
-      line_items.map{ |li| li.price * li.quantity }.sum
+      line_items.includes(:product).map{ |li| li.product.price * li.quantity }.sum
     end
+  end
+
+  def total_income
+    line_items.includes(:product).map{ |li| li.income }.sum
   end
 
   def format_phone

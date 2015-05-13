@@ -1,0 +1,16 @@
+%b Имя:
+= user.name
+%br/
+- if user.phone.present?
+  %b Телефон:
+  = number_to_phone(user.phone[3..-1], country_code: 380)
+  %br/
+%b Email:
+= user.email
+%br/
+%b Доход:
+= user.total_income
+%br/
+%b Прибыль:
+= user.clean_total_income
+

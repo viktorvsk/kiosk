@@ -32,6 +32,14 @@ class User < ActiveRecord::Base
     update(role: role_name) unless role_name == role
   end
 
+  def total_income
+    orders.map(&:total_sum).sum
+  end
+
+  def clean_total_income
+    orders.map(&:total_income).sum
+  end
+
   private
 
   def strip_phone
