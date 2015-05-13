@@ -1,4 +1,6 @@
-
+- @meta_title = @taxon.seo.try(:title)
+- @meta_description = @taxon.seo.try(:description)
+- @meta_keywords = @taxon.seo.try(:keywords)
 .panel.panel-default
   .panel-heading
     .row

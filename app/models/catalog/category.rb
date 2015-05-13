@@ -19,6 +19,7 @@ class Catalog::Category < ActiveRecord::Base
   has_many :properties, through: :category_properties
   belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id, touch: true
   has_one :seo, as: :seoable, dependent: :destroy
+  accepts_nested_attributes_for :seo
 
   def tax_for(value)
     value = value.to_f.ceil

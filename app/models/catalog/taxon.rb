@@ -4,8 +4,10 @@ class Catalog::Taxon < ActiveRecord::Base
   # after_update :rerender_menu
   has_one :category, class_name: Catalog::Category, foreign_key: :catalog_taxon_id
   has_one :image, as: :imageable, dependent: :destroy
+  has_one :seo, as: :seoable, dependent: :destroy
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  accepts_nested_attributes_for :image
+  accepts_nested_attributes_for :image, allow_destroy: false
+  accepts_nested_attributes_for :seo, allow_destroy: false
 
   has_ancestry
 

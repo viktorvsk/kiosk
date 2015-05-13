@@ -4,8 +4,5 @@ class TaxonsController < CatalogController
     if params[:slug] != @taxon.slug
       redirect_to t_path(slug: @taxon.slug, id: @taxon), status: 301
     end
-    @meta_title = @taxon.name
-    # @meta_description = @taxon.name
-    # @meta_keywords = @taxon.name
   end
 end
