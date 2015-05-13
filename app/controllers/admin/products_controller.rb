@@ -10,6 +10,7 @@ class Admin::ProductsController < Admin::BaseController
   def index
     @q = Catalog::Product.ransack
     @all_products = Catalog::Product.includes(vendor_products: :product)
+    @all_products_count = @all_products.count
     @products = @all_products.page(params[:page])
   end
 
@@ -17,6 +18,7 @@ class Admin::ProductsController < Admin::BaseController
     params[:q].each_value do |v| v.strip! end if params[:q]
     @q = Catalog::Product.ransack(params[:q])
     @all_products = @q.result(distinct: true)
+    @all_products_count = @all_products.count.respond_to?(:keys) ? @all_products.count.keys.count : @all_products.count
     @products = @all_products.order('created_at DESC').page(params[:page])
     respond_to do |format|
       format.html { render :index }
