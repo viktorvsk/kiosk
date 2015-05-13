@@ -4,6 +4,10 @@ ru:
     site_name: Название сайта
     delta: Разница похожих товаров, %
     similar_distance: Порог схожести названий
+    kiosk_meta_title: SEO заголовок (главная)
+    kiosk_meta_description: SEO описание (главная)
+    kiosk_meta_keywords: SEO ключевые слова (главная)
+    default_title: title страницы по-умолчанию
     txt:
       js: Javascript
       css: CSS

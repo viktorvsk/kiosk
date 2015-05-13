@@ -5,4 +5,4 @@
 %meta{:content => meta(:author), :name => "author"}
 %meta{:content => meta(:keywords), :name => "keywords"}
 %title
-  = meta(:title) || 'Киоск'
+  = meta(:title) || Conf['default_title'] || 'evoTex'
