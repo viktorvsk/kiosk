@@ -9,7 +9,7 @@
           .col-sm-2.col-md-2.col-lg-1
             = f_i.check_box :_destroy
             = f_i.label :_destroy, 'Удалить'
-            .thumbnail= image_tag f_i.object.attachment, class: 'img-responsive'
+            .thumbnail= image_tag '', class: 'img-responsive', 'data-original' => f_i.object.attachment
             = field_for f_i, :position
     .row
       .col-sm-3.col-sm-offset-3

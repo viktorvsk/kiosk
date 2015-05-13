@@ -4,6 +4,7 @@
     "jquery-ui": "latest",
     "jquery.ui.touch-punch.dk": "latest",
     "nouislider": "latest",
-    "magnific-popup": "latest"
+    "magnific-popup": "latest",
+    "jquery.lazyload": "latest"
   }
 }

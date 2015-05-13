@@ -3,7 +3,7 @@
 
     .product_image
       = link_to p_path(slug: product.slug, id: product.id) do
-        = image_tag product.preview_path, class: 'img-responsive'
+        = image_tag '', class: 'img-responsive lazy', 'data-original' => product.preview_path
   .col-xs-6
     .product_name
       = link_to product.name, p_path(slug: product.slug, id: product.id)

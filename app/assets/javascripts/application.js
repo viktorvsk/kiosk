@@ -12,6 +12,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.lazyload
 //= require jquery_ujs
 //= require bootstrap
 //= require magnific-popup
@@ -24,4 +25,8 @@ $(document).on('ajaxSend', window.Kiosk.Common.startLoading);
 $(document).on('ajaxComplete', window.Kiosk.Common.finishLoading);
 $(document).on('change', 'form[data-autoupdate]', function () {
   $(this).trigger('submit');
+});
+
+$(document).ready(function () {
+  $("img.lazy").lazyload();
 });

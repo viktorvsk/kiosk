@@ -4,7 +4,7 @@
       .row
         .col-xs-3
           - if product.images.present?
-            = image_tag product.images.first.url, class: 'img-responsive thumbnail'
+            = image_tag '', class: 'img-responsive thumbnail lazy', 'data-original' => product.images.sort_by(&:position).first.url
         .col-xs-9
           .pull-left
             - if product.price.present?

@@ -8,7 +8,7 @@
           %i.glyphicon.glyphicon-remove-circle.text-danger
     .product_image
       = link_to p_path(slug: product.slug, id: product.id) do
-        = image_tag product.preview_path, class: 'img-responsive'
+        = image_tag '', class: 'img-responsive lazy', 'data-original' => product.preview_path
   %td
     .product_price= price_for(product)
   %td{ width: 150 }

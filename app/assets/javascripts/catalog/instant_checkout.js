@@ -2,8 +2,8 @@
 (function () {
   $(document).ready(function () {
 
-    $('#instant-checkout').on('show.bs.modal', function () {
-      console.log('1');
+    $('#instant-checkout').on('shown.bs.modal', function () {
+      $(".modal .lazy").lazyload();
     });
 
   });
