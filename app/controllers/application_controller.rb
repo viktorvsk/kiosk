@@ -28,7 +28,7 @@ private
       current_user.current_order || current_user.create_current_order(phone: current_user.phone, name: current_user.name)
     session[:order_id] = @current_order.id
     if !@current_order.user
-      current_user.current_order.destroy
+      current_user.current_order.try(:destroy)
       @current_order.update user: current_user, name: current_user.name, phone: current_user.phone
     end
   end

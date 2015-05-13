@@ -48,6 +48,20 @@ Rails.application.configure do
   # when problems arise.
   config.log_level = :debug
 
+  config.action_mailer.perform_deliveries     = true
+  config.action_mailer.raise_delivery_errors  = true
+  config.action_mailer.delivery_method        = :smtp
+  config.action_mailer.default_url_options    = {:host => "kiosk.evotex.kh.ua"}
+  config.action_mailer.smtp_settings          = {
+    :address                => "smtp.gmail.com",
+    :port                   => 587,
+    :domain                 => "kiosk.evotex.kh.ua",
+    :authentication         => :plain,
+    :user_name              => Figaro.env.gmail_user_name,
+    :password               => Figaro.env.gmail_user_pass,
+    :enable_starttls_auto   => true
+  }
+
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
