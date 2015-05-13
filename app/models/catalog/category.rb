@@ -5,7 +5,7 @@ class Catalog::Category < ActiveRecord::Base
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
   has_many :brands, through: :products
-  has_many :vendor_products, through: :products, class_name: ::Vendor::Product
+  #has_many :vendor_products, through: :products, class_name: ::Vendor::Product
   has_many :category_properties, class_name: Catalog::CategoryProperty,
                                  foreign_key: :catalog_category_id,
                                  autosave: true,
@@ -15,7 +15,7 @@ class Catalog::Category < ActiveRecord::Base
                               dependent: :delete_all,
                               autosave: true
   has_many :filters, through: :category_filters
-  has_many :filter_values, through: :category_filter_values
+  has_many :filter_values, through: :category_filters, source: :filter
   has_many :properties, through: :category_properties
   belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id, touch: true
   has_one :seo, as: :seoable, dependent: :destroy

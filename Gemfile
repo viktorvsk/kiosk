@@ -125,6 +125,7 @@ group :development do
   gem 'bootstrap-generators', '~> 3.3.1'
 
   # Debug
+  gem 'lol_dba'
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513061130) do
+ActiveRecord::Schema.define(version: 20150513192909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,10 @@ ActiveRecord::Schema.define(version: 20150513061130) do
     t.datetime "updated_at"
   end
 
+  add_index "active_admin_comments", ["author_id", "author_type"], name: "index_active_admin_comments_on_author_id_and_author_type", using: :btree
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_id", "resource_type"], name: "index_active_admin_comments_on_resource_id_and_resource_type", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "callbacks", force: :cascade do |t|
@@ -197,6 +199,7 @@ ActiveRecord::Schema.define(version: 20150513061130) do
     t.datetime "updated_at"
   end
 
+  add_index "ckeditor_assets", ["assetable_id", "assetable_type"], name: "index_ckeditor_assets_on_assetable_id_and_assetable_type", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
@@ -211,6 +214,7 @@ ActiveRecord::Schema.define(version: 20150513061130) do
     t.datetime "updated_at",                       null: false
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "images", force: :cascade do |t|
@@ -222,6 +226,7 @@ ActiveRecord::Schema.define(version: 20150513061130) do
     t.integer  "position",       default: 0
   end
 
+  add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
   add_index "images", ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "line_items", force: :cascade do |t|
@@ -276,6 +281,7 @@ ActiveRecord::Schema.define(version: 20150513061130) do
     t.datetime "updated_at",                null: false
   end
 
+  add_index "seos", ["seoable_id", "seoable_type"], name: "index_seos_on_seoable_id_and_seoable_type", using: :btree
   add_index "seos", ["seoable_type", "seoable_id"], name: "index_seos_on_seoable_type_and_seoable_id", using: :btree
   add_index "seos", ["seoable_type", "seoable_id"], name: "seo_polymorphic_index", unique: true, using: :btree
 
@@ -333,6 +339,7 @@ ActiveRecord::Schema.define(version: 20150513061130) do
   end
 
   add_index "vendor_products", ["articul"], name: "index_vendor_products_on_articul", using: :btree
+  add_index "vendor_products", ["catalog_product_id", "vendor_merchant_id"], name: "vendor_products_product_merchant", using: :btree
   add_index "vendor_products", ["catalog_product_id"], name: "index_vendor_products_on_catalog_product_id", using: :btree
   add_index "vendor_products", ["current_price"], name: "index_vendor_products_on_current_price", using: :btree
   add_index "vendor_products", ["in_stock"], name: "index_vendor_products_on_in_stock", using: :btree
