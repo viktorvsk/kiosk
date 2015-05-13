@@ -9,8 +9,10 @@
           .col-sm-2.col-md-2.col-lg-1
             = f_i.check_box :_destroy
             = f_i.label :_destroy, 'Удалить'
-            .thumbnail= image_tag '', class: 'img-responsive', 'data-original' => f_i.object.attachment
+            .thumbnail
+              = image_tag '', class: 'img-responsive lazy', 'data-original' => f_i.object.attachment
             = field_for f_i, :position
+    %hr/
     .row
       .col-sm-3.col-sm-offset-3
         = f.text_field :images_from_url, class: 'form-control', placeholder: 'Ссылка для скачивания'
