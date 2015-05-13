@@ -59,5 +59,5 @@
     .well.well-sm
       %small
         = @category.description.html_safe
-= render 'price_slider'
+= render 'price_slider', min_categopy: @category.products.where('price > 0').minimum(:price).to_i , max_category: @category.products.maximum(:price).to_i + 100
 = render 'product_view'

@@ -98,7 +98,6 @@
         if (bindFromProduct(vendorProduct)) {
           recountProduct(oldProduct);
         }
-        console.log(data);
         that.updateProduct(product);
       });
 
@@ -117,7 +116,6 @@
         type: 'DELETE',
         success: function (data) {
           that.updateProduct(product);
-          console.log(data);
         }
       });
     }
@@ -135,7 +133,6 @@
     }
 
     function onUnbind(event, ui) {
-      console.log(event);
       var $vendorProductNode = $(ui.draggable),
         vendorProductId = $vendorProductNode.data(dataVendorProductId),
         $product = productFor($vendorProductNode);
@@ -152,7 +149,6 @@
 
       bind($productNode, $vendorProductNode);
       $vendorProductNode.appendTo($productNode.find('ul'));
-      console.log(event);
       that.init();
     }
 

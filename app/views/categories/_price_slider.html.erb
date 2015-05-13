@@ -1,7 +1,6 @@
-<%- max_category = @category.products.maximum(:price).to_i + 100  %>
-<%- min_category = @category.products.where('price > 0').minimum(:price).to_i %>
 <script>
-  $("#price-slider").noUiSlider({
+  var priceSlider = function () {
+    $("#price-slider").noUiSlider({
       start: [<%= params[:min].to_i || 0 %>, <%= params[:max] || max_category %>],
       connect: true,
 
@@ -15,8 +14,16 @@
       }
     });
 
-  $('#price-slider').noUiSlider_pips({
-    mode: 'steps',
-    density: 5
-  });
+    $('#price-slider').noUiSlider_pips({
+      mode: 'steps',
+      density: 5
+    });
+  }
+
+  if (window.$) { priceSlider(); }
 </script>
+<% content_for :post_scripts do %>
+  <script>priceSlider();</script>
+<% end %>
+
+

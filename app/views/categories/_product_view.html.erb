@@ -1,6 +1,8 @@
-<script>
-  (function () {
-    var view = localStorage.getItem('product-view') || 'grid';
-    Kiosk.Common.switchView(view);
-  }());
-</script>
+<% content_for :post_scripts do %>
+  <script>
+    (function () {
+      var view = localStorage.getItem('product-view') || 'grid';
+      Kiosk.Common.switchView(view);
+    }());
+  </script>
+<% end %>
