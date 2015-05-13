@@ -226,7 +226,7 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def preview_path
-    images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "product_missing.png"
+    images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "/product_missing.png"
   end
 
   def seo_template(attribute)

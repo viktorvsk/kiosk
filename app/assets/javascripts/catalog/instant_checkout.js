@@ -3,7 +3,7 @@
   $(document).ready(function () {
 
     $('#instant-checkout').on('shown.bs.modal', function () {
-      $(".modal .lazy").lazyload();
+      $(".modal .lazy").lazyload({effect : "fadeIn"});
     });
 
   });

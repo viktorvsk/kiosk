@@ -28,5 +28,5 @@ $(document).on('change', 'form[data-autoupdate]', function () {
 });
 
 $(document).ready(function () {
-  $("img.lazy").lazyload();
+  $("img.lazy").lazyload({effect : "fadeIn"});
 });

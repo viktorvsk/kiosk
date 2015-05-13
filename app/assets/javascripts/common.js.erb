@@ -14,7 +14,7 @@
 
     this.finishLoading = function () {
       $('#loader').remove();
-      $("img.lazy").lazyload();
+      $("img.lazy").lazyload({effect : "fadeIn"});
     };
 
     this.toggler = function (event) {

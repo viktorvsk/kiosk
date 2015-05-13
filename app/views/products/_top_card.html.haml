@@ -9,7 +9,7 @@
           = product.id
       .product_image
         = link_to p_path(slug: product.slug, id: product.id) do
-          = image_tag '', class: 'img-responsive lazy', 'data-original' => product.preview_path
+          = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => product.preview_path
       .product_name
         = link_to product.name, p_path(slug: product.slug, id: product.id)
       = render 'products/compare_button', product: product

@@ -10,7 +10,7 @@
             = f_i.check_box :_destroy
             = f_i.label :_destroy, 'Удалить'
             .thumbnail
-              = image_tag '', class: 'img-responsive lazy', 'data-original' => f_i.object.attachment
+              = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => f_i.object.attachment
             = field_for f_i, :position
     %hr/
     .row

@@ -8,7 +8,7 @@
   .row
     .col-sm-4
       = link_to product.preview_path, class: 'product-cover', class: 'mfp-gallery' do
-        = image_tag '', class: 'thumbnail img-responsive lazy', 'data-original' => product.preview_path
+        = image_tag 'lazy-spinner.gif', class: 'thumbnail img-responsive lazy', 'data-original' => product.preview_path
     .col-sm-4
       .product_price= price_for product
       = render 'products/compare_button', product: product
