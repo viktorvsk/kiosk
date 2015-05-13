@@ -44,7 +44,7 @@ class OrdersController < CatalogController
     params[:line_items].each do |id, values|
       q = values[:quantity]
       li = @current_order.line_items.find(id)
-      if q.to_i == 0
+      if q.to_i < 1
         li.destroy
       else
         li.update(quantity: q)

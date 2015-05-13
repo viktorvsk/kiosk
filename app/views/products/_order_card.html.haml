@@ -15,7 +15,7 @@
     .product_quantity
       .col-sm-12
         = form_tag update_lineitem_count_order_path, remote: false, 'data-autoupdate' => true, method: :patch do
-          = number_field "line_items[#{li_id}]", :quantity, value: quantity, class: 'form-control', min: 1
+          = number_field "line_items[#{li_id}]", :quantity, value: quantity, class: 'form-control', min: 1, pattern: '\d+'
   %td
     .product_price
       = price_for(product, quantity)

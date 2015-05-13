@@ -1,5 +1,5 @@
 class LineItem < ActiveRecord::Base
-
+  validates :quantity, numericality: { less_than_or_equal_to: 10, greater_than_or_equal_to: 1 }
   belongs_to :order
   belongs_to :product, class_name: Catalog::Product, foreign_key: :catalog_product_id
 
