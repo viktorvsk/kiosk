@@ -3,11 +3,11 @@
     .col-sm-8.h-100.col-xs-12
       - cache ['slides', Markup.active.slides] do
         = render 'shared/slides'
-    .col-sm-4.h-100.articles-bar.hidden-xs
+    .col-sm-4.h-100.articles-bar.hidden-xs.hidden-sm
       %h3.text-center Статьи
       - cache ['articles', Markup.active.articles] do
         = render 'shared/articles'
-  .visible-xs
+  .visible-xs.visible-sm
     %br/
     .row
       .col-xs-12
