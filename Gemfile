@@ -8,6 +8,7 @@ gem 'execjs'
 gem 'unicorn'
 # Schedule
 gem 'resque', '1.25.2'
+gem 'newrelic_rpm'
 
 
 # Scrape
