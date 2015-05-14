@@ -21,7 +21,7 @@ module ProductsHelper
       .with_value
       .includes(:property)
       .sort_by(&:position)
-      .first(15)
+      .first(8)
       .map{ |pp| "<b>#{pp.property_name}</b>: #{pp.name};" }
       .join('<br/>')
       .html_safe

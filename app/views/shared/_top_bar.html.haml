@@ -1,5 +1,6 @@
 - @q ||= Catalog::Product.ransack
 - @random_search_word ||= Catalog::Product.order("RANDOM()").first.name.split.first
+
 .jumbotron.bg-main-color.top-bar
   #animated-header.hidden-xs
     %canvas#animated-header-canvas
@@ -8,7 +9,8 @@
       .col-sm-3
         = Conf['ck.logo'].html_safe
       .col-sm-6
-        = render 'shared/pages_menu'
+        - cache [ 'logo', Markup.pages ] do
+          = render 'shared/pages_menu'
         = Conf['ck.phones'].html_safe
         = render 'shared/main_search_bar'
       .col-sm-3

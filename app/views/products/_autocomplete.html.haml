@@ -1,6 +1,5 @@
 .product
   .col-xs-3
-
     .product_image
       = link_to p_path(slug: product.slug, id: product.id) do
         = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => product.preview_path

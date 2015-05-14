@@ -103,6 +103,8 @@ class Catalog::Product < ActiveRecord::Base
       end
       ids.uniq!
       all.where(id: ids)
+    rescue
+      Catalog::Product.none
     end
 
     def tpl_search(str)
@@ -136,6 +138,10 @@ class Catalog::Product < ActiveRecord::Base
 
     def top(top_name)
       where("catalog_products.info->'#{top_name}' = '1'")
+    end
+
+    def top_products
+      where("info->'newest' = '1' OR info->'hit'='1' OR info->'homepage'='1'")
     end
 
     def all_properties

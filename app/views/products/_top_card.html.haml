@@ -3,20 +3,12 @@
     .product_inner{ class: css }
       .product_special
         .product_top.label{ class: "label-#{css}" }= name
-      .product_articul
-        .label.label-warning
-          Код:
-          = product.id
-      .product_image
-        = link_to p_path(slug: product.slug, id: product.id) do
-          = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => product.preview_path
-      .product_name
-        = link_to product.name, p_path(slug: product.slug, id: product.id)
+      = render 'products/articul', product: product
+      = render 'products/cover_image', product: product
+      = render 'products/name', product: product
       = render 'products/compare_button', product: product
-      .product_price
-        = price_for(product)
+      = render 'products/price', product: product
       = render 'products/order_buttons', product: product
-      .product_properties
-        = product_properties_for(product)
+      = render 'products/hover_properties.html.haml', product: product
 
 
