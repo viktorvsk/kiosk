@@ -10,7 +10,7 @@ class Vendor::Merchant < ActiveRecord::Base
    :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev,
    :f_dclink_ddp, :f_brand, :f_warranty, :f_category
   validates :name, presence: true, uniqueness: true
-  validates :currency_rates, :currency_order, :required, :currency_order, :not_in_stock,
+  validates :currency_rates, :currency_order, :required, :not_in_stock, :currency_order, :not_in_stock,
     json: true,
     allow_blank: true
   has_many :products, class_name: Vendor::Product, foreign_key: :vendor_merchant_id, dependent: :delete_all

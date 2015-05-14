@@ -14,3 +14,7 @@
       .col-xs-12.text-right
         = link_to '/price.xml', class: 'btn btn-primary', title: 'Скачать прайс (XML)' do
           %i.glyphicon.glyphicon-list-alt
+    - if current_user.try(:admin?)
+      %br/
+      .row
+        = render 'shared/admin_extended_footer_menu'

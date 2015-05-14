@@ -1,0 +1,38 @@
+- if current_user.try(:admin?)
+  .col-sm-3
+    %ul.list-group
+      %li.list-group-item= link_to 'Новый заказ', new_admin_order_path
+      %li.list-group-item= link_to 'Все заказы', admin_orders_path
+      %li.list-group-item= link_to 'Новый пользователь', new_admin_user_path
+      %li.list-group-item= link_to 'Все пользователи', admin_users_path
+      %li.list-group-item= link_to 'Комментарии к товарам', admin_catalog_comments_path
+      %li.list-group-item= link_to 'Коллбеки', admin_callbacks_path
+      %li.list-group-item= link_to 'Товары', admin_products_path
+      %li.list-group-item= link_to 'Новый товар', new_admin_product_path
+  .col-sm-3
+    %ul.list-group
+      %li.list-group-item= link_to 'Характеристики', admin_catalog_properties_path
+      %li.list-group-item= link_to 'Новая характеристика', new_admin_catalog_property_path
+      %li.list-group-item= link_to 'Характеристики товаров', admin_catalog_product_properties_path
+      %li.list-group-item= link_to 'Новая характеристика товара', new_admin_catalog_product_property_path
+      %li.list-group-item= link_to 'Фильтры', admin_catalog_filters_path
+      %li.list-group-item= link_to 'Новый фильтр', new_admin_catalog_filter_path
+      %li.list-group-item= link_to 'Значения фильтров товаров', admin_catalog_filter_values_path
+      %li.list-group-item= link_to 'Новое значение фильтра товара', new_admin_catalog_filter_value_path
+  .col-sm-3
+    %ul.list-group
+      %li.list-group-item= link_to 'Поставщики', admin_vendor_merchants_path
+      %li.list-group-item= link_to 'Новый поставщик', new_admin_vendor_merchant_path
+      %li.list-group-item= link_to 'Товары по прайсам', admin_vendor_products_path
+      %li.list-group-item= link_to 'Настройки', admin_confs_path
+      %li.list-group-item= link_to 'Разметки', admin_markups_path
+      %li.list-group-item= link_to 'Новая разметка', new_admin_markup_path
+      %li.list-group-item= link_to 'Файловый менеджер', uploaded_files_path(:root)
+  .col-sm-3
+    %ul.list-group
+      %li.list-group-item= link_to 'Категории', admin_categories_path
+      %li.list-group-item= link_to 'Новая категория', new_admin_category_path
+      %li.list-group-item= link_to 'Меню', admin_catalog_taxons_path
+      %li.list-group-item= link_to 'Новое меню', new_admin_catalog_taxon_path
+      %li.list-group-item= link_to 'Бренды', admin_catalog_brands_path
+      %li.list-group-item= link_to 'Новый бренд', new_admin_catalog_brand_path
