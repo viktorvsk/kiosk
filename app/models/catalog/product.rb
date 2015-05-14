@@ -441,6 +441,10 @@ class Catalog::Product < ActiveRecord::Base
 
   def copy_filters_from_category
     ids = product_filters.map(&:catalog_filter_id)
+    # TODO: Ugly decision
+    product_filters.map do |prod_fltr|
+      prod_fltr.destroy if prod_fltr.filter.category_filters.first.category != category
+    end
     category.category_filters.each do |category_filter|
       next if ids.include?(category_filter.filter.id)
       params = { filter: category_filter.filter }
