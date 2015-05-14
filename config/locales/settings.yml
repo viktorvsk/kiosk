@@ -2,6 +2,7 @@ ru:
   settings:
     seo_template_product: Шаблон заголовка страницы в карточке товара
     site_name: Название сайта
+    marketplaces: Источники парсинга
     delta: Разница похожих товаров, %
     similar_distance: Порог схожести названий
     kiosk_meta_title: SEO заголовок (главная)

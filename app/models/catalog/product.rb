@@ -14,7 +14,6 @@ class Catalog::Product < ActiveRecord::Base
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
   after_save :recount_unfixed
-  MARKETPLACES = %W(rozetka hotline brain erc).map{ |m| "#{m}Marketplace".classify.constantize }
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name,
@@ -49,6 +48,10 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
+
+    def active_marketplaces
+      Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify.constantize rescue nil }.compact
+    end
 
     def ransackable_scopes(auth_object = nil)
       [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound]
@@ -174,7 +177,7 @@ class Catalog::Product < ActiveRecord::Base
 
     def marketplace_by_url(url)
       host = URI.parse(url.to_s.strip).host.to_s
-      MARKETPLACES.detect { |m| m::HOST =~ host }
+      self.class.active_marketplaces.detect { |m| m::HOST =~ host }
     end
 
     def create_from_marketplace(url, opts = {})
@@ -188,13 +191,13 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     # def search_marketplaces_by_model(model)
-    #   MARKETPLACES.map do |m|
+    #   self.class.active_marketplaces.map do |m|
     #     m.new(model).search
     #   end.flatten
     # end
 
     def search_marketplaces_by_model(model)
-      Parallel.map(MARKETPLACES, in_threads: MARKETPLACES.count) do |marketplace|
+      Parallel.map(active_marketplaces, in_threads: active_marketplaces.count) do |marketplace|
         begin
           marketplace.new(model).search
         rescue Exception
