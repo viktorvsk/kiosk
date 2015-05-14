@@ -7,15 +7,18 @@
         .form-group
           = f.search_field :name_or_id_or_model_cont, class: 'form-control', placeholder: 'Название, модель или артикул'
     .row
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_filters, options_for_select([['С фильтрами','y'], ['Без фильтров','n']], params[:q].try(:fetch, :with_filters)), {}, class: 'form-control'
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_properties, options_for_select([['С характеристиками','y'], ['Без Характеристик','n']], params[:q].try(:fetch, :with_properties)), {}, class: 'form-control'
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_bound, options_for_select([['Привязанные','y'], ['Не привязанные','n']], params[:q].try(:fetch, :with_bound)), {},class: 'form-control'
+      .col-sm-3
+        .form-group
+          = f.select :catalog_brand_id_eq, options_for_select(Catalog::Brand.all.map{ |b| [b.name, b.id] }, params[:q].try(:fetch, :catalog_brand_id_eq)), {},class: 'form-control'
     .row
       .col-xs-12
         .form-actions

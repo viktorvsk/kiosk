@@ -25,6 +25,12 @@ ActiveAdmin.register Order do
   #   permitted
   # end
 
+  controller do
+    def scoped_collection
+      super.includes :line_items, user: :orders
+    end
+  end
+
   index do
     selectable_column
     column "Заказ" do |order|
