@@ -177,7 +177,7 @@ class Catalog::Product < ActiveRecord::Base
 
     def marketplace_by_url(url)
       host = URI.parse(url.to_s.strip).host.to_s
-      self.class.active_marketplaces.detect { |m| m::HOST =~ host }
+      active_marketplaces.detect { |m| m::HOST =~ host }
     end
 
     def create_from_marketplace(url, opts = {})
