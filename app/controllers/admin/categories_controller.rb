@@ -31,7 +31,7 @@ class Admin::CategoriesController < Admin::BaseController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to aedit_dmin_eategory_url(@category), notice: 'Категория создана.' }
+        format.html { redirect_to edit_admin_category_url(@category), notice: 'Категория создана.' }
       else
         format.html { render :new }
       end
