@@ -1,17 +1,20 @@
 %i
   %b
-    %center= order.id
-%b Сумма:
-= "#{order.total_sum} грн."
+    %center
+      №
+      = order.id
+%i= I18n.l(order.created_at, format: "%e %b, %H:%M")
 %br/
-%b Имя:
-= order.name
+%i= I18n.l(order.updated_at, format: "%e %b, %H:%M")
 %br/
-- if order.phone.present?
-  %b телефон
-  = number_to_phone(order.phone[3..-1], country_code: 380)
+%b Вход:
+%i= order.total_sum - order.total_income
 %br/
-%b Адрес:
-= order.address
+%b Продажа:
+%i= order.total_sum
 %br/
-%center= I18n.l(order.created_at, format: "%e %b, %Y")
+%b Прибыль:
+%i= order.total_income
+%br/
+%b Товаров:
+%i= order.items_count

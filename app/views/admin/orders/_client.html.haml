@@ -1,16 +1,19 @@
-%b Имя:
-= user.name
+%b
+  %center
+    = order.name.presence || 'Имя не указано'
+    - if user = order.user
+      ( #{link_to user.name.presence || 'Имя не указано', admin_user_path(user)} )
+      %i
+        [ #{user.total_income} / #{user.clean_total_income} ]
+= number_to_phone(order.phone[3..-1], country_code: 380) rescue '-'
+- if order.user
+  (#{number_to_phone(order.user.try(:phone)[3..-1], country_code: 380) rescue '-'})
 %br/
-- if user.phone.present?
-  %b Телефон:
-  = number_to_phone(user.phone[3..-1], country_code: 380)
-  %br/
-%b Email:
-= user.email
+%hr/
+%i= order.address
 %br/
-%b Доход:
-= user.total_income
+%hr/
+%i= order.delivery_type
 %br/
-%b Прибыль:
-= user.clean_total_income
-
+%hr/
+%i= order.payment_type

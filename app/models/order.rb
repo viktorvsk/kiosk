@@ -2,8 +2,9 @@ class Order < ActiveRecord::Base
 
   store_accessor :info, :phone, :name, :address, :comment,
     :payment_type, :delivery_type, :status
-  has_many :line_items, dependent: :destroy
+  belongs_to :user
   has_many :products, through: :line_items
+  has_many :line_items, dependent: :destroy
 
   PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
   validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
@@ -13,7 +14,14 @@ class Order < ActiveRecord::Base
   scope :unknown, -> { where(user: nil) }
   scope :completed, -> { where("orders.completed_at IS NOT NULL AND orders.state = 'payd'") }
   scope :checkout, -> { where(state: 'checkout') }
-  belongs_to :user
+
+  accepts_nested_attributes_for :line_items, allow_destroy: true
+  accepts_nested_attributes_for :user
+
+  (1..12).each do |month|
+    scope "month_#{month}", -> { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month, 1), Date.new(Date.today.year, month, 1).end_of_month) }
+  end
+
 
   class << self
     def payment_types
@@ -38,6 +46,15 @@ class Order < ActiveRecord::Base
       false
     end
 
+  end
+
+  def comment=(value)
+    txt = self.info['comment'].to_s << "<br/>#{value}"
+    super(txt)
+  end
+
+  def comment
+    ""
   end
 
   def items_count

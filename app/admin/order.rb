@@ -1,11 +1,16 @@
 ActiveAdmin.register Order do
   menu parent: 'CRM'
-  actions :all, except: [:show]
+  actions :all, except: [:show, :destroy]
+
+  (1..12).each do |month|
+    scope I18n.l(Date.new(Date.today.year, month, 1), format: "%b"), "month_#{month}"
+  end
 
   scope 'В корзине', :in_cart
   scope 'К оплате', :checkout
   scope 'Завершенные', :completed
   scope 'Незаваершенные', :unknown
+
 
 
   filter :id, as: :string
@@ -15,7 +20,7 @@ ActiveAdmin.register Order do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
-  permit_params :state
+  permit_params :state, :comment, :address, :user_id
   #
   # or
   #
@@ -33,25 +38,23 @@ ActiveAdmin.register Order do
 
   index do
     selectable_column
-    column "Заказ" do |order|
+    column "Информация" do |order|
       render 'admin/orders/info', order: order
     end
     column "Клиент" do |order|
-      render 'admin/orders/client', user: order.user if order.user
+      render 'admin/orders/client', order: order
     end
-    column "Комментарий" do |order|
-      order.comment
+    column "Комментарии и товары" do |order|
+      order.info['comment'].try(:html_safe)
     end
-    column "Товаров" do |order|
-      order.items_count
+    column "" do |order|
+      render 'admin/orders/actions', order: order
     end
-    column "Итого" do |order|
-      "#{order.total_sum} грн."
-    end
-    column "Плюс" do |order|
-      "#{order.total_income} грн."
-    end
-    actions
+  end
+
+  form do |f|
+    render 'admin/orders/form', f: f
+
   end
 
 
