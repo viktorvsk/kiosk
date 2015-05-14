@@ -9,6 +9,7 @@ class Catalog::FilterValue < ActiveRecord::Base
     end
 
     def count_w(id, params, products)
+      # TODO: Optimize filters pluses
       s = ''
       init_count = products.count
       p = Marshal.load(Marshal.dump(params))
@@ -29,7 +30,7 @@ class Catalog::FilterValue < ActiveRecord::Base
         s = '+'
       end
 
-      return [checked_state, "#{s}#{count}"]
+      return "#{s}#{count}"
     end
   end
 

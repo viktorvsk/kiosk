@@ -1,6 +1,7 @@
 - filtered = params[:f].to_s.split(',').map(&:strip)
 - checked_state = filtered.include?(filter_value.id.to_s)
-- state, count_w_filter = Catalog::FilterValue.count_w(filter_value.id, params, products)
+-# state, count_w_filter = Catalog::FilterValue.count_w(filter_value.id, params, products)
+- count_w_filter = Catalog::FilterValue.count_w(filter_value.id, params, products)
 - disabled = ((count_w_filter.to_i.abs == 0) && !checked_state)
 - css_class = ''
 - css_class << ' active' if checked_state
