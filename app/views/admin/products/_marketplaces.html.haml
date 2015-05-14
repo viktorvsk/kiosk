@@ -2,7 +2,7 @@
   - marketplaces.each do |marketplace|
     %li.list-group-item
       - if marketplace[:do_not_show]
-        Не в наличии из источника
+        = link_to 'Не в наличии из источника', marketplace[:url]
         .pull-right
           .label.label-info= URI.parse(marketplace[:url]).host
       - else
