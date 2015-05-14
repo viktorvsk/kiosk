@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 # Basic
 gem 'rails', '4.2.0'
 gem 'pg'
-gem 'puma'
 gem 'bower-rails', '~> 0.9.2'
 gem 'execjs'
+gem 'unicorn'
 # Schedule
 gem 'resque', '1.25.2'
 
@@ -166,6 +166,7 @@ group :development do
 end
 
 group :development, :test do
+
   gem 'byebug'
   # gem 'web-console', '~> 2.0'
   # gem 'spring'
@@ -189,6 +190,7 @@ end
 
 group :production do
   gem 'rack-cache'
+  gem 'puma'
   # gem 'rails_12factor'
 end
 
