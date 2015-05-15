@@ -1,5 +1,11 @@
 ---
 ru:
+  orders:
+    states:
+      in_cart: В корзине
+      checkout: К оплате
+      unknown: Незавершенные
+      completed: Завершенные
   date:
     abbr_day_names:
     - Вс

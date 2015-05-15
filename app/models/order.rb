@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-
+  STATES = ['in_cart', 'unknown', 'checkout', 'completed']
   store_accessor :info, :phone, :name, :address, :comment,
     :payment_type, :delivery_type, :status
   belongs_to :user
@@ -14,16 +14,21 @@ class Order < ActiveRecord::Base
   scope :unknown, -> { where(user: nil) }
   scope :completed, -> { where("orders.completed_at IS NOT NULL AND orders.state = 'payd'") }
   scope :checkout, -> { where(state: 'checkout') }
+  scope :by_month, -> (month) { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month.to_i, 1), Date.new(Date.today.year, month.to_i, 1).end_of_month) }
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :user
 
-  (1..12).each do |month|
-    scope "month_#{month}", -> { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month, 1), Date.new(Date.today.year, month, 1).end_of_month) }
-  end
-
-
   class << self
+    def ransackable_scopes(auth_object = nil)
+      [:by_month, :by_state]
+    end
+
+    def by_state(state)
+      return false unless state.to_s.in?(STATES)
+      all.send(state)
+    end
+
     def payment_types
       Conf['txt.payment_types'].split("\n").map(&:strip)
     end
@@ -33,6 +38,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def order_product=(product_id)
+    add_product(product_id)
+  end
+
+  def order_product
+  end
 
   def add_product(product, quantity=1)
     product = product.kind_of?(Catalog::Product) ? product : Catalog::Product.where(id: product).first

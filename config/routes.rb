@@ -103,7 +103,9 @@ Rails.application.routes.draw do
     end
     resources :confs, only: [:index, :update]
     resources :markups, except: [:show]
-    resources :orders, except: [:show]
+    resources :orders, except: [:show] do
+      get :search, on: :collection
+    end
     resources :users, except: [:show]
     namespace :vendor do
       resources :products, only: [:index, :show, :update] do
