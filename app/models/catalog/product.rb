@@ -98,26 +98,26 @@ class Catalog::Product < ActiveRecord::Base
 
     def main_search(str)
       ids = all.tpl_search(str).pluck(:id) + all.words_search(str).pluck(:id)
-      if Conf['b.search_with_similars'] == 't'
-        if ids.size < 10
-          similars = all.similarity_search(str)
-          ids += similars.pluck(:id) if similars
-        end
+      if (ids.size < 5) && (Conf['b.search_with_similars'] == 't')
+        similars = all.similarity_search(str)
+        ids += similars.pluck(:id) if similars
       end
       ids.uniq!
-      all.where(id: ids)
+      ids.present? ? all.where(id: ids) : Catalog::Product.none
     rescue
       Catalog::Product.none
     end
 
     def tpl_search(str)
-      str = str.to_s.strip
-      q = [
-        %{to_char(catalog_products.id, '99999999') ILIKE :name},
-        %{name ILIKE :name},
-        %{name ILIKE :translit_name}
-      ].join(" OR ")
-      all.where(q, name: "%#{str}%", translit_name: "%#{Russian.translit(str)}%")
+      str = str.to_s.strip.split.map{ |w| "%#{w}%" }.join
+      q = []
+      name = "%#{str}%"
+      tr_name = "%#{Russian.translit(str)}%"
+      q << %{catalog_products.id = :id} if str =~ /\A\d+\Z/
+      q << %{name ILIKE :name}
+      q << %{name ILIKE :translit_name} if name != tr_name
+      q = q.join(" OR ")
+      all.where(q, id: str, name: name, translit_name: tr_name)
     end
 
     def words_search(str)
