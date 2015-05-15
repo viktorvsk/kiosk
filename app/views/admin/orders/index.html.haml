@@ -9,7 +9,7 @@
           = f.select :by_month, options_for_select((1..12).map{ |i| [I18n.l(Date.new(Date.today.year, i, 1), format: "%b"), i] }, params[:q][:by_month]), {include_blank: 'Выберите месяц'}, class: 'form-control select2'
       .col-xs-4
         .form-group
-          = f.select :user_id_eq, options_for_select(User.all.map{ |u| ["#{u.name} #{u.phone}".presence || u.email, u.id] }, params[:q][:user_id_eq]), {include_blank: 'Выберите клиента'}, class: 'form-control select2'
+          = f.select :user_id_eq, options_for_select(User.all.map{ |u| [u.form_display, u.id] }, params[:q][:user_id_eq]), {include_blank: 'Выберите клиента'}, class: 'form-control select2'
       .col-xs-4
         .form-group
           = f.select :by_state, options_for_select(Order::STATES.map{ |s| [t("orders.states.#{s}"), s] }, params[:q][:by_state]), {include_blank: 'Выберите состояние'}, class: 'form-control select2'

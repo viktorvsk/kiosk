@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     role == 'admin'
   end
 
+  def form_display
+    "#{name} #{phone}".presence || email
+  end
+
   def promote_to(role_name)
     fail ArgumentError, "Invalid role. Use one of: #{ROLES.join(', ')}" unless role_name.to_s.in?( ROLES )
     update(role: role_name) unless role_name == role

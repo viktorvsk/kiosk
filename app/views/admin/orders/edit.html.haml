@@ -1,0 +1,8 @@
+.page-header
+  = link_to admin_orders_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Назад
+  %h1
+    Заказ №
+    = @order.id
+= render 'form', comment: @order.info['comment'].to_s.html_safe # TODO: XSS

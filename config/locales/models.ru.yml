@@ -99,6 +99,8 @@ ru:
           active: Активные
       order:
         name: Имя
+        state: Состояние
+        user_id: Клиент
         phone: Телефон
         address: Адрес
         id: Номер заказа
