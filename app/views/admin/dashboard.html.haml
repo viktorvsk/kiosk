@@ -51,7 +51,6 @@
       = td('Пользователей клиентов', User.count - User.admins.count)
       = td('Пользователей админов', User.admins.count)
       = td('Заказов всего', Order.count)
-      = td('Заказов незавершенных', Order.unknown.count)
       = td('Заказов ожидающих обработки', Order.checkout.count)
       = td('Заказов обработанных', Order.completed.count)
       = td('Коллбэков', Callback.count)
