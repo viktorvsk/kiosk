@@ -8,11 +8,13 @@ $(document).ready(function() {
     addListeners();
 
     function initHeader() {
+
         width = window.innerWidth;
         height = window.innerHeight;
         target = {x: width/2, y: height/2};
 
         largeHeader = document.getElementById('animated-header');
+        if (!largeHeader) { return; }
         largeHeader.style.height = height+'px';
 
         canvas = document.getElementById('animated-header-canvas');
@@ -99,6 +101,7 @@ $(document).ready(function() {
     function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
+
         largeHeader.style.height = height+'px';
         canvas.width = width;
         canvas.height = height;
@@ -113,7 +116,7 @@ $(document).ready(function() {
     }
 
     function animate() {
-        if(animateHeader) {
+        if(animateHeader && largeHeader) {
             ctx.clearRect(0,0,width,height);
             for(var i in points) {
                 // detect points in range
