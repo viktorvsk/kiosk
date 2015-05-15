@@ -101,13 +101,11 @@ class Catalog::Product < ActiveRecord::Base
       tpl_ids = all.tpl_search(str).pluck(:id)
       wrd_ids = all.words_search(str).pluck(:id)
       ids = tpl_ids + wrd_ids
-      if ids.size < 10
-        ids +=
-        if (ids.size < 5) && (Conf['b.search_with_similars'] == 't')
-          similars = all.similarity_search(str)
-          ids += similars.pluck(:id) if similars
-        end
+      if (ids.size < 5) && (Conf['b.search_with_similars'] == 't')
+        similars = all.similarity_search(str)
+        ids += similars.pluck(:id) if similars
       end
+
       ids.uniq!
       ids.present? ? all.where(id: ids) : Catalog::Product.none
     rescue
@@ -122,19 +120,19 @@ class Catalog::Product < ActiveRecord::Base
         q << %{catalog_products.id = :id}
         h[:id] = str
       else
-        # name = "%#{str}%"
-        # tr_name = Russian.translit(name)
-        # q << %{name ILIKE :name}
-        # q << %{name ILIKE :translit_name} if name != tr_name
-        # h[:name] = name
-        # h[:translit_name] = tr_name
+        name = "%#{str}%"
+        tr_name = Russian.translit(name)
+        q << %{name ILIKE :name}
+        q << %{name ILIKE :translit_name} if name != tr_name
+        h[:name] = name
+        h[:translit_name] = tr_name
       end
       q = q.join(" OR ")
       q.present? ? all.where(q, h) : Catalog::Product.none
     end
 
     def words_search(str)
-      words = str.to_s.strip.split.map{ |w| "#{w}|#{w}:*"}
+      words = str.to_s.strip.split.map{ |w| "#{w}:*"}
       words = words.map do |w|
         t = Russian.translit(w)
         if t == w
@@ -143,7 +141,7 @@ class Catalog::Product < ActiveRecord::Base
           "(#{t} | #{w})"
         end
       end
-      search_str = words.join(' & ')
+      search_str = words.join('&')
       query = "to_tsvector('english', name) @@ :q"
       all.where(query, q: search_str)
     end
