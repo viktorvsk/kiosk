@@ -1,5 +1,5 @@
 %tr
-  %td= render 'info', order: order
+  %td{ class: order.state }= render 'info', order: order
   %td= render 'client', order: order
   %td= order.info['comment'].try(:html_safe)
   %td= render 'actions', order: order

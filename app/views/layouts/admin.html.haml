@@ -28,4 +28,8 @@
       .container
         &copy; 2015
     = render 'shared/modals'
-    = javascript_include_tag 'application', 'admin'
+    = javascript_include_tag 'application', 'admin', '//cdn.jsdelivr.net/webshim/1.15.7/polyfiller.js'
+    :javascript
+      webshims.setOptions('waitReady', false);
+      webshims.setOptions('forms-ext', {types: 'date'});
+      webshims.polyfill('forms forms-ext');

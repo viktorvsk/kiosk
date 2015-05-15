@@ -1,7 +1,6 @@
 class Admin::OrdersController < Admin::BaseController
   def index
-    params[:q].each_value do |v| v.strip! end if params[:q]
-    @q = Order.includes(line_items: :order, user: :orders).ransack(params[:q])
+    @q = Order.includes(line_items: :order, user: :orders).ransack(search_params)
     @all_orders = @q.result(distinct: true)
     @orders = @all_orders.page(params[:page])
   end
@@ -19,10 +18,22 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def search
-    params[:q].each_value do |v| v.strip! end if params[:q]
-    @q = Order.includes(line_items: :order, user: :orders).ransack(params[:q])
+    @q = Order.includes(line_items: :order, user: :orders).ransack(search_params)
     @all_orders = @q.result(distinct: true)
     @orders = @all_orders.page(params[:page])
     render :index
+  end
+
+  private
+
+  def search_params
+    if params[:q]
+      params[:q].each do |k, v|
+        params[:q][k] = params[:q][k].strip
+        params[:q].delete(k) if params[:q][k].blank?
+      end
+    else
+      params[:q] = {}
+    end
   end
 end

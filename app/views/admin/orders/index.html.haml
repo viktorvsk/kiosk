@@ -4,15 +4,16 @@
       .col-xs-12
         .form-group
           = f.search_field :id_eq, class: 'form-control', placeholder: 'Номер'
-      .col-xs-3
+      .col-xs-4
         .form-group
-          = f.select :by_month, options_for_select((1..12).map{ |i| [I18n.l(Date.new(Date.today.year, i, 1), format: "%b"), i] }, params[:q].try(:fetch, :by_month)), {include_blank: false, prompt: 'Выберите месяц'}, class: 'form-control select2'
-      .col-xs-3
+          = f.select :by_month, options_for_select((1..12).map{ |i| [I18n.l(Date.new(Date.today.year, i, 1), format: "%b"), i] }, params[:q][:by_month]), {include_blank: 'Выберите месяц'}, class: 'form-control select2'
+      .col-xs-4
         .form-group
-          = f.select :user_id_eq, options_for_select(User.all.map{ |u| [u.name, u.id] }, params[:q].try(:fetch, :user_id_eq)), {include_blank: false, prompt: 'Выберите клиента'}, class: 'form-control select2'
-      .col-xs-3
+          = f.select :user_id_eq, options_for_select(User.all.map{ |u| ["#{u.name} #{u.phone}".presence || u.email, u.id] }, params[:q][:user_id_eq]), {include_blank: 'Выберите клиента'}, class: 'form-control select2'
+      .col-xs-4
         .form-group
-          = f.select :by_state, options_for_select(Order::STATES.map{ |s| [t("orders.states.#{s}"), s] }, params[:q].try(:fetch, :by_state)), {include_blank: false, prompt: 'По состоянию'}, class: 'form-control select2'
+          = f.select :by_state, options_for_select(Order::STATES.map{ |s| [t("orders.states.#{s}"), s] }, params[:q][:by_state]), {include_blank: 'Выберите состояние'}, class: 'form-control select2'
+
     .row
       .col-xs-3
         .form-group
@@ -32,12 +33,18 @@
 %h1
   Заказы
   %small (#{@all_orders.count})
-.table-responsive
-  %table.table.table-bordered.table-hover
-    %tr
-      %th Инфо
-      %th Клиент
-      %th Комментарии
-      %th
-    = render @orders
-    = paginate @orders
+- if @orders.present?
+  .table-responsive
+    %table.table.table-bordered.table-hover
+      %thead
+        %tr
+          %th Инфо
+          %th Клиент
+          %th Комментарии
+          %th
+      %tbody= render @orders
+      %tfooter
+        %tr
+          %td.text-center{ colspan: 4 }= paginate @orders
+- else
+  По данному фильтру заказы не найдены

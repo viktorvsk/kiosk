@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
-  STATES = ['in_cart', 'unknown', 'checkout', 'completed']
+  STATES = %w{in_cart checkout completed deny}
   store_accessor :info, :phone, :name, :address, :comment,
-    :payment_type, :delivery_type, :status
+    :payment_type, :delivery_type
   belongs_to :user
   has_many :products, through: :line_items
   has_many :line_items, dependent: :destroy
@@ -10,11 +10,14 @@ class Order < ActiveRecord::Base
   validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
   before_validation :strip_phone
 
-  scope :in_cart, -> { where("orders.state = 'in_cart' AND user_id IS NOT NULL") }
-  scope :unknown, -> { where(user: nil) }
-  scope :completed, -> { where("orders.completed_at IS NOT NULL AND orders.state = 'payd'") }
-  scope :checkout, -> { where(state: 'checkout') }
-  scope :by_month, -> (month) { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month.to_i, 1), Date.new(Date.today.year, month.to_i, 1).end_of_month) }
+  #scope :payd, -> { where(state: 'payd') }
+  #scope :unknown, -> { where(user: nil) }
+  scope :in_cart,   -> { where("orders.state = 'in_cart'") }
+  scope :completed, -> { where("orders.state = 'payd'") }
+  scope :checkout,  -> { where("orders.state = 'checkout'") }
+  scope :deny,      -> { where("orders.state = 'deny'") }
+
+  scope :by_month,  -> (month) { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month.to_i, 1), Date.new(Date.today.year, month.to_i, 1).end_of_month) }
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :user
