@@ -97,6 +97,7 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def main_search(str)
+      str = str.mb_chars.downcase.to_s
       tpl_ids = all.tpl_search(str).pluck(:id)
       wrd_ids = all.words_search(str).pluck(:id)
       ids = tpl_ids + wrd_ids
