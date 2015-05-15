@@ -101,9 +101,12 @@ class Catalog::Product < ActiveRecord::Base
       tpl_ids = all.tpl_search(str).pluck(:id)
       wrd_ids = all.words_search(str).pluck(:id)
       ids = tpl_ids + wrd_ids
-      if (ids.size < 5) && (Conf['b.search_with_similars'] == 't')
-        similars = all.similarity_search(str)
-        ids += similars.pluck(:id) if similars
+      if ids.size < 10
+        ids +=
+        if (ids.size < 5) && (Conf['b.search_with_similars'] == 't')
+          similars = all.similarity_search(str)
+          ids += similars.pluck(:id) if similars
+        end
       end
       ids.uniq!
       ids.present? ? all.where(id: ids) : Catalog::Product.none
@@ -131,7 +134,7 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def words_search(str)
-      words = str.to_s.strip.split.map{ |w| "#{w}:*"}
+      words = str.to_s.strip.split.map{ |w| "#{w}|#{w}:*"}
       words = words.map do |w|
         t = Russian.translit(w)
         if t == w
