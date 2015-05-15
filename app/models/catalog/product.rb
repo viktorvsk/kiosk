@@ -111,15 +111,15 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def tpl_search(str)
-      str = str.to_s.strip.gsub(/[[:punct:]]/,'%').split.join("%")
+      str = str.to_s.strip.split.join("%")
       q = []
       h = {}
-      name = "%#{str}%"
-      tr_name = Russian.translit(name)
       if str =~ /\A\d+\Z/
         q << %{catalog_products.id = :id}
         h[:id] = str
       else
+        # name = "%#{str}%"
+        # tr_name = Russian.translit(name)
         # q << %{name ILIKE :name}
         # q << %{name ILIKE :translit_name} if name != tr_name
         # h[:name] = name
@@ -130,9 +130,16 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def words_search(str)
-      words = str.to_s.strip.split
-      translit_words = words.map{ |w| "#{Russian.translit(w)}:*" }.uniq
-      search_str = translit_words.join(' & ')
+      words = str.to_s.strip.split.map{ |w| "#{w}:*"}
+      words = words.map do |w|
+        t = Russian.translit(w)
+        if t == w
+          t
+        else
+          "(#{t} | #{w})"
+        end
+      end
+      search_str = words.join(' & ')
       query = "to_tsvector('english', name) @@ :q"
       all.where(query, q: search_str)
     end
