@@ -59,6 +59,7 @@ class Vendor::Merchant < ActiveRecord::Base
     curr_order = currency_order.presence ||'[]'
     curr_order_json = JSON.parse(curr_order)
     rates = currency_rates.kind_of?(String) ? JSON.parse(currency_rates) : currency_rates
+    nst = not_in_stock.kind_of?(String) ? JSON.parse(not_in_stock) : not_in_stock
     settings = {
       'start'           => f_start,
       'format'          => format,
@@ -67,7 +68,7 @@ class Vendor::Merchant < ActiveRecord::Base
       'rates'           => rates,
       'currency_order'  => curr_order_json,
       'required'        => required,
-      'not_in_stock'    => not_in_stock,
+      'not_in_stock'    => nst,
       'discount'        => discount,
       'dclink_ddp'      => f_dclink_ddp,
       'columns'         => {
