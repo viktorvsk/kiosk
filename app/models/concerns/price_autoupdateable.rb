@@ -9,9 +9,9 @@ module PriceAutoupdateable
         tempfile = Tempfile.new("#{merchant_id}_price.xml")
         tempfile << get_fresh_pricelist
         tempfile.close
-        merchant.update(format: 'xml')
-        Vendor::Pricelist.async_import!(merchant.id, tempfile.path)
+        merchant.update(format: price_list_format || 'xml')
         merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
+        Vendor::Pricelist.new(merchant.id, tempfile.path).import!
       end
 
     end

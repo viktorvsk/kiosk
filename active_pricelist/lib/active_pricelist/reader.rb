@@ -49,7 +49,21 @@ module ActivePricelist
         @columns.each_pair do |k, v|
           val = product.search(v).first
           val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
-          row[k] = val.to_s.strip
+          row[k] = val.try(:text).to_s.strip.encode('utf-8')
+        end
+        @rows << row
+      end
+    end
+
+    def parse_as_strict_xml
+      xml       = File.read(@file, encoding: @encoding)
+      doc       = Nokogiri::HTML(xml.force_encoding('UTF-8'))
+      doc.search(@start).each do |product|
+        row = {}
+        @columns.each_pair do |k, v|
+          val = product.search(v).first
+          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
+          row[k] = val.try(:text).to_s.strip.encode('utf-8')
         end
         @rows << row
       end
@@ -62,7 +76,7 @@ module ActivePricelist
         @columns.each do |k, v|
           val = spreadsheet.cell(row_num, v.to_i)
           val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
-          row[k] = val.to_s.strip
+          row[k] = val.to_s.strip.encode('utf-8')
         end
         @rows << row
       end
@@ -76,7 +90,7 @@ module ActivePricelist
         @columns.each do |k, v|
           val = rows[row_num - 1][v.to_i - 1]
           val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
-          row[k] = val.to_s.strip
+          row[k] = val.to_s.strip.encode('utf-8')
         end
         @rows << row
       end
@@ -89,7 +103,7 @@ module ActivePricelist
           @columns.each do |k, v|
             val = csv_row[v.to_i - 1]
             val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
-            row[k] = val.to_s.strip
+            row[k] = val.to_s.strip.encode('utf-8')
           end
           @rows << row
         end
