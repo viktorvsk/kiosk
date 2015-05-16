@@ -11,7 +11,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
         action: 'price',
         storage: 0,
         type: 0
-        }).body
+        }).body.force_encoding('windows-1251').encode("utf-8")
   end
 
 end

@@ -4,7 +4,7 @@ class AkustikaxmlParser < ::ActivePricelist::Base
   private
 
   def self.get_fresh_pricelist
-    Typhoeus.get("http://xmlex.kin.dp.ua/21ev/priceA00002851.xml").body
+    Typhoeus.get("http://xmlex.kin.dp.ua/21ev/priceA00002851.xml").body.force_encoding("UTF-8")
   end
 
 end
