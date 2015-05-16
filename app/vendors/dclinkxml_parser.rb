@@ -3,7 +3,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
 
   private
 
-  def price_list_format
+  def self.price_list_format
     'strict_xml'
   end
 
