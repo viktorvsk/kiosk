@@ -1,5 +1,5 @@
-= link_to edit_admin_order_path(order) do
-  %i Изменить
-Оплатить
-%hr/
+= link_to edit_admin_order_path(order), class: 'btn btn-primary btn-xs' do
+  %i.glyphicon.glyphicon-edit
+= link_to '#', class: 'btn btn-success btn-xs' do
+  %i.glyphicon.glyphicon-ok
 .label{ class: order.state }= t("orders.states.#{order.state}")
