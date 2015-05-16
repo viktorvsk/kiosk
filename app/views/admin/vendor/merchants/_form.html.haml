@@ -13,7 +13,7 @@
               %small Цена = Цена - (Цена &times; Скидка   &#247; 100)
             .col-sm-6= field_for(f, :email, :email_field)
             .col-sm-6= select_field_for(f, :encoding,['UTF-8', 'Windows-1251'])
-            .col-sm-3= select_field_for(f, :format,  ['xlsx','xls','xml','strict xml' ,'csv'])
+            .col-sm-3= select_field_for(f, :format,  ['xlsx','xls','xml','strict_xml' ,'csv'])
             .col-sm-12= field_for(f, :description, :text_area, rows: 10)
       .col-sm-6
         = field_set_tag do

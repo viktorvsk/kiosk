@@ -1,6 +1,6 @@
 module ActivePricelist
   class Reader
-    SUPPORTED_FORMATS = %w(xml xls xlsx csv).freeze
+    SUPPORTED_FORMATS = ['xml', 'strict_xml', 'xls', 'xlsx', 'csv'].freeze
     attr_reader :rows
     attr_accessor :file,        :format,      :encoding,
                   :start,       :columns,
