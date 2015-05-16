@@ -45,6 +45,7 @@ module ActivePricelist
       xml       = File.read(@file, encoding: @encoding)
       doc       = Nokogiri::HTML(xml.force_encoding('UTF-8'))
       doc.search(@start).each do |product|
+
         row = {}
         @columns.each_pair do |k, v|
           val = product.search(v).first
@@ -57,7 +58,7 @@ module ActivePricelist
 
     def parse_as_strict_xml
       xml       = File.read(@file, encoding: @encoding)
-      doc       = Nokogiri::HTML(xml.force_encoding('UTF-8'))
+      doc       = Nokogiri::XML(xml.force_encoding('UTF-8'), nil, @encoding)
       doc.search(@start).each do |product|
         row = {}
         @columns.each_pair do |k, v|
