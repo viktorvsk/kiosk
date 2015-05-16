@@ -3,17 +3,37 @@ class LineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product, class_name: Catalog::Product, foreign_key: :catalog_product_id
 
-  def fix_price
-    update(price: product.price, vendor_price: product.in_price)
+  def fix_price!
+    update(price: client_price, vendor_price: in_price)
   end
 
   def income
-    if order.state == 'checkout'
-      (price - vendor_price) * quantity
+    client_price - in_price
+  end
+
+  def in_price
+    p = if order.state == 'in_cart'
+      if product.fixed_price?
+        (product.price.to_i - product.fixed_tax.to_i)
+      else
+        product.in_price
+      end
     else
-      (product.price - product.in_price) * quantity
+      vendor_price
     end
 
+    (p.to_i * quantity).to_f.ceil
+
+  end
+
+  def client_price
+    p = if order.state == 'in_cart'
+      product.price
+    else
+      price
+    end
+
+    (p.to_i * quantity).to_f.ceil
   end
 
 end

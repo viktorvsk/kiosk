@@ -29,8 +29,8 @@ class OrdersController < CatalogController
     head 422 and return unless @current_order.ready?
     pass = Devise.friendly_token
     user = User.where(phone: @current_order.phone).first_or_create!(email: "#{@current_order.phone}@kiosk.evotex.kh.ua", password: pass, password_confirmation: pass)
+    @current_order.line_items.map(&:fix_price!)
     @current_order.update!(state: 'checkout', user: user, completed_at: Time.now)
-    @current_order.line_items.map(&:fix_price)
     session[:order_id] = nil
     if session[:ordered].present?
       session[:ordered] = session[:ordered].to_s << " #{@current_order.id}"

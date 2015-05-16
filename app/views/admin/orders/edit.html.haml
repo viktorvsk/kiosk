@@ -2,7 +2,13 @@
   = link_to admin_orders_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
     Назад
+  .label{ class: @order.state }= t("orders.states.#{@order.state}")
   %h1
     Заказ №
     = @order.id
-= render 'form', comment: @order.info['comment'].to_s.html_safe # TODO: XSS
+    %small
+      К оплате:
+      %b #{@order.total_sum} грн.
+      Прибыль:
+      %b #{@order.total_income} грн.
+= render 'form', comment: @order.display_comment

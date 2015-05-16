@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   STATES = %w{in_cart checkout completed deny}
   store_accessor :info, :phone, :name, :address, :comment,
-    :payment_type, :delivery_type
+    :payment_type, :delivery_type, :delivery_cost
   belongs_to :user
   has_many :products, through: :line_items
   has_many :line_items, dependent: :destroy
@@ -62,13 +62,18 @@ class Order < ActiveRecord::Base
 
   end
 
-  def comment=(value)
-    txt = self.info['comment'].to_s << "<br/>#{value}"
-    super(txt)
+  def add_comment=(value)
+    txt = comment.to_s << value
+    comment= txt
   end
 
-  def comment
+  def add_comment
     ""
+  end
+
+  def display_comment
+     # TODO: XSS
+    comment.to_s.split("<hr/>").reverse.join("<hr/>").html_safe
   end
 
   def items_count
@@ -76,19 +81,15 @@ class Order < ActiveRecord::Base
   end
 
   def ready?
-    valid? && %w(name phone address).all?{ |field| self.send(field).present? }
+    valid? && %w(name phone).all?{ |field| self.send(field).present? }
   end
 
   def total_sum
-    if state == 'checkout'
-      line_items.includes(:product).map{ |li| li.price * li.quantity }.sum
-    else
-      line_items.includes(:product).map{ |li| li.product.price * li.quantity }.sum
-    end
+    line_items.includes(:product).map(&:client_price).sum
   end
 
   def total_income
-    line_items.includes(:product).map{ |li| li.income }.sum
+    line_items.includes(:product).map(&:income).sum
   end
 
   def format_phone

@@ -108,8 +108,10 @@ ru:
         completed_at: Завершен
         user: Клиент
         comment: Комментарий
+        add_comment: Комментарий
         payment_type: Cпособ оплаты
         delivery_type: Споособ доставки
+        delivery_cost: Стоимость доставки
       conf:
         var: Название
         value: Значение
@@ -158,6 +160,7 @@ ru:
         price: Цена
         old_price: Старая цена
         fixed_price: Фиксированная цена
+        fixed_tax: Фиксированная наценка
         newest: Новинка
         homepage: На главной
         hit: Хит продаж

@@ -1,6 +1,14 @@
 /*jslint browser:true */
 (function () {
   function Common() {
+    this.errorLoading = function () {
+      var $spinnerContainer = $('<div class="error"/>').attr('id', 'error-loader').text("Ошибка");
+      $('body').prepend($spinnerContainer);
+      $spinnerContainer.hide(1000);
+      setTimeout(function () { $spinnerContainer.remove(); }, 1000);
+
+    };
+
     this.startLoading = function () {
       var $spinnerContainer = $('<div/>').attr('id', 'loader'),
         $spinner = $('<div/>').addClass('spinner')
@@ -12,7 +20,7 @@
       $('body').prepend($spinnerContainer);
     };
 
-    this.finishLoading = function () {
+    this.finishLoading = function (data, status, xhr) {
       $('#loader').remove();
       $("img.lazy").lazyload({effect : "fadeIn"});
     };

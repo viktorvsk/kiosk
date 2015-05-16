@@ -21,6 +21,7 @@
   .col-sm-2
     %ul.list-group
       %li.list-group-item= field_for f, :price, :text_field, disabled: !f.object.fixed_price?
+      %li.list-group-item= field_for f, :fixed_tax, :text_field, disabled: !f.object.fixed_price?
       %li.list-group-item= field_for f, :old_price
   .col-sm-2
     %li.list-group-item= field_for f, :main_name

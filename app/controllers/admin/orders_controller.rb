@@ -37,13 +37,13 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def order_params
-    c = params[:order][:comment]
+    c = params[:order][:add_comment]
     if c.present?
       named_comment = %(<hr/><b>#{current_user.name}</b>: #{c} <div class='text-right'> #{Time.now.strftime("%x %X")}</div>)
-      params[:order][:comment] = named_comment
+      params[:order][:add_comment] = named_comment
     end
     params.require(:order).permit(:name, :phone, :state, :user, :address,
-                                  :comment, :payment_type, :delivery_type)
+                                  :add_comment, :payment_type, :delivery_type)
   end
 
   def search_params

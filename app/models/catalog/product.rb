@@ -17,7 +17,7 @@ class Catalog::Product < ActiveRecord::Base
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name,
-                        :url
+                        :url, :fixed_tax
   validates :name, :category, presence: true
   # validates :model, :name, uniqueness: true
   belongs_to :category, -> { includes(:taxon) },
@@ -285,7 +285,11 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def in_price
-    (vendor_products.rrc.active.max_by(&:price).try(:rrc) || vendor_products.active.min_by(&:price).try(:price)).to_f.ceil
+    if rrc = vendor_products.rrc.active.max_by(&:price).try(:rrc)
+      rrc
+    else
+      vendor_products.active.min_by(&:price).try(:price)
+    end.to_f.ceil
   end
 
   def bind(vendor_product)
