@@ -40,11 +40,11 @@ $(document).ready(function () {
   });
 
   $('#q_main_search').focus(function () {
-    $('[data-search-autocomplete]').show('slow');
+    $('[data-search-autocomplete]').show('fast');
   });
 
   $('#q_main_search').blur(function () {
-    $('[data-search-autocomplete]').hide('slow');
+    $('[data-search-autocomplete]').hide('fast');
   });
 
   $(document).on('click', '[data-product-view]', function (event) {
