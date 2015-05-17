@@ -15,15 +15,18 @@
         .form-group
           = f.select :catalog_brand_id_eq, options_for_select(Catalog::Brand.all.map{ |b| [b.name, b.id] }, params[:q].try(:fetch, :catalog_brand_id_eq)), {prompt: 'Выберите бренд'},class: 'form-control select2'
     .row
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_filters, options_for_select([['С фильтрами','y'], ['Без фильтров','n']], params[:q].try(:fetch, :with_filters)), {prompt: 'По наличию фильтров'}, class: 'form-control select2'
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_properties, options_for_select([['С характеристиками','y'], ['Без Характеристик','n']], params[:q].try(:fetch, :with_properties)), {prompt: 'По наличию характеристик'}, class: 'form-control select2'
-      .col-sm-4
+      .col-sm-3
         .form-group
           = f.select :with_bound, options_for_select([['Привязанные','y'], ['Не привязанные','n']], params[:q].try(:fetch, :with_bound)), {prompt: 'По наличию привязки'},class: 'form-control select2'
+      .col-sm-3
+        .form-group
+          = f.select :fixed_price_eq, options_for_select([['С фиксированной ценой','1'], ['Без фиксированной цены','0']], params[:q].try(:fetch, :with_bound)), {prompt: 'По фикс. цене'},class: 'form-control select2'
 
     .row
       .col-xs-12
