@@ -30,9 +30,14 @@
     .form-actions
       = f.submit 'Найти', class: 'btn btn-success'
 
-%h1
-  Заказы
-  %small (#{@all_orders.count})
+.page-header
+  = link_to new_admin_order_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новый заказ
+  %h1
+    Заказы
+    %small (#{@all_orders.count})
+
 - if @orders.present?
   .table-responsive
     %table.table.table-bordered.table-hover

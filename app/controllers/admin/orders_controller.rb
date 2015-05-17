@@ -10,7 +10,7 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def update
-    if params[:order][:line_items_attributes]
+    if params[:order].try(:[], :line_items_attributes)
       params[:order][:line_items_attributes].each do |li|
         if li.last[:quantity] == '0'
           @order.line_items.find(li.last[:id]).destroy
@@ -26,9 +26,16 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def create
+    @order = Order.new(admin_order_params)
+    if @order.save
+      redirect_to edit_admin_order_path(@order)
+    else
+      render :new
+    end
   end
 
   def new
+    @order = Order.new
   end
 
   def search
@@ -50,9 +57,15 @@ class Admin::OrdersController < Admin::BaseController
       named_comment = %(<hr/><b>#{current_user.name}</b>: #{c} <div class='text-right'> #{Time.now.strftime("%x %X")}</div>)
       params[:order][:add_comment] = named_comment
     end
-    params.require(:order).permit(:name, :phone, :state, :user, :address,
+    params.require(:order).permit(:name, :phone, :state, :user_id, :address,
       :add_comment, :payment_type, :delivery_type, :admin_order_product,
-      line_items_attributes: [:quantity, :price, :vendor_price, :id])
+      line_items_attributes: [:quantity, :price, :vendor_price, :id, :vendor, :serial_numbers])
+  end
+
+  def admin_order_params
+    params[:order][:creation_way] = 'admin'
+    params.require(:order).permit(:name, :phone, :user, :address,
+      :payment_type, :delivery_type, :state, :creation_way)
   end
 
   def search_params

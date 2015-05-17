@@ -58,7 +58,7 @@ class Order < ActiveRecord::Base
 
   def add_product(product, quantity=1, admin=false)
     product = product.kind_of?(Catalog::Product) ? product : Catalog::Product.where(id: product).first
-    if product
+    if product && product.price > 0
       if already_added = line_items.detect{ |li| li.product == product }
         quantity = quantity + already_added.quantity
         if admin
@@ -68,8 +68,6 @@ class Order < ActiveRecord::Base
         else
           already_added.update(quantity: quantity)
         end
-
-
       else
         if admin
           line_items.create(product: product, quantity: quantity, price: product.price, vendor_price: product.in_price)

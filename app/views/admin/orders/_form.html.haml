@@ -1,6 +1,6 @@
 .row
   .col-sm-4
-    = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path , remote: true, data: { autoupdate: true }) do |f|
+    = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path , remote: @order.persisted?, data: { autoupdate: @order.persisted? }) do |f|
       = render 'shared/error_messages', object: f.object
       %ul.list-group
         %li.list-group-item= field_for f, :name
@@ -11,6 +11,9 @@
         %li.list-group-item= select_field_for f, :delivery_type, Order.payment_types
         %li.list-group-item= field_for f, :delivery_cost
         %li.list-group-item= field_for f, :address, :text_area, rows: 8
+      .form-actions
+        - if @order.new_record?
+          = f.submit 'Создать заказ', class: 'btn btn-success'
   .col-sm-4
     %pre.comment= comment
     = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path) do |f|
@@ -20,6 +23,7 @@
   .col-sm-4
     = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path) do |f|
       = f.text_field :admin_order_product, class: 'form-control'
+      %small Артикул товара
       .form-actions
         = f.submit 'Добавить товар', class: 'btn btn-success'
     %br/

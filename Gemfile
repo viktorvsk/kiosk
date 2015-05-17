@@ -124,6 +124,7 @@ group :development do
   # Test coverage
   # gem 'coverband'
   gem 'bootstrap-generators', '~> 3.3.1'
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
 
   # Debug
   gem 'lol_dba'

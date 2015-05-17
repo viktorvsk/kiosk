@@ -97,6 +97,9 @@ ru:
           callbacks: Коллбэки
           slides: Слайды
           active: Активные
+      line_item:
+        serial_numbers: Серийные номера
+        vendor: Поставщик
       order:
         name: Имя
         state: Состояние

@@ -24,7 +24,7 @@ $(document).on('click', '[data-toggler]', window.Kiosk.Common.toggler);
 $(document).on('ajaxSend', window.Kiosk.Common.startLoading);
 $(document).on('ajaxComplete', window.Kiosk.Common.finishLoading);
 $(document).on('ajaxError', window.Kiosk.Common.errorLoading);
-$(document).on('change', 'form[data-autoupdate]', function () {
+$(document).on('change', 'form[data-autoupdate="true"]', function () {
   $(this).trigger('submit');
 });
 
