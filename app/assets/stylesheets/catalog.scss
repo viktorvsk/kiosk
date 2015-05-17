@@ -69,7 +69,7 @@ body{
 .taxons-container{
   margin-top: -50px;
   position: relative;
-  z-index: 2;
+  z-index: 99999999;
   @media (max-width: 768px){
     margin-top: -25px;
     li{
