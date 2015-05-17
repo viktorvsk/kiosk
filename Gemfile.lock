@@ -299,6 +299,8 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.2)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
     redcarpet (3.2.3)
     redis (3.2.1)
     redis-actionpack (4.0.0)
@@ -438,6 +440,7 @@ DEPENDENCIES
   rails-settings-cached (= 0.4.1)
   rails_best_practices
   ransack
+  rb-inotify (>= 0.8.8)
   redis-rails
   resque (= 1.25.2)
   roo

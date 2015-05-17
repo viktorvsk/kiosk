@@ -125,7 +125,7 @@ group :development do
   # gem 'coverband'
   gem 'bootstrap-generators', '~> 3.3.1'
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
-
+  gem 'rb-inotify', '>= 0.8.8'
   # Debug
   gem 'lol_dba'
   gem 'rails_best_practices'
