@@ -24,6 +24,10 @@ every 1.hours do
   rake "catalog:hourly_update"
 end
 
+every '50 * * * *' do
+  rake "catalog:update_pricelist"
+end
+
 every 1.day do
   command "/home/vvsk/kiosk/shared/backup_script.sh"
 end

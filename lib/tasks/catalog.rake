@@ -3,7 +3,6 @@ namespace :catalog do
   desc 'Update Sitemap nad Site pricelist'
   task :hourly_update => :environment do
     Rake::Task['catalog:update_sitemap'].invoke
-    Rake::Task['catalog:update_pricelist'].invoke
     Rake::Task['catalog:auto_update_prices'].invoke
   end
 
