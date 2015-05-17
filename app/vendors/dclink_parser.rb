@@ -5,7 +5,7 @@ class DclinkParser < ::ActivePricelist::Base
   def transform
     @currency_order.each do |curr|
       if @product[curr].to_f.ceil > 0
-        @product['price'] = @product[curr].to_f.ceil
+        @product['price'] = @product[curr].to_f
         if curr == 'rrc'
           @product['is_rrc'] = true
         else

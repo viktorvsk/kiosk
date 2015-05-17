@@ -9,7 +9,7 @@ class ErcParser < ::ActivePricelist::Base
         @product['price'] = (@product[curr].to_f * @rates[curr].to_f).ceil
 
         if @product['monitor'] == '1'
-          @product['price']   = @product['uah'].to_f.ceil
+          @product['price']   = @product['uah'].to_f
           @product['rrc']     = @product['price']
           @product['is_rrc']  = true
         else
