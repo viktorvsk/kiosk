@@ -1,10 +1,12 @@
 %offer{:available => "true", :id => product.id}
   %url= "http://evotex.kh.ua/products/p/#{product.slug}/#{product.id}"
   %price= product.price.to_f
-  %currencyid UAH
-  %categoryid{:type => "Own"}= category.id
-  %picture= URI.join 'http://evotex.kh.ua', product.preview_path
-  %name product.name
-  - if (warr = product.warranty(warranty_id)) && warr.name.to_i > 0
+  %currencyId UAH
+  %categoryId{:type => "Own"}= category.id
+  %picture
+    - image_path = product.images.sort_by(&:position).first.try(:to_s) || "/product_missing.png"
+    = URI.join 'http://evotex.kh.ua', image_path
+  %name= product.name
+  - if (warr = product.product_properties.detect{ |pp| (pp.catalog_property_id == warranty_id) && (pp.name.to_i > 0) })
     %manufacturer_warranty true
     %param{:name => "Гарантия"}= warr.name.to_i

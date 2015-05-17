@@ -35,8 +35,9 @@ class CatalogController < ApplicationController
   end
 
   def price
-    categories = Catalog::Category.select(:id, :name).includes(:products)
-    render 'catalog/price.xml', layout: false, locals: { categories: categories }
+    categories = Catalog::Category.pricelist_association
+    warranty_id = Catalog::Property.warranty.try(:id)
+    render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id }
   end
 
   def set_comparing_products

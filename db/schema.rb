@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 20150515102011) do
   add_index "catalog_category_brands", ["catalog_category_id", "catalog_brand_id"], name: "category_brands_index", unique: true, using: :btree
   add_index "catalog_category_brands", ["catalog_category_id"], name: "index_catalog_category_brands_on_catalog_category_id", using: :btree
 
+  create_table "catalog_category_filter_values", force: :cascade do |t|
+    t.integer  "catalog_category_id",     null: false
+    t.integer  "catalog_filter_value_id", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "catalog_category_filter_values", ["catalog_category_id"], name: "index_catalog_category_filter_values_on_catalog_category_id", using: :btree
+  add_index "catalog_category_filter_values", ["catalog_filter_value_id"], name: "index_catalog_category_filter_values_on_catalog_filter_value_id", using: :btree
+
   create_table "catalog_category_filters", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false
     t.integer  "catalog_filter_id",               null: false

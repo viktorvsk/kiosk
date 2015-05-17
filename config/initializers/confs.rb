@@ -30,6 +30,8 @@ default_settings = {
   'b.search_with_similars'=> 't'
 }
 
-default_settings.each do |k, v|
-  Conf[k] = v if Conf.get_all[k].blank?
+if Conf.table_exists?
+  default_settings.each do |k, v|
+    Conf[k] = v if Conf.get_all[k].nil?
+  end
 end

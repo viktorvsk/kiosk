@@ -21,6 +21,13 @@ class Catalog::Category < ActiveRecord::Base
   has_one :seo, as: :seoable, dependent: :destroy
   accepts_nested_attributes_for :seo
 
+  def self.pricelist_association
+    joins(:products)
+      .where('catalog_products.price > 0')
+      .select(:id, :name)
+      .uniq
+  end
+
   def tax_for(value)
     value = value.to_f.ceil
     if value > tax_threshold.to_f.ceil
@@ -71,6 +78,10 @@ class Catalog::Category < ActiveRecord::Base
       # Category already has this filter
     end
     filter
+  end
+
+  def products_for_price
+    products.select('catalog_products.price, catalog_products.name, catalog_products.id, catalog_products.slug').with_price.includes(:product_properties, images: [:imageable])
   end
 
   def reorder_filter_values=(values)
