@@ -6,16 +6,4 @@
 %i= I18n.l(order.created_at, format: "%e %b, %H:%M")
 %br/
 %i= I18n.l(order.updated_at, format: "%e %b, %H:%M")
-%table.table{ style: 'color: #333' }
-  %tr
-    %td Вход
-    %td= order.total_sum - order.total_income
-  %tr
-    %td Продажа
-    %td= order.total_sum
-  %tr
-    %td Прибыль
-    %td= order.total_income
-  %tr
-    %td Товаров
-    %td= order.items_count
+

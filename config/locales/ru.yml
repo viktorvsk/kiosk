@@ -8,6 +8,11 @@ ru:
       completed: Оплаченные
       payd: Оплачен
       deny: Отказ
+    creation_ways:
+      default: Корзина
+      missing: Не подтвержден
+      admin:  Менеджер
+      instant_checkout: Один клик
   date:
     abbr_day_names:
     - Вс

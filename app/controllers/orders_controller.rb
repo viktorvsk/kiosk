@@ -21,7 +21,7 @@ class OrdersController < CatalogController
   def instant_checkout
     @current_order.line_items.destroy_all
     @current_order.add_product(params[:product_id])
-    @current_order.update(status: 'instant_checkout')
+    @current_order.update(creation_way: 'instant_checkout')
     redirect_to checkout_order_url
   end
 
@@ -29,8 +29,15 @@ class OrdersController < CatalogController
     head 422 and return unless @current_order.ready?
     pass = Devise.friendly_token
     user = User.where(phone: @current_order.phone).first_or_create!(email: "#{@current_order.phone}@kiosk.evotex.kh.ua", password: pass, password_confirmation: pass)
+    if @current_order.creation_way == 'instant_checkout'
+      creation_way = 'instant_checkout'
+    elsif current_user.try(:admin?)
+      creation_way = 'admin'
+    else
+      creation_way = 'default'
+    end
     @current_order.line_items.map(&:fix_price!)
-    @current_order.update!(state: 'checkout', user: user, completed_at: Time.now)
+    @current_order.update!(state: 'checkout', user: user, completed_at: Time.now, creation_way: creation_way)
     session[:order_id] = nil
     if session[:ordered].present?
       session[:ordered] = session[:ordered].to_s << " #{@current_order.id}"

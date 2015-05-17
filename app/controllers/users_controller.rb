@@ -5,7 +5,7 @@ class UsersController < CatalogController
     if @user.persisted?
       @orders = @user.orders.includes(:line_items)
     else
-      @orders = session[:ordered] ? Order.find(session[:ordered].to_s.split) : Order.none
+      @orders = session[:ordered] ? Order.where(id: session[:ordered].to_s.split).includes(:line_items) : Order.none
     end
   end
 

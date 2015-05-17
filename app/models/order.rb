@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   STATES = %w{in_cart checkout completed deny}
   store_accessor :info, :phone, :name, :address, :comment,
-    :payment_type, :delivery_type, :delivery_cost
+    :payment_type, :delivery_type, :delivery_cost, :creation_way
   belongs_to :user
   has_many :products, through: :line_items
   has_many :line_items, dependent: :destroy

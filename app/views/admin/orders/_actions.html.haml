@@ -1,5 +1,22 @@
 = link_to edit_admin_order_path(order), class: 'btn btn-primary btn-xs' do
   %i.glyphicon.glyphicon-edit
-= link_to '#', class: 'btn btn-success btn-xs' do
-  %i.glyphicon.glyphicon-ok
+  / Редактировать
+/ = link_to '#', class: 'btn btn-success btn-xs' do
+/   %i.glyphicon.glyphicon-ok
 .label{ class: order.state }= t("orders.states.#{order.state}")
+.label.label-default= t("orders.creation_ways.#{order.creation_way || 'missing'}")
+%br/
+%br/
+%table.table.table-bordered{ style: 'color: #333' }
+  %tr
+    %td Вход
+    %td= order.total_sum - order.total_income
+  %tr
+    %td Продажа
+    %td= order.total_sum
+  %tr
+    %td Прибыль
+    %td= order.total_income
+  %tr
+    %td Товаров
+    %td= order.items_count

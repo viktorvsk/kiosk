@@ -1,8 +1,8 @@
 %tr
-  %td{ class: order.state }= render 'info', order: order
+  %td{ width: 100, class: order.state }= render 'info', order: order
   %td= render 'client', order: order
-  %td
+  %td{ width: 200 }
     %pre.comment
       = order.display_comment
-  %td= render 'actions', order: order
+  %td{ width: 150 }= render 'actions', order: order
 
