@@ -1,0 +1,35 @@
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title
+      = link_to li.object.product.name, edit_admin_product_path(li.object.product)
+  .panel-body
+    .row
+      .container-fluid
+        .col-sm-4
+          .row
+            .text-center
+              = link_to edit_admin_product_path(li.object.product) do
+                = image_tag 'lazy-spinner.gif', class: 'img-responsive thumbnail lazy', 'data-original' => li.object.product.preview_path
+              %small ( #{li.object.quantity} шт. )
+              %br/
+              Код: #{li.object.product.id}
+
+        .col-sm-8
+
+          %table.table.table-bordered{ style: 'color: #333' }
+            %tr
+              %td Цена
+              %td= li.object.client_price
+            %tr
+              %td Вход
+              %td= li.object.in_price
+            %tr
+              %td Прибыль
+              %td= li.object.income
+
+  .panel-footer
+    .row
+      .col-sm-8
+        Оформлено за #{li.object.price} грн.
+      .col-sm-4
+        = li.number_field :quantity, class: 'form-control'

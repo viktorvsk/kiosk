@@ -18,4 +18,14 @@
       .form-actions
         = f.submit 'Отправить', class: 'btn btn-success'
   .col-sm-4
-    = render @order.line_items.includes(:product)
+    = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path) do |f|
+      = f.text_field :admin_order_product, class: 'form-control'
+      .form-actions
+        = f.submit 'Добавить товар', class: 'btn btn-success'
+    %br/
+    = form_for(@order, url: @order.persisted? ? admin_order_path(@order) : admin_orders_path) do |f|
+      =# render @order.line_items.includes(:product, :order), f: f
+      = f.fields_for :line_items do |li|
+        = render 'line_items_attributes', li: li
+      .form-actions
+        = f.submit 'Обновить', class: 'btn btn-success'

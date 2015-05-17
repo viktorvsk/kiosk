@@ -10,8 +10,16 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def update
+    if params[:order][:line_items_attributes]
+      params[:order][:line_items_attributes].each do |li|
+        if li.last[:quantity] == '0'
+          @order.line_items.find(li.last[:id]).destroy
+          params[:order][:line_items_attributes].delete(li.first)
+        end
+      end
+    end
     if @order.update(order_params)
-      redirect_to :back
+       redirect_to :back
     else
       render :edit
     end
@@ -43,7 +51,8 @@ class Admin::OrdersController < Admin::BaseController
       params[:order][:add_comment] = named_comment
     end
     params.require(:order).permit(:name, :phone, :state, :user, :address,
-                                  :add_comment, :payment_type, :delivery_type)
+      :add_comment, :payment_type, :delivery_type, :admin_order_product,
+      line_items_attributes: [:quantity, :price, :vendor_price, :id])
   end
 
   def search_params

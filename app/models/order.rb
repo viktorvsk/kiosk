@@ -41,6 +41,14 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def admin_order_product=(product_id)
+    add_product(product_id, 1, true)
+  end
+
+  def admin_order_product
+    ''
+  end
+
   def order_product=(product_id)
     add_product(product_id)
   end
@@ -48,14 +56,29 @@ class Order < ActiveRecord::Base
   def order_product
   end
 
-  def add_product(product, quantity=1)
+  def add_product(product, quantity=1, admin=false)
     product = product.kind_of?(Catalog::Product) ? product : Catalog::Product.where(id: product).first
     if product
       if already_added = line_items.detect{ |li| li.product == product }
-        already_added.increment! :quantity, quantity
+        quantity = quantity + already_added.quantity
+        if admin
+          pr = product.price * quantity
+          v_pr = product.in_price * quantity
+          already_added.update(quantity: quantity, price: pr.ceil, vendor_price: v_pr.ceil)
+        else
+          already_added.update(quantity: quantity)
+        end
+
+
       else
-        line_items.create(product: product, quantity: quantity)
+        if admin
+          line_items.create(product: product, quantity: quantity, price: product.price, vendor_price: product.in_price)
+        else
+          line_items.create(product: product, quantity: quantity)
+        end
       end
+
+
     else
       false
     end
@@ -85,7 +108,7 @@ class Order < ActiveRecord::Base
   end
 
   def total_sum
-    line_items.includes(:product).map(&:client_price).sum
+    line_items.includes(:product, :order).map(&:client_price).sum
   end
 
   def total_income

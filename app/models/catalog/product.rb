@@ -285,11 +285,12 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def in_price
-    if rrc = vendor_products.rrc.active.max_by(&:price).try(:rrc)
+    p = if rrc = vendor_products.rrc.active.max_by(&:price)
       rrc
     else
-      vendor_products.active.min_by(&:price).try(:price)
-    end.to_f.ceil
+      vendor_products.active.min_by(&:price)
+    end
+    p.try(:price).to_f.ceil
   end
 
   def bind(vendor_product)
