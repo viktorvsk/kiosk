@@ -267,6 +267,7 @@
 
   &_autocomplete{
     position: relative;
+    z-index: 9999999;
 
     &_inner{
       position: absolute;
