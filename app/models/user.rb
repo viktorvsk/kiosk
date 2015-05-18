@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   ROLES = %w(admin customer)
   scope :admins, -> { where(role: 'admin') }
 
-  PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
+  # PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
   validates :phone,
-    format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ },
+    format: { with: /\A(380)\d{9}\Z/ },
     allow_blank: true,
     uniqueness: true
   before_validation :strip_phone

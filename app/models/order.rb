@@ -6,8 +6,9 @@ class Order < ActiveRecord::Base
   has_many :products, through: :line_items
   has_many :line_items, dependent: :destroy
 
-  PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
-  validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
+  # PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
+  # validates :phone, format: { with: /\A(380)(#{PHONE_OPERATORS})\d{6,7}\Z/ }, allow_blank: true
+  validates :phone, format: { with: /\A(380)\d{9}\Z/ }, allow_blank: true
   before_validation :strip_phone
 
   #scope :payd, -> { where(state: 'payd') }
