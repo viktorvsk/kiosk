@@ -28,7 +28,6 @@ body{
   background-size: cover;
   background-position: center center;
   background: transparent;
-  z-index: 1;
   height: 392px!important;
   z-index: 1;
   pointer-events:none;
@@ -69,7 +68,7 @@ body{
 .taxons-container{
   margin-top: -50px;
   position: relative;
-  z-index: 999999;
+  z-index: 99;
   @media (max-width: 768px){
     margin-top: -25px;
     li{
@@ -77,6 +76,7 @@ body{
     }
   }
 }
+
 
 .taxons{
   position: relative;

@@ -33,7 +33,7 @@
   margin-left: -100px;
   background: #19B5FE;
 
-  z-index: 999999999999999999;
+  z-index: 100;
   opacity: 0.88;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -51,13 +51,15 @@
   color: #fff;
   text-align: center;
 
-  z-index: 999999999999999999;
+  z-index: 100;
   opacity: 0.88;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   box-shadow: 0px 5px 10px #777;
 
 }
+
+
 
 .spinner {
   margin: 0 auto 0;
@@ -167,7 +169,7 @@ body > footer.jumbotron{
 }
 
 .navbar{
-  z-index: 999999999;
+  z-index: 101;
   hr{
     padding: 3px 0;
     margin: 3px 0;
@@ -196,3 +198,6 @@ body > footer.jumbotron{
   display: none;
 }
 
+.modal{
+  z-index: 103;
+}
