@@ -19,7 +19,7 @@ class CategoriesController < CatalogController
     @brand = Catalog::Brand.where(id: params[:b]).first
     @filters_and_results_hash = {
       filters: @category.category_filters.includes(filter: :values),
-      brands: @category.brands.uniq,
+      brands: @category.brands.uniq.sort_by(&:name),
       products: @products,
       products_count: @all_products.count,
       all_products: @all_products
