@@ -1,5 +1,5 @@
 %offer{:available => "true", :id => product.id}
-  %url= "http://evotex.kh.ua/products/p/#{product.slug}/#{product.id}"
+  %url= "http://evotex.kh.ua/p/#{product.slug}/#{product.id}"
   %price= product.price.to_f
   %currencyId UAH
   %categoryId{:type => "Own"}= category.id

@@ -21,7 +21,7 @@ namespace :catalog do
     categories = Catalog::Category.pricelist_association
     warranty_id = Catalog::Property.warranty.try(:id)
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories, warranty_id: warranty_id })
-    File.open(Rails.public_path.join('price.xml'), 'w'){ |f| f.puts pricelist }
+    File.open(Rails.public_path.join('price_full.xml'), 'w'){ |f| f.puts pricelist }
   end
 
   desc 'Auto upadte prices'
