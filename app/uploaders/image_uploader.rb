@@ -68,10 +68,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   protected
 
   def watermarkable?(new_file)
-    is_product = model.imageable.class == Catalog::Product
-    scraped_host = new_file.file.instance_variable_get("@uri").try(:host)
-    is_not_evotex_image = scraped_host ? !(scraped_host =~ /evotex/) : false
-    is_product && is_not_evotex_image
+    model.imageable_type == 'Catalog::Product'
   end
 
 end

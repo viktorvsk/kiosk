@@ -424,7 +424,9 @@ class Catalog::Product < ActiveRecord::Base
     tempfile.binmode
     tempfile << open(img_url).read
     tempfile.close
-    images << Image.new(attachment: tempfile)
+    i = Image.new(imageable_type: Catalog::Product)
+    i.attachment = tempfile
+    images << i
   end
 
   def images_from_pc=(values)
