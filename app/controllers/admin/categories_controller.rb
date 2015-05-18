@@ -111,7 +111,9 @@ class Admin::CategoriesController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:catalog_category).permit(:name, :tax, :tax_threshold, :tax_max, :catalog_taxon_id, :description, :s_name)
+      params.require(:catalog_category).permit(:name, :tax, :tax_threshold,
+        :tax_max, :catalog_taxon_id, :description, :s_name, :slug,
+        seo_attributes: [:id, :title, :description, :keywords])
     end
 
 end

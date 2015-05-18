@@ -18,9 +18,14 @@
         %ul.list-group
           %li.list-group-item
             = field_for f, :description, :cktext_area, ckeditor: { language: :ru }
+        %h3 SEO
+        - f.object.build_seo unless f.object.seo
+        %ul.list-group
+          = render 'shared/seo_attributes', seo: f.object.seo, f: f
         .form-actions
           = link_to 'Обновить позиции', admin_category_reorder_all_properties_path(@category), class: 'btn btn-default', method: :post, remote: :true if @category.persisted?
           = f.submit f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'
+
   - if @category.persisted?
     .row
       .col-sm-4
