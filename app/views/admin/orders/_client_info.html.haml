@@ -1,0 +1,48 @@
+%ul.nav.nav-tabs
+  - if user = order.user
+    %li{ class: ('active' if order.products.blank?)}= link_to "Клиент", "#order_#{order.id}_client", 'data-toggle' => 'tab'
+  - if order.products.present?
+    %li.active= link_to "Товары (#{order.items_count})", "#order_#{order.id}_products", 'data-toggle' => 'tab'
+  - if order.comment.present?
+    %li= link_to "Комментарии (#{order.comment.to_s.split('<hr/>').count})", "#order_#{order.id}_comments", 'data-toggle' => 'tab'
+.tab-content
+  - if user = order.user
+    .tab-pane{ id: "order_#{order.id}_client", class: ('active' if order.products.blank?) }
+      %table.table.table-bordered.color-black
+        %tr
+          %td Имя
+          %td
+            =link_to edit_admin_user_path(user) do
+              = user.name.presence || 'не указано'
+        %tr
+          %td Телефон
+          %td= number_to_phone(user.phone[3..-1], country_code: 380) rescue '-'
+        %tr
+          %td Всего потратил
+          %td #{user.total_income} грн.
+        %tr
+          %td Принес прибыли
+          %td #{user.clean_total_income} грн.
+  - if order.products.present?
+    .tab-pane.active{ id: "order_#{order.id}_products" }
+      %table.table.table-bordered.color-black
+        %tr
+          %th Название
+          %th.text-center Кол-во
+          %th.text-center Цена
+          %th.text-center Поставщик
+        - order.line_items.each do |li|
+          %tr
+            %td= link_to li.product.name, edit_admin_product_path(li.product)
+            %td= li.quantity
+            %td #{li.product.price} грн.
+            %td
+              - if li.product.fixed_price?
+                Фикс. цена
+              - else
+                - m = li.product.active_vendor.merchant
+                = link_to m.name, edit_admin_vendor_merchant_path(m)
+  - if order.comment.present?
+    .tab-pane{ id: "order_#{order.id}_comments" }
+      %pre.comment
+        = order.display_comment

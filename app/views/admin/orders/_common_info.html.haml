@@ -1,0 +1,20 @@
+.text-right
+  .badge ##{order.id}
+%br/
+.label{ class: order.state }= t("orders.states.#{order.state}")
+.label.label-default= t("orders.creation_ways.#{order.creation_way || 'missing'}")
+.label.label-primary{ title: 'Время появления пользователя' }
+  = I18n.l(order.created_at, format: "%e %b, %H:%M")
+.label.label-primary{ title: 'Время последнего обновления' }
+  = I18n.l(order.updated_at, format: "%e %b, %H:%M")
+- if order.completed_at.present?
+  .label.label-primary{ title: 'Время оформления заказа' }
+    = I18n.l(order.completed_at, format: "%e %b, %H:%M")
+.label{ class: ( order.total_income >= 0 ? 'label-success' : 'label-danger') }
+  = order.total_sum - order.total_income
+  \/
+  = order.total_sum
+  (#{order.total_income})
+= link_to edit_admin_order_path(order), class: 'label btn btn-primary btn-xs' do
+  %i.glyphicon.glyphicon-edit
+  Редактировать

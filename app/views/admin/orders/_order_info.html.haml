@@ -1,0 +1,16 @@
+%table.table.table-bordered.color-black
+  %tr
+    %td Имя
+    %td= order.name.presence || 'не указано'
+  %tr
+    %td Телефон
+    %td= number_to_phone(order.phone[3..-1], country_code: 380) rescue '-'
+  %tr
+    %td Адрес
+    %td= order.address
+  %tr
+    %td Доставка
+    %td= order.delivery_type
+  %tr
+    %td Оплата
+    %td= order.payment_type

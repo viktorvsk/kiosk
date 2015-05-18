@@ -40,13 +40,12 @@
 
 - if @orders.present?
   .table-responsive
-    %table.table.table-bordered.table-hover
+    %table.table.table-bordered.table-hover.orders-table
       %thead
         %tr
           %th Инфо
-          %th Клиент
-          %th Комментарии
-          %th
+          %th Заказ
+          %th Дополнительно
       %tbody= render @orders
       %tfooter
         %tr

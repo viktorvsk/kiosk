@@ -1,8 +1,9 @@
 %tr
-  %td{ width: 100, class: order.state }= render 'info', order: order
-  %td= render 'client', order: order
-  %td{ width: 200 }
-    %pre.comment
-      = order.display_comment
-  %td{ width: 150 }= render 'actions', order: order
+  %td.orders-table_common-info
+    = render 'common_info', order: order
+  %td.orders-table_order-info{ colspan: (order.user || order.products.present?) ? 0 : 2 }
+    = render 'order_info', order: order
+  - if order.user || order.products.present?
+    %td.orders-table_client-info
+      = render 'client_info', order: order
 
