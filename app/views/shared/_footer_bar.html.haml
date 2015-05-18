@@ -12,8 +12,9 @@
         = Conf['ck.footer3'].html_safe
     .row
       .col-xs-12.text-right
-        = link_to '/price.xml', class: 'btn btn-primary', title: 'Скачать прайс (XML)' do
+        = link_to '/price_full.xml', class: 'btn btn-xs btn-primary', title: 'Скачать прайс (XML)' do
           %i.glyphicon.glyphicon-list-alt
+          Скачать прайс (XML)
     - if current_user.try(:admin?)
       %br/
       .row

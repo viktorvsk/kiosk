@@ -31,7 +31,7 @@ class UsersController < CatalogController
         password: pass,
         password_confirmation: pass,
         phone: phone,
-        email: "#{phone}@kiosk.evotex.kh.ua",
+        email: "#{phone}@evotex.kh.ua",
         name: params[:callback][:name]
       }
       user = User.new(h)
