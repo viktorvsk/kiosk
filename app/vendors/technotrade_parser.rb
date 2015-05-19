@@ -16,6 +16,7 @@ class TechnotradeParser < ::ActivePricelist::Base
           @product['rrc'] = @product['price']
           @product['is_rrc'] = true
         else
+          @product['is_rrc'] = false
           @product['price'] = (@product['price'].to_f * @rates[curr].to_f * (100 - @discount.to_f.ceil)/100).ceil
         end
         break

@@ -9,6 +9,7 @@ class DclinkParser < ::ActivePricelist::Base
         if curr == 'rrc'
           @product['is_rrc'] = true
         else
+          @product['is_rrc'] = false
           rate = if @product['name'] =~ /ddp/i
             @dclink_ddp_rate.to_f
           else
