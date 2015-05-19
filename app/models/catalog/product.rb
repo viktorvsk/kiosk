@@ -54,7 +54,7 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def ransackable_scopes(auth_object = nil)
-      [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound]
+      [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound, :top]
     end
 
     def by_category_params(params)
