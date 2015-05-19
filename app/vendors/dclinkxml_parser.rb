@@ -44,7 +44,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
           rate = if @product['name'] =~ /ddp/i
             @dclink_ddp_rate.to_f
           else
-            @rates[curr]
+            @rates[curr].to_f
           end
           @product['price'] = (@product['usd'].to_f * rate * (100 - @discount.to_i) / 100).ceil
         end
