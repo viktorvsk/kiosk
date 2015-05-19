@@ -100,7 +100,7 @@ module Vendor
         expression = %(UPDATE "vendor_products" SET
           "price" = #{p['price']},
           "is_rrc" = #{p['is_rrc']},
-          "in_stock" = #{p['is_rrc']},
+          "in_stock" = #{p['in_stock']},
           "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
       end.join
       ActiveRecord::Base.connection.execute(sql)
