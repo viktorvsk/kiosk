@@ -40,8 +40,11 @@
               - if li.product.fixed_price?
                 Фикс. цена
               - else
-                - m = li.product.active_vendor.merchant
-                = link_to m.name, edit_admin_vendor_merchant_path(m)
+                - m = li.product.active_vendor.try(:merchant)
+                - if m
+                  = link_to m.name, edit_admin_vendor_merchant_path(m)
+                - else
+                  Поставщик не найден
   - if order.comment.present?
     .tab-pane{ id: "order_#{order.id}_comments" }
       %pre.comment
