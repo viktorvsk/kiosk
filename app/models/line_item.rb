@@ -22,8 +22,8 @@ class LineItem < ActiveRecord::Base
       vendor_price
     end
 
-    (p.to_i * quantity).to_f.ceil
-
+    # (p.to_i * quantity).to_f.ceil
+    p.to_f.ceil
   end
 
   def client_price
@@ -33,7 +33,8 @@ class LineItem < ActiveRecord::Base
       price
     end
 
-    (p.to_i * quantity).to_f.ceil
+    # (p.to_i * quantity).to_f.ceil
+    p.to_f.ceil
   end
 
 end
