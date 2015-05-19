@@ -96,9 +96,12 @@ module Vendor
 
     def batch_update( products )
       sql = products.compact.map do |p|
-        attributes_to_update = []
         info_attrs = p.info.to_json
-        expression = %(UPDATE "vendor_products" SET "price" = #{p['price']}, "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
+        expression = %(UPDATE "vendor_products" SET
+          "price" = #{p['price']},
+          "is_rrc" = #{p['is_rrc']},
+          "in_stock" = #{p['is_rrc']},
+          "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
       end.join
       ActiveRecord::Base.connection.execute(sql)
     end
@@ -125,7 +128,7 @@ module Vendor
       @to_update_articuls  = @to_update.pluck(:articul)
       @to_update = @to_update.map do |product|
         new_product = @products.detect{ |p| p['articul'] == product.articul }
-        next if product['price'].to_i == new_product['price'].to_i
+        # next if product['price'].to_i == new_product['price'].to_i
         new_product_attributes = new_product.slice( *UPDATE_ATTRIBUTES )
         new_product_attributes.each do |k, v|
           product.send("#{k}=", v)
