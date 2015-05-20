@@ -1,4 +1,5 @@
 class Admin::Vendor::MerchantsController < Admin::BaseController
+  before_action :check_content_manager_permissions
   before_action :set_merchant, only: [:show, :edit, :update, :destroy, :pricelist]
   before_action :set_custom_merchants, only: [:new, :edit]
 

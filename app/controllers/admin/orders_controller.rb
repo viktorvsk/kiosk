@@ -1,4 +1,5 @@
 class Admin::OrdersController < Admin::BaseController
+  before_action :check_admin_permissions
   before_action :set_order, only: [:edit, :update]
   def index
     @q = Order.includes(:products, line_items: :order, user: :orders).ransack(search_params)

@@ -1,5 +1,9 @@
 ---
 ru:
+  roles:
+    admin: Администратор
+    customer: Клиент
+    content: Контент-менеджер
   orders:
     states:
       in_cart: Пустые
@@ -12,7 +16,7 @@ ru:
     creation_ways:
       default: Корзина
       missing: Не подтвержден
-      admin:  Менеджер
+      admin: Менеджер
       instant_checkout: Один клик
   date:
     abbr_day_names:

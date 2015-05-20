@@ -28,7 +28,7 @@ ActiveAdmin.register User do
       f.input :phone
       f.input :password
       f.input :password_confirmation
-      f.input :role, as: :select, collection: [['Клиент', 'user'],['Администратор', 'admin']], include_blank: false
+      f.input :role, as: :select, collection: User::ROLES.map{ |r| [t("roles.#{r}"), r] }, include_blank: false
     end
     f.actions
   end

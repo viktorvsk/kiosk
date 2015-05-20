@@ -1,4 +1,6 @@
 class Admin::BindingController < Admin::BaseController
+  before_action :check_content_manager_permissions
+
   def bind
     @product = ::Catalog::Product.find(params[:product_id])
     @vendor_product = ::Vendor::Product.find(params[:vendor_product_id])

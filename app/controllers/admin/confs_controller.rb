@@ -1,4 +1,5 @@
 class Admin::ConfsController < Admin::BaseController
+  before_action :check_admin_permissions
   before_action :set_conf, only: [:edit, :update]
 
   # GET /admin/confs

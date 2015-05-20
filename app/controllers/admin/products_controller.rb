@@ -1,4 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
+  before_action :check_content_manager_permissions
   before_action :set_product, only: [:edit, :show, :update, :destroy, :bind,
                                     :unbind, :recount, :copy_filters,
                                     :copy_properties, :update_product_filter_value,
@@ -12,6 +13,7 @@ class Admin::ProductsController < Admin::BaseController
     @all_products = Catalog::Product.includes(vendor_products: :product)
     @all_products_count = @all_products.count
     @products = @all_products.page(params[:page])
+
   end
 
   def search

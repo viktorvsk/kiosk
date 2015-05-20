@@ -67,7 +67,7 @@ gem 'devise'
 # gem 'omniauth'
 # gem 'omniauth-vkontakte'
 # gem 'omniauth-facebook'
-# gem 'cancancan', '~> 1.8'
+gem 'cancancan', '~> 1.8'
 
 # Refactoring
 # gem 'draper'

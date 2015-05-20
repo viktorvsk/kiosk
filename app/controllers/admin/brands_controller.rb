@@ -1,4 +1,5 @@
 class Admin::BrandsController < Admin::BaseController
+  before_action :check_content_manager_permissions
   before_action :set_brand, only: [:edit, :update, :destroy]
 
   # GET /admin/brands

@@ -1,4 +1,5 @@
 class Admin::PropertiesController < Admin::BaseController
+  before_action :check_content_manager_permissions
   before_action :set_category, only: [:destroy_category_property, :create_category_property]
   before_action :set_product, only: [:update_product_property, :destroy_product_property, :create_product_property]
 

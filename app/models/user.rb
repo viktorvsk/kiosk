@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  ROLES = %w(admin customer)
+  ROLES = %w(admin customer content)
   scope :admins, -> { where(role: 'admin') }
 
   # PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')

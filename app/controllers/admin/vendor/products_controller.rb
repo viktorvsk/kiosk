@@ -1,4 +1,5 @@
 class Admin::Vendor::ProductsController < Admin::BaseController
+  before_action :check_content_manager_permissions
   # GET /admin/vendor/products
   # GET /admin/vendor/products.json
   def index
