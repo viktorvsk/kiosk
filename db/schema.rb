@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517133821) do
+ActiveRecord::Schema.define(version: 20150520222010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,19 @@ ActiveRecord::Schema.define(version: 20150517133821) do
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
 
+  create_table "user_product_actions", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "action_type"
+    t.integer  "user_id"
+    t.text     "action"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "user_product_actions", ["action_type"], name: "index_user_product_actions_on_action_type", using: :btree
+  add_index "user_product_actions", ["product_id"], name: "index_user_product_actions_on_product_id", using: :btree
+  add_index "user_product_actions", ["user_id"], name: "index_user_product_actions_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: "",     null: false
     t.string   "phone",                  default: "",     null: false
@@ -358,5 +371,6 @@ ActiveRecord::Schema.define(version: 20150517133821) do
   add_index "vendor_products", ["price"], name: "index_vendor_products_on_price", using: :btree
   add_index "vendor_products", ["vendor_merchant_id"], name: "index_vendor_products_on_vendor_merchant_id", using: :btree
 
+  add_foreign_key "comments", "users"
   add_foreign_key "comments", "users"
 end

@@ -16,11 +16,16 @@ class User < ActiveRecord::Base
   has_one :current_order, -> { where(state: 'in_cart') }, class_name: Order, dependent: :destroy
   has_many :orders, -> { where.not(state: 'in_cart') }, dependent: :destroy
   has_many :callbacks, dependent: :destroy
+  has_many :actions, dependent: :destroy, class_name: UserProductAction
 
   ROLES.each do |role_name|
     define_method "#{role_name}?" do
       role_name == role
     end
+  end
+
+  def record!(product, action_type, action)
+    actions.create(product: product, action_type: action_type, action: action)
   end
 
   def is_admin?
