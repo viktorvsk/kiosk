@@ -171,6 +171,7 @@
       $(vendorProduct).draggable(draggableConfig);
       $(productDroppable).droppable(droppableProductConfig);
       $(vendorProductsTable).droppable(droppableVendorProductConfig);
+      $("[data-toggle='tooltip']").tooltip({animate: false, html: true});
     };
 
     $(document).on('click', toScrapeSelector, createFromMarketPlace);
