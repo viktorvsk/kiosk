@@ -4,7 +4,7 @@ class Admin::BaseController < ApplicationController
 
   def dashboard
     render 'admin/dashboard'
-    authorize! :watch, :dashboard
+    authorize! :manage, :content
   end
 
   private
