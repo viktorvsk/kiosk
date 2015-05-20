@@ -31,6 +31,8 @@
             - if current_user
               - if current_user.admin?
                 %li= link_to 'Админ', admin_path
+              - if current_user.content?
+                %li= link_to 'Админ', admin_vendor_products_path
               %li= link_to 'Выйти', destroy_user_session_path, method: :delete
             - else
               %li= link_to 'Зарегистрироваться', new_user_registration_path
