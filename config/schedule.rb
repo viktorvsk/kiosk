@@ -30,4 +30,5 @@ end
 
 every 1.day do
   command "/home/vvsk/kiosk/shared/backup_script.sh"
+  runner "Order.in_cart.destroy_all"
 end
