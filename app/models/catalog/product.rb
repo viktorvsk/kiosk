@@ -419,19 +419,40 @@ class Catalog::Product < ActiveRecord::Base
     end
   end
 
+  def multiple_remote_images
+  end
+
+  def multiple_remote_images=(img_urls)
+    img_urls = img_urls.to_s.split("\n")
+    return if img_urls.blank?
+    img_urls.each do |url|
+      scrape_image(url)
+    end
+  end
+
   def scrape_image(url)
     img_url = URI.encode URI.decode url.to_s.strip
     tempfile = Tempfile.new([File.basename(img_url), File.extname(img_url)])
     tempfile.binmode
-    tempfile << open(img_url).read
-    tempfile.close
-    i = Image.new(imageable_type: Catalog::Product)
-    i.attachment = tempfile
-    images << i
+    begin
+      tempfile << open(img_url).read rescue return
+      tempfile.close
+      i = Image.new(imageable_type: Catalog::Product)
+      i.attachment = tempfile
+      images << i
+    rescue
+      nil
+    ensure
+      tempfile.close
+    end
   end
 
   def images_from_pc=(values)
-    values.each { |v| images << Image.new(attachment: v) }
+    values.each do |v|
+      i = Image.new(imageable_type: Catalog::Product)
+      i.attachment = v
+      images << i
+    end
   end
 
   def category=(value)

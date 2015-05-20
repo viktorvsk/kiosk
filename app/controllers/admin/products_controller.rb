@@ -155,6 +155,7 @@ class Admin::ProductsController < Admin::BaseController
       .permit(:name, :model, :catalog_category_id, :fixed_price, :main_name,
               :price, :old_price, :video, :catalog_brand_id, :slug, :description,
               :newest, :homepage, :hit, :images_from_url, :accessories,
+              :multiple_remote_images,
               seo_attributes: [:id, :keywords, :description, :title],
               images_from_pc: [],
               product_properties_attributes: [:id, :name, :position, :property_name],

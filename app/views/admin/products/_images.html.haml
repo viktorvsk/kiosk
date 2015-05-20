@@ -14,11 +14,13 @@
             = field_for f_i, :position
     %hr/
     .row
-      .col-sm-3.col-sm-offset-3
-        = f.text_field :images_from_url, class: 'form-control', placeholder: 'Ссылка для скачивания'
-      .col-sm-3.text-right
-        .btn.btn-default.btn-file
+      .col-sm-3
+        = field_for f, :images_from_url, :text_field
+      .col-sm-3
+        = field_for f, :multiple_remote_images, :text_area
+      .col-sm-3
+        .btn.btn-default.btn-file.form-control
           Добавить изображения с компьютера
           = f.file_field :images_from_pc, multiple: true, class: 'form-control'
-      .col-sm-3.text-right
+      .col-sm-3
         = f.submit 'Обновить изображения', class: 'btn btn-success form-control'

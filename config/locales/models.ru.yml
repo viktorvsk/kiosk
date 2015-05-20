@@ -159,6 +159,8 @@ ru:
         name: Название
       catalog/product:
         id: Артикул
+        images_from_url: Скачать с источника
+        multiple_remote_images: Скачать картинки напрямую
         name: Название
         model: Модель
         main_name: Короткое имя

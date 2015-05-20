@@ -32,7 +32,10 @@
     %ul.list-group
       %li.list-group-item
         = field_for f, :description, :cktext_area, ckeditor: { language: :ru }
-        .form-actions= f.submit 'Сохранить', class: 'btn btn-xs btn-info'
+        - if @product.persisted?
+          .form-actions= f.submit 'Обновить описание', class: 'btn btn-xs btn-info'
   .col-sm-4
     - @product.build_seo unless @product.seo
     = render 'shared/seo_attributes', seo: @product.seo, f: f
+- if @product.new_record?
+  .form-actions= f.submit 'Создать', class: 'btn btn-info'
