@@ -27,7 +27,11 @@ module SimpleFormHelper
       html[:class] = 'form-control select2'
     end
     html[:autocomplete] ||= :off
-    css_class = f.object.errors[attr_name].any? ? 'form-group has-error' : 'form-group'
+    if f.object.try(:errors) && f.object.errors[attr_name].any?
+      css_class = 'form-group has-error'
+    else
+      css_class = 'form-group'
+    end
     selected = if opts[:selected]
       opts[:selected]
     elsif association_name = f.object.try(attr_name).try(:name)

@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  STATES = %w{in_cart checkout completed deny}
+  STATES = %w{in_cart checkout completed deny in_cart_products}
   store_accessor :info, :phone, :name, :address, :comment,
     :payment_type, :delivery_type, :delivery_cost, :creation_way
   belongs_to :user
@@ -13,12 +13,13 @@ class Order < ActiveRecord::Base
 
   #scope :payd, -> { where(state: 'payd') }
   #scope :unknown, -> { where(user: nil) }
-  scope :in_cart,   -> { where("orders.state = 'in_cart'") }
+  scope :in_cart,   -> { includes(:line_items).where(line_items: { order_id: nil }, orders: {state: 'in_cart'}) }
+  scope :in_cart_products,   -> { joins(:line_items).where("orders.state = 'in_cart'") }
   scope :completed, -> { where("orders.state = 'payd'") }
   scope :checkout,  -> { where("orders.state = 'checkout'") }
   scope :deny,      -> { where("orders.state = 'deny'") }
 
-  scope :by_month,  -> (month) { where('created_at >= ? AND created_at <= ?', Date.new(Date.today.year, month.to_i, 1), Date.new(Date.today.year, month.to_i, 1).end_of_month) }
+  scope :by_month,  -> (month) { where('orders.created_at >= ? AND orders.created_at <= ?', Date.new(Date.today.year, month.to_i, 1), Date.new(Date.today.year, month.to_i, 1).end_of_month) }
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :user

@@ -2,7 +2,8 @@
 ru:
   orders:
     states:
-      in_cart: В корзине
+      in_cart: Пустые
+      in_cart_products: В корзине
       checkout: К оплате
       unknown: Незавершенные
       completed: Оплаченные

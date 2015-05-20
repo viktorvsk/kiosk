@@ -2,7 +2,7 @@ class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: [:edit, :update]
   def index
     @q = Order.includes(:products, line_items: :order, user: :orders).ransack(search_params)
-    @all_orders = @q.result(distinct: true).order('completed_at DESC NULLS LAST')
+    @all_orders = @q.result.order('orders.completed_at DESC NULLS LAST')
     @orders = @all_orders.page(params[:page])
   end
 
@@ -39,8 +39,8 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def search
-    @q = Order.includes(line_items: :order, user: :orders).ransack(search_params)
-    @all_orders = @q.result(distinct: true).order('completed_at DESC NULLS LAST')
+    @q = Order.includes(:products, line_items: :order, user: :orders).ransack(search_params)
+    @all_orders = @q.result.order('orders.completed_at DESC NULLS LAST')
     @orders = @all_orders.page(params[:page])
     render :index
   end
