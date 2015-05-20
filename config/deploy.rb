@@ -90,6 +90,7 @@ set :shared_paths, [
   'tmp', 'public', 'vendor/assets/bower_components'
 ]
 
+
 task :environment do
   invoke :'rbenv:load'
   queue! %(export NODE_PATH="#{node_path}")
@@ -155,6 +156,11 @@ task :enable_active_admin => environment do
   queue! %(mv #{deploy_to}/current/admin/ #{deploy_to}/current/app/admin/ 2>/dev/null)
 end
 
+desc 'Update crontab'
+task update_crontab: :environment do
+  invoke :'whenever:write'
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
 
@@ -167,7 +173,6 @@ task :deploy => :environment do
     invoke :'enable_active_admin'
     invoke :'bower_install'
     invoke :'rails_patched:assets_precompile'
-    invoke :'whenever:write'
     invoke :'deploy:cleanup'
     invoke :'restart_resque'
 
@@ -177,4 +182,5 @@ task :deploy => :environment do
       invoke :'puma:phased_restart'
     end
   end
+  invoke :'whenever:write'
 end
