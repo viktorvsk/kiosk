@@ -97,11 +97,14 @@ module Vendor
     def batch_update( products )
       sql = products.compact.map do |p|
         info_attrs = p.info.to_json
-        expression = %(UPDATE "vendor_products" SET
-          "price" = #{p['price']},
-          "is_rrc" = #{p['is_rrc']},
-          "in_stock" = #{p['in_stock']},
-          "info" = $json$#{info_attrs}$json$ WHERE "articul" = '#{p['articul']}';)
+        expression = %(
+          UPDATE "vendor_products" SET
+            "price" = #{p['price']},
+            "is_rrc" = #{p['is_rrc']},
+            "in_stock" = #{p['in_stock']},
+            "info" = $json$#{info_attrs}$json$
+          WHERE "articul" = '#{p['articul']}'
+            AND "vendor_merchant_id" = '#{@merchant.id}';)
       end.join
       ActiveRecord::Base.connection.execute(sql)
     end
@@ -128,7 +131,7 @@ module Vendor
       @to_update_articuls  = @to_update.pluck(:articul)
       @to_update = @to_update.map do |product|
         new_product = @products.detect{ |p| p['articul'] == product.articul }
-        # next if product['price'].to_i == new_product['price'].to_i
+        next if !product_changed?(product, new_product)
         new_product_attributes = new_product.slice( *UPDATE_ATTRIBUTES )
         new_product_attributes.each do |k, v|
           product.send("#{k}=", v)
@@ -146,6 +149,18 @@ module Vendor
       # @to_create.uniq!{ |p| p.name }
       @to_create.uniq!{ |p| p.articul }
       @to_create.reject!{ |p| p.articul.blank? || p.articul.in?(@products_articuls) } # or p.name.in?(@products_names)
+    end
+
+    def product_changed?(old_product, new_product)
+      old_product.price != new_product['price'] ||
+      old_product.in_stock != new_product['in_stock'] ||
+      old_product.in_stock_kiev != new_product['in_stock_kiev'] ||
+      old_product.in_stock_kharkov != new_product['in_stock_kharkov'] ||
+      old_product.is_rrc != new_product['is_rrc'] ||
+      old_product.rrc != new_product['rrc'] ||
+      old_product.uah != new_product['uah'] ||
+      old_product.usd != new_product['usd'] ||
+      old_product.eur != new_product['uer']
     end
 
   end

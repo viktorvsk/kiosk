@@ -33,6 +33,14 @@ var typewatch = function(){
 var typeWatcher = typewatch();
 
 $(document).ready(function () {
+
+  $(".cd-top").click(function(event) {
+    event.preventDefault();
+    $('html, body').animate({
+      scrollTop: $("#animated-header").offset().top
+    }, 400);
+  });
+
   $('.search-example').click(function (event) {
     $('#q_main_search').closest('form').find('input[type="search"]').val($(this).text());
     $('#q_main_search').closest('form').submit();

@@ -7,6 +7,8 @@
     %style= Conf['txt.css']
     = csrf_meta_tags
   %body
+    = link_to '#animated-header', class: 'cd-top' do
+      %i.glyphicon.glyphicon-chevron-up
     = render 'layouts/nav/catalog'
     = render 'shared/top_bar'
     = render 'shared/flash_bar'
