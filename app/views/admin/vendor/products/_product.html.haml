@@ -1,18 +1,25 @@
+- tooltip = render('admin/vendor/products/additional_info', product: product)
 - inactive = !product.active? or !product.in_stock?
 %li.list-group-item.col-xs-12.draggable-vendor-product{ 'data-draggable' => 'vendorProduct', 'data-vendor-product-id' => product.id, class: ('inactive' if inactive ) }
+  .container-fluid
+    .row
+      .row
+        .col-xs-6
+          %span
+            .label.label-primary #{product.price} грн.
+            %b= link_to product.merchant.name, edit_admin_vendor_merchant_path(product.merchant)
+            %i [#{product.articul}]
+        .col-xs-6.text-right
+          %span
+            = link_to toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true', class: 'unselectable btn btn-xs btn-default' do
+              %i.glyphicon.glyphicon-remove
+          = link_to '#', 'data-toggle' => 'tooltip', title: tooltip do
+            .btn.btn-xs.btn-info
+              %i.glyphicon.glyphicon-info-sign
+      .row
+        .col-xs-12.text-center
+          %span
+            %b= product.name
 
-  .col-xs-2
-    %a.btn.btn-xs.btn-success
-      %i.glyphicon.glyphicon-menu-hamburger
-  %span
-    .col-xs-2.col-xs-offset-8.text-right
-      = link_to toggle_activation_admin_vendor_product_path(product), method: :post, remote: true, 'data-activation-toggle' => 'true', class: 'unselectable btn btn-xs btn-default' do
-        %i.glyphicon.glyphicon-remove
-  %span
-    .col-xs-12.text-center
-      %b= product.name
-    .col-sm-6.text-left
-      = render 'admin/vendor/products/info', product: product
-    .col-sm-6.text-left
-      = render 'admin/vendor/products/additional_info', product: product
-    = render 'admin/vendor/products/scraper', product: product
+      .row
+        = render 'admin/vendor/products/info', product: product

@@ -1,39 +1,33 @@
-- if product.is_rrc?
-  %b RRC:
-  %i= product.rrc.to_f
+.text-left
+  = product.merchant.rates
   %br/
-- if product.usd.to_i > 0
-  %b $:
-  %i= product.usd.to_f
-  %br/
-- if product.eur.to_i > 0
-  %b €:
-  %i= product.eur.to_f
-  %br/
-- if product.uah.to_i > 0
-  %b ₴:
-  %i= product.uah.to_f
-  %br/
-- if !product.in_stock?
-  %b Нет в наличии
-  %br/
-- unless product.in_stock_kiev.nil?
-  - if product.in_stock_kiev
-    %b Киев:
-    %i +
+  - if product.is_rrc?
+    RRC: #{product.rrc.to_f}
     %br/
-  - if product.in_stock_kharkov
-    %b Харьков:
-    %i +
+  - if product.usd.to_i > 0
+    $: #{product.usd.to_f}
     %br/
-  - if product.warranty.present?
-    %b Гарантия:
-    %i= product.warranty
+  - if product.eur.to_i > 0
+    €: #{product.eur.to_f}
     %br/
-  - if product.category.present?
-    %b Категория:
-    %i= product.category
+  - if product.uah.to_i > 0
+    ₴: #{product.uah.to_f}
     %br/
-  - if product.brand.present?
-    %b Бренд:
-    %i= product.brand
+  - if !product.in_stock?
+    Нет в наличии
+    %br/
+  - unless product.in_stock_kiev.nil?
+    - if product.in_stock_kiev
+      Киев: +
+      %br/
+    - if product.in_stock_kharkov
+      Харьков: +
+      %br/
+    - if product.warranty.present?
+      Гарантия: #{product.warranty}
+      %br/
+    - if product.category.present?
+      Категория: #{product.category}
+      %br/
+    - if product.brand.present?
+      Бренд: #{product.brand}

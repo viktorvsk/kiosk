@@ -1,25 +1,27 @@
-.well
+.panel-material
   = search_form_for @q_catalog_products, url: search_admin_products_path(format: :js), remote: true do |f|
     .row
       .col-sm-12
         .form-group
-          = f.label :name_or_id_or_model_or_slug_cont, 'Название, артикул или модель'
           = f.search_field :name_or_id_or_model_or_slug_cont, class: 'form-control'
       %div{ 'data-toggleable' => 'catalog-products-filters', style: 'display: none' }
         .col-sm-4
           .form-group
             = f.label :catalog_category_id_eq, 'Категория'
-            = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, { include_blank: 'Все категории' }, class: 'form-control select2')
+            = f.collection_select(:catalog_category_id_eq, Catalog::Category.all, :id, :name, { include_blank: 'Все категории' }, class: 'form-control')
         .col-sm-4
           .form-group
             = f.label :vendor_products_vendor_merchant_id_eq, 'Поставщик'
-            = f.collection_select(:vendor_products_vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все поставщики' }, class: 'form-control select2')
+            = f.collection_select(:vendor_products_vendor_merchant_id_eq, Vendor::Merchant.all, :id, :name, { include_blank: 'Все поставщики' }, class: 'form-control')
 
-      .col-sm-12
+      .col-sm-6
+        %div{ 'data-catalog-products-paginate' => true }
+      .col-sm-6
         .form-group
           .form-actions.text-right
-            = link_to 'Сбросить', '#', 'onclick' => 'javascript:$(this).closest("form")[0].reset(); return false;', class: 'btn btn-default btn-small'
-            = link_to 'Показать фильтры', '#', 'data-toggler' => 'catalog-products-filters', 'data-hide-msg' => 'Скрыть фильтры', 'data-show-msg' => 'Показать фильтры', class: 'btn btn-default btn-small'
-            = f.submit 'Найти', class: 'btn btn-primary btn-small'
+            = link_to 'Сбросить', '#', 'onclick' => 'javascript:$(this).closest("form")[0].reset(); return false;', class: 'btn btn-default btn-xs'
+            = link_to 'Показать фильтры', '#', 'data-toggler' => 'catalog-products-filters', 'data-hide-msg' => 'Скрыть фильтры', 'data-show-msg' => 'Показать фильтры', class: 'btn btn-default btn-xs'
+            = f.submit 'Найти', class: 'btn btn-primary btn-xs'
 
-%ul.list-group.catalog-products-list{ 'data-catalog-products' => true }
+
+%ul.list-group.catalog-products-list.ul-products{ 'data-catalog-products' => true }

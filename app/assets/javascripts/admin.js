@@ -20,6 +20,21 @@
 //= require_tree ./admin
 
 $(document).ready(function () {
+
+  if($('.binding').size()){
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 70 ){
+        $('.binding .panel-material').addClass('binding-panel-fixed');
+        $('.binding .ul-products').addClass('binding-list-fixed');
+      } else {
+        $('.binding .panel-material').removeClass('binding-panel-fixed');
+        $('.binding .ul-products').removeClass('binding-list-fixed');
+      }
+
+    });
+
+  }
+
   // var defaultRates;
   // defaultRates = {
   //   uah: 1,

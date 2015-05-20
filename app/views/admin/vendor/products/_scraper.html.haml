@@ -1,8 +1,7 @@
-%span.col-xs-12.text-center{ 'data-vendor-scraper' => 'vendor-product' }
-  %hr/
-
+%span{ 'data-vendor-scraper' => 'vendor-product' }
   = form_for product, url:  admin_vendor_product_path(product), remote: true do |f|
-    Модель:
-    = f.text_field :model, 'data-model' => true, id: "p#{product.id}"
+    .input-group
+      = f.text_field :model, 'data-model' => true, id: "p#{product.id}", class: 'form-control'
+      .input-group-btn
+        = link_to 'Скачать', '#', class: 'btn btn-primary', 'data-toggle' => 'modal', 'data-target' => '#vendor-product-scraper-window', 'data-scraper-modal' => true
     = f.submit 'update', type: :hidden
-    = link_to 'Скачать', '#', class: 'btn btn-primary btn-xs', 'data-toggle' => 'modal', 'data-target' => '#vendor-product-scraper-window', 'data-scraper-modal' => true

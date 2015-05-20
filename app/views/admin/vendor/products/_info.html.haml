@@ -1,13 +1,2 @@
-Код поставщика:
-%b= product.articul
-%br/
-Цена:
-%b= "#{product.price} грн."
-%br/
-%b Поставщик:
-%i= product.merchant.name
-%br/
-%b Курсы:
-%i
-  = product.merchant.rates
-%br/
+.col-xs-12
+  = render 'admin/vendor/products/scraper', product: product

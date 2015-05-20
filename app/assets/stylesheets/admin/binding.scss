@@ -13,6 +13,19 @@
 .inactive{
   opacity: 0.5;
 }
+
+.binding .col-sm-6{
+  position: relative;
+}
+.binding-panel-fixed{
+  position: fixed;
+  width: 48%;
+  top: 0!important;
+  z-index:  100;
+}
+.binding-list-fixed{
+  margin-top: 150px;
+}
 .bind-to-product
 {
   background: #19b5fe!important;
@@ -30,7 +43,10 @@
     color: #333;
   }
   margin: 15px auto;
-  [data-scraper-modal]{
+  .input-group{
+    width: 100%;
+  }
+  .input-group-btn .btn{
     display: none;
   }
 }
