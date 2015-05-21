@@ -39,6 +39,15 @@ class ProductsController < CatalogController
     end
   end
 
+  def old_show
+    @product = Catalog::Product.where(slug: params[:slug]).first
+    if @product.present?
+      render :show
+    else
+      redirect_to root_path, alert: 'Товар не найден, возможно, устаревшая ссылка.'
+    end
+  end
+
   def add_comment
     product = Catalog::Product.find(params[:product_id])
     product.comments.create(comment_params)

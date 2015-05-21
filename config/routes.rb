@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
 
+  get '/products/:slug', to: 'products#old_show'
+
   get 'pages/(:slug)/:id', to: 'catalog#static_page', as: :static_page
   get 'help', to: 'catalog#help_pages', as: :help_pages
   get 'help/:slug/:id', to: 'catalog#show_help_page', as: :help_page
