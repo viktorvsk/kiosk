@@ -14,7 +14,7 @@ class CategoriesController < CatalogController
       redirect_to c_path(slug: @category.slug, id: @category), status: 301
     end
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
-    @all_products = @category.products.by_category_params(params)
+    @all_products = @category.products.with_price.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])
     @brand = Catalog::Brand.where(id: params[:b]).first
     @filters_and_results_hash = {
