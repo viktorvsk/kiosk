@@ -4,7 +4,7 @@
     = render 'layouts/catalog_meta_bar'
     = render 'shared/head_assets'
     = favicon_link_tag '/favicon.ico'
-    %style= Conf['txt.css']
+    %style= Conf['txt.css'].try(:html_safe)
     = csrf_meta_tags
   %body
     = link_to '#animated-header', class: 'cd-top' do
@@ -17,6 +17,6 @@
     = render 'shared/footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
-    %script= Conf['txt.js']
+    %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
 

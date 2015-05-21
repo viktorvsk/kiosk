@@ -74,17 +74,30 @@ class Catalog::Product < ActiveRecord::Base
 
     def with_filters(val)
       if val == 'y'
-        all.joins(:product_filters).uniq
+        all
+          .joins(:product_filters)
+          .where
+          .not(catalog_product_filter_values: {catalog_filter_value_id: nil})
+          .uniq
       elsif val == 'n'
-        all.joins('LEFT JOIN catalog_product_filter_values ON catalog_product_filter_values.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(catalog_product_filter_values.id) = 0')
+        all
+          .includes(:product_filters)
+          .where(catalog_product_filter_values: {catalog_filter_value_id: nil})
+          .uniq
       end
     end
 
     def with_properties(val)
       if val == 'y'
-        all.joins(:product_properties).uniq
+        all
+          .joins(:product_properties)
+          .where("catalog_product_properties.name != ''")
+          .uniq
       elsif val == 'n'
-        all.joins('LEFT JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(catalog_product_properties.id) = 0')
+        all
+          .includes(:product_properties)
+          .where("catalog_product_properties.catalog_product_id IS NULL OR catalog_product_properties.name = '' OR catalog_product_properties.name IS NULL")
+          .uniq
       end
     end
 

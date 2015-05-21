@@ -21,7 +21,7 @@ class Admin::ProductsController < Admin::BaseController
     @q = Catalog::Product.ransack(params[:q])
     @all_products = @q.result(distinct: true)
     @all_products_count = @all_products.count.respond_to?(:keys) ? @all_products.count.keys.count : @all_products.count
-    @products = @all_products.order('created_at DESC').page(params[:page])
+    @products = @all_products.order('catalog_products.created_at DESC').page(params[:page])
     respond_to do |format|
       format.html { render :index }
       format.js
