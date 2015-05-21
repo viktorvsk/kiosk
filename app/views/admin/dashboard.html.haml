@@ -32,8 +32,7 @@
         %td{ colspan: 2 }
           %b Поставщики
       = td('Всего позиций товаров', Vendor::Product.count)
-      = td('Привязано', Vendor::Product.bound.uniq.count)
-      = td('C ценой', Vendor::Product.with_price.count)
+      = td('Привязано', Vendor::Product.bound.count)
       = td('Не привязано', Vendor::Product.count - Vendor::Product.bound.count)
       = td('Активных', Vendor::Product.active.count)
       = td('Неактивных', Vendor::Product.not_active.count)
