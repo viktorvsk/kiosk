@@ -19,7 +19,7 @@ class Catalog::FilterValue < ActiveRecord::Base
       action = checked_state ? :delete : :push
       p[:f] = p[:f].to_s.split(',').map(&:strip).send(action, id).join(',')
 
-      count = products.unscoped.by_category_params(p).count
+      count = products.unscoped.with_price.by_category_params(p).count
 
       if (filtered & siblings).present?
         if count == init_count
