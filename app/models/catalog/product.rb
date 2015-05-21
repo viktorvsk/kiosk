@@ -323,6 +323,27 @@ class Catalog::Product < ActiveRecord::Base
     nil
   end
 
+  def empty_attributes
+    attributes
+      .select{ |k, v| v.blank? }
+      .keys
+      .map{ |k| I18n.t("activerecord.attributes.catalog/product.#{k}") }
+      .join('; ')
+  end
+
+  def stats
+    stats = {
+      '<b>Название</b>' => name,
+      '<b>Пустые поля</b>' => empty_attributes,
+      '<b>Характеристик</b>' => product_properties.where.not(name: nil).count,
+      '<b>Фильтров</b>' => product_filters.where.not(filter_value: nil).count,
+      '<b>Изображений</b>' => images.count,
+      '<b>Длина описания</b>' => description.size
+    }
+    stats.to_a.map{ |stat| stat.join(": ") }.join("\n<br/>")
+
+  end
+
   def reorder(props)
     product_properties.each do |property|
       position = props[property.id.to_s].try(:fetch, 'position').to_i

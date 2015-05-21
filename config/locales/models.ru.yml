@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      user_product_action:
+        one: История
+        many: Истории
+        other: Истории
+        few: Истории
       catalog/comment:
         one: Отзыв
         many: Отзывы
@@ -100,6 +105,12 @@ ru:
       line_item:
         serial_numbers: Серийные номера
         vendor: Поставщик
+      user_product_action:
+        user: Пользователь
+        action_type: Тип действия
+        action: Действие
+        product: Товар
+        created_at: Дата
       order:
         name: Имя
         state: Состояние
@@ -120,6 +131,7 @@ ru:
         value: Значение
       user:
         name: Имя
+        uniq_product_actions_today: Товаров за сегодня
         phone: Телефон
         password: Пароль
         role: Роль

@@ -3,9 +3,17 @@ ActiveAdmin.register User do
   actions :all, except: [:show]
   menu priority: 1, parent: "CRM"
   filter :email
+
+  scope 'Администраторы', :admins
+  scope 'Контент менеджеры', :contents
+  scope 'Клиенты', :customers
+
   index do
     selectable_column
     column :email
+    column :uniq_product_actions_today do |user|
+      user.uniq_product_actions_today
+    end
     actions
   end
 

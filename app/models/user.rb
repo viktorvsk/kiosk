@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   ROLES = %w(admin customer content)
-  scope :admins, -> { where(role: 'admin') }
+  # scope :admins, -> { where(role: 'admin') }
+  # scope :contents, -> { where(role: 'content') }
 
   # PHONE_OPERATORS = %w(63 93 50 97 96 572).join('|')
   validates :phone,
@@ -19,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :actions, dependent: :destroy, class_name: UserProductAction
 
   ROLES.each do |role_name|
+    scope "#{role_name}s", ->{ where(role: role_name) }
     define_method "#{role_name}?" do
       role_name == role
     end
@@ -47,6 +49,10 @@ class User < ActiveRecord::Base
 
   def clean_total_income
     orders.map(&:total_income).sum
+  end
+
+  def uniq_product_actions_today
+    actions.where(created_at: Date.today.beginning_of_day..Date.today.end_of_day).pluck(:product_id).uniq.count
   end
 
   private

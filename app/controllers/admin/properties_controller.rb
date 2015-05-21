@@ -15,6 +15,8 @@ class Admin::PropertiesController < Admin::BaseController
   def reorder_product
     @product = Catalog::Product.includes(:product_properties).find(params[:product_id])
     if @product.reorder(params[:properties])
+      current_user.record!(@product, 'Отредактировал', "Переместил характеристику")
+
       head 200
     else
       head 400
@@ -47,6 +49,7 @@ class Admin::PropertiesController < Admin::BaseController
     p_p = @product.product_properties.find(params[:id])
     if p_p.modify!(params[:catalog_product_property][:property_name], params[:catalog_product_property][:name])
       @id = p_p.reload.property.id.to_s
+      current_user.record!(@product, 'Отредактировал', "Характеристика <b>#{p_p.property_name}</b>: #{p_p.name}")
     else
       head 400
     end
