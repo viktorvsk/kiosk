@@ -111,6 +111,7 @@ class Admin::ProductsController < Admin::BaseController
     url = URI.decode params[:url]
     model = URI.decode params[:model]
     product = Catalog::Product.create_from_marketplace(url, category: category, model: model)
+    current_user.record!(product, 'Создал', "<center>Спарсил</center><br/>\n#{product.stats}<br/>\n<b>Категория</b>: #{category.name}")
     vendor_product = Vendor::Product.ransack(model_cont: model).result.bind_to(product)
     head 200
   end
@@ -118,6 +119,7 @@ class Admin::ProductsController < Admin::BaseController
   def update_from_marketplace
     if @product.update_from_marketplace
       @product.save
+      current_user.record!(@product, 'Отредактировал', "<center>Спарсил</center><br/>\n#{@product.stats}")
       redirect_to edit_admin_product_url(@product), notice: 'Характеристики и описание обновлены'
     else
       redirect_to edit_admin_product_url(@product), error: 'Произошла ошибка'
@@ -126,11 +128,13 @@ class Admin::ProductsController < Admin::BaseController
 
   def copy_filters
     @product.copy_filters_from_category
+    current_user.record!(@product, 'Отредактировал', 'Скопировал фильтры')
     redirect_to edit_admin_product_url(@product), notice: 'Фильтры скопированы'
   end
 
   def copy_properties
     @product.copy_properties_from_category
+    current_user.record!(@product, 'Отредактировал', 'Скопировал характеристики')
     redirect_to edit_admin_product_url(@product), notice: 'Характеристики скопированы'
   end
 

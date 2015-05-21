@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def record!(product, action_type, action)
-    actions.create(product: product, action_type: action_type, action: action)
+    actions.create!(product: product, action_type: action_type, action: action)
   end
 
   def is_admin?
