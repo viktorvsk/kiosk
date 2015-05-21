@@ -23,8 +23,8 @@
       = td('Фильтров товаров', Catalog::ProductFilterValue.count)
       = td('С фильтрами', Catalog::Product.with_filters("y").count)
       = td('С характеристиками', Catalog::Product.with_properties("y").count)
-      = td('Без фильтров', Catalog::Product.with_filters("n").count)
-      = td('Без характеристик', Catalog::Product.with_properties("n").count)
+      =# td('Без фильтров', Catalog::Product.with_filters("n").count)
+      =# td('Без характеристик', Catalog::Product.with_properties("n").count)
 
   .table-responsive.col-md-4
     %table.table.table-striped.table-bordered.table-hover
