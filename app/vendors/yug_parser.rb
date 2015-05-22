@@ -16,7 +16,7 @@ class YugParser < ::ActivePricelist::Base
         break
       end
     end
-    @product['price'] = @product['price'].ceil
+    @product['price'] = @product['price'].to_f.ceil
 
     @product['price'] += @product['delivery_tax'].to_i if !@product['is_rrc'] && (@product['price'].to_f.ceil > 0)
 
