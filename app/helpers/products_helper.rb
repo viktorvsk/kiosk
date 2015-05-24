@@ -59,6 +59,7 @@ module ProductsHelper
   end
 
   def breadcrumbs_for_category(category)
+    return if category.taxon.nil?
     top_taxon = category.taxon.parent
     [
       link_to(Conf[:site_name], root_path),
