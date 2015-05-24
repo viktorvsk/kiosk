@@ -351,7 +351,7 @@ class Catalog::Product < ActiveRecord::Base
       '<b>Характеристик</b>' => product_properties.where.not(name: nil).count,
       '<b>Фильтров</b>' => product_filters.where.not(filter_value: nil).count,
       '<b>Изображений</b>' => images.count,
-      '<b>Длина описания</b>' => description.size
+      '<b>Длина описания</b>' => description.to_s.size
     }
     stats.to_a.map{ |stat| stat.join(": ") }.join("\n<br/>")
 

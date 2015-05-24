@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
 private
   def authorize_admin!
-    redirect_to root_path, notice: 'Только для администраторов' if !current_user.admin?
+    redirect_to root_path, notice: 'Только для администраторов' if !current_user.try(:admin?)
   end
 
   def after_sign_in_path_for(resource)

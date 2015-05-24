@@ -2,7 +2,7 @@ class Catalog::Category < ActiveRecord::Base
   include Slugable
   # after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description, :s_name
-  validates :name, presence: true
+  validates :name, :taxon, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
   has_many :brands, through: :products
   #has_many :vendor_products, through: :products, class_name: ::Vendor::Product

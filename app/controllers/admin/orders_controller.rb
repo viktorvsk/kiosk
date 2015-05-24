@@ -53,7 +53,7 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def order_params
-    c = params[:order][:add_comment]
+    c = params.try(:[], :order).try(:[], :add_comment)
     if c.present?
       named_comment = %(<hr/><b>#{current_user.name}</b>: #{c} <div class='text-right'> #{Time.now.strftime("%x %X")}</div>)
       params[:order][:add_comment] = named_comment

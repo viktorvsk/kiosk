@@ -38,7 +38,7 @@ class RozetkaMarketplace < BasicMarketplace
       } rescue nil
     end
 
-    res[:name]        = page.at_css('h1.detail-title').text.strip
+    res[:name]        = page.at_css('h1.detail-title').try(:text).to_s.strip
     res[:description] = page.at_css('#short_text').inner_html.strip rescue ''
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query

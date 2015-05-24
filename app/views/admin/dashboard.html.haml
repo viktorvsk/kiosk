@@ -2,7 +2,7 @@
   %h1 Статистика
 
 .row
-  .table-responsive.col-md-4
+  .table-responsive.col-md-3
     %table.table.table-striped.table-bordered.table-hover
       %tr
         %td{ colspan: 2 }
@@ -25,8 +25,7 @@
       = td('С характеристиками', Catalog::Product.with_properties("y").count)
       =# td('Без фильтров', Catalog::Product.with_filters("n").count)
       =# td('Без характеристик', Catalog::Product.with_properties("n").count)
-
-  .table-responsive.col-md-4
+  .table-responsive.col-md-3
     %table.table.table-striped.table-bordered.table-hover
       %tr
         %td{ colspan: 2 }
@@ -41,8 +40,7 @@
       = td('Специальных поставщиков', Vendor::Merchant.special.count)
       = td('Давний прайс', I18n.l(Vendor::Merchant.oldest_price, format: "%e %b, %X"))
       = td('Новый прайс', I18n.l(Vendor::Merchant.newest_price, format: "%e %b, %X"))
-
-  .table-responsive.col-md-4
+  .table-responsive.col-md-3
     %table.table.table-striped.table-bordered.table-hover
       %tr
         %td{ colspan: 2 }
@@ -55,4 +53,10 @@
       = td('Заказов обработанных', Order.completed.count)
       = td('Коллбэков', Callback.count)
       = td('Комментариев', Catalog::Comment.count)
-
+  .table-responsive.col-md-3
+    %table.table.table-striped.table-bordered.table-hover
+      %tr
+        %td{ colspan: 2 }
+          %b Привязано
+      - (1..10).each do |x|
+        = td("#{x} позиц.", Catalog::Product.joins(:vendor_products).having("COUNT(vendor_products.id) = #{x}").group("catalog_products.id").count.count)
