@@ -160,6 +160,7 @@ ru:
         slug: Ссылка
       catalog/category:
         all_aliases: Все синонимы
+        active: Рекламируется
         slug: Ссылка
         name: Название
         tax: Наценка ниже

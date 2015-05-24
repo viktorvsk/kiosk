@@ -13,7 +13,7 @@ class ProductsController < CatalogController
   def search
     params[:q].each_value { |v| v.strip! } if params[:q]
     @q = Catalog::Product.ransack(params[:q])
-    @all_products = @q.result
+    @all_products = @q.result.with_price
     @products = @all_products.zeros_last.order('price ASC').page(params[:page])
     respond_to do |format|
       format.html do

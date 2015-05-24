@@ -24,9 +24,10 @@ class Catalog::Category < ActiveRecord::Base
   accepts_nested_attributes_for :aliases, allow_destroy: true
 
   def self.pricelist_association
-    joins(:products)
+    where(active: true)
+      .joins(:products)
       .where('catalog_products.price > 0')
-      .select(:id, :name)
+      .select('catalog_categories.id, catalog_categories.name')
       .uniq
   end
 

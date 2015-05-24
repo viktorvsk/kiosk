@@ -13,6 +13,8 @@
           %li.list-group-item= field_for(f, :tax_threshold)
           %li.list-group-item= field_for(f, :tax)
           %li.list-group-item= field_for(f, :tax_max)
+          %li.list-group-item
+            = select_field_for(f, :active, [['Нет','f'],['Да','t']], selected: f.object.active ? 't' : 'f')
       .col-sm-9
         %h3 Описание
         %ul.list-group

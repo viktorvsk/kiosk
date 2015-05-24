@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150524144544) do
+ActiveRecord::Schema.define(version: 20150524193612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,14 +69,16 @@ ActiveRecord::Schema.define(version: 20150524144544) do
   add_index "catalog_brands", ["name"], name: "index_catalog_brands_on_name", unique: true, using: :btree
 
   create_table "catalog_categories", force: :cascade do |t|
-    t.string   "name",             default: "", null: false
-    t.string   "slug",             default: "", null: false
+    t.string   "name",             default: "",   null: false
+    t.string   "slug",             default: "",   null: false
     t.hstore   "info"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "catalog_taxon_id"
+    t.boolean  "active",           default: true, null: false
   end
 
+  add_index "catalog_categories", ["active"], name: "index_catalog_categories_on_active", using: :btree
   add_index "catalog_categories", ["catalog_taxon_id"], name: "index_catalog_categories_on_catalog_taxon_id", using: :btree
   add_index "catalog_categories", ["name"], name: "index_catalog_categories_on_name", using: :btree
   add_index "catalog_categories", ["slug"], name: "index_catalog_categories_on_slug", using: :btree
