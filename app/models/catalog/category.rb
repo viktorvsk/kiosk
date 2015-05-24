@@ -17,9 +17,11 @@ class Catalog::Category < ActiveRecord::Base
   has_many :filters, through: :category_filters
   has_many :filter_values, through: :category_filters, source: :filter
   has_many :properties, through: :category_properties
+  has_many :aliases, as: :aliasable, dependent: :destroy
   belongs_to :taxon, class_name: Catalog::Taxon, foreign_key: :catalog_taxon_id, touch: true
   has_one :seo, as: :seoable, dependent: :destroy
   accepts_nested_attributes_for :seo
+  accepts_nested_attributes_for :aliases, allow_destroy: true
 
   def self.pricelist_association
     joins(:products)
@@ -62,6 +64,19 @@ class Catalog::Category < ActiveRecord::Base
       Catalog::ProductProperty.where(id: prod_props_ids).update_all(position: position)
     end
 
+  end
+
+  def all_aliases
+    aliases.map(&:name).join("\n")
+  end
+
+  def all_aliases=(values)
+    aliases.destroy_all
+    to_create = values.split("\n").reject(&:blank?)
+    to_create.map! do |v|
+      { name: v }
+    end
+      aliases.create(to_create)
   end
 
   def add_filter(filter_name, postfix = nil)

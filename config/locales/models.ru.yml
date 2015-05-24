@@ -159,6 +159,7 @@ ru:
         title: Заголовок страницы
         slug: Ссылка
       catalog/category:
+        all_aliases: Все синонимы
         slug: Ссылка
         name: Название
         tax: Наценка ниже

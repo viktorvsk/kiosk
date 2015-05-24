@@ -34,5 +34,12 @@
       .col-sm-4
         %h3 Фильтры
         = render 'admin/categories/filters', category: @category
+      .col-sm-4
+        %h3 Синонимы
+        = form_for @category, url: admin_category_path(@category) do |f|
+          = f.text_area :all_aliases, rows: 10, class: 'form-control'
+          .form-actions
+            = f.submit 'Изменить синонимы', class: 'btn btn-success'
+
 
 
