@@ -44,7 +44,8 @@ class BrainMarketplace < BasicMarketplace
     res[:images]      = page.css('.thumbs_list a').map { |a| URI.join('http://brain.com.ua', a['href']).to_s } rescue []
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query
-    #res[:category]    = page.css('.crumbs a')[1].text.strip
+    res[:vendor_code] = page.at_css('.kod > p').text.gsub('код товара ', '').strip
+    res[:vendor_category]    = page.css('.crumbs a')[1].text.strip
 
     res
 

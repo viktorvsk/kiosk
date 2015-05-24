@@ -70,6 +70,10 @@ module Vendor
       end
     end
 
+    def search_marketplace(marketplace, searcher)
+      marketplace.new(send(searcher)).search
+    end
+
     def bind_to(catalog_product)
       update!(product: catalog_product)
       catalog_product.recount

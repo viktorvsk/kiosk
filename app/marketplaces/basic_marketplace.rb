@@ -8,7 +8,7 @@ class BasicMarketplace
   end
 
   def search
-    html = Typhoeus.get(search_query, follow_location: true).body
+    html = Typhoeus.get(search_query, followlocation: true, verbose: false).body
     doc = Nokogiri::HTML(html)
     @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }
   end

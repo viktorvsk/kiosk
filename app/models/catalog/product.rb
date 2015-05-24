@@ -17,7 +17,8 @@ class Catalog::Product < ActiveRecord::Base
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
                         :old_price, :main_name,
-                        :url, :fixed_tax
+                        :url, :fixed_tax,
+                        :vendor, :vendor_code, :vendor_category
   validates :name, :category, presence: true
   # validates :model, :name, uniqueness: true
   belongs_to :category, -> { includes(:taxon) },
@@ -220,12 +221,6 @@ class Catalog::Product < ActiveRecord::Base
       params[:model] = opts[:model] if opts[:model]
       create(params)
     end
-
-    # def search_marketplaces_by_model(model)
-    #   self.class.active_marketplaces.map do |m|
-    #     m.new(model).search
-    #   end.flatten
-    # end
 
     def search_marketplaces_by_model(model)
       Parallel.map(active_marketplaces, in_threads: active_marketplaces.count) do |marketplace|
