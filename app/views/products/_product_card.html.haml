@@ -34,10 +34,7 @@
       %br/
       - if product.video.present?
         .text-center= video_for product.video
-      - if product.description.present?
-        = product.description.html_safe
-      - else
-        Описание отсутствует
+      =# product.description.to_s.html_safe
     #comments.tab-pane.fade
       %br/
       - if product.comments.olds.present?

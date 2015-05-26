@@ -386,5 +386,4 @@ ActiveRecord::Schema.define(version: 20150524193612) do
   add_index "vendor_products", ["vendor_merchant_id"], name: "index_vendor_products_on_vendor_merchant_id", using: :btree
 
   add_foreign_key "comments", "users"
-  add_foreign_key "comments", "users"
 end

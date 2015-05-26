@@ -34,7 +34,9 @@ class ErcMarketplace < BasicMarketplace
     res[:images]      = page.css('.vido_frame_big_gallery_container img').map { |i| URI.join('http://erc.ua', i['src']).to_s rescue nil }.compact rescue []
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query
-    # res[:category]    = page.at_css('.cpContent_tbVnd_pnVnd_tvVnd_2.cpContent_tbVnd_pnVnd_tvVnd_4').text.strip
+    res[:vendor]      = 'ERC'
+    res[:vendor_code] = @query.split('/').last
+    res[:vendor_category]    = @query.split('/')[-3]
     res
   end
 end
