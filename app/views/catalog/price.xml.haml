@@ -9,6 +9,7 @@
     %categories
       - categories.find_each do |category|
         %category{:id => category.id}= category.name
+    %local_delivery_cost 0
     %offers
       - categories.find_each do |category|
         = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category }, as: :product
