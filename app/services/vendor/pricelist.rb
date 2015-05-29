@@ -35,7 +35,7 @@ module Vendor
       @products_articuls = @merchant.products.pluck('vendor_products.articul')
       delete_not_in_pricelist
       batch_create_or_update
-      notify('Привязываются товары')
+      # notify('Привязываются товары')
       # Binder.perform
       notify('Пересчитывается цена товаров')
       @merchant.catalog_products.recount
@@ -84,13 +84,16 @@ module Vendor
     end
 
     def batch_create_or_update
+      notify('Находятся прайсы, которые нужно обновить')
       from_hash_to_update
+      notify('Находятся прайсы, которые нужно создать')
       from_hash_to_create
       notify('Обновляются существующие прайсы')
       batch_update( @to_update )
       notify('Создаются новые прайсы')
       batch_create( @to_create )
       # actual_products = @to_create_articuls.try(:count).to_i + @to_update_articuls.try(:count).to_i
+      notify('Товары в текущем прайс листе помечаются актуальными')
       actual_articuls = @products.map{ |p| p['articul'] }
       Vendor::Product.where(articul: actual_articuls).activate
     end
