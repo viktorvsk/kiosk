@@ -90,8 +90,9 @@ module Vendor
       batch_update( @to_update )
       notify('Создаются новые прайсы')
       batch_create( @to_create )
-      actual_products = @to_create_articuls.try(:count).to_i + @to_update_articuls.try(:count).to_i
-      Vendor::Product.where(id: actual_products).activate
+      # actual_products = @to_create_articuls.try(:count).to_i + @to_update_articuls.try(:count).to_i
+      actual_articuls = @products.map{ |p| p['articul'] }
+      Vendor::Product.where(articul: actual_articuls).activate
     end
 
     def batch_update( products )
