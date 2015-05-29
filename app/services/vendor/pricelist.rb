@@ -19,6 +19,7 @@ module Vendor
     end
 
     def initialize(merchant_id, file_path)
+      notify("Ошибка загрузки файла:\n #{file_path}", true) unless File.file?(file_path)
       @file         = File.new(file_path)
       @merchant     = ::Vendor::Merchant.find(merchant_id)
       @settings     = @merchant.to_activepricelist
