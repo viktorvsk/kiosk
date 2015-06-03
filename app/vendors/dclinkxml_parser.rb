@@ -8,13 +8,11 @@ class DclinkxmlParser < ::ActivePricelist::Base
   end
 
   def self.get_fresh_pricelist
-    Typhoeus.post("https://opt.dclink.com.ua/xml.htm",
+    Typhoeus.post("https://api.dclink.com.ua/api/GetPriceAll",
+      ssl_verifypeer: false,
       body: {
         login: 'evotex',
-        passw: 'cv70ZVhW',
-        action: 'price',
-        storage: 0,
-        type: 0
+        password: 'cv70ZVhW'
         }).body.force_encoding('windows-1251').encode("utf-8")
   end
 
