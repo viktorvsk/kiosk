@@ -1,4 +1,9 @@
 class Catalog::Category < ActiveRecord::Base
+  SEO_MAPPER = {
+    'имя-мн'                => :name,
+    'имя-ед'                => :s_name
+  }
+  SEO_ATTRS = SEO_MAPPER.keys.join('|')
   include Slugable
   # after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description, :s_name
@@ -113,6 +118,10 @@ class Catalog::Category < ActiveRecord::Base
     values.each do |filter_id, position_hash|
       Catalog::CategoryFilter.find(filter_id).update(position_hash.permit(:position))
     end
+  end
+
+  def seo_template
+    Conf[:seo_template_category].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) rescue '' }
   end
 
   private

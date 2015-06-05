@@ -8,6 +8,7 @@ default_settings = {
   'kiosk_meta_description'=> 'Интернет-магазин',
   'kiosk_meta_keywords'   => 'Ноутбуки, нетбуки в Харькове',
   'seo_template_product'  => '{{название}} за {{цена}} грн. в Харькове',
+  'seo_template_category' => '{{имя-мн}} в Харькове. Купить {{имя-ед}}',
   'txt.js'                => '',
   'txt.robots'                => '',
   'txt.css'               => '',

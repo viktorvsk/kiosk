@@ -6,8 +6,11 @@
 
     %ul.list-group
       = render @confs.reject{ |c| c.var =~ /(^txt\.)|(^ck\.)/ }.sort_by(&:created_at)
-      %h2 SEO-шаблон
+      %h2 SEO-шаблон товаров
       - Catalog::Product::SEO_MAPPER.keys.each do |key|
+        %li.list-group-item= key
+      %h2 SEO-шаблон категорий
+      - Catalog::Category::SEO_MAPPER.keys.each do |key|
         %li.list-group-item= key
       %h2 Источники парсинга (указывать через пробел)
       %li.list-group-item rozetka

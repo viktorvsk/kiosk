@@ -1,4 +1,4 @@
-- @meta_title = @category.seo.try(:title)
+- @meta_title = @category.seo.try(:title).presence || @category.seo_template
 - @meta_keywords = @category.seo.try(:keywords)
 - @meta_description = @category.seo.try(:description)
 

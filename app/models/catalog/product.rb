@@ -283,7 +283,7 @@ class Catalog::Product < ActiveRecord::Base
     images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "/product_missing.png"
   end
 
-  def seo_template(attribute)
+  def seo_template
     Conf[:seo_template_product].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) rescue '' }
   end
 

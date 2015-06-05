@@ -1,4 +1,4 @@
-- @meta_title = @product.seo.try(:title).presence || @product.seo_template(:title)
+- @meta_title = @product.seo.try(:title).presence || @product.seo_template
 - @meta_keywords = @product.seo.try(:keywords)
 - @meta_description = @product.seo.try(:description)
 - if current_user.try(:admin?) && @product
