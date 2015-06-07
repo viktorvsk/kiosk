@@ -3,5 +3,5 @@
     %tr
       %th Характеристика
       %th Значение
-  %tbody
+  %tbody{ itemprop: 'description' }
     = render partial: 'product_property', collection: product_properties.with_value.sort_by(&:position), as: :product_property

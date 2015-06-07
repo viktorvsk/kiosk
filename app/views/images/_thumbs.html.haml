@@ -1,2 +1,3 @@
+- not_lazy = false unless local_assigns[:not_lazy]
 = link_to image, class: 'mfp-gallery' do
-  .col-sm-2= render image
+  .col-sm-2= render image, not_lazy: not_lazy

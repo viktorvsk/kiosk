@@ -1,1 +1,14 @@
-= image_tag 'lazy-spinner.gif', class: 'img-responsive thumbnail lazy', 'data-original' => image.url
+:erb
+  <%
+    hash = {
+      class: 'img-responsive thumbnail ',
+      alt: image.imageable.try(:name),
+      title: image.imageable.try(:name),
+      itemprop: 'image'
+    }
+  %>
+- if local_assigns[:not_lazy] == true
+  = image_tag image.url, hash
+- else
+  - hash['data-original'] = image.url
+  = image_tag 'lazy-spinner.gif', hash

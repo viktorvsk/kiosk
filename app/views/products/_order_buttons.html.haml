@@ -1,6 +1,7 @@
-- if product.bound?
+- if product.price.to_i > 0
   .product_buy
     = link_to 'Купить', add_product_order_path(product), method: :post, class: 'btn btn-success product_cart-button'
     = link_to product_path(product), method: :get, remote: true do
       .btn.btn-info.product_instant-button{ 'data-toggle' => 'modal', 'data-target' => '#instant-checkout'}
         Купить в 1 клик
+

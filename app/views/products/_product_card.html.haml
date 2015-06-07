@@ -1,63 +1,79 @@
-= breadcrumbs_for_product(@product)
-%h1
-  = @product.name
-  %small
-    %sup= "[#{@product.id}]"
-.product_card
-  .product_articul
-    .label.label-warning
-      Код:
-      %b= product.id
-  .row
-    .col-sm-4
-      = link_to product.preview_path, class: 'product-cover', class: 'mfp-gallery' do
-        = image_tag 'lazy-spinner.gif', class: 'thumbnail img-responsive lazy', 'data-original' => product.preview_path
-    .col-sm-4
-      .product_price= price_for product
-      = render 'products/compare_button', product: product
-      = render 'products/order_buttons', product: product
-      = Conf['ck.social_card'].try(:html_safe)
-    .col-sm-4
-      = Conf['ck.delivery_card'].try(:html_safe)
-  .row
-    - if product.images.present?
-      .images-thumbs
-        = render partial: 'images/thumbs', collection: product.images.includes(:imageable).where.not(id: product.images.sort_by(&:position).first.id).sort_by(&:position), as: :image
-  %ul.nav.nav-tabs
-    %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
-    %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
-    %li= link_to "Отзывы (#{product.comments.olds.count})", '#comments', 'data-toggle' => 'tab'
-    %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
+- content_for :ogg_meta do
+  %meta{ property: "og:type", content: "product" }
+  %meta{ property: "og:site_name", content: "evotex" }
+  %meta{ property: "og:title", content: product.name }
+  %meta{ property: "og:url", content: product_path(product) }
+  %meta{ property: "og:image", content: product.preview_path }
+  %meta{ property: "og:description", content: "" }
 
-  .tab-content
-    #properties.tab-pane.active.fade.in
-      = render 'product_properties', product_properties: product.product_properties.includes(:property).with_value
-      %small Характеристики и комплектация могут изменяться производителем без уведомления.
-    #description.tab-pane.fade
-      %br/
-      - if product.video.present?
-        .text-center= video_for product.video
-      =# product.description.to_s.html_safe
-    #comments.tab-pane.fade
-      %br/
-      - if product.comments.olds.present?
-        %h3 Отзывы о товаре
-        = render product.comments.olds
-      - else
-        Никто еще не оставил отзыв об этом товаре.
-      %br/
-      %br/
-      = form_for product.comments.new, url: product_comment_path(product) do |f|
-        .panel.panel-default
-          .panel-heading
-            %h4.panel-title Отзыв о товаре
-          .panel-body
-            = field_for f, :body, :text_area, required: true
+= breadcrumbs_for_product(product)
+%div{ itemtype: 'http://schema.org/Product', itemscope: '' }
+  %h1{ itemprop: 'name'}
+    = product.name
+    %small
+      %sup= "[#{product.id}]"
+  .product_card
+    .product_articul
+      %meta{ content: product.id, itemprop: "sku" }
+      .label.label-warning
+        Код:
+        %b= product.id
+    .row
+      .col-sm-4
+        = link_to product.preview_path, class: 'product-cover', class: 'mfp-gallery', itemprop: 'url' do
+          = image_tag product.preview_path, class: 'thumbnail img-responsive lazy', itemprop: 'image', alt: product.name, title: product.name
+      .col-sm-4
+        %div{ itemtype: "http://schema.org/Offer", itemscope: "", itemprop: "offers" }
+          .product_price
+            %link{ href: "http://schema.org/#{product.price.to_i > 0 ? 'In' : '1OutOf'}Stock", itemprop: "availability"}
+            = price_for product
+          = render 'products/compare_button', product: product
+          = render 'products/order_buttons', product: product
+        = Conf['ck.social_card'].try(:html_safe)
+      .col-sm-4
+        = Conf['ck.delivery_card'].try(:html_safe)
+    .row
+      - if product.images.present?
+        .images-thumbs
+          -  images = product.images.includes(:imageable).where.not(id: product.images.sort_by(&:position).first.id).sort_by(&:position)
+          = render partial: 'images/thumbs', collection: images, as: :image, locals: { not_lazy: true }
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
+      %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
+      %li= link_to "Отзывы (#{product.comments.olds.count})", '#comments', 'data-toggle' => 'tab'
+      %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
 
-          .panel-footer
-            .text-right
-              = f.submit 'Оставить отзыв', class: 'btn btn-warning'
-    #accesories.tab-pane.fade
-      %br/
-      - if product.accessories_products.present?
-        = render collection: product.accessories_products, partial: 'products/top_card', as: :product, locals: { css: 'success', name: 'Аксессуар' }
+    .tab-content
+      #properties.tab-pane.active.fade.in
+        = render 'product_properties', product_properties: product.product_properties.includes(:property).with_value
+        %small Характеристики и комплектация могут изменяться производителем без уведомления.
+      #description.tab-pane.fade
+        %br/
+        - if product.video.present?
+          .text-center= video_for product.video
+        - if false
+          %div{ itemprop: 'description' }
+            = product.description.to_s.html_safe
+      #comments.tab-pane.fade
+        %br/
+        - if product.comments.olds.present?
+          %h3 Отзывы о товаре
+          = render product.comments.olds
+        - else
+          Никто еще не оставил отзыв об этом товаре.
+        %br/
+        %br/
+        = form_for product.comments.new, url: product_comment_path(product) do |f|
+          .panel.panel-default
+            .panel-heading
+              %h4.panel-title Отзыв о товаре
+            .panel-body
+              = field_for f, :body, :text_area, required: true
+
+            .panel-footer
+              .text-right
+                = f.submit 'Оставить отзыв', class: 'btn btn-warning'
+      #accesories.tab-pane.fade
+        %br/
+        - if product.accessories_products.present?
+          = render collection: product.accessories_products, partial: 'products/top_card', as: :product, locals: { css: 'success', name: 'Аксессуар' }

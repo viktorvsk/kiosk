@@ -8,6 +8,16 @@
   display: none;
 }
 
+.breadcrumbs{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li{
+    display: inline;
+
+  }
+}
+
 body{
   margin: 0;
   padding-top: 50px;

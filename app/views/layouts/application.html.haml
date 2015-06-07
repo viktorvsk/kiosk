@@ -5,6 +5,7 @@
     = render 'shared/head_assets'
     = favicon_link_tag '/favicon.ico'
     %style= Conf['txt.css'].try(:html_safe)
+    = yield :ogg_meta
     = csrf_meta_tags
   %body
     = link_to '#animated-header', class: 'cd-top' do
