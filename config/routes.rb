@@ -31,7 +31,6 @@ Rails.application.routes.draw do
   resources :taxons, only: [:show], path: 't'
   resource :order, only: [:show, :update] do
     post :checkout
-    post 'instant_checkout/:product_id', to: 'orders#instant_checkout', as: :instant_checkout
     patch 'update_lineitem_count', to: 'orders#update_lineitem_count', as: :update_lineitem_count
     post 'add_product/:product_id', to: 'orders#add_product', as: :add_product
     delete 'remove_product/:product_id', to: 'orders#remove_product', as: :remove_product

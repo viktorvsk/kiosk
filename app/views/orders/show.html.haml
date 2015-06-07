@@ -20,7 +20,7 @@
         .label.label-info= "#{@current_order.total_sum} грн."
       %br/
       .order-form
-        = render 'orders/form', order: @current_order, product: nil
+        = render 'orders/form', order: @current_order, product_id: nil, instant: false
     - else
       %p Вы еще не добавили ни одного товара
     = link_to (request.referrer ? request.referrer : root_path) do

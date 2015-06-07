@@ -8,7 +8,9 @@ class OrdersController < CatalogController
           partial: 'orders/form',
           layout: false,
           locals: {
-            order: @current_order
+            order: @current_order,
+            instant: false,
+            product_id: nil
           }
         }
       end
@@ -18,15 +20,13 @@ class OrdersController < CatalogController
   def show
   end
 
-  def instant_checkout
-    @current_order.line_items.destroy_all
-    @current_order.add_product(params[:product_id])
-    @current_order.update(creation_way: 'instant_checkout')
-    redirect_to checkout_order_url
-  end
-
   def checkout
     head 422 and return unless @current_order.ready?
+    if params[:instant] == 'true'
+      @current_order.line_items.destroy_all
+      @current_order.add_product(params[:product_id])
+      @current_order.update(creation_way: 'instant_checkout')
+    end
     pass = Devise.friendly_token
     user = User.where(phone: @current_order.phone).first_or_create!(email: "#{@current_order.phone}@kiosk.evotex.kh.ua", password: pass, password_confirmation: pass)
     if @current_order.creation_way == 'instant_checkout'
