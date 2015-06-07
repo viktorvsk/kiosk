@@ -44,7 +44,7 @@ class ProductsController < CatalogController
     if @product.present?
       render :show
     else
-      redirect_to root_path, alert: 'Товар не найден, возможно, устаревшая ссылка.'
+      redirect_to search_products_path(q: {main_search: params[:slug]}), alert: 'Товар не найден, возможно, устаревшая ссылка.'
     end
   end
 
