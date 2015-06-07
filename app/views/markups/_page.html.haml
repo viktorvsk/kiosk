@@ -1,3 +1,7 @@
+- @meta_title = page.seo.try(:title)
+- @meta_keywords = page.seo.try(:keywords)
+- @meta_description = page.seo.try(:description)
+
 %h1
   = page.name
 .panel-material
