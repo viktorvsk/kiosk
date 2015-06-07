@@ -52,7 +52,10 @@ $(document).ready(function () {
   });
 
   $('#q_main_search').blur(function () {
-    $('[data-search-autocomplete]').hide('fast');
+    setTimeout(function () {
+      $('[data-search-autocomplete]').hide('fast');
+    }, 50);
+
   });
 
   $(document).on('click', '[data-product-view]', function (event) {
