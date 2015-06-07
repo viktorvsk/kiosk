@@ -17,6 +17,7 @@
     = render 'shared/footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
-    %script= Conf['txt.js'].try(:html_safe)
+    - if !(current_user && current_user.admin?) && !Rails.env.development?
+      %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
 
