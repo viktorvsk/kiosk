@@ -339,6 +339,14 @@ class Catalog::Product < ActiveRecord::Base
       .join('; ')
   end
 
+  def advanced_name(category_prefix = false, id_postfix = true)
+    adv_name = []
+    adv_name << category.name if category_prefix
+    adv_name << name
+    adv_name << "[#{id}]" if id_postfix
+    adv_name.join(' ')
+  end
+
   def stats
     stats = {
       '<b>Название</b>' => name,

@@ -1,5 +1,8 @@
 = breadcrumbs_for_product(@product)
-%h1= @product.name
+%h1
+  = @product.name
+  %small
+    %sup= "[#{@product.id}]"
 .product_card
   .product_articul
     .label.label-warning
