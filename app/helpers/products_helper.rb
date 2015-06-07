@@ -1,31 +1,27 @@
 module ProductsHelper
   include AutoHtml
   def price_for(product, quantity=1)
-    price = product.bound? ? (product.price * quantity) : 0
+    price = product.price.to_i * quantity
     if price.to_f.ceil == 0
       return %{Нет в наличии}
     end
-    old_price = product.old_price.to_f.ceil * quantity
 
-    price_inner = if (old_price > 0) && (old_price > price)
-      content_tag(:span, class: 'product_old-price') do
-        old_price.to_s
-      end +
-      "#{price} грн."
+    old_price = (product.old_price.to_f.ceil * quantity).to_s
+    old_price_node = content_tag(:span, class: 'product_old-price') { old_price }
+
+
+    price_node = if @product == product
+       content_tag(:span, itemprop: :price) { "#{price} грн." } +
+       tag(:meta, itemprop: 'priceCurrency', content: 'UAH')
     else
-      "#{price} грн."
+      content_tag(:span) { "#{price} грн." }
     end
 
-    if @product == product
-      content_tag(:span, itemprop: :price) do
-        tag(:meta, itemprop: 'priceCurrency', content: 'UAH') +
-        price_inner
-      end
+    if product.old_price.to_i > product.price.to_i
+      old_price_node + price_node
     else
-      price_inner
+      price_node
     end
-
-
 
   end
 

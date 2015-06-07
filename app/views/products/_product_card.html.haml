@@ -25,7 +25,7 @@
       .col-sm-4
         %div{ itemtype: "http://schema.org/Offer", itemscope: "", itemprop: "offers" }
           .product_price
-            %link{ href: "http://schema.org/#{product.price.to_i > 0 ? 'In' : '1OutOf'}Stock", itemprop: "availability"}
+            %link{ href: "http://schema.org/#{product.price.to_i > 0 ? 'In' : 'OutOf'}Stock", itemprop: "availability"}
             = price_for product
           = render 'products/compare_button', product: product
           = render 'products/order_buttons', product: product
