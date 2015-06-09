@@ -15,7 +15,7 @@
     = render 'shared/flash_bar'
     .container-fluid
       = yield
-    =# render 'shared/footer_bar'
+    = render 'shared/product_card_footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
     - if !(current_user && current_user.admin?) && !Rails.env.development?

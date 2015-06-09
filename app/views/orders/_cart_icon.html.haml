@@ -1,0 +1,7 @@
+= link_to order_path, title: 'Перейти в корзину' do
+  %i.glyphicon.glyphicon-shopping-cart
+  Корзина:
+  - if @current_order.products.present?
+    = "(#{@current_order.items_count}) #{@current_order.total_sum} грн."
+  - else
+    пусто

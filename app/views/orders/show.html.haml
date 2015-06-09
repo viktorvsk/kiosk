@@ -2,7 +2,7 @@
   %h1 Корзина
 .row
   .col-sm-3
-    = render 'products/aside'
+    = render 'shared/aside'
   .col-sm-9
     - if @current_order.products.present?
       %table.table.table-bordered.product_table

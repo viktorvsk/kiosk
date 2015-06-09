@@ -51,7 +51,7 @@
           .col-sm-5.col-sm-offset-7.col-md-3.col-md-offset-9.text-right
             = select_tag :o, options_for_select([['сначала дешевые','a'],['сначала дорогие','d']], params[:o]), 'data-sort' => true, class: 'form-control'
             %br/
-        = render collection: products, partial: 'products/search_card', as: :product
+        = render collection: products, partial: 'products/cards/search', as: :product
       - else
         По текущему запросу товары не найдены
     .panel-footer

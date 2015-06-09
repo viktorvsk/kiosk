@@ -27,6 +27,6 @@
               - else
 
                 %h3= link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category)
-                = render partial: 'products/search_card', collection: child_taxon.category.products.with_price.order('RANDOM()').limit(3), as: :product
+                = render partial: 'products/cards/search', collection: child_taxon.category.products.with_price.order('RANDOM()').limit(3), as: :product
 
 

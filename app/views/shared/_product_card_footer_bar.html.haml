@@ -1,0 +1,11 @@
+%footer.jumbotron.bg-main-color
+  .container-fluid
+    .row
+      .col-sm-2
+        %h4 Evotex &copy; 2013 - 2015
+      .col-sm-8
+        - cache [ 'logo', Markup.pages ] do
+          = render 'shared/pages_menu'
+      .col-sm-2
+        .btn.btn-primary.btn-cart
+          = render 'orders/cart_icon'

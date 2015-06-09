@@ -1,4 +1,4 @@
-%nav#top_point.navbar.navbar-default.navbar-fixed-top.catalog-navbar{:role => "navigation"}
+%nav.navbar.navbar-default.navbar-fixed-top.catalog-navbar{:role => "navigation"}
   .container
     .row
       .col-xs-12
@@ -13,13 +13,7 @@
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
             %li
-              = link_to order_path do
-                %i.glyphicon.glyphicon-shopping-cart
-                Корзина:
-                - if @current_order.products.present?
-                  = "(#{@current_order.items_count}) #{@current_order.total_sum} грн."
-                - else
-                  пусто
+              = render 'orders/cart_icon'
             %li
               = link_to user_path do
                 %i.glyphicon.glyphicon-user

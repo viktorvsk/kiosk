@@ -1,6 +1,6 @@
+- return if product.accessories_products.blank?
 .panel.panel-success
   .panel-heading
     %h3.panel-title Аксессуары к товару <b>#{product.name}</b>
   .panel-body
-    - if product.accessories_products.present?
-      = render collection: product.accessories_products, partial: 'products/cards/top', as: :product, locals: { css: 'success', name: 'Аксессуар' }
+    = render collection: product.accessories_products, partial: 'products/cards/top', as: :product, locals: { css: 'success', name: 'Аксессуар' }

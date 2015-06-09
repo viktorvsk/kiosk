@@ -13,8 +13,9 @@
             = render 'products/card/main_image', product: product
           .col-sm-6
             = render 'products/card/offer', product: product
-            = short_properties_for product
-            %h2= warranty_for product
+            %div{ itemprop: 'description' }
+              = short_properties_for product
+              %h2= warranty_for product
 
           .col-sm-12
             = render 'products/card/video', product: product
