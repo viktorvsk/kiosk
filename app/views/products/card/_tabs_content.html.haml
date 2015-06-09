@@ -1,6 +1,6 @@
 .tab-content
   #properties.tab-pane.active.fade.in
-    = render 'product_properties', product_properties: product.product_properties.includes(:property).with_value
+    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value
     %small Характеристики и комплектация могут изменяться производителем без уведомления.
   #description.tab-pane.fade
     %br/
@@ -10,25 +10,4 @@
       %div{ itemprop: 'description' }
         = product.description.to_s.html_safe
   #comments.tab-pane.fade
-    %br/
-    - if product.comments.olds.present?
-      %h3 Отзывы о товаре
-      = render product.comments.olds
-    - else
-      Никто еще не оставил отзыв об этом товаре.
-    %br/
-    %br/
-    = form_for product.comments.new, url: product_comment_path(product) do |f|
-      .panel.panel-default
-        .panel-heading
-          %h4.panel-title Отзыв о товаре
-        .panel-body
-          = field_for f, :body, :text_area, required: true
-
-        .panel-footer
-          .text-right
-            = f.submit 'Оставить отзыв', class: 'btn btn-warning'
-  #accesories.tab-pane.fade
-    %br/
-    - if product.accessories_products.present?
-      = render collection: product.accessories_products, partial: 'products/cards/top', as: :product, locals: { css: 'success', name: 'Аксессуар' }
+    = render 'products/card/comments', product: product

@@ -1,5 +1,7 @@
 %ul.nav.nav-tabs
   %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
-  %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
+  - if product.video.present?
+    %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
   %li= link_to "Отзывы (#{product.comments.olds.count})", '#comments', 'data-toggle' => 'tab'
-  %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'
+:css
+  .product_card .nav-tabs li{ width: #{product.video.present? ? '33.3333333%' : '50%'} }

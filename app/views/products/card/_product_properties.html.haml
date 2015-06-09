@@ -1,0 +1,4 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+  %tbody{ itemprop: 'description' }
+    = render partial: 'products/card/product_property', collection: product_properties.with_value.sort_by(&:position), as: :product_property

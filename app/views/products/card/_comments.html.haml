@@ -1,0 +1,15 @@
+- if product.comments.olds.present?
+  = render product.comments.olds
+- else
+  Никто еще не оставил отзыв об этом товаре.
+
+= form_for product.comments.new, url: product_comment_path(product) do |f|
+  .panel.panel-default
+    .panel-heading
+      %h4.panel-title Отзыв о товаре
+    .panel-body
+      = field_for f, :body, :text_area, required: true
+
+    .panel-footer
+      .text-right
+        = f.submit 'Оставить отзыв', class: 'btn btn-warning'
