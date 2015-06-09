@@ -1,5 +1,5 @@
 class ProductsController < CatalogController
-  layout :resolve_layout
+  # layout :resolve_layout
   before_action :set_product, only: [:show, :super_instant_checkout]
 
   # GET /products
@@ -41,11 +41,16 @@ class ProductsController < CatalogController
     end
     respond_to do |format|
       format.html do
+        session.clear
         top_products = Catalog::Product.with_price.top_products
         @newest = top_products.select{ |p| p.newest == '1' }
         @homepage = top_products.select{ |p| p.homepage == '1' }
         @hit = top_products.select{ |p| p.hit == '1' }
-        render :show_new
+        if !!session[:new_layout] || Catalog.show_new_layout?
+          session[:new_layout] = 1
+          self.class.send(:layout, 'product_card')
+          render :show_new
+        end
     end
       format.js
     end
@@ -69,7 +74,7 @@ class ProductsController < CatalogController
   private
 
     def resolve_layout
-      action_name == 'show' ? 'product_card' : 'application'
+      action_name != 'show' ? 'product_card' : 'application'
     end
 
     # Use callbacks to share common setup or constraints between actions.

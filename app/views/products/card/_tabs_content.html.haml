@@ -1,6 +1,6 @@
 .tab-content
   #properties.tab-pane.active.fade.in
-    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value
+    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value, product: product
     %small Характеристики и комплектация могут изменяться производителем без уведомления.
   #description.tab-pane.fade
     %br/
