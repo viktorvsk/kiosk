@@ -220,3 +220,16 @@ body > footer.jumbotron{
 .modal{
   z-index: 103;
 }
+
+
+.navbar-form{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+  .form-group{
+    min-width: 60%;
+    width: 60%;
+    max-width: 80%;
+  }
+}

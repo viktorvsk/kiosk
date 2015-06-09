@@ -37,7 +37,7 @@ $(document).ready(function () {
   $(".cd-top").click(function(event) {
     event.preventDefault();
     $('html, body').animate({
-      scrollTop: $("#animated-header").offset().top
+      scrollTop: $("#top_point").offset().top
     }, 400);
   });
 

@@ -52,7 +52,6 @@
   .nav-tabs{
     margin-top: 1em;
     li{
-      width: 25%;
       text-align: center;
     }
   }
@@ -263,6 +262,7 @@
       width: 100%;
       z-index: 100;
       background: #fff;
+      margin: auto;
       color: #111;
       -webkit-box-shadow: 0px 0px 12px #ddd;
       -moz-box-shadow: 0px 0px 12px #ddd;
@@ -283,4 +283,23 @@
 
     }
   }
+}
+
+.aside_new{
+  [itemprop="telephone"]{
+    font-family: 'Courier New';
+    a{ color: #333; text-decoration: none; }
+    font-size: 125%;
+    padding: 5px 0;
+  }
+
+  &_phones{
+    img{ width: 20px; border-radius: 50% }
+  }
+
+
+}
+
+b.warranty{
+  color: #e74c3c;
 }
