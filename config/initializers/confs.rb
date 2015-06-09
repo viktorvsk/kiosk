@@ -13,6 +13,7 @@ default_settings = {
   'txt.robots'            => '',
   'txt.css'               => '',
   'txt.delivery_types'    => '',
+  'txt.words_to_downcase' => '',
   'txt.payment_types'     => '',
   'new_layout_limit'      => '100',
   'ck.logo'               => 'Логотип',

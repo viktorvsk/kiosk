@@ -20,8 +20,14 @@ namespace :catalog do
   task update_pricelist: :environment do
     categories = Catalog::Category.pricelist_association
     warranty_id = Catalog::Property.warranty.try(:id)
+
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories, warranty_id: warranty_id })
     File.open(Rails.public_path.join('price_full.xml'), 'w'){ |f| f.puts pricelist }
+
+    # Repeat for Yandex Market
+    pricelist = ActionController::Base.new.render_to_string("catalog/price_yandex", locals: { categories: categories, warranty_id: warranty_id })
+    File.open(Rails.public_path.join('price_yandex.xml'), 'w'){ |f| f.puts pricelist }
+
   end
 
   desc 'Auto upadte prices'

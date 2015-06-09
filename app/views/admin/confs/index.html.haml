@@ -4,7 +4,8 @@
 .row
   .col-xs-12
     %ul.nav.nav-tabs
-      %li.active= link_to 'Текстовые', '#text', 'data-toggle' => 'tab'
+      %li.active= link_to 'Простые', '#text', 'data-toggle' => 'tab'
+      %li= link_to 'Текстовые', '#textarea', 'data-toggle' => 'tab'
       %li= link_to 'HTML', '#html', 'data-toggle' => 'tab'
       %li= link_to 'SEO шаблоны', '#seo-templates', 'data-toggle' => 'tab'
       %li= link_to 'Парсинг', '#parsing', 'data-toggle' => 'tab'
@@ -30,7 +31,7 @@
       #html.tab-pane
         %ul.list-group
           = render @confs.select{ |c| c.var =~ /^ck\./ }.sort_by(&:created_at)
-      #text.tab-pane
+      #textarea.tab-pane
         %ul.list-group
           = render @confs.select{ |c| c.var =~ /^txt\./ }.sort_by(&:created_at)
 

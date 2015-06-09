@@ -11,6 +11,7 @@
         %category{:id => category.id}= category.name
     %local_delivery_cost 30
     %offers
+      - words_ary = Conf['txt.words_to_downcase'].split("\n").map{ |w| w.mb_chars.downcase.strip.to_s }
       - categories.find_each do |category|
-        = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'true', with_id: true, words_ary: [] }, as: :product
+        = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'false', with_id: false, words_ary: words_ary }, as: :product
 

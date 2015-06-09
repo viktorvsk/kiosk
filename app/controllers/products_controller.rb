@@ -41,7 +41,6 @@ class ProductsController < CatalogController
     end
     respond_to do |format|
       format.html do
-        session.clear
         top_products = Catalog::Product.with_price.top_products
         @newest = top_products.select{ |p| p.newest == '1' }
         @homepage = top_products.select{ |p| p.homepage == '1' }
