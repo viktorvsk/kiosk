@@ -7,7 +7,7 @@ module Catalog
       last_session, sessions_count = conf[0]
       sessions_count = conf[1] || 0
       stale_session = Time.at(last_session) < Time.now.beginning_of_day
-      under_limit = Conf['txt.new_layout_limit'].to_i > sessions_count
+      under_limit = Conf['new_layout_limit'].to_i > sessions_count
       if stale_session
         last_session = Time.now.to_i
         sessions_count = 0

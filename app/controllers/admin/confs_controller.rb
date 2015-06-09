@@ -5,7 +5,7 @@ class Admin::ConfsController < Admin::BaseController
   # GET /admin/confs
   # GET /admin/confs.json
   def index
-    @confs = Conf.order(:created_at).all
+    @confs = Conf.order(:created_at).all.reject{ |c| c.var =~ /\An\./ }
   end
 
   # PATCH/PUT /admin/confs/1

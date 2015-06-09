@@ -14,7 +14,7 @@ default_settings = {
   'txt.css'               => '',
   'txt.delivery_types'    => '',
   'txt.payment_types'     => '',
-  'txt.new_layout_limit'  => '100',
+  'new_layout_limit'      => '100',
   'ck.logo'               => 'Логотип',
   'ck.logo_min'           => '<img align="top" alt="" src="http://evotex.kh.ua/logo_min.png" style="width: 60px; height: 20px; display: inline; padding: 0; margin: 0" />',
   'ck.delivery_card'      => 'Оплата\Доставка в карточке товара',
