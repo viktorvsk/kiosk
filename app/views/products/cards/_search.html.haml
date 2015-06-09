@@ -1,0 +1,13 @@
+.product
+  .product_wrapper
+    .product_inner
+      .product_list-left
+        = render 'products/mini_card/articul', product: product
+        = render 'products/mini_card/cover_image', product: product
+        = render 'products/mini_card/name', product: product
+        = render 'products/mini_card/compare_button', product: product
+        = render 'products/mini_card/price', product: product
+        = render 'products/mini_card/order_buttons', product: product
+      .product_list-right
+        = render 'products/mini_card/hover_properties.html.haml', product: product
+

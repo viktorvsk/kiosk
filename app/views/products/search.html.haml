@@ -23,7 +23,7 @@
           Результаты
           %small= "(#{total})"
       .panel-body
-        = render collection: @products, partial: 'products/search_card', as: :product
+        = render collection: @products, partial: 'products/cards/search', as: :product
       .panel-footer
         .text-center
           = paginate @products

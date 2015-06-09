@@ -1,0 +1,18 @@
+= render 'products/card/ogg_meta', product: product
+= breadcrumbs_for_product(product)
+%div{ itemtype: 'http://schema.org/Product', itemscope: '' }
+  = render 'products/card/header', product: product
+  .product_card
+    = render 'products/card/sku', product: product
+    .row
+      .col-sm-4
+        = render 'products/card/main_image', product: product
+      .col-sm-4
+        = render 'products/card/offer', product: product
+        = Conf['ck.social_card'].try(:html_safe)
+      .col-sm-4
+        = Conf['ck.delivery_card'].try(:html_safe)
+    .row
+      = render 'products/card/gallery_images', product: product
+    = render 'products/card/nav_tabs', product: product
+    = render 'products/card/tabs_content', product: product

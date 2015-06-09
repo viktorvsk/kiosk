@@ -1,0 +1,5 @@
+%ul.nav.nav-tabs
+  %li.active= link_to 'Характеристики', '#properties', 'data-toggle' => 'tab'
+  %li= link_to 'Описание', '#description', 'data-toggle' => 'tab'
+  %li= link_to "Отзывы (#{product.comments.olds.count})", '#comments', 'data-toggle' => 'tab'
+  %li= link_to 'Аксессуары', '#accesories', 'data-toggle' => 'tab'

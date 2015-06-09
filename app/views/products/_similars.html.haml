@@ -1,0 +1,10 @@
+- return unless similars = product.similars(Conf['delta'].to_f)
+- return unless similars.present?
+.row
+  .col-xs-12
+    .panel.panel-warning
+      .panel-heading
+        %h4.panel-title
+          Товары, похожие на <b>#{product.name}</b>
+      .panel-body.text-center
+        = render collection: product.similars(Conf['delta'].to_f), partial: 'products/cards/top', as: :product, locals: { css: 'info', name: 'Похожий товар' }

@@ -1,0 +1,4 @@
+- return if product.images.blank?
+.images-thumbs
+  -  images = product.images.includes(:imageable).where.not(id: product.images.sort_by(&:position).first.id).sort_by(&:position)
+  = render partial: 'images/thumbs', collection: images, as: :image, locals: { not_lazy: true }
