@@ -2,42 +2,11 @@
 - @meta_keywords = Conf['kiosk_meta_description']
 - @meta_description = Conf['kiosk_meta_keywords']
 
-.panel-material.slides-panel
-  .row.h-100
-    .col-md-8.h-100.col-xs-12
-      - cache ['slides', Markup.active.slides] do
-        = render 'shared/slides'
-    .col-md-4.h-100.articles-bar.hidden-xs.hidden-sm
-      %h3.text-center Статьи
-      - cache ['articles', Markup.active.articles] do
-        = render 'shared/articles'
-
-.row.visible-xs.visible-sm
-  .col-xs-12
-    .panel.panel-info
-      .panel-heading
-        %h4.panel-title.text-center Статьи
-      .panel-body
-        - cache ['articles', Markup.active.articles] do
-          = render 'shared/articles'
+= render 'products/slides'
 .row
   .col-xs-12
-    - cache ['homepage_tops', @hit, @newest, @homepage, session[:comparing_ids]] do
-      .panel.panel-success
-        .panel-heading
-          %h4.panel-title Хиты продаж
-        .panel-body
-          = render collection: @hit, partial: 'products/cards/top', as: :product, locals: { css: 'success', name: 'Хит продаж' }
-      .panel.panel-warning
-        .panel-heading
-          %h4.panel-title Новинки
-        .panel-body
-          = render collection: @newest, partial: 'products/cards/top', as: :product, locals: { css: 'danger', name: 'Новинка' }
-      .panel.panel-primary
-        .panel-heading
-          %h4.panel-title Популярное
-        .panel-body
-          = render collection: @homepage, partial: 'products/cards/top', as: :product, locals: { css: 'info', name: 'Популярное' }
+    = render 'products/homepage_tops', hit: @hit, newest: @newest, homepage: @homepage
+
 .row
   .col-xs-12
     .panel-material

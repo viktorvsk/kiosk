@@ -1,0 +1,18 @@
+.panel-material.slides-panel
+  .row.h-100
+    .col-md-8.h-100.col-xs-12
+      - cache ['slides', Markup.active.slides] do
+        = render 'shared/slides'
+    .col-md-4.h-100.articles-bar.hidden-xs.hidden-sm
+      %h3.text-center Статьи
+      - cache ['articles', Markup.active.articles] do
+        = render 'shared/articles'
+
+.row.visible-xs.visible-sm
+  .col-xs-12
+    .panel.panel-info
+      .panel-heading
+        %h4.panel-title.text-center Статьи
+      .panel-body
+        - cache ['articles', Markup.active.articles] do
+          = render 'shared/articles'

@@ -46,8 +46,11 @@ module ProductsHelper
   end
 
   def short_properties_for(product)
-    props = product.product_properties.includes(:property).with_value.sort_by(&:position).first(3)
-    props.map!{ |p| "<b>#{p.property.name}</b>: #{p.name}" }.join("<br/>").html_safe
+    props = product.product_properties.includes(:property).with_value.sort_by(&:position).first(8)
+    props
+      .map!{ |p| "<b>#{p.property.name}</b>: #{p.name}" }
+      .join("<br/>")
+      .html_safe
   end
 
   def warranty_for(product)

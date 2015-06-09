@@ -101,7 +101,7 @@ $(document).ready(function() {
     function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
-
+        if( !largeHeader ) { return; }
         largeHeader.style.height = height+'px';
         canvas.width = width;
         canvas.height = height;

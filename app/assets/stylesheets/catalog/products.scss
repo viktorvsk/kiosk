@@ -303,3 +303,18 @@
 b.warranty{
   color: #e74c3c;
 }
+
+.offer-new-block{
+  background: #fff3b5;
+  padding: 1em;
+  text-align: center;
+  margin: auto;
+  position: relative;
+
+  .product_price{
+    font-size: 220%;
+  }
+  *{
+    vertical-align: bottom;
+  }
+}

@@ -1,6 +1,6 @@
 class ProductsController < CatalogController
   layout :resolve_layout
-  before_action :set_product, only: [:show]
+  before_action :set_product, only: [:show, :super_instant_checkout]
 
   # GET /products
   # GET /products.json
@@ -40,7 +40,13 @@ class ProductsController < CatalogController
       return
     end
     respond_to do |format|
-      format.html { render :show_new }
+      format.html do
+        top_products = Catalog::Product.with_price.top_products
+        @newest = top_products.select{ |p| p.newest == '1' }
+        @homepage = top_products.select{ |p| p.homepage == '1' }
+        @hit = top_products.select{ |p| p.hit == '1' }
+        render :show_new
+    end
       format.js
     end
   end

@@ -12,6 +12,15 @@
             = Conf['ck.logo_min'].html_safe
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
+            %li= render 'orders/cart_icon'
+            %li.dropdown
+              = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                О магазине
+                %span.caret
+              %ul.dropdown-menu
+                - Markup.pages.sort_by(&:position).each do |page|
+                  %li
+                    = link_to page.name, static_page_path(slug: page.slug, id: page.id)
             %li
               = link_to '#', 'data-toggle' => 'modal', 'data-target' => '#callback' do
                 %i.glyphicon.glyphicon-earphone

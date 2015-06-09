@@ -1,0 +1,31 @@
+%div{ itemtype: "http://schema.org/Offer", itemscope: "", itemprop: "offers" }
+  .offer-new-block
+    .product_price
+      %link{ href: "http://schema.org/#{product.price.to_i > 0 ? 'In' : 'OutOf'}Stock", itemprop: "availability"}
+      = price_for product
+    - if product.price.to_i > 0
+      .product_buy
+        .row
+          = form_tag checkout_order_path do
+            = hidden_field :order, :super_instant, value: true
+            = hidden_field :order, :product_id, value: @product.id
+            .col-xs-12
+              .form-group
+                .input-group
+                  = phone_field :order, :phone, value: @current_order.phone , class: 'form-control', required: true, pattern: '\+38 \(0\d\d\) \d\d\d-\d\d-\d\d'
+                  .input-group-btn
+                    %button.btn.btn-success{ type: :submit }
+                      Купить в 1 клик
+                .text-left
+                  %small
+                    Введите свой номер, что бы мы могли перезвонить Вам и уточнить все
+                    вопросы о товаре <b>#{product.name}</b>.
+                    %br/
+                    &nbsp;&nbsp;&nbsp;&nbsp;Консультация бесплатна и Вы можете
+                    в любой момент отказаться от покупки.
+            .col-sm-12
+              = link_to add_product_order_path(product), method: :post, class: 'btn btn-primary product_cart-button' do
+                %i.glyphicon.glyphicon-shopping-cart
+                Добавить в корзину и продолжить покупки
+
+

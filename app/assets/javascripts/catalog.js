@@ -4,6 +4,7 @@
 //= require animated-header/demo-1
 //= require animated-header/TweenLite.min
 //= require animated-header/EasePack.min
+//= require jQuery-Mask-Plugin
 
 var mainSearchPerform = function () {
   var q = $('#q_main_search').val();
@@ -33,6 +34,8 @@ var typewatch = function(){
 var typeWatcher = typewatch();
 
 $(document).ready(function () {
+
+  $('[type="tel"]').mask('+38 (000) 000-00-00', { placeholder: '+38(___)___-__-__' })
 
   $(".cd-top").click(function(event) {
     event.preventDefault();

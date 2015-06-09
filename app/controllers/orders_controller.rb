@@ -21,6 +21,12 @@ class OrdersController < CatalogController
   end
 
   def checkout
+    if params[:order].try(:[], :super_instant) == 'true'
+      @current_order.line_items.destroy_all
+      phone = Catalog.strip_phone(params[:order][:phone])
+      @current_order.add_product(params[:order][:product_id])
+      @current_order.update!(creation_way: 'instant_checkout', name: 'Купил в 1 клик', phone: phone)
+    end
     head 422 and return unless @current_order.ready?
     if params[:instant] == 'true'
       @current_order.line_items.destroy_all

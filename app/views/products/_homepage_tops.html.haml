@@ -1,0 +1,16 @@
+- cache ['homepage_tops', hit, newest, homepage, session[:comparing_ids]] do
+  .panel.panel-success
+    .panel-heading
+      %h4.panel-title Хиты продаж
+    .panel-body
+      = render collection: hit, partial: 'products/cards/top', as: :product, locals: { css: 'success', name: 'Хит продаж' }
+  .panel.panel-warning
+    .panel-heading
+      %h4.panel-title Новинки
+    .panel-body
+      = render collection: newest, partial: 'products/cards/top', as: :product, locals: { css: 'danger', name: 'Новинка' }
+  .panel.panel-primary
+    .panel-heading
+      %h4.panel-title Популярное
+    .panel-body
+      = render collection: homepage, partial: 'products/cards/top', as: :product, locals: { css: 'info', name: 'Популярное' }

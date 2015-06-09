@@ -7,23 +7,23 @@
   .product_card
     = render 'products/card/sku', product: product
     .row
-      .col-sm-8
+      .col-sm-9
         .row
           .col-sm-6
             = render 'products/card/main_image', product: product
           .col-sm-6
-            = render 'products/card/offer', product: product
+            = render 'products/card/offer_new', product: product
+            %h2.text-center
+              = warranty_for product
             %div{ itemprop: 'description' }
               = short_properties_for product
-              %h2= warranty_for product
 
-          .col-sm-12
-            = render 'products/card/video', product: product
-      .col-sm-4
+          /
+            .col-sm-12
+              =# render 'products/card/video', product: product
+      .col-sm-3
         = render 'shared/aside_new'
     .row
       = render 'products/card/gallery_images', product: product
-    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value
+    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value, product: product
     %small Характеристики и комплектация могут изменяться производителем без уведомления.
-  %h2 Отзывы о товаре <b>#{product.name}</b>
-  = render 'products/card/comments', product: product
