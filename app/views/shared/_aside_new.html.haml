@@ -1,0 +1,57 @@
+%section.aside_new{ itemtype: "http://schema.org/LocalBusiness", itemscope: '' }
+
+  %h4.text-center Режим работы
+  %hr/
+  .row
+    .col-sm-8
+      %p ПН &ndash; ПТ: с 9:00 до 19:00
+      %p СБ: с 10:00 до 16:00
+      %p ВС: выходной
+      %p Офис в городе Харькове: ул.Гамарника 7/9
+    .col-sm-4
+      %h3{ itemprop: 'name' } Evotex
+  %hr/
+  %h4.text-center Контактная информация
+  .row
+    .col-sm-6.aside_new_phones
+      = image_tag('life.png', alt: 'life :)', title: 'life :)')
+      %span{ itemprop: 'telephone' } (093)–805–33–00
+      %br/
+      = image_tag('ks.png', alt: 'Киевстар', title: 'Киевстар')
+      %span{ itemprop: 'telephone' } (098)–118–33–00
+      %br/
+      = image_tag('mts.png', alt: 'mts', title: 'mts')
+      %span{ itemprop: 'telephone' } (095)–387–33–00
+      %br/
+      = image_tag('stationary.png', alt: 'Городской', title: 'Городской')
+      %span{ itemprop: 'telephone' } (057)–731–30–38
+      %br/
+    .col-sm-6
+      %p
+        = image_tag("http://web.icq.com/whitepages/online?icq=667590341&img=5")
+        667590341 - EvoTex
+      %p
+        = image_tag("http://web.icq.com/whitepages/online?icq=668202791&img=5")
+        668202791 - EvoTex
+  %hr/
+  %h4.text-center Доставка
+  .row
+    .col-sm-4
+      = image_tag('delivery.png', class: 'img-responsive')
+    .col-sm-8
+      Срок доставки: 1 - 3 дня.
+      %br/
+      Cамовывозом - бесплатно.
+      %br/
+      Курьером - до 8 кг - 30 грн.
+      %br/
+      Отправляем через курьерские службы.
+  %hr/
+  %h4.text-center Оплата
+  .row
+    .col-sm-8
+      <b>Наличными</b> - оплата в нашем офисе.<br/>
+      <b>Безнал</b> - банковская карта, через онлайн банк, либо терманалы соответствующего банка.
+    .col-sm-4
+      = image_tag('pay.png', class: 'img-responsive')
+  %hr/

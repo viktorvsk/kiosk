@@ -1,0 +1,28 @@
+= render 'products/card/ogg_meta', product: product
+
+%div{ itemtype: 'http://schema.org/Product', itemscope: '' }
+  = render 'products/card/header', product: product
+  = breadcrumbs_for_product(product)
+  %br/
+  .product_card
+    = render 'products/card/sku', product: product
+    .row
+      .col-sm-8
+        .row
+          .col-sm-6
+            = render 'products/card/main_image', product: product
+          .col-sm-6
+            = render 'products/card/offer', product: product
+            = short_properties_for product
+            %h2= warranty_for product
+
+          .col-sm-12
+            = render 'products/card/video', product: product
+      .col-sm-4
+        = render 'shared/aside_new'
+    .row
+      = render 'products/card/gallery_images', product: product
+    = render 'products/card/product_properties', product_properties: product.product_properties.includes(:property).with_value
+    %small Характеристики и комплектация могут изменяться производителем без уведомления.
+  %h2 Отзывы о товаре <b>#{product.name}</b>
+  = render 'products/card/comments', product: product

@@ -45,6 +45,20 @@ module ProductsHelper
     end
   end
 
+  def short_properties_for(product)
+    props = product.product_properties.includes(:property).with_value.sort_by(&:position).first(3)
+    props.map!{ |p| "<b>#{p.property.name}</b>: #{p.name}" }.join("<br/>").html_safe
+  end
+
+  def warranty_for(product)
+    w = product.warranty.try(:name).to_i
+    if w > 0
+      "Официальная гарантия от производителя <b class='warranty'>#{product.warranty.name}</b>.".html_safe
+    else
+      "Официальная гарантия от производителя не менее 12 месяцев."
+    end
+  end
+
   def breadcrumbs_for_product(product)
     top_taxon = product.category.taxon.parent
     category = product.category

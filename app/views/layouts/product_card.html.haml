@@ -7,18 +7,19 @@
     %style= Conf['txt.css'].try(:html_safe)
     = yield :ogg_meta
     = csrf_meta_tags
-  %body#top_point
+  %body
     = link_to '#top_point', class: 'cd-top' do
       %i.glyphicon.glyphicon-chevron-up
-    = render 'layouts/nav/catalog'
-    = render 'shared/top_bar'
+    = render 'layouts/nav/product_card'
+    =# render 'shared/top_bar'
     = render 'shared/flash_bar'
-    .container
+    .container-fluid
       = yield
-    = render 'shared/footer_bar'
+    =# render 'shared/footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
     - if !(current_user && current_user.admin?) && !Rails.env.development?
       %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
-
+:css
+  body{ padding: 0 }

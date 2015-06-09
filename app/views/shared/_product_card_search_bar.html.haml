@@ -1,0 +1,14 @@
+- @q ||= Catalog::Product.ransack
+- @random_search_word ||= Catalog::Product.order("RANDOM()").first.name.split.first
+
+= search_form_for @q, url: search_products_path, id: 'main_search_form', class: 'navbar-form' do |f|
+  .form-group{ display: :inline }
+    .input-group{ display: :table }
+      = f.search_field :main_search, class: 'form-control', placeholder: 'Поиск по сайту...', required: true, autocomplete: :off
+      %span.input-group-btn{ style: "width:1%;" }
+        %button.btn.btn-success{ type: :submit }
+          %span.glyphicon.glyphicon-search
+
+
+    .product_autocomplete
+      .product_autocomplete_inner{ 'data-search-autocomplete' => true }

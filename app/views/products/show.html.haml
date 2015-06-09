@@ -1,10 +1,10 @@
 - @meta_title = @product.seo.try(:title).presence || @product.seo_template
 - @meta_keywords = @product.seo.try(:keywords)
 - @meta_description = @product.seo.try(:description)
-= render 'products/vendor_info', product: @product
+= render 'products/lists/vendor', product: @product
 .row
   .col-sm-3
-    = render 'aside'
+    = render 'shared/aside'
   .col-sm-9
-    = render 'products/product_card', product: @product
-= render 'products/similars', product: @product
+    = render 'products/cards/inner', product: @product
+= render 'products/lists/similars', product: @product

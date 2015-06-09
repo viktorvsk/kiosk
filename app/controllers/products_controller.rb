@@ -1,4 +1,5 @@
 class ProductsController < CatalogController
+  layout :resolve_layout
   before_action :set_product, only: [:show]
 
   # GET /products
@@ -25,7 +26,7 @@ class ProductsController < CatalogController
       end
       format.js do
         @products = @products.limit(5)
-        render text: render_to_string(partial: 'products/autocomplete_all', locals: { products: @products, query: params[:q]['main_search'] })
+        render text: render_to_string(partial: 'products/lists/autocomplete', locals: { products: @products, query: params[:q]['main_search'] })
       end
     end
 
@@ -36,6 +37,11 @@ class ProductsController < CatalogController
   def show
     if params[:slug] != @product.slug
       redirect_to p_path(slug: @product.slug, id: @product), status: 301
+      return
+    end
+    respond_to do |format|
+      format.html { render :show_new }
+      format.js
     end
   end
 
@@ -55,6 +61,11 @@ class ProductsController < CatalogController
   end
 
   private
+
+    def resolve_layout
+      action_name == 'show' ? 'product_card' : 'application'
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Catalog::Product.find(params[:id])

@@ -1,0 +1,20 @@
+%nav#top_point.navbar.navbar-default.catalog-navbar{:role => "navigation"}
+  .container-fluid
+    .row
+      .col-xs-12
+        .navbar-header
+          %button.navbar-toggle.collapsed{:type => "button", :data => {:toggle => "collapse", :target => "#navbar"}, :aria => {:expanded => "false", :controls => "navbar"} }
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to root_path, :class => "navbar-brand" do
+            = Conf['ck.logo_min'].html_safe
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              = link_to '#', 'data-toggle' => 'modal', 'data-target' => '#callback' do
+                %i.glyphicon.glyphicon-earphone
+                Перезвонить мне
+          .hidden-xs= render 'shared/product_card_search_bar'
+

@@ -1,6 +1,6 @@
 (function () {
   var orderPartial = "<%= escape_javascript(render(partial: 'orders/form', locals: { order: @current_order, instant: true, product_id: @product.id })) %>";
-  var productPartial = "<%= escape_javascript(render partial: 'products/instant_modal', locals: { product: @product }) %>";
+  var productPartial = "<%= escape_javascript(render partial: 'shared/instant_modal', locals: { product: @product }) %>";
   var productName = "<%= escape_javascript(@product.name) %>";
   $('#instant-checkout .modal-title').text(productName);
   $('#instant-checkout .modal-body .order-form').html(orderPartial);
