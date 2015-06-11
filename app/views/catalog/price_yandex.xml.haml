@@ -13,5 +13,6 @@
     %offers
       - words_ary = Conf['txt.words_to_downcase'].split("\n").map{ |w| w.mb_chars.downcase.strip.to_s }
       - categories.find_each do |category|
+      - next if category.id == 1051
         = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'false', with_id: false, words_ary: words_ary }, as: :product
 
