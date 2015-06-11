@@ -118,6 +118,7 @@ GEM
       sass (~> 3.4)
       thor
     bower-rails (0.9.2)
+    browser (0.8.0)
     builder (3.2.2)
     bullet (4.14.7)
       activesupport (>= 3.0.0)
@@ -406,6 +407,7 @@ DEPENDENCIES
   bootstrap-generators (~> 3.3.1)
   bootstrap-sass (~> 3.3.3)
   bower-rails (~> 0.9.2)
+  browser
   bullet
   byebug
   cancancan (~> 1.8)
