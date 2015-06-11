@@ -12,5 +12,5 @@
     %local_delivery_cost 30
     %offers
       - categories.find_each do |category|
-        = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'true', with_id: true, words_ary: [] }, as: :product
+        = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'true', with_id: false, words_ary: [] }, as: :product
 

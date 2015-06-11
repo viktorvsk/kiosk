@@ -1,5 +1,4 @@
 class ProductsController < CatalogController
-  # layout :resolve_layout
   before_action :set_product, only: [:show, :super_instant_checkout]
 
   # GET /products
@@ -72,9 +71,9 @@ class ProductsController < CatalogController
 
   private
 
-    def resolve_layout
-      action_name != 'show' ? 'product_card' : 'application'
-    end
+    # def resolve_layout
+    #   action_name == 'show' ? 'product_card' : 'application'
+    # end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_product
