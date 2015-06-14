@@ -78,7 +78,7 @@ body{
 .taxons-container{
   margin-top: -50px;
   position: relative;
-  z-index: 99;
+  z-index: 10;
   @media (max-width: 768px){
     margin-top: -25px;
     li{
@@ -168,7 +168,7 @@ body{
   position: fixed;
   right: 24px;
   bottom: 24px;
-  z-index: 200;
+  z-index: 10;
   background: #fff;
   box-shadow: 0px 1px 2px #aaa;
   width: 24px;

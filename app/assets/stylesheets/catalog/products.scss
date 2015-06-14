@@ -139,7 +139,7 @@
       box-shadow: 0px 0px 12px #ddd;
     }
     .product_wrapper{
-      z-index: 999999;
+      z-index: 12;
     }
 
     .product_properties{
@@ -255,12 +255,12 @@
 
   &_autocomplete{
     position: relative;
-    z-index: 9999999;
+    z-index: 15;
 
     &_inner{
       position: absolute;
       width: 100%;
-      z-index: 100;
+      z-index: 15;
       background: #fff;
       margin: auto;
       color: #111;
