@@ -9,7 +9,7 @@ namespace :catalog do
   desc 'Update Sitemap'
   task :update_sitemap => :environment do
     categories = Catalog::Category.select(:id, :slug, :updated_at, :name)
-    products = Catalog::Product.bound.with_price.select(:id, :name, :slug, :updated_at).uniq
+    products = Catalog::Product.with_price.select(:id, :name, :slug, :updated_at).uniq
     pages = Markup.active.pages_and_articles.select(:id, :name, :slug, :updated_at)
     helps = Markup.active.helps.select(:id, :name, :slug, :updated_at)
     sitemap = ActionController::Base.new.render_to_string("catalog/sitemap", locals: { categories: categories, products: products, helps: helps, pages: pages })
