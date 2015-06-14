@@ -15,7 +15,7 @@ class Order < ActiveRecord::Base
   #scope :unknown, -> { where(user: nil) }
   scope :in_cart,   -> { includes(:line_items).where(line_items: { order_id: nil }, orders: {state: 'in_cart'}) }
   scope :in_cart_products,   -> { joins(:line_items).where("orders.state = 'in_cart'") }
-  scope :completed, -> { where("orders.state = 'payd'") }
+  scope :completed, -> { where("orders.state = 'completed'") }
   scope :checkout,  -> { where("orders.state = 'checkout'") }
   scope :deny,      -> { where("orders.state = 'deny'") }
 
