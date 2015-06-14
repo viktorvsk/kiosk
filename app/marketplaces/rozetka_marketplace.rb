@@ -32,11 +32,7 @@ class RozetkaMarketplace < BasicMarketplace
 
   def product_page_scraper(page)
     res = {}
-    properties = page.css('.detail-chars-l-i').map do |row|
-      {
-        row.at_css('dt').text.strip => row.at_css('dd').text.strip
-      } rescue nil
-    end
+    properties = scrape_properties_page
 
     res[:name]        = page.at_css('h1.detail-title').try(:text).to_s.strip
     res[:description] = page.at_css('#short_text').inner_html.strip rescue ''
@@ -49,5 +45,18 @@ class RozetkaMarketplace < BasicMarketplace
 
     res
 
+  end
+
+  def scrape_properties_page
+    url = "#{@query}tab=characteristics"
+    html = Typhoeus.get(url, followlocation: true, verbose: false).body
+    doc = Nokogiri::HTML(html)
+    properties = doc.css('.pp-characteristics-tab-i').map do |row|
+      {
+        row.at_css('dt').text.strip => row.at_css('dd').text.strip
+      } rescue nil
+    end
+
+    properties
   end
 end

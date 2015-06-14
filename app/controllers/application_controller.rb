@@ -19,7 +19,7 @@ private
   end
 
   def set_current_order
-    return if (request.path =~ /^\/admin/) ||
+    return if request.path =~ /^\/admin/
     current_user ? set_order_for_user : set_order_for_guest
   end
 
