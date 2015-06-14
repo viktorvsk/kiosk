@@ -10,8 +10,7 @@
 %h2 Другие товары в интернет-магазине Evotex
 = render 'products/lists/accessories', product: @product
 = render 'products/lists/similars', product: @product
-- if false
-  - cache ['catalog_menu', Catalog::Taxon.pluck(:updated_at).map(&:to_i)] do
-    = render 'shared/menu_bar'
+- cache ['catalog_menu', Catalog::Taxon.pluck(:updated_at).map(&:to_i)] do
+  = render 'shared/menu_bar'
 = render 'products/slides'
 = render 'products/homepage_tops', hit: @hit, newest: @newest, homepage: @homepage
