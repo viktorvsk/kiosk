@@ -52,7 +52,7 @@
   margin-left: -100px;
   background: #19B5FE;
 
-  z-index: 13;
+  z-index: 14;
   opacity: 0.88;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -70,7 +70,7 @@
   color: #fff;
   text-align: center;
 
-  z-index: 13;
+  z-index: 14;
   opacity: 0.88;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -187,8 +187,8 @@ body > footer.jumbotron{
   margin: auto;
 }
 
-.navbar{
-  z-index: 11;
+.catalog-navbar{
+  z-index: 13;
   hr{
     padding: 3px 0;
     margin: 3px 0;

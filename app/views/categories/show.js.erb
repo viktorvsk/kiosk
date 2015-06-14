@@ -2,5 +2,8 @@
   var partial = "<%= escape_javascript(render 'filters_and_results', @filters_and_results_hash) %>"
   var url = "<%= request.url %>";
   $('#filters_and_results').html(partial);
+  $('html, body').animate({
+    scrollTop: $("#filter-results").offset().top - 70
+  }, 200);
   history.pushState(null, null, url);
 })();

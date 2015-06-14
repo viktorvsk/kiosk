@@ -7,6 +7,8 @@
     %style= Conf['txt.css'].try(:html_safe)
     = yield :ogg_meta
     = csrf_meta_tags
+    :css
+      body{ padding: 0 }
   %body
     = link_to '#top_point', class: 'cd-top' do
       %i.glyphicon.glyphicon-chevron-up
@@ -21,5 +23,4 @@
     - if !(current_user && current_user.admin?) && !Rails.env.development?
       %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
-:css
-  body{ padding: 0 }
+
