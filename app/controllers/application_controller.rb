@@ -19,7 +19,7 @@ private
   end
 
   def set_current_order
-    return if request.path =~ /^\/admin/
+    return if (request.path =~ /^\/admin/) ||
     current_user ? set_order_for_user : set_order_for_guest
   end
 
@@ -36,7 +36,12 @@ private
   end
 
   def set_order_for_guest
-    @current_order = Order.where(state: 'in_cart').where(id: session[:order_id]).first || Order.create!
-    session[:order_id] = @current_order.id
+    browser = Browser.new(ua: request.user_agent, accept_language: "en-us")
+    if browser.bot?
+      @current_order = Order.completed.first || Order.first
+    else
+      @current_order = Order.where(state: 'in_cart').where(id: session[:order_id]).first || Order.create!
+      session[:order_id] = @current_order.id
+    end
   end
 end
