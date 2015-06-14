@@ -87,7 +87,7 @@ class Order < ActiveRecord::Base
 
   def add_comment=(value)
     txt = comment.to_s << value
-    comment= txt
+    self.comment = txt
   end
 
   def add_comment
