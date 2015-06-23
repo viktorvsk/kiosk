@@ -24,7 +24,7 @@
               = link_to product.name, p_path(slug: product.slug, id: product.id)
             .product_price
               = price_for(product)
-            = render 'products/order_buttons', product: product
+            = render 'products/mini_card/order_buttons', product: product
       - properties.each do |property|
         %tr{ 'data-compare' => 'tr' }
           %td= property.name
