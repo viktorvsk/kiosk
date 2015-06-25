@@ -44,7 +44,6 @@ class OrdersController < CatalogController
     end
     @current_order.line_items.map(&:fix_price!)
     @current_order.update!(state: 'checkout', user: user, completed_at: Time.now, creation_way: creation_way)
-    byebug
     session[:order_id] = nil
     if session[:ordered].present?
       session[:ordered] = session[:ordered].to_s << " #{@current_order.id}"
