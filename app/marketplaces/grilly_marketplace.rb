@@ -12,7 +12,6 @@ class GrillyMarketplace < BasicMarketplace
   end
 
   def search_results_mapper(product)
-    byebug
     res = {}
     res[:name]  = product.at_css('.name a').text.strip
     res[:url]   = product.at_css('.name a')['href'].to_s
