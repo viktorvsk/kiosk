@@ -25,6 +25,9 @@
         = render 'shared/aside_new'
     .row
       = render 'products/card/gallery_images', product: product
+    .row
+      .t3d-link.t3d-inj.t3d-std{ 'data-parnter-id' => product.id }
+
     - if product.video.present?
       .row
         .text-center= video_for product.video
