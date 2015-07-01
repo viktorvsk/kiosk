@@ -11,6 +11,8 @@
         .row
           .col-sm-6
             = render 'products/card/main_image', product: product
+            %br/
+            .t3d-link.t3d-inj.t3d-std{ 'data-parnter-id' => product.id }
           .col-sm-6
             = render 'products/card/offer_new', product: product
             %h2.text-center
@@ -25,8 +27,6 @@
         = render 'shared/aside_new'
     .row
       = render 'products/card/gallery_images', product: product
-    .row
-      .t3d-link.t3d-inj.t3d-std{ 'data-parnter-id' => product.id }
 
     - if product.video.present?
       .row
