@@ -76,7 +76,7 @@ end
 current_root = File.expand_path '../', __FILE__
 node_path    = '/home/vvsk/.nvm/versions/node/v0.12.1/bin'
 
-set :domain,      'vvsk@terenkur.com'
+set :domain,      'vvsk@evotex.kh.ua'
 set :application, 'kiosk'
 set :server_name, 'kiosk.evotex.kh.ua'
 set :deploy_to,   '/home/vvsk/kiosk'
