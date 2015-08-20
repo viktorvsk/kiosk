@@ -8,15 +8,15 @@ class BrainMarketplace < BasicMarketplace
   end
 
   def search_found_selector
-    '.photo_block'
+    '.absolute_bg'
   end
 
   def search_results_mapper(product)
     res = {}
-    res[:name]  = product.at_css('.photo_block_headline a').text.strip
-    res[:url]   = URI.join('http://brain.com.ua', product.at_css('.photo_block_headline a')['href']).to_s
-    res[:image] = URI.join('http://brain.com.ua', product.at_css('.photo img')['src']).to_s
-    price_node  = product.at_css('.prise')
+    res[:name]  = product.at_css('.name a').text.strip
+    res[:url]   = URI.join('http://brain.com.ua', product.at_css('.name a')['href']).to_s
+    res[:image] = URI.join('http://brain.com.ua', product.at_css('.img img')['src']).to_s
+    price_node  = product.at_css('.price .number')
 
     if price_node.present?
       res[:price] = price_node.text.to_i
@@ -33,19 +33,19 @@ class BrainMarketplace < BasicMarketplace
   def product_page_scraper(page)
     res = {}
 
-    properties = page.css('.product_specifications tr').map do |row|
+    properties = page.css('.characteristics .table .row').map do |row|
       {
-        row.at_css('th').text.strip => row.at_css('td').text.strip
+        row.css('div')[0].text.strip => row.css('div')[1].text.strip
       } rescue nil
     end
 
-    res[:name]        = page.at_css('h1').text.strip
-    res[:description] = page.at_css('.description').inner_html.strip rescue ''
-    res[:images]      = page.css('.thumbs_list a').map { |a| URI.join('http://brain.com.ua', a['href']).to_s } rescue []
+    res[:name]        = page.at_css('.name').text.strip
+    res[:description] = page.at_css('.description_wrapper').inner_html.strip rescue ''
+    res[:images]      = page.css('.magnifier_picture').map { |img| URI.join('http://brain.com.ua', img['src']).to_s } rescue []
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query
-    res[:vendor_code] = page.at_css('.kod > p').text.gsub('код товара ', '').strip
-    res[:vendor_category]    = page.css('.crumbs a')[1].text.strip
+    res[:vendor_code] = page.at_css('.code').text.gsub('код товара ', '').strip
+    res[:vendor_category]    = page.css('.bread_crumbs a').last.text.strip
 
     res
 

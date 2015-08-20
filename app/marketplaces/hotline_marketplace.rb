@@ -14,8 +14,8 @@ class HotlineMarketplace < BasicMarketplace
   def search_results_mapper(product)
     res = {}
 
-    res[:name]  = product.at_css('.title-box h3 a').text.strip
-    res[:url]   = full_url(product.at_css('.title-box h3 a')['href'])
+    res[:name]  = product.at_css('.ttle a').text.strip
+    res[:url]   = full_url(product.at_css('.ttle a')['href'])
     res[:image] = full_url(product.at_css('.img-box img')['src'])
     price_node  = product.at_xpath("//span[@class='orng']/text()")
 

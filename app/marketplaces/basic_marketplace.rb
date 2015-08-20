@@ -10,7 +10,7 @@ class BasicMarketplace
   def search
     html = Typhoeus.get(search_query, followlocation: true, verbose: false).body
     doc = Nokogiri::HTML(html)
-    @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }
+    @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }.first(24)
   end
 
   def scrape
