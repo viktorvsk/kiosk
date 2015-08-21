@@ -42,6 +42,7 @@ class RepkaMarketplace < BasicMarketplace
     res[:name]        = page.at_css('h1').text.strip
     res[:description] = page.at_css('#tab_block_main').inner_html.strip rescue ''
     res[:images]      = page.css('ul.sc_box img').map { |img| URI.join('https://repka.ua', img['data-detsrc']).to_s } rescue []
+    res[:images]      << URI.join('https://repka.ua', page.at_css('#main_photo_link img')['src']).to_s
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query
     res[:vendor_code] = page.at_css('.code span').text.strip
