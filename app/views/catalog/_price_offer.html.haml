@@ -14,6 +14,14 @@
       = name
     - else
       = name
+  - if offer_available == 'false'
+    %sales_notes
+      - if product.price.to_i.in?(1..5000)
+        Предоплата не требуется.
+      - elsif product.price.to_i.in?(5000..50000)
+        Необходима предоплата.
+      - else
+        Предоплата 100%.
   - if (warr = product.product_properties.detect{ |pp| (pp.catalog_property_id == warranty_id) && (pp.name.to_i > 0) })
     %manufacturer_warranty true
     %param{:name => "Гарантия"}= warr.name.to_i
