@@ -19,7 +19,7 @@ class Admin::Vendor::ProductsController < Admin::BaseController
   end
 
   def search
-    params[:q].each_value do |v| v.strip! end
+    params[:q].each_value{ |v| v.strip! }
     @q_vendor_products = ::Vendor::Product.unbound.ransack(params[:q])
     @products = @q_vendor_products.result.order('updated_at DESC').page(params[:page])
   end

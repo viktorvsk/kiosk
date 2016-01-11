@@ -37,6 +37,7 @@ gem 'carrierwave-ftp', require: 'carrierwave/storage/ftp/all'
 gem 'file_browser', path: 'file_browser'
 
 group :development do
+  gem 'pry'
   gem 'bootstrap-generators', '~> 3.3.1'
   gem 'rails-dev-boost',
       git: 'git://github.com/thedarkone/rails-dev-boost.git'

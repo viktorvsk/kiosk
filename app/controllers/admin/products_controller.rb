@@ -13,7 +13,6 @@ class Admin::ProductsController < Admin::BaseController
     @all_products = Catalog::Product.includes(vendor_products: :product)
     @all_products_count = @all_products.count
     @products = @all_products.page(params[:page])
-
   end
 
   def search
