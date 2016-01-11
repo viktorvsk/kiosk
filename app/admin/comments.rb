@@ -9,15 +9,15 @@ ActiveAdmin.register Catalog::Comment do
   index do
     selectable_column
     column :created_at
-    column 'Товар' do |product|
-      link_to 'Ссылка на товар', product_path(product)
+    column 'Товар' do |comment|
+      link_to "#{commentable_product(comment).name}", product_path(commentable_product(comment))
     end
     actions
   end
 
   form do |f|
     f.inputs "Детали" do
-      li link_to 'Ссылка на товар', product_path
+      li link_to 'Ссылка на товар', product_path(commentable_product(object))
       f.input :body
       f.input :active
     end
