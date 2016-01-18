@@ -34,7 +34,7 @@ class BigshopMarketplace < BasicMarketplace
     doc = Nokogiri::HTML(html)
     properties = []
     doc.search('tbody tr').each_cons(2) do |name, value|
-      properties << { name.at_css('td').text => value.at_css('td').text }
+      properties << { value.at_css('td').text => name.at_css('td').text }
     end
     properties
   end
