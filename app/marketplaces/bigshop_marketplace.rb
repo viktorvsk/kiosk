@@ -33,8 +33,8 @@ class BigshopMarketplace < BasicMarketplace
     html = Typhoeus.get(url, followlocation: true, verbose: false).body
     doc = Nokogiri::HTML(html)
     properties = []
-    doc.search('tbody tr').each_cons(2) do |name, value|
-      properties << { value.at_css('td').text => name.at_css('td').text }
+    doc.search('tbody tr td').each_slice(2) do |name, value|
+      properties << { name.text => value.text }
     end
     properties
   end
