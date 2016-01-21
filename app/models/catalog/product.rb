@@ -539,8 +539,10 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def attributes_blank?
-    slug = self[:slug]
-    [seo.description, seo.keywords, slug].any? { |attribute| attribute.blank? }
+    if self.seo
+      slug = self[:slug]
+      [seo.description, seo.keywords, slug].any? { |attribute| attribute.blank? }
+    end
   end
 
   private

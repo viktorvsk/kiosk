@@ -1,6 +1,6 @@
 <% attributes = ['#catalog_product_slug', @product.slug, 
 	      '#catalog_product_seo_attributes_keywords', @product.seo.keywords, 
-	      '#catalog_product_seo_attributes_description', @product.description] %>
+	      '#catalog_product_seo_attributes_description', @product.seo.description] %>
 <% attributes.each_slice(2) do |input, value| %>
    $('<%= input %>').val('<%= j value %>');
 <% end %>
