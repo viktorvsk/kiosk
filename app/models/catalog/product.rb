@@ -13,6 +13,7 @@ class Catalog::Product < ActiveRecord::Base
   SEO_ATTRS = SEO_MAPPER.keys.join('|')
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
+  before_save :filling_attributes, if: :attributes_blank?
   after_save :recount_unfixed
   store_accessor :info, :video, :description, :accessories,
                         :newest, :homepage, :hit,
@@ -537,8 +538,19 @@ class Catalog::Product < ActiveRecord::Base
     end
   end
 
+  def attributes_blank?
+    slug = self[:slug]
+    [seo.description, seo.keywords, slug].any? { |attribute| attribute.blank? }
+  end
+
   private
 
+  def filling_attributes
+    slug = self[:slug]
+    [seo.description, name, seo.keywords, name, slug, model].each_slice(2) do |field, value|
+      field.replace(value) if field.blank?
+    end
+  end
 
   def price_to_recount
     rrc = vendor_products.select_rrc

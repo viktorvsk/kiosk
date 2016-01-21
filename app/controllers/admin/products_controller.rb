@@ -66,10 +66,11 @@ class Admin::ProductsController < Admin::BaseController
       if @product.update(product_params)
         current_user.record!(@product, 'Отредактировал', @product.stats)
         format.html { redirect_to edit_admin_product_url(@product), notice: 'Товар успешно обновлен.' }
-        format.json { render :show, status: :ok, location: @product }
+        format.js
+        # format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        #format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
