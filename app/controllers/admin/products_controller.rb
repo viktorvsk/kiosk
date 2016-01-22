@@ -62,12 +62,13 @@ class Admin::ProductsController < Admin::BaseController
   # PATCH/PUT /admin/products/1
   # PATCH/PUT /admin/products/1.json
   def update
-    @attributes = {'#catalog_product_slug': @product.slug, 
-                  '#catalog_product_seo_attributes_keywords': @product.seo.keywords, 
-                  '#catalog_product_seo_attributes_description': @product.seo.description}
+    
     respond_to do |format|
       if @product.update(product_params)
         current_user.record!(@product, 'Отредактировал', @product.stats)
+        @attributes = {'#catalog_product_slug': @product.slug, 
+                       '#catalog_product_seo_attributes_keywords': @product.seo.keywords, 
+                       '#catalog_product_seo_attributes_description': @product.seo.description}    
         format.html { redirect_to edit_admin_product_url(@product), notice: 'Товар успешно обновлен.' }
         format.js
         # format.json { render :show, status: :ok, location: @product }
