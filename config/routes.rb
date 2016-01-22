@@ -117,7 +117,7 @@ Rails.application.routes.draw do
         post :pricelist, on: :member
       end
     end
-    resources :callbacks
+    resources :callbacks, except: [:new, :create, :show]
   end
   ActiveAdmin.routes(self)
 end
