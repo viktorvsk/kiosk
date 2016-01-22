@@ -1,0 +1,37 @@
+.page-header
+  .callback-links
+    %ul
+      %li
+        = link_to 'Обработанные', admin_callbacks_path(scope: 'processing')
+        %span.count
+          = callbacks.olds.count
+      %li
+        = link_to 'Не обработанные', admin_callbacks_path(scope: 'non-processing')
+        %span.count
+          = callbacks.news.count
+  %h1 Коллбэки
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Имя
+        %th Телефон
+        %th Клиент
+    %tbody
+      - @callbacks.each do |callback|
+        %tr
+          %td
+            = callback.name
+          %td
+            = callback.phone
+          %td
+            = link_to callback.name, edit_admin_user_path(callback)
+          %td
+            = link_to 'Изменить', edit_admin_callback_path(callback)
+          %td
+            = link_to admin_callback_path(callback), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm': 'Вы уверены?' do
+              %i.glyphicon.glyphicon-remove
+    %tfoot
+      %tr
+        %td.text-center{ colspan: 6 }
+          = paginate @callbacks

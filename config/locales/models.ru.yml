@@ -81,6 +81,7 @@ ru:
         body: Сообщение
         active: Обработан
         user: Клиент
+        user_id: Клиент
       markup:
         name: Заголовок
         body: Текст
