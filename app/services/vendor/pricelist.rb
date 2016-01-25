@@ -15,7 +15,6 @@ module Vendor
       def perform(merchant_id, file_path)
         ::Vendor::Pricelist.new(merchant_id, file_path).import!
       end
-
     end
 
     def initialize(merchant_id, file_path)
