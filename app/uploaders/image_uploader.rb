@@ -1,7 +1,7 @@
 class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
-  storage :sftp
+  storage :fog
   #sprocess convert: :png
 
   process quality: 85
