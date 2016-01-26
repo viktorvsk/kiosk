@@ -35,6 +35,7 @@ gem 'mini_magick'
 gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/ftp/all'
 gem 'file_browser', path: 'file_browser'
+gem 'fog'
 
 group :development do
   gem 'pry'
