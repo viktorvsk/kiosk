@@ -54,6 +54,7 @@ group :development do
   gem 'mina-puma',  require: false
   gem 'mina-nginx', require: false
   gem 'mina-scp',   require: false
+  gem 'capistrano-rails'
 end
 
 group :development, :test do
