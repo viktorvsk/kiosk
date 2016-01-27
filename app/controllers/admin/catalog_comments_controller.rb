@@ -8,7 +8,7 @@ class Admin::CatalogCommentsController < Admin::BaseController
                 when 'processing' then Catalog::Comment.with_product.olds
                 else Catalog::Comment.with_product
                 end
-    @comments = comments.page(params[:page])
+    @comments = comments.order(created_at: :desc).page(params[:page])
   end
 
   def edit
