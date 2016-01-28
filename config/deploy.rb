@@ -161,6 +161,17 @@ task update_crontab: :environment do
   invoke :'whenever:write'
 end
 
+desc 'Restart puma (phased restart)'
+task phased_restart: :environment do
+  queue! %[
+      if [ -e '#{pumactl_socket}' ]; then
+        cd #{deploy_to}/#{current_path} && CURRENT_PATH='/home/vvsk/kiosk' bundle exec pumactl -S #{puma_state} --pidfile #{puma_pid} phased-restart
+      else
+        echo 'Puma is not running!';
+      fi
+    ]
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
 
@@ -179,7 +190,7 @@ task :deploy => :environment do
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
 
-      invoke :'puma:phased_restart'
+      invoke :'phased_restart'
     end
   end
   invoke :'whenever:write'

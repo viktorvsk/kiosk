@@ -36,6 +36,7 @@ gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/ftp/all'
 gem 'file_browser', path: 'file_browser'
 gem 'fog'
+gem 'rack-mini-profiler'
 
 group :development do
   gem 'pry'
@@ -54,7 +55,6 @@ group :development do
   gem 'mina-puma',  require: false
   gem 'mina-nginx', require: false
   gem 'mina-scp',   require: false
-  gem 'capistrano-rails'
 end
 
 group :development, :test do

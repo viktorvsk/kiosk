@@ -97,6 +97,24 @@ task :'assets_precompile' do
   end
 end
 
+task :setup => :environment do
+
+  queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets")
+  queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets")
+  queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids")
+  queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/pids")
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/server"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/server"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
+
+end
+
 task :enviroment do
   invoke :'rbenv:load'
   queue! %(export NODE_PATH="#{node_path}")
@@ -105,6 +123,17 @@ task :enviroment do
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public"]
   queue! %[mkdir -p "#{deploy_to}/shared/vendor/assets/bower_components"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/vendor/assets/bower_components"]
+end
+
+desc 'Restart puma (phased restart)'
+task phased_restart: :environment do
+  queue! %[
+      if [ -e '#{pumactl_socket}' ]; then
+        cd #{deploy_to}/#{current_path} && CURRENT_PATH='/home/ubuntu/staging' bundle exec pumactl -S #{puma_state} --pidfile #{puma_pid} phased-restart
+      else
+        echo 'Puma is not running!';
+      fi
+    ]
 end
 
 desc "Deploys the current version to the staging server."
@@ -124,7 +153,7 @@ task :deploy => :enviroment do
     
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      invoke :'puma:phased_restart'
+      invoke :'phased_restart'
     end
   end
   invoke :'whenever:write'
