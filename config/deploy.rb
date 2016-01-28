@@ -165,7 +165,7 @@ desc 'Restart puma (phased restart)'
 task phased_restart: :environment do
   queue! %[
       if [ -e '#{pumactl_socket}' ]; then
-        cd #{deploy_to}/#{current_path} && CURRENT_PATH='/home/vvsk/kiosk' bundle exec pumactl -S #{puma_state} --pidfile #{puma_pid} phased-restart
+        cd #{deploy_to}/#{current_path} && CURRENT_PATH=/home/vvsk/kiosk bundle exec pumactl -S #{puma_state} --pidfile #{puma_pid} phased-restart
       else
         echo 'Puma is not running!';
       fi
