@@ -36,7 +36,6 @@ gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/ftp/all'
 gem 'file_browser', path: 'file_browser'
 gem 'fog'
-gem 'rack-mini-profiler'
 
 group :development do
   gem 'pry'

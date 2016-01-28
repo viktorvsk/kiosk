@@ -3,13 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :set_current_order
-  before_filter :miniprofiler
-  
-private
 
-  def miniprofiler
-    Rack::MiniProfiler.authorize_request
-  end
+private
 
   def authorize_admin!
     redirect_to root_path, notice: 'Только для администраторов' if !current_user.try(:admin?)
