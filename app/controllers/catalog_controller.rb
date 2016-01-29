@@ -35,9 +35,10 @@ class CatalogController < ApplicationController
   end
 
   def price
-    categories = Catalog::Category.pricelist_association
+    products_count, categories = Catalog::Category.pricelist_association_and_products_count
     warranty_id = Catalog::Property.warranty.try(:id)
-    render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id }
+    render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id, 
+                                                                                 products_count: products_count }
   end
 
   def set_comparing_products

@@ -6,7 +6,7 @@
     - Markup.active.slides.each_with_index do |slide, index|
       .item{ class: ('active' if index == 0) }
         = slide.body.html_safe
-  %a.left.carousel-control{ href: '#slides', data: { slide: :next } }
+  %a.left.carousel-control{ href: '#slides', data: { slide: :prev } }
     %i.glyphicon.glyphicon-chevron-left
-  %a.right.carousel-control{ href: '#slides', data: { slide: :prev } }
+  %a.right.carousel-control{ href: '#slides', data: { slide: :next } }
     %i.glyphicon.glyphicon-chevron-right

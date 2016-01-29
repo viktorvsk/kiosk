@@ -27,7 +27,15 @@ class Catalog::Category < ActiveRecord::Base
   has_one :seo, as: :seoable, dependent: :destroy
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :aliases, allow_destroy: true
-
+  
+  def self.pricelist_association_and_products_count
+    products = where(active: true).joins(:products)
+    categories = products.where('catalog_products.price > 0')
+                         .select('catalog_categories.id, catalog_categories.name')
+                         .uniq
+    [products.size, categories]
+  end
+  
   def self.pricelist_association
     where(active: true)
       .joins(:products)

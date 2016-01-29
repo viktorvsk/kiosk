@@ -141,6 +141,7 @@
     height: 100%;
   }
   .carousel-indicators{
+    z-index: 9;
     li{ background: #afaf88 }
   }
 }
@@ -197,6 +198,10 @@ body > footer.jumbotron{
 
 #main_search_form{
   input{ border-radius: 0!important; }
+}
+
+.modal-content{
+  padding-top: 30px;
 }
 
 /******************************** Workarounds ********************************/
