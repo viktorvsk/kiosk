@@ -45,7 +45,6 @@ class BigshopMarketplace < BasicMarketplace
     res[:name] = page.at_css('#container h1').text
     res[:properties] = properties.select(&:present?)
     res[:url] = @query
-    res[:name] = page.at_css('#container h1').text
     res[:images] = [page.at_css('#content img')['src']]
     res
   end

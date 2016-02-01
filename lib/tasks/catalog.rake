@@ -18,10 +18,11 @@ namespace :catalog do
 
   desc 'Update Pricelist'
   task update_pricelist: :environment do
-    categories = Catalog::Category.pricelist_association
+    products_count, categories = Catalog::Category.pricelist_association_and_products_count
     warranty_id = Catalog::Property.warranty.try(:id)
 
-    pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories, warranty_id: warranty_id })
+    pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories, warranty_id: warranty_id,
+                                                                                       products_count: products_count })
     File.open(Rails.public_path.join('price_full.xml'), 'w'){ |f| f.puts pricelist }
 
     # Repeat for Yandex Market
@@ -30,7 +31,7 @@ namespace :catalog do
 
   end
 
-  desc 'Auto upadte prices'
+  desc 'Auto update prices'
   task auto_update_prices: :environment do
     merchants = Vendor::Merchant.auto_updateable
     merchants.each do |m|
