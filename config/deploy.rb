@@ -6,6 +6,10 @@ require 'mina/rbenv'
 require 'mina/puma'
 require 'mina/nginx'
 require 'mina/scp'
+require 'pry'
+require 'dotenv'
+
+Dotenv.load(".env.#{ENV["RAILS_ENV"]}")
 
 ################################################################################
 settings.rake_assets_precompile = "RAILS_ENV=production bundle exec rake assets:precompile RAILS_GROUPS=assets"
@@ -74,16 +78,15 @@ end
 ################################################################################
 
 current_root = File.expand_path '../', __FILE__
-node_path    = '/home/vvsk/.nvm/versions/node/v0.12.1/bin'
+node_path    = ENV['MINA_NODE_PATH'] 
 
-set :domain,      'vvsk@evotex.kh.ua'
-set :application, 'kiosk'
-set :server_name, 'kiosk.evotex.kh.ua'
-set :deploy_to,   '/home/vvsk/kiosk'
+set :domain,      ENV['MINA_DOMAIN']
+set :application, ENV['MINA_APPLICATION']
+set :server_name, ENV['MINA_SERVER_NAME']
+set :deploy_to,   ENV['MINA_DEPLOY']
 set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      'master'
-
-
+set :puma_config, "#{deploy_to}/#{shared_path}/config/puma/#{ENV['RAILS_ENV']}.rb"
 
 set :shared_paths, [
   'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml',

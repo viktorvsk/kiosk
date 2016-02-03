@@ -38,7 +38,7 @@ gem 'file_browser', path: 'file_browser'
 gem 'fog'
 
 group :development do
-  gem 'rack-mini-profiler'
+  gem 'dotenv-rails'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'

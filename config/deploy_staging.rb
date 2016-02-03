@@ -6,14 +6,15 @@ require 'mina/rbenv'
 require 'mina/puma'
 require 'mina/nginx'
 require 'mina/scp'
-node_path    = '/usr/bin/node'
+node_path = ENV['MINA_NODE_PATH']
 
-set :domain,      'ubuntu@54.93.89.37'
-set :application, 'staging'
-set :server_name, 'staging.evotex.kh.ua'
-set :deploy_to,   '/home/ubuntu/staging'
+set :domain,      Figaro.env.mina_domain
+set :application, Figaro.env.mina_application
+set :server_name, Figaro.env.mina_server_name
+set :deploy_to,   Figaro.env.mina_deploy_to
 set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      'master'
+
 
 def check_for_changes_script(options={})
   diffs = options[:at].map { |path|
