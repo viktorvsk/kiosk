@@ -28,14 +28,6 @@ class Catalog::Category < ActiveRecord::Base
   accepts_nested_attributes_for :seo
   accepts_nested_attributes_for :aliases, allow_destroy: true
   
-  def self.pricelist_association_and_products_count
-    products = where(active: true).joins(:products)
-    categories = products.where('catalog_products.price > 0')
-                         .select('catalog_categories.id, catalog_categories.name')
-                         .uniq
-    [products.size, categories]
-  end
-  
   def self.pricelist_association
     where(active: true)
       .joins(:products)
@@ -130,6 +122,10 @@ class Catalog::Category < ActiveRecord::Base
 
   def seo_template
     Conf[:seo_template_category].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) rescue '' }
+  end
+
+  def self.products_pricelist_count
+    where(active: true).joins(:products).count
   end
 
   private

@@ -6,7 +6,6 @@ require 'mina/rbenv'
 require 'mina/puma'
 require 'mina/nginx'
 require 'mina/scp'
-require 'pry'
 require 'dotenv'
 
 Dotenv.load(".env.#{ENV["RAILS_ENV"]}")

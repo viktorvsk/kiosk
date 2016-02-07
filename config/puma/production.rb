@@ -14,7 +14,6 @@ stdout_redirect "#{deploy_to}/shared/log/puma.stdout.log", "#{deploy_to}/shared/
 bind            "unix://#{deploy_to}/shared/tmp/sockets/kiosk.sock"
 activate_control_app "unix://#{deploy_to}/shared/tmp/sockets/pumactl.sock"
 
-
 on_worker_boot do
   # worker specific setup
   ActiveSupport.on_load(:active_record) do

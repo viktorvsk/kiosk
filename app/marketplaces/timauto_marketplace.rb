@@ -47,7 +47,7 @@ class TimautoMarketplace < BasicMarketplace
     res[:name] = page.at_css('.csidebar .blockname').text
     res[:properties] = properties.select(&:present?)
     res[:url] = @query
-    res[:images] = [page.at_css('.fleft .product-image')['src']]
+    res[:images] = ["http://timauto.com.ua/#{page.at_css('.fleft .product-image')['src']}"]
     res
   end
 end

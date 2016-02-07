@@ -44,7 +44,7 @@ group :development do
   gem 'pry-rails'
   gem 'bootstrap-generators', '~> 3.3.1'
   gem 'rails-dev-boost',
-      git: 'git://github.com/thedarkone/rails-dev-boost.git'
+       git: 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'rb-inotify', '>= 0.8.8'
   gem 'binding_of_caller'
   gem 'better_errors'
@@ -63,7 +63,7 @@ group :development, :test do
   gem 'did_you_mean'
 end
 
-group :production do
+group :production, :staging do
   gem 'rack-cache'
 end
 
