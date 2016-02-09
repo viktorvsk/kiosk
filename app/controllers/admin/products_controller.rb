@@ -66,7 +66,7 @@ class Admin::ProductsController < Admin::BaseController
     respond_to do |format|
       if @product.update(product_params)
         current_user.record!(@product, 'Отредактировал', @product.stats)
-        ProductsDecorator.new(@product).update_properties
+        @product.update_properties
         format.html { redirect_to edit_admin_product_url(@product), notice: 'Товар успешно обновлен.' }
         format.js
         # format.json { render :show, status: :ok, location: @product }

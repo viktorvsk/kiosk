@@ -71,7 +71,8 @@ module ActivePricelist
     end
 
     def parse_as_xls
-      spreadsheet = Roo::Spreadsheet.open(@file)
+      file = Roo::Spreadsheet.open(@file)
+      spreadsheet = Decoder.new(file).xls
       @start.to_i.upto(spreadsheet.last_row) do |row_num|
         row = {}
         @columns.each do |k, v|

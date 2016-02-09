@@ -50,7 +50,6 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
-
     def active_marketplaces
       Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify.constantize rescue nil }.compact
     end
@@ -542,6 +541,15 @@ class Catalog::Product < ActiveRecord::Base
     return unless seo
     slug = self[:slug]
     [seo.description, seo.keywords, slug].any?(&:blank?)
+  end
+
+  def update_properties
+    return {'#catalog_product_slug': slug} unless seo
+    {
+      '#catalog_product_slug': slug,
+      '#catalog_product_seo_attributes_keywords': seo.keywords,
+      '#catalog_product_seo_attributes_description': seo.description
+    }
   end
 
   private

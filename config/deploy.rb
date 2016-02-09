@@ -139,12 +139,12 @@ end
 
 desc "Install assets with bower."
 task :bower_install => :environment do
-  queue! %(RAILS_ENV=production bundle exec rake bower:install)
+  queue! %(RAILS_ENV=#{ENV["RAILS_ENV"]} bundle exec rake bower:install)
 end
 
 desc "Restart Resque workers"
 task :restart_resque => :environment do
-  queue! %(RAILS_ENV=production rake resque:restart_workers)
+  queue! %(RAILS_ENV=#{ENV["RAILS_ENV"]} rake resque:restart_workers)
 end
 
 desc "Disable ActiveAdmin before running migrations"
@@ -176,12 +176,11 @@ task :deploy => :environment do
     invoke :'bower_install'
     invoke :'rails_patched:assets_precompile'
     invoke :'deploy:cleanup'
-    invoke :'restart_resque'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-
       invoke :'puma:phased_restart'
+      invoke :'restart_resque'
     end
   end
   invoke :'whenever:write'
