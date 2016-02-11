@@ -1,4 +1,5 @@
 require 'open-uri'
+
 class Catalog::Product < ActiveRecord::Base
   include Slugable
   SEO_MAPPER = {

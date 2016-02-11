@@ -74,7 +74,7 @@ module Vendor
     end
 
     def upload_pricelist
-       File.open(@merchant.pricelist_path, 'wb'){ |f| f.puts @file.read }
+      File.open(@merchant.pricelist_path, 'wb'){ |f| f.puts @file.read }
     end
 
     def parse_pricelist

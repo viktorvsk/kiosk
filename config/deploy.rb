@@ -11,7 +11,7 @@ require 'dotenv'
 Dotenv.load(".env.#{ENV["RAILS_ENV"]}")
 
 ################################################################################
-settings.rake_assets_precompile = "RAILS_ENV=production bundle exec rake assets:precompile RAILS_GROUPS=assets"
+settings.rake_assets_precompile = "RAILS_ENV=#{ENV['RAILS_ENV']} bundle exec rake assets:precompile RAILS_GROUPS=assets"
 
 def check_for_changes_script(options={})
   diffs = options[:at].map { |path|
@@ -86,6 +86,7 @@ set :deploy_to,   ENV['MINA_DEPLOY']
 set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      'master'
 set :puma_config, "#{deploy_to}/#{shared_path}/config/puma/#{ENV['RAILS_ENV']}.rb"
+set :bundle_prefix, "RAILS_ENV=#{ENV['RAILS_ENV']} bundle exec"
 
 set :shared_paths, [
   'config/database.yml', 'log', 'config/secrets.yml', 'config/application.yml',

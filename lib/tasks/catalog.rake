@@ -18,7 +18,8 @@ namespace :catalog do
 
   desc 'Update Pricelist'
   task update_pricelist: :environment do
-    products_count, categories = Catalog::Category.pricelist_association
+    products_count = Catalog::Category.products_pricelist_count
+    categories = Catalog::Category.pricelist_association
     warranty_id = Catalog::Property.warranty.try(:id)
 
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: { categories: categories, warranty_id: warranty_id,

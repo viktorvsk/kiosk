@@ -35,7 +35,6 @@ class CatalogController < ApplicationController
   end
 
   def price
-    products_count = Catalog::Category.products_pricelist_count
     categories = Catalog::Category.pricelist_association
     warranty_id = Catalog::Property.warranty.try(:id)
     render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id, 
