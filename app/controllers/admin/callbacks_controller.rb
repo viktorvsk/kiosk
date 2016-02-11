@@ -4,8 +4,8 @@ class Admin::CallbacksController < Admin::BaseController
 
   def index
     callbacks = case params['scope']
-                 when 'non-processing' then ::Callback.olds
-                 when 'processing' then ::Callback.news
+                 when 'olds' then ::Callback.olds
+                 when 'news' then ::Callback.news
                  else ::Callback.all
                  end
     @callbacks = callbacks.page(params[:page])

@@ -4,11 +4,11 @@ class Admin::MarkupsController < Admin::BaseController
 
   def index
     markups = case params['scope']
-              when 'actives'  then ::Markup.active
-              when 'pages'    then ::Markup.pages
-              when 'articles' then ::Markup.articles
-              when 'helps'    then ::Markup.helps
-              when 'slides'   then ::Markup.slides
+              when 'actives'  then Markup.active
+              when 'pages'    then Markup.pages
+              when 'articles' then Markup.articles
+              when 'helps'    then Markup.helps
+              when 'slides'   then Markup.slides
               else ::Markup.all
               end
     @markups = markups.page(params[:page])
@@ -38,6 +38,6 @@ class Admin::MarkupsController < Admin::BaseController
   end
 
   def set_markup
-    @markup = ::Markup.find(params[:id])
+    @markup = Markup.find(params[:id])
   end
 end

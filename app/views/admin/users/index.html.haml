@@ -5,7 +5,7 @@
         %li
           = link_to type, admin_users_path(scope: scope)
           %span.count
-            = users.send(scope).count
+            = User.send(scope).count
   %h1 Пользователи
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

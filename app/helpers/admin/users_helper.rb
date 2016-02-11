@@ -1,8 +1,4 @@
 module Admin::UsersHelper
-  def users
-    @users ||= User.all
-  end
-
   def user_links
     {'admins': 'Администраторы', 'contents': 'Менеджеры', 'customers': 'Клиенты'}
   end

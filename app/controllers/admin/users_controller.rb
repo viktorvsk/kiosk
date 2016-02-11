@@ -4,11 +4,11 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     users = case params['scope']
-           when 'admins'   then User.admin
-           when 'managers' then User.manager
-           when 'client'   then User.client
-           else User.all
-           end
+            when 'admins'      then User.admins
+            when 'contents'    then User.contents
+            when 'customers'   then User.customers
+            else User.all
+            end
     @users = users.page(params[:page])
   end
 

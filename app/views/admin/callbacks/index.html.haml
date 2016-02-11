@@ -5,7 +5,7 @@
         %li
           = link_to type, admin_callbacks_path(scope: scope)
           %span.count
-            = callbacks.send(scope).count
+            = Callback.send(scope).count
   %h1 Коллбэки
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
