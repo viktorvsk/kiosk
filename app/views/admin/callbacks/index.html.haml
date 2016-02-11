@@ -1,14 +1,11 @@
 .page-header
-  .callback-links
+  .index-links
     %ul
-      %li
-        = link_to 'Обработанные', admin_callbacks_path(scope: 'processing')
-        %span.count
-          = callbacks.news.count
-      %li
-        = link_to 'Не обработанные', admin_callbacks_path(scope: 'non-processing')
-        %span.count
-          = callbacks.olds.count
+      - callback_links.each do |scope, type|
+        %li
+          = link_to type, admin_callbacks_path(scope: scope)
+          %span.count
+            = callbacks.send(scope).count
   %h1 Коллбэки
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

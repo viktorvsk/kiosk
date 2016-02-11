@@ -1,0 +1,31 @@
+.page-header
+  .index-links
+    %ul
+      - user_links.each do |scope, type|
+        %li
+          = link_to type, admin_users_path(scope: scope)
+          %span.count
+            = users.send(scope).count
+  %h1 Пользователи
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Email
+        %th Товаров за сегодня
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            = user.email
+          %td
+            = user.uniq_product_actions_today
+          %td
+            = link_to 'Изменить', edit_admin_user_path(user)
+          %td
+            = link_to admin_user_path(user), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm': 'Вы уверены?' do
+              %i.glyphicon.glyphicon-remove
+  %tfoot
+    %tr
+      %td.text-center{ colspan: 6 }
+        = paginate @users

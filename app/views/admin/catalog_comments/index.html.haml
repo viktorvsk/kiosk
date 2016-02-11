@@ -1,14 +1,11 @@
 .page-header
-  .comment-links
+  .index-links
     %ul
-      %li
-        = link_to 'Обработанные', admin_catalog_comments_path(scope: 'processing')
-        %span.count
-          = comments.olds.count
-      %li
-        = link_to 'Не обработанные', admin_catalog_comments_path(scope: 'non-processing')
-        %span.count
-          = comments.news.count
+      - comment_links.each do |scope, type|
+        %li
+          = link_to type, admin_catalog_comments_path(scope: scope)
+          %span.count
+            = comments.send(scope).count
   %h1 Комментарии
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

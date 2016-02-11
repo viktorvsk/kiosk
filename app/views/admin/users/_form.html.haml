@@ -1,0 +1,10 @@
+= form_for([:admin, @user]) do |f|
+  %ul.list-group
+    %li.list-group-item= field_for(f, :email)
+    %li.list-group-item= field_for(f, :name)
+    %li.list-group-item= field_for(f, :phone)
+    %li.list-group-item= field_for(f, :password)
+    %li.list-group-item= field_for(f, :password_confirmation)
+    %li.list-group-item
+      = f.select :role, user_roles
+  = f.submit 'Отправить', class: 'btn btn-success'

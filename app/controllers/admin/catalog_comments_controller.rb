@@ -4,8 +4,8 @@ class Admin::CatalogCommentsController < Admin::BaseController
 
   def index
     comments = case params['scope']
-                when 'non-processing' then Catalog::Comment.with_product.news
-                when 'processing' then Catalog::Comment.with_product.olds
+                when 'news' then Catalog::Comment.with_product.news
+                when 'olds' then Catalog::Comment.with_product.olds
                 else Catalog::Comment.with_product
                 end
     @comments = comments.order(created_at: :desc).page(params[:page])

@@ -19,8 +19,11 @@ class Admin::MarkupsController < Admin::BaseController
   end
 
   def update
-    @markup.update(markup_params)
-    redirect_to admin_markups_path
+    if @markup.update(markup_params)
+      redirect_to admin_markups_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
