@@ -1,0 +1,11 @@
+= form_for([:admin, @markup]) do |f|
+  %ul.list-group
+    %li.list-group-item= field_for(f, :name)
+    %li.list-group-item= field_for(f, :slug)
+    %li.list-group-item= field_for(f, :position)
+    %li.list-group-item
+      = f.select :markup_type, markup_types
+    %li.list-group-item
+      = field_for(f, :body, :cktext_area, ckeditor: { language: :ru })
+    = render 'shared/seo_attributes', seo: @markup.seo, f: f
+  = f.submit 'Отправить', class: 'btn btn-success'

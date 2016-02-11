@@ -91,10 +91,7 @@ class Catalog::Product < ActiveRecord::Base
 
     def with_properties(val)
       if val == 'y'
-        all
-          .joins(:product_properties)
-          .where("catalog_product_properties.name != ''")
-          .uniq
+        properties_with_name
       elsif val == 'n'
         all
           .includes(:product_properties)
@@ -103,6 +100,14 @@ class Catalog::Product < ActiveRecord::Base
       end
     end
 
+    def properties_with_name
+      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products 
+             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id 
+             WHERE (catalog_product_properties.name != '')) AS temp"
+      query = Catalog::Product.connection.select_all(sql)
+      query.rows.join
+    end
+    
     def with_bound(val)
       if val == 'y'
         all.joins(:vendor_products).uniq

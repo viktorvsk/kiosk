@@ -1,4 +1,6 @@
 ru:
+  "true": Да
+  "false": Нет
   activerecord:
     models:
       user_product_action:

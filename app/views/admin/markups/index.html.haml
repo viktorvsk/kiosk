@@ -1,0 +1,44 @@
+.page-header
+  .markups-links
+    %ul
+      - links.each do |k,v|
+        %li= link_to v, admin_markups_path(scope: k)
+        = Markup.send(k).count
+  %h1 Разметки
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Заголовок
+        %th Ссылка
+        %th Позиция
+        %th Активно
+        %th Тип
+        %th Создано
+        %th Обновлено
+    %tbody
+      - @markups.each do |markup|
+        %tr
+          %td
+            = markup.name
+          %td
+            = markup.slug
+          %td
+            = markup.position
+          %td
+            = t("#{markup.active}")
+          %td
+            = t("activerecord.attributes.markup.types.#{markup.markup_type}")
+          %td
+            = I18n.l(markup.created_at, format: "%e %b, %H:%M")
+          %td
+            = I18n.l(markup.updated_at, format: "%e %b, %H:%M")
+          %td
+            = link_to 'Изменить', edit_admin_markup_path(markup)
+          %td
+            = link_to admin_markup_path(markup), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm': 'Вы уверены?' do
+              %i.glyphicon.glyphicon-remove
+  %tfoot
+    %tr
+      %td.text-center{ colspan: 6 }
+        = paginate @markups

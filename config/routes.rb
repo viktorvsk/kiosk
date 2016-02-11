@@ -118,7 +118,8 @@ Rails.application.routes.draw do
       end
     end
     resources :callbacks, except: [:new, :create, :show]
-    resources :catalog_comments
+    resources :catalog_comments, except: [:new, :create, :show]
+    resources :markups, except: [:new, :create, :show]
   end
   ActiveAdmin.routes(self)
 end

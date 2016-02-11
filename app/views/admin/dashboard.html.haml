@@ -7,10 +7,10 @@
       %tr
         %td{ colspan: 2 }
           %b Товары
-      = td('Всего', Catalog::Product.count)
-      = td('Привязано', Catalog::Product.bound.uniq.count)
-      = td('Не привязано', Catalog::Product.count - Catalog::Product.bound.uniq.count)
-      = td('С ценой', Catalog::Product.with_price.count)
+      = td('Всего', counter('products'){ Catalog::Product })
+      = td('Привязано', counter('bound_products'){ Catalog::Product.bound.uniq })
+      = td('Не привязано', counter('products') - counter('bound_products'))
+      = td('С ценой', Catalog::Category.products_pricelist_count)
       = td('С фиксированной ценой', Catalog::Product.where(fixed_price: true).count)
       = td('Изображений товаров', Image.where(imageable_type: Catalog::Product).count)
       = td('Категорий', Catalog::Category.count)
@@ -22,7 +22,7 @@
       = td('Значений фильтров', Catalog::FilterValue.count)
       = td('Фильтров товаров', Catalog::ProductFilterValue.count)
       = td('С фильтрами', Catalog::Product.with_filters("y").count)
-      = td('С характеристиками', Catalog::Product.with_properties("y").count)
+      = td('С характеристиками', Catalog::Product.with_properties("y"))
       =# td('Без фильтров', Catalog::Product.with_filters("n").count)
       =# td('Без характеристик', Catalog::Product.with_properties("n").count)
   .table-responsive.col-md-3
@@ -30,9 +30,9 @@
       %tr
         %td{ colspan: 2 }
           %b Поставщики
-      = td('Всего позиций товаров', Vendor::Product.count)
-      = td('Привязано', Vendor::Product.bound.count)
-      = td('Не привязано', Vendor::Product.count - Vendor::Product.bound.count)
+      = td('Всего позиций товаров', counter('vendor_products'){ Vendor::Product })
+      = td('Привязано', counter('bound_products'))
+      = td('Не привязано', counter('vendor_products') - counter('bound_products'))
       = td('Активных', Vendor::Product.active.count)
       = td('Неактивных', Vendor::Product.not_active.count)
       = td('Поставщиков', Vendor::Merchant.count)
@@ -46,9 +46,9 @@
         %td{ colspan: 2 }
           %b CRM
       = td('Просмотров новой карточки товара', Conf['n.new_layout_sessions'].to_s.split(',')[1])
-      = td('Пользователей всего', User.count)
-      = td('Пользователей клиентов', User.count - User.admins.count)
-      = td('Пользователей админов', User.admins.count)
+      = td('Пользователей всего', counter('user'){ User })
+      = td('Пользователей клиентов', counter('user') - counter('admin'){ User.admins })
+      = td('Пользователей админов', counter('admin'))
       = td('Заказов всего', Order.count)
       = td('Заказов ожидающих обработки', Order.checkout.count)
       = td('Заказов обработанных', Order.completed.count)
