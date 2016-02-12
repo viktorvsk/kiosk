@@ -1,11 +1,7 @@
 .page-header
   .index-links
     %ul
-      - user_links.each do |scope, type|
-        %li
-          = link_to type, admin_users_path(scope: scope)
-          %span.count
-            = User.send(scope).count
+      = generate_links(user_links, User)
   %h1 Пользователи
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

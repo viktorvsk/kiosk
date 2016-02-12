@@ -1,11 +1,7 @@
 .page-header
   .index-links
     %ul
-      - callback_links.each do |scope, type|
-        %li
-          = link_to type, admin_callbacks_path(scope: scope)
-          %span.count
-            = Callback.send(scope).count
+      = generate_links(callback_links, Callback)
   %h1 Коллбэки
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

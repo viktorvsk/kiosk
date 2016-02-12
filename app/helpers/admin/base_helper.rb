@@ -6,6 +6,6 @@ module Admin::BaseHelper
     return @counters[name] if @counters.key?(name)
     return unless block_given?
     relation = yield
-    @counters[name.to_s] ||=  relation.count if relation.respond_to? :count
+    @counters[name.to_s] ||= relation.count if relation.respond_to?(:count)
   end
 end

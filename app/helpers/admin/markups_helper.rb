@@ -1,5 +1,5 @@
 module Admin::MarkupsHelper
-  def links
+  def markup_links
     {'active': 'Активные', 'pages': 'Страницы', 'articles': 'Статьи', 'helps': 'Страницы помощи', 'slides': 'Слайды'}
   end
 

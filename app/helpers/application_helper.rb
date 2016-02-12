@@ -14,4 +14,14 @@ module ApplicationHelper
       content_tag(:td) { name } + content_tag(:td, class: 'text-center'){ value.to_s }
     end
   end
+
+  def generate_links(links, klass)
+    counts = links.map do |scope, type|
+      content_tag('li') { 
+        link_to(type, admin_callbacks_path(scope: scope)) + 
+        content_tag('span', klass.send(scope).count, class: 'count')
+      }
+    end
+    counts.sum
+  end
 end

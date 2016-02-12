@@ -1,11 +1,7 @@
 .page-header
   .index-links
     %ul
-      - comment_links.each do |scope, type|
-        %li
-          = link_to type, admin_catalog_comments_path(scope: scope)
-          %span.count
-            = comments.send(scope).count
+      = generate_links(comment_links, Catalog::Comment)
   %h1 Комментарии
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover

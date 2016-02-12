@@ -1,9 +1,9 @@
 .page-header
   .markups-links
     %ul
-      - links.each do |k,v|
-        %li= link_to v, admin_markups_path(scope: k)
-        = Markup.send(k).count
+      - markup_links.each do |scope, type|
+        %li= link_to type, admin_markups_path(scope: scope)
+        = Markup.send(scope).count
   %h1 Разметки
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
