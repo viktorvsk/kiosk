@@ -18,7 +18,7 @@ module ApplicationHelper
   def generate_links(links, klass)
     counts = links.map do |scope, type|
       content_tag('li') { 
-        link_to(type, admin_callbacks_path(scope: scope)) + 
+        link_to(type, polymorphic_path([:admin, klass], scope: scope)) + 
         content_tag('span', klass.send(scope).count, class: 'count')
       }
     end

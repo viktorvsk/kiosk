@@ -33,7 +33,7 @@ class Admin::MarkupsController < Admin::BaseController
 
   private
   def markup_params
-    params.require(:markup).permit(:name, :slug, :position, :markup_type, :body,
+    params.require(:markup).permit(:name, :slug, :position, :markup_type, :body, :active,
                                    seo_attributes: [:id, :keywords, :description, :title])
   end
 
