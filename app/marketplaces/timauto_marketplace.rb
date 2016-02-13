@@ -1,6 +1,11 @@
 class TimautoMarketplace < BasicMarketplace
   HOST = /timauto/
 
+  def initialize(query)
+    query = query.encode('cp1251')
+    super
+  end
+    
   private
   
   def search_query
@@ -14,10 +19,10 @@ class TimautoMarketplace < BasicMarketplace
   def search_results_mapper(product)
     res = {}
     url = 'http://timauto.com.ua/'
-    res[:name] = product.at_css('.products-item .products-name a').text
-    res[:url] = url + product.at_css('.products-item .products-name a')['href']
-    res[:image] = url + product.at_css('.products-item img')['src']
-    if price_node = product.at_css('.products-item .products-price span').text
+    res[:name] = product.at_css('.products-name a').text
+    res[:url] = url + product.at_css('.products-name a')['href']
+    res[:image] = url + product.at_css('img')['src']
+    if price_node = product.at_css('.products-price span')
       res[:price] = price_node.text.scan(/\d/).join.to_i
     else
       res[:do_not_show] = true

@@ -3,6 +3,7 @@ require 'typhoeus'
 
 class BasicMarketplace
   attr_reader :products
+
   def initialize(query)
     @query = URI.encode URI.decode query
   end
