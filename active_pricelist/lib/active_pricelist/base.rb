@@ -50,6 +50,7 @@ module ActivePricelist
     def parse
       price_list = ActivePricelist::Reader.new(reader_settings)
       price_list.parse!
+      binding.pry
       price_list.rows.each do |row|
         @product = row
         transform
