@@ -125,7 +125,7 @@ class Catalog::Category < ActiveRecord::Base
   end
 
   def self.products_pricelist_count
-    where(active: true).joins(:products).count
+    where(active: true).joins(:products).where('catalog_products.price > 0').count
   end
 
   private
