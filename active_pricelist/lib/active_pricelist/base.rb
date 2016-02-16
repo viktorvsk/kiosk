@@ -17,7 +17,7 @@ module ActivePricelist
       @rates            = opts['rates']
       @currency_order   = opts['currency_order'] || %w(rrc uah usd eur)
       @required         = opts['required']       || %w(name)
-      @not_in_stock     = opts['not_in_stock']   || ["-","Нет","нет","нет в наличии","ожидается",'\+/-',"в пути","резерв","доп.склад","в резервах","ждем","заказ","Ожидаем","поштучно","под заказ","Ожидается"]
+      @not_in_stock     = opts['not_in_stock']   || ["-","Нет","нет","нет в наличии","ожидается",'\+/-',"в пути","резерв","доп.склад","в резервах","ждем","заказ","Ожидаем","поштучно","под заказ","Ожидается", "*"]
       @discount         = opts['discount']       || 0
       @xslt             = opts['xslt']
       @products         = []

@@ -8,7 +8,7 @@ class Vendor::Merchant < ActiveRecord::Base
    :encoding, :format, :parser_class,
    :required, :currency_order, :currency_rates, :not_in_stock,
    :f_uah_1, :f_uah_2, :f_monitor, :f_ddp, :f_stock_kharkov, :f_stock_kiev,
-   :f_dclink_ddp, :f_brand, :f_warranty, :f_category
+   :f_dclink_ddp, :f_brand, :f_warranty, :f_category, :f_stock_dclink
   validates :name, presence: true, uniqueness: true
   validates :currency_rates, :currency_order, :required, :not_in_stock, :currency_order, :not_in_stock,
     json: true,
@@ -90,8 +90,8 @@ class Vendor::Merchant < ActiveRecord::Base
         'monitor'       => f_monitor,
         'ddp'           => f_ddp,
         'stock_kharkov' => f_stock_kharkov,
-        'stock_kiev'    => f_stock_kiev
-
+        'stock_kiev'    => f_stock_kiev,
+        'stock_dclink'  => f_stock_dclink
       }
     }
 
