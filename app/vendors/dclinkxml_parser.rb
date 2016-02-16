@@ -14,11 +14,11 @@ class DclinkxmlParser < ::ActivePricelist::Base
                     login: 'evotex',
                     password: 'cv70ZVhW'
                   }).body.force_encoding('windows-1251').encode("utf-8")
-    price = search_only_available(pricelist)
-    remove_price_by_pricetype(price)
+    remove_price_by_pricetype(pricelist)
   end
   
   def self.remove_price_by_pricetype(pricelist)
+    pricelist = Nokogiri::XML(pricelist.force_encoding('UTF-8'), nil, 'UTF-8')
     pricelist.search('Product').each do |row|
       if row.search('PriceType').text == 'USD'
         row.search("RetailPriceUAH").remove
@@ -26,19 +26,9 @@ class DclinkxmlParser < ::ActivePricelist::Base
         row.search("PriceUSD").remove
       end
     end
-    pricelist
+    pricelist.to_s
   end
 
-  def self.search_only_available(pricelist)
-    pricelist = Nokogiri::XML(pricelist.force_encoding('UTF-8'), nil, 'UTF-8')
-    pricelist.search('Product').each do |x|
-      if x.at_css('Availability').text != '**'
-        x.remove
-      end
-    end
-    pricelist
-  end
-  
   # def transform
   #   @currency_order.each do |curr|
   #     if @product[curr].to_f.ceil > 0
@@ -68,7 +58,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
                  else
                    @rates[curr].to_f
                  end
-          if curr == 'uah'
+          if curr == 'uah' && @product['name'] =~ /ddp/i
             rate = @rates['usd'].to_f / @dclink_ddp_rate.to_f
             @product['price'] = (@product['price'].to_f / rate * (100 - @discount.to_i) / 100).ceil
           else
