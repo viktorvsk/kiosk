@@ -12,7 +12,6 @@ module ActivePricelist
     end
 
     def initialize(opts = {})
-      binding.pry
       self.columns        = opts['columns']        if opts['columns']
       self.format         = opts['format']         if opts['format']
       self.start          = opts['start']          if opts['start']

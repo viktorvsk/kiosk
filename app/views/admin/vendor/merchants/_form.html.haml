@@ -1,4 +1,3 @@
-
 = form_for(@merchant, url: (@merchant.new_record? ? admin_vendor_merchants_path : admin_vendor_merchant_path(@merchant))) do |f|
   = render 'shared/error_messages', object: f.object
   .well.bs-component
@@ -45,7 +44,7 @@
           .col-sm-6= field_for(f, :f_stock_dclink)
       .col-sm-6
         = field_set_tag do
-          %legend Настройки рассчета
+          %legend Настройки расчета
           / .col-sm-6= field_for(f, :required)
           .col-sm-6
             = field_for( f, :currency_rates, :text_area)

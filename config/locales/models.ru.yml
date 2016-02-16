@@ -228,6 +228,7 @@ ru:
         f_category: Категория
         f_brand: Бренд
         f_warranty: Гарантия
+        f_stock_dclink: Наличие (Для Dclinkxml)
         parser_class: Специальный поставщик
         not_in_stock: Слова для определения ОТСУТСТВИЯ в наличии
         required: Обязательные поля
