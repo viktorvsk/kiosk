@@ -1,14 +1,6 @@
 class RozetkaMarketplace < BasicMarketplace
   HOST = /rozetka/
 
-  def search
-    options = {proxy: "211.110.127.210:3128"}
-    request = Typhoeus::Request.new(search_query, options)
-    html = request.run.body
-    doc = Nokogiri::HTML(html)
-    @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }.first(24)
-  end
-
   private
 
   def search_query
