@@ -53,12 +53,12 @@ class DclinkxmlParser < ::ActivePricelist::Base
           @product['is_rrc'] = true
         else
           @product['is_rrc'] = false
-          rate = if @product['name'] =~ /ddp/i
-                   @dclink_ddp_rate.to_f
+          rate = if @product['name'] =~ /ddp/i && curr == 'usd'
+                   @dclink_ddp_rate.to_f 
                  else
                    @rates[curr].to_f
                  end
-          @product['price'] = (@product['usd'].to_f * rate * (100 - @discount.to_i) / 100).ceil
+          @product['price'] = (@product[curr].to_f * rate * (100 - @discount.to_i) / 100).ceil
         end
         break
       end
