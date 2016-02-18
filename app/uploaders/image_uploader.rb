@@ -70,5 +70,4 @@ class ImageUploader < CarrierWave::Uploader::Base
   def watermarkable?(new_file)
     model.imageable_type == 'Catalog::Product'
   end
-
 end
