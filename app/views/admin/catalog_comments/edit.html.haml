@@ -1,6 +1,6 @@
 = form_for([:admin, @comment]) do |f|
   %ul.list-group
-    %li.list-group-item= link_to @comment.commentable.name, product_path(@comment.commentable.name)
+    %li.list-group-item= link_to @comment.commentable.name, product_path(@comment.commentable)
     %li.list-group-item= field_for(f, :body, :text_area, rows: 8)
     %li.list-group-item
       = field_for(f, :active, :check_box)
