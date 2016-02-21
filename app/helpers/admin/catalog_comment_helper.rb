@@ -4,6 +4,6 @@ module Admin::CatalogCommentHelper
   end
 
   def comment_links
-    {'olds': 'Обработанные', 'news': 'Не обработанные'}
+    { 'olds' => 'Обработанные', 'news' => 'Не обработанные' }
   end
 end

@@ -1,6 +1,6 @@
 module Admin::MarkupsHelper
   def markup_links
-    {'active': 'Активные', 'pages': 'Страницы', 'articles': 'Статьи', 'helps': 'Страницы помощи', 'slides': 'Слайды'}
+    { 'active' => 'Активные', 'pages' => 'Страницы', 'articles' => 'Статьи', 'helps' => 'Страницы помощи', 'slides' => 'Слайды' }
   end
 
   def markup_types

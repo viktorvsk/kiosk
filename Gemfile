@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2'
-gem 'puma', '~> 2.11.0'
+gem 'puma'
 gem 'pg'
 gem 'bower-rails', '~> 0.9.2'
 gem 'execjs'
@@ -36,6 +36,7 @@ gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/ftp/all'
 gem 'file_browser', path: 'file_browser'
 gem 'fog'
+gem 'ffi', git: 'https://github.com/ffi/ffi.git', branch: 'elcapt'
 
 group :development do
   gem 'dotenv-rails'
@@ -45,7 +46,8 @@ group :development do
   gem 'bootstrap-generators', '~> 3.3.1'
   gem 'rails-dev-boost',
        git: 'git://github.com/thedarkone/rails-dev-boost.git'
-  gem 'rb-inotify', '>= 0.8.8'
+  # gem 'rb-inotify', '>= 0.8.8'
+  gem 'rb-fsevent', '>= 0.9.1'
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'

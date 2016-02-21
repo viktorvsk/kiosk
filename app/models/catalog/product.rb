@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'open-uri'
 
 class Catalog::Product < ActiveRecord::Base
@@ -550,11 +551,11 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def update_properties
-    return {'#catalog_product_slug': slug} unless seo
+    return {'#catalog_product_slug' => slug} unless seo
     {
-      '#catalog_product_slug': slug,
-      '#catalog_product_seo_attributes_keywords': seo.keywords,
-      '#catalog_product_seo_attributes_description': seo.description
+      '#catalog_product_slug' => slug,
+      '#catalog_product_seo_attributes_keywords' => seo.keywords,
+      '#catalog_product_seo_attributes_description' => seo.description
     }
   end
 

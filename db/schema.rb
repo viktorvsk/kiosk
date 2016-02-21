@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211090047) do
+ActiveRecord::Schema.define(version: 20160128180258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,31 +34,6 @@ ActiveRecord::Schema.define(version: 20160211090047) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_id", "resource_type"], name: "index_active_admin_comments_on_resource_id_and_resource_type", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
-
-  create_table "active_marketplace_products", force: :cascade do |t|
-    t.integer  "vendor_product_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "active_marketplace_products", ["vendor_product_id"], name: "index_active_marketplace_products_on_vendor_product_id", using: :btree
-
-  create_table "active_marketplace_urls", force: :cascade do |t|
-    t.text    "uri",                           null: false
-    t.integer "active_marketplace_product_id", null: false
-  end
-
-  add_index "active_marketplace_urls", ["active_marketplace_product_id"], name: "index_active_marketplace_urls_on_active_marketplace_product_id", using: :btree
-
-  create_table "active_marketplace_user_created_products", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "active_marketplace_product_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "active_marketplace_user_created_products", ["active_marketplace_product_id"], name: "created_products_product", using: :btree
-  add_index "active_marketplace_user_created_products", ["user_id"], name: "created_products_user", using: :btree
 
   create_table "aliases", force: :cascade do |t|
     t.string   "name",           null: false
@@ -411,9 +386,5 @@ ActiveRecord::Schema.define(version: 20160211090047) do
   add_index "vendor_products", ["updated_at"], name: "index_vendor_products_on_updated_at", using: :btree
   add_index "vendor_products", ["vendor_merchant_id"], name: "index_vendor_products_on_vendor_merchant_id", using: :btree
 
-  add_foreign_key "active_marketplace_products", "vendor_products"
-  add_foreign_key "active_marketplace_urls", "active_marketplace_products"
-  add_foreign_key "comments", "users"
-  add_foreign_key "comments", "users"
   add_foreign_key "comments", "users"
 end

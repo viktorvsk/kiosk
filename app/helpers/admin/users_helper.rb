@@ -1,6 +1,6 @@
 module Admin::UsersHelper
   def user_links
-    {'admins': 'Администраторы', 'contents': 'Менеджеры', 'customers': 'Клиенты'}
+    { 'admins' => 'Администраторы', 'contents' => 'Менеджеры', 'customers' => 'Клиенты'}
   end
 
   def user_roles
