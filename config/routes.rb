@@ -121,6 +121,7 @@ Rails.application.routes.draw do
     resources :catalog_comments, except: [:new, :create, :show]
     resources :markups, except: [:new, :create, :show]
     resources :users, except: [:new, :create, :show]
+    resources :user_actions
   end
   ActiveAdmin.routes(self)
 end

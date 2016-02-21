@@ -1,0 +1,33 @@
+.page-header
+  .inline-index-links
+    %ul
+      - user_actions_links.each do |scope, type|
+        %li= link_to type, admin_user_actions_path(scope: scope)
+        = UserProductAction.send(scope).count
+  %h1 Истории
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Имя
+        %th Тип действия
+        %th Товар
+        %th Действие
+        %th Дата
+    %tbody
+      - @user_actions.each do |user_action|
+        %tr
+          %td
+            = user_action.user.name
+          %td
+            = user_action.action_type
+          %td
+            = link_to user_action.product.name, product_path(user_action.product) rescue 'Товар удален'
+          %td
+            = user_action.action.html_safe
+          %td
+            = I18n.l(user_action.created_at, format: "%e %b, %H:%M")
+    %tfoot
+      %tr
+        %td.text-center{ colspan: 6 }
+          = paginate @user_actions
