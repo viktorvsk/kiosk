@@ -10,6 +10,6 @@ class Admin::UserActionsController < Admin::BaseController
                     when 'destroyed' then UserProductAction.destroyed
                     else UserProductAction.all
                     end
-    @user_actions = user_actions.page(params[:page])
+    @user_actions = user_actions.order(created_at: :desc).page(params[:page])
   end
 end
