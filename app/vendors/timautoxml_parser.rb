@@ -1,4 +1,4 @@
-class TimautoParser < ::ActivePricelist::Base
+class TimautoxmlParser < ::ActivePricelist::Base
   include PriceAutoupdateable
 
   private
