@@ -8,18 +8,20 @@ class UserActionsService
   def call
     user_actions = UserProductAction
     if params['start'] && params['end']
-      user_actions = by_date(user_actions)
+      user_actions = filter_by_date(user_actions)
     end
-    user_actions = by_action_type(user_actions) unless params['actions'].blank?
+    user_actions = filter_by_action_type(user_actions) unless params['actions'].blank?
     user_actions
   end
+
+  private
   
-  def by_date(user_actions)
+  def filter_by_date(user_actions)
     start_day, end_day = build_date(params['start'], params['end'])
     user_actions.where(created_at: start_day.beginning_of_day..end_day.end_of_day) 
   end
 
-  def by_action_type(user_actions)
+  def filter_by_action_type(user_actions)
     user_actions.where(action_type: action_type)
   end
 

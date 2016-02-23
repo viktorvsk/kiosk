@@ -1,7 +1,7 @@
 .page-header
   = form_tag(url_for, method: :get) do
     %ul.list-group
-      %li.list-group-item= select_tag 'actions', options_for_select(user_actions_type_select, default_action_type_select(params)), include_blank: true
+      %li.list-group-item= select_tag 'actions', options_for_select(user_action_types, default_action_type(params)), include_blank: true
       %li.list-group-item= select_date user_actions_date(params['start'], Date.today - 1.year), prefix: :start
       %li.list-group-item= select_date user_actions_date(params['end'], Date.today), prefix: :end
     = submit_tag 'Отфильтровать', class: 'btn btn-success'
