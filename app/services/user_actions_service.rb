@@ -11,6 +11,7 @@ class UserActionsService
       user_actions = filter_by_date(user_actions)
     end
     user_actions = filter_by_action_type(user_actions) unless params['actions'].blank?
+    user_actions = filter_by_name(user_actions) unless params['user'].blank?
     user_actions
   end
 
@@ -25,6 +26,14 @@ class UserActionsService
     user_actions.where(action_type: action_type)
   end
 
+  def filter_by_name(user_actions)
+    user_actions.where('user_product_actions.user_id = ?', params['user'])
+  end
+
+  def name
+    params['name']
+  end
+  
   def action_type
     UserProductAction::ACTION_TYPES[params['actions'].to_i]
   end

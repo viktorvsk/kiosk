@@ -15,4 +15,12 @@ module Admin::UserActionsHelper
   def default_action_type(params)
     params['actions'].to_i unless params['actions'].blank?
   end
+
+  def user_action_names
+    User.joins(:actions).uniq.pluck(:name, :id)
+  end
+
+  def default_user_name
+    User.find(params['user']).id unless params['user'].blank?
+  end
 end
