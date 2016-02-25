@@ -23,4 +23,12 @@ module Admin::UserActionsHelper
   def default_user_name
     User.find(params['user']).id unless params['user'].blank?
   end
+
+  def user_actions_count(user_actions)
+    actions = {}
+    UserProductAction::ACTION_TYPES.each do |type|
+      actions[type] = user_actions.where(action_type: type).count
+    end
+    actions
+  end
 end

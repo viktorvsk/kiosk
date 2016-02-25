@@ -2,9 +2,9 @@
   = render 'form'
   .inline-index-links
     %ul
-      - user_actions_links.each do |scope, type|
+      - user_actions_count(@filtered_actions).each do |type, count|
         %li= link_to type, '#'
-        = UserProductAction.send(scope).count
+        = count
   %h1 Истории
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
