@@ -22,7 +22,8 @@ class Vendor::Merchant < ActiveRecord::Base
     %w( Технотрейд Technotrade ),
     %w( ЮГ-Контракт Yug ),
     %w( DC-Link(XML) Dclinkxml ),
-    %w( Akustika(XML) Akustikaxml )
+    %w( Akustika(XML) Akustikaxml ),
+    %w( Timautoxml Timautoxml )
   ]
 
   def self.auto_updateable
