@@ -2,6 +2,19 @@ class Admin::MarkupsController < Admin::BaseController
   before_action :check_admin_permissions
   before_action :set_markup, only: [:edit, :update, :destroy]
 
+  def new
+    @markup = Markup.new
+  end
+
+  def create
+    @markup = Markup.create(markup_params)
+    if @markup.save
+      redirect_to admin_markups_path
+    else
+      render 'new'
+    end
+  end
+
   def index
     markups = case params['scope']
               when 'actives'  then Markup.active
@@ -9,7 +22,7 @@ class Admin::MarkupsController < Admin::BaseController
               when 'articles' then Markup.articles
               when 'helps'    then Markup.helps
               when 'slides'   then Markup.slides
-              else ::Markup.all
+              else Markup.all
               end
     @markups = markups.page(params[:page])
   end

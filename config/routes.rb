@@ -119,11 +119,11 @@ Rails.application.routes.draw do
     end
     resources :callbacks, except: [:new, :create, :show]
     resources :catalog_comments, except: [:new, :create, :show]
-    resources :markups, except: [:new, :create, :show]
+    resources :markups, except: :show
     resources :users, except: [:new, :create, :show]
-    resources :user_actions, only: [:index]
-    resources :filters
-    resources :filter_values
+    resources :user_actions, only: :index
+    resources :filters, except: :show
+    resources :filter_values, except: :show
   end
   ActiveAdmin.routes(self)
 end
