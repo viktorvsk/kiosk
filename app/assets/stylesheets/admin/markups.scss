@@ -1,6 +1,10 @@
-.markups-links {
-    float: right;
+.markups-links{
+    margin-top: 40px;
+    li{
+	display: inline;
+    }
 }
-.markups-links li{
-    display: inline;
+
+.markups-button-and-links{
+    float: right;
 }

@@ -1,9 +1,13 @@
 .page-header
-  .inline-index-links
-    %ul
-      - markup_links.each do |scope, type|
-        %li= link_to type, admin_markups_path(scope: scope)
-        = Markup.send(scope).count
+  .markups-button-and-links
+    = link_to new_admin_markup_path, :class => 'btn btn-primary' do
+      %span.glyphicon.glyphicon-plus
+      Новая страница
+    .markups-links
+      %ul
+        - markup_links.each do |scope, type|
+          %li= link_to type, admin_markups_path(scope: scope)
+          = Markup.send(scope).count
   %h1 Разметки
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
