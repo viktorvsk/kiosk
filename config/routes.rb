@@ -122,6 +122,8 @@ Rails.application.routes.draw do
     resources :markups, except: [:new, :create, :show]
     resources :users, except: [:new, :create, :show]
     resources :user_actions, only: [:index]
+    resources :filters
+    resources :filter_values
   end
   ActiveAdmin.routes(self)
 end

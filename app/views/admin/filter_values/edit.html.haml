@@ -1,0 +1,10 @@
+.page-header
+  %h1 Изменить значение фильтра
+.row
+  = form_for(@filter_value, url: admin_filter_value_path) do |f|
+    %ul.list-group
+      %li.list-group-item
+        = f.select :catalog_filter_id, filters
+      %li.list-group-item= field_for(f, :name)
+      %li.list-group-item= field_for(f, :display_name)
+    = f.submit 'Отправить', class: 'btn btn-success'

@@ -61,6 +61,7 @@ module Vendor
 
     def delete_not_in_pricelist
       @to_delete = @products_articuls - @products.map{ |p| p['articul'] }
+      binding.pry
       @merchant
         .products
         .unbound

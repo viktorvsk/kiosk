@@ -1,0 +1,27 @@
+.page-header
+  = link_to new_admin_filter_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новый фильтр
+  %h1 Фильтры
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Имя
+        %th Отображаемое имя
+    %tbody
+      - @filters.each do |filter|
+        %tr
+          %td
+            = filter.name
+          %td
+            = filter.display_name
+          %td
+            = link_to 'Изменить', edit_admin_filter_path(filter)
+          %td
+            = link_to admin_filter_path(filter), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?' do
+              %i.glyphicon.glyphicon-remove
+    %tfoot
+      %tr
+        %td.text-center{ colspan: 6 }
+          = paginate @filters

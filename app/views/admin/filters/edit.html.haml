@@ -1,0 +1,8 @@
+.page-header
+  %h1 Изменить фильтр
+.row
+  = form_for(@filter, url: admin_filter_path) do |f|
+    %ul.list-group
+      %li.list-group-item= field_for(f, :name)
+      %li.list-group-item= field_for(f, :display_name)
+    = f.submit 'Отправить', class: 'btn btn-success'
