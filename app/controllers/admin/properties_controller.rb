@@ -72,7 +72,12 @@ class Admin::PropertiesController < Admin::BaseController
   end
 
   def index
-    @properties = Catalog::Property.all.page(params[:page])
+    properties = if params['name']
+                   Catalog::Property.where("name ILIKE ?", "%#{params['name']}%")
+                 else
+                   Catalog::Property.all
+                 end
+    @properties = properties.order(created_at: :desc).page(params[:page])
   end
 
   def new
