@@ -2,6 +2,7 @@ class Admin::PropertiesController < Admin::BaseController
   before_action :check_content_manager_permissions
   before_action :set_category, only: [:destroy_category_property, :create_category_property]
   before_action :set_product, only: [:update_product_property, :destroy_product_property, :create_product_property]
+  before_action :set_property, only: [:edit, :update, :destroy]
 
   def reorder_category
     @category = Catalog::Category.includes(:category_properties).find(params[:category_id])
@@ -70,6 +71,39 @@ class Admin::PropertiesController < Admin::BaseController
     end
   end
 
+  def index
+    @properties = Catalog::Property.all.page(params[:page])
+  end
+
+  def new
+    @property = Catalog::Property.new
+  end
+
+  def create
+    @property = Catalog::Property.create(catalog_property_params)
+    if @property.save
+      redirect_to admin_properties_path
+    else
+      render 'new'
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @property.update(catalog_property_params)
+      redirect_to admin_properties_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @property.destroy
+    redirect_to admin_properties_path
+  end
+  
   private
 
   def set_category
@@ -80,7 +114,15 @@ class Admin::PropertiesController < Admin::BaseController
     @product = Catalog::Product.find(params[:product_id])
   end
 
+  def set_property
+    @property = Catalog::Property.find(params[:id])
+  end
+
   def product_property_params
     params.require(:catalog_product_property).permit(:name, :property_name)
+  end
+
+  def catalog_property_params
+    params.require(:catalog_property).permit(:name)
   end
 end
