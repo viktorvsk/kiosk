@@ -9,7 +9,7 @@
           %li.list-group-item= field_for(f, :name)
           %li.list-group-item= field_for(f, :description, :text_area)
           %li.list-group-item
-            - if @brand.image.attachment.present?
+            - if @brand.image.present?
               .thumbnail
                 = image_tag @brand.image.url, class: 'img-responsive'
             = f.fields_for :image, f.object.image do |f_i|

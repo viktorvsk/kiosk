@@ -1,4 +1,6 @@
 = form_tag(admin_filters_path, method: :get, enforce_utf8: false) do
-  %ul.list-group
-    %li.list-group-item= text_field_tag :name, params['name']
-  = submit_tag 'Отфильтровать', class: 'btn btn-success'
+  .row
+    .col-sm-8.col-sm-offset-2.text-center
+      .input-group
+        = text_field_tag :name, params['name'], class: 'form-control', placeholder: 'Название'
+        .input-group-btn= submit_tag 'Найти', class: 'btn btn-success'
