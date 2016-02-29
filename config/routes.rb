@@ -124,6 +124,7 @@ Rails.application.routes.draw do
     resources :user_actions, only: :index
     resources :filters, except: :show
     resources :filter_values, except: :show
+    resources :properties
   end
   ActiveAdmin.routes(self)
 end

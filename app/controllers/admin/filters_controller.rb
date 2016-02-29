@@ -3,7 +3,12 @@ class Admin::FiltersController < Admin::BaseController
   before_action :set_filter, only: [:edit, :update, :destroy]
 
   def index
-    @filters = Catalog::Filter.all.page(params[:page])
+    filters = if params['name']
+                 Catalog::Filter.where("name ILIKE ?", "%#{params['name']}%")
+               else
+                 Catalog::Filter.all
+               end
+    @filters = filters.order(created_at: :desc).page(params[:page])
   end
 
   def new
