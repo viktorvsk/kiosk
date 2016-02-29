@@ -24,7 +24,7 @@ class Admin::MarkupsController < Admin::BaseController
               when 'slides'   then Markup.slides
               else Markup.all
               end
-    @markups = markups.page(params[:page])
+    @markups = markups.order(created_at: :desc).page(params[:page])
   end
   
   def edit
