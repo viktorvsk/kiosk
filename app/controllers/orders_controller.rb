@@ -50,6 +50,7 @@ class OrdersController < CatalogController
     else
       session[:ordered] = @current_order.id.to_s
     end
+    @bla = '10'
     redirect_to user_path, notice: "Заказ успешно оформлен. Номер заказа: #{@current_order.id}"
   end
 
