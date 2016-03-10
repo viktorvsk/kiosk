@@ -15,7 +15,6 @@ default_settings = {
   'txt.delivery_types'    => '',
   'txt.words_to_downcase' => '',
   'txt.payment_types'     => '',
-  'new_layout_limit'      => '100',
   'ck.logo'               => 'Логотип',
   'ck.logo_min'           => '<img align="top" alt="" src="http://evotex.kh.ua/logo_min.png" style="width: 60px; height: 20px; display: inline; padding: 0; margin: 0" />',
   'ck.delivery_card'      => 'Оплата\Доставка в карточке товара',
@@ -30,8 +29,7 @@ default_settings = {
   'ck.homepage_seo'       => 'Интернет-магазин ...',
   'ck.mode'               => '<h1>Режим работы</h1>',
   'ck.mode_product_card'  => '<h1>Режим работы</h1> Карточка товара',
-  'b.search_with_similars'=> 't',
-  'n.new_layout_sessions' => '0'
+  'b.search_with_similars'=> 't'
 }
 
 if Conf.table_exists?

@@ -46,22 +46,8 @@ class ProductsController < CatalogController
         @newest = top_products.select{ |p| p.newest == '1' }
         @homepage = top_products.select{ |p| p.homepage == '1' }
         @hit = top_products.select{ |p| p.hit == '1' }
-        browser = Browser.new(ua: request.user_agent, accept_language: "en-us")
-        if browser.bot? || !!session[:new_layout] || Catalog.show_new_layout?
-          session[:new_layout] = 1 unless browser.bot?
-          render :show_new
-        end
-    end
+      end
       format.js
-    end
-  end
-
-  def old_show
-    @product = Catalog::Product.where(slug: params[:slug]).first
-    if @product.present?
-      render :show
-    else
-      redirect_to search_products_path(q: {main_search: params[:slug]}), alert: 'Товар не найден, возможно, устаревшая ссылка.'
     end
   end
 

@@ -50,7 +50,7 @@ class OrdersController < CatalogController
     else
       session[:ordered] = @current_order.id.to_s
     end
-    redirect_to user_path, notice: "Заказ успешно оформлен. Номер заказа: #{@current_order.id}"
+    redirect_to user_path(ordered: true), notice: "Заказ успешно оформлен. Номер заказа: #{@current_order.id}"
   end
 
   def update_lineitem_count

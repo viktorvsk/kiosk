@@ -45,7 +45,6 @@
       %tr
         %td{ colspan: 2 }
           %b CRM
-      = td('Просмотров новой карточки товара', Conf['n.new_layout_sessions'].to_s.split(',')[1])
       = td('Пользователей всего', counter('user'){ User })
       = td('Пользователей клиентов', counter('user') - counter('admin'){ User.admins })
       = td('Пользователей админов', counter('admin'))

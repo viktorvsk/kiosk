@@ -13,14 +13,13 @@
     = link_to '#top_point', class: 'cd-top' do
       %i.glyphicon.glyphicon-chevron-up
     = render 'layouts/nav/product_card'
-    =# render 'shared/top_bar'
     = render 'shared/flash_bar'
     .container-fluid
       = yield
     = render 'shared/product_card_footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
-    %script#topprice3d{ src: "http://topprice.ua/js/3d.js" }
+    %script#topprice3d{ src: "http://topprice.ua/js/3d.js", async: true }
     - if !(current_user && current_user.admin?) && !Rails.env.development?
       %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
