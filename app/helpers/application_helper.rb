@@ -24,4 +24,9 @@ module ApplicationHelper
     end
     counts.sum
   end
+
+  def presents(object, klass = nil)
+    klass ||= "#{object.class}Presenter"
+    klass.constantize.new(object)
+  end
 end
