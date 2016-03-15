@@ -3,16 +3,6 @@ require 'open-uri'
 
 class Catalog::Product < ActiveRecord::Base
   include Slugable
-  SEO_MAPPER = {
-    'название'              => :name,
-    'главное-имя'           => :main_name,
-    'цена'                  => :price,
-    'старая-цена'           => :old_price,
-    'название-категории'    => :categroy_name,
-    'название-категории-1'  => :category_single_name,
-    'бренд'                 => :brand_name
-  }
-  SEO_ATTRS = SEO_MAPPER.keys.join('|')
   before_create :copy_properties_from_category
   before_create :copy_filters_from_category
   before_save :filling_attributes, if: :attributes_blank?
@@ -52,68 +42,7 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
-
-    def ransackable_scopes(auth_object = nil)
-      [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound, :top]
-    end
-
-    def by_category_params(params)
-      q = {
-        price_gteq: params[:min],
-        price_lteq: params[:max],
-        main_search: params[:name],
-        brand_id_in: params[:b].to_s.split(','),
-        filters_cont: params[:f]
-      }
-      all.ransack(q).result
-    end
-
-    def with_warranty
-      joins(:product_properties).where(catalog_product_properties: { catalog_property_id: Catalog::Property.warranty.id })
-    end
-
-    def with_filters(val)
-      if val == 'y'
-        all
-          .joins(:product_filters)
-          .where
-          .not(catalog_product_filter_values: {catalog_filter_value_id: nil})
-          .uniq
-      elsif val == 'n'
-        all
-          .includes(:product_filters)
-          .where(catalog_product_filter_values: {catalog_filter_value_id: nil})
-          .uniq
-      end
-    end
-
-    def with_properties(val)
-      if val == 'y'
-        properties_with_name
-      elsif val == 'n'
-        all
-          .includes(:product_properties)
-          .where("catalog_product_properties.catalog_product_id IS NULL OR catalog_product_properties.name = '' OR catalog_product_properties.name IS NULL")
-          .uniq
-      end
-    end
-
-    def properties_with_name
-      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products 
-             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id 
-             WHERE (catalog_product_properties.name != '')) AS temp"
-      query = Catalog::Product.connection.select_all(sql)
-      query.rows.join
-    end
-    
-    def with_bound(val)
-      if val == 'y'
-        all.joins(:vendor_products).uniq
-      elsif val == 'n'
-        all.joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(vendor_products.id) = 0')
-      end
-    end
-
+    # *************************** S C O P E S ***********************************#
     def main_search(str)
       str = str.mb_chars.downcase.to_s
       tpl_ids = all.tpl_search(str).pluck(:id)
@@ -183,12 +112,53 @@ class Catalog::Product < ActiveRecord::Base
       where("info->'newest' = '1' OR info->'hit'='1' OR info->'homepage'='1'")
     end
 
-    def all_properties
-      all.map(&:product_properties).map{ |p| p.map(&:property) }.flatten.uniq
+    def by_category_params(params)
+      q = {
+        price_gteq: params[:min],
+        price_lteq: params[:max],
+        main_search: params[:name],
+        brand_id_in: params[:b].to_s.split(','),
+        filters_cont: params[:f]
+      }
+      all.ransack(q).result
     end
 
-    def filters_cont(filters_str)
-      filter(filters_str.to_s.split(',').compact)
+    def with_warranty
+      joins(:product_properties).where(catalog_product_properties: { catalog_property_id: Catalog::Property.warranty.id })
+    end
+
+    def with_filters(val)
+      if val == 'y'
+        all
+          .joins(:product_filters)
+          .where
+          .not(catalog_product_filter_values: {catalog_filter_value_id: nil})
+          .uniq
+      elsif val == 'n'
+        all
+          .includes(:product_filters)
+          .where(catalog_product_filter_values: {catalog_filter_value_id: nil})
+          .uniq
+      end
+    end
+
+    def with_properties(val)
+      if val == 'y'
+        properties_with_name
+      elsif val == 'n'
+        all
+          .includes(:product_properties)
+          .where("catalog_product_properties.catalog_product_id IS NULL OR catalog_product_properties.name = '' OR catalog_product_properties.name IS NULL")
+          .uniq
+      end
+    end
+
+    def with_bound(val)
+      if val == 'y'
+        all.joins(:vendor_products).uniq
+      elsif val == 'n'
+        all.joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(vendor_products.id) = 0')
+      end
     end
 
     def filter(fvalues_ids)
@@ -211,16 +181,6 @@ class Catalog::Product < ActiveRecord::Base
       where(id: ids)
     end
 
-    def create_from_marketplace(url, opts = {})
-      marketplace = BasicMarketplace.find_by_url(url)
-      raise StandardError, 'Unknown Marketplace' unless marketplace
-      params = marketplace.new(url).scrape.except(opts[:ignored_fields])
-      params[:properties].reverse!
-      params[:category] = opts[:category] if opts[:category]
-      params[:model] = opts[:model] if opts[:model]
-      create(params)
-    end
-
     def unbound
       joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id')
         .where('vendor_products.catalog_product_id IS NULL')
@@ -232,6 +192,37 @@ class Catalog::Product < ActiveRecord::Base
         .group('catalog_products.id')
         .having('count(vendor_products.id) >=  ?', number)
     end
+    # ************************** S C O P E S **********************************#
+
+    def ransackable_scopes(auth_object = nil)
+      [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound, :top]
+    end
+
+    def properties_with_name
+      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products 
+             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id 
+             WHERE (catalog_product_properties.name != '')) AS temp"
+      query = Catalog::Product.connection.select_all(sql)
+      query.rows.join
+    end
+ 
+    def all_properties
+      all.map(&:product_properties).map{ |p| p.map(&:property) }.flatten.uniq
+    end
+
+    def filters_cont(filters_str)
+      filter(filters_str.to_s.split(',').compact)
+    end
+
+    def create_from_marketplace(url, opts = {})
+      marketplace = BasicMarketplace.find_by_url(url)
+      raise StandardError, 'Unknown Marketplace' unless marketplace
+      params = marketplace.new(url).scrape.except(opts[:ignored_fields])
+      params[:properties].reverse!
+      params[:category] = opts[:category] if opts[:category]
+      params[:model] = opts[:model] if opts[:model]
+      create(params)
+    end
 
     def recount
       transaction do
@@ -240,21 +231,97 @@ class Catalog::Product < ActiveRecord::Base
         end
       end
     end
-
-
   end
+
+  # ******************* V I R T U A L  A T T R I B U T E S ********************#
+
+  def filters=(values)
+    return if category.blank? || category.new_record?
+    values.uniq{ |hs| hs.keys.first }.each do |filter|
+      f_name = filter.keys.first
+      f_val = filter.values.first
+      f = category.add_filter(f_name, category.name)
+      f_v = f.add_value(f_val, f.name)
+      product_filters.new(filter_value: f_v, filter: f)
+    end
+    save if persisted?
+  end
+
+  def properties=(values)
+    values.uniq{ |hs| hs.keys.first }.each do |prop|
+      set_property(prop.keys.first, prop.values.first)
+    end
+  end
+
+  def images=(values)
+    values.each { |v| scrape_image(v) }
+  end
+
+  def evotex_images=(values)
+    values.each do |image_path|
+      image_path = image_path[1..-1]
+      image_path.gsub!(/\?.+/, '')
+      image_path.gsub!(/\.product\./, '.original.')
+      image_file = File.new Rails.root.join('tmp', image_path)
+      images.create(attachment: image_file)
+    end
+  end
+
+  def images_from_url
+  end
+
+  def images_from_pc
+  end
+
+  def images_from_url=(value)
+    return unless value.present?
+    url = URI.encode URI.decode value.strip
+    marketplace = BasicMarketplace.find_by_url(url)
+    img_urls = marketplace.new(url).scrape[:images]
+    img_urls.each do |img_url|
+      scrape_image(img_url)
+    end
+  end
+
+  def multiple_remote_images
+  end
+
+  def multiple_remote_images=(img_urls)
+    img_urls = img_urls.to_s.split("\n")
+    return if img_urls.blank?
+    img_urls.each do |url|
+      scrape_image(url)
+    end
+  end
+
+  def images_from_pc=(values)
+    values.each do |v|
+      i = Image.new(imageable_type: Catalog::Product)
+      i.attachment = v
+      images << i
+    end
+  end
+
+  def category=(value)
+    case value
+    when String
+      cat = Catalog::Category.where(name: value).first_or_create
+      super(cat)
+    when Catalog::Category
+      super(value)
+    else
+      errors.add(:catalog_category_id, 'Expected Category or category name')
+      # raise ArgumentError, 'Expected Category or category name'
+    end
+  end
+
+  def brand=(value)
+  end
+  # ******************* V I R T U A L  A T T R I B U T E S ********************#
 
   def accessories_products
     return unless accessories.present?
     self.class.where(id: accessories.split).with_price.uniq
-  end
-
-  def preview_path
-    images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "/product_missing.png"
-  end
-
-  def seo_template
-    Conf[:seo_template_product].gsub(/\{\{(#{SEO_ATTRS})\}\}/){ self.send(SEO_MAPPER[$1]) rescue '' }
   end
 
   def recount
@@ -343,65 +410,6 @@ class Catalog::Product < ActiveRecord::Base
     .destroy_all
   end
 
-  def filters=(values)
-    return if category.blank? || category.new_record?
-    values.uniq{ |hs| hs.keys.first }.each do |filter|
-      f_name = filter.keys.first
-      f_val = filter.values.first
-      f = category.add_filter(f_name, category.name)
-      f_v = f.add_value(f_val, f.name)
-      product_filters.new(filter_value: f_v, filter: f)
-    end
-    save if persisted?
-  end
-
-  def properties=(values)
-    values.uniq{ |hs| hs.keys.first }.each do |prop|
-      set_property(prop.keys.first, prop.values.first)
-    end
-  end
-
-  def images=(values)
-    values.each { |v| scrape_image(v) }
-  end
-
-  def evotex_images=(values)
-    values.each do |image_path|
-      image_path = image_path[1..-1]
-      image_path.gsub!(/\?.+/, '')
-      image_path.gsub!(/\.product\./, '.original.')
-      image_file = File.new Rails.root.join('tmp', image_path)
-      images.create(attachment: image_file)
-    end
-  end
-
-  def images_from_url
-  end
-
-  def images_from_pc
-  end
-
-  def images_from_url=(value)
-    return unless value.present?
-    url = URI.encode URI.decode value.strip
-    marketplace = BasicMarketplace.find_by_url(url)
-    img_urls = marketplace.new(url).scrape[:images]
-    img_urls.each do |img_url|
-      scrape_image(img_url)
-    end
-  end
-
-  def multiple_remote_images
-  end
-
-  def multiple_remote_images=(img_urls)
-    img_urls = img_urls.to_s.split("\n")
-    return if img_urls.blank?
-    img_urls.each do |url|
-      scrape_image(url)
-    end
-  end
-
   def scrape_image(url)
     img_url = URI.encode URI.decode url.to_s.strip
     tempfile = Tempfile.new([File.basename(img_url), File.extname(img_url)])
@@ -417,30 +425,6 @@ class Catalog::Product < ActiveRecord::Base
     ensure
       tempfile.close
     end
-  end
-
-  def images_from_pc=(values)
-    values.each do |v|
-      i = Image.new(imageable_type: Catalog::Product)
-      i.attachment = v
-      images << i
-    end
-  end
-
-  def category=(value)
-    case value
-    when String
-      cat = Catalog::Category.where(name: value).first_or_create
-      super(cat)
-    when Catalog::Category
-      super(value)
-    else
-      errors.add(:catalog_category_id, 'Expected Category or category name')
-      # raise ArgumentError, 'Expected Category or category name'
-    end
-  end
-
-  def brand=(value)
   end
 
   def copy_properties_to_category
