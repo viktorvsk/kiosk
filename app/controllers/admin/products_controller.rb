@@ -105,7 +105,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def search_marketplaces
-    @marketplaces = Catalog::Product.search_marketplaces_by_model(params[:model]).compact
+    @marketplaces = BasicMarketplace.find_products_by_query(params[:model])
   end
 
   def create_from_marketplace

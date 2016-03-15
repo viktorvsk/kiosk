@@ -52,9 +52,6 @@ class Catalog::Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_properties,
                                 reject_if: lambda { |p| p[:property_name].blank? }
   class << self
-    def active_marketplaces
-      Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify.constantize rescue nil }.compact
-    end
 
     def ransackable_scopes(auth_object = nil)
       [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound, :top]
@@ -214,29 +211,14 @@ class Catalog::Product < ActiveRecord::Base
       where(id: ids)
     end
 
-    def marketplace_by_url(url)
-      host = URI.parse(url.to_s.strip).host.to_s
-      active_marketplaces.detect { |m| m::HOST =~ host }
-    end
-
     def create_from_marketplace(url, opts = {})
-      marketplace = marketplace_by_url(url)
+      marketplace = BasicMarketplace.find_by_url(url)
       raise StandardError, 'Unknown Marketplace' unless marketplace
       params = marketplace.new(url).scrape.except(opts[:ignored_fields])
       params[:properties].reverse!
       params[:category] = opts[:category] if opts[:category]
       params[:model] = opts[:model] if opts[:model]
       create(params)
-    end
-
-    def search_marketplaces_by_model(model)
-      Parallel.map(active_marketplaces, in_threads: active_marketplaces.count) do |marketplace|
-        begin
-          marketplace.new(model).search
-        rescue Exception
-          nil
-        end
-      end.flatten
     end
 
     def unbound
@@ -456,7 +438,7 @@ class Catalog::Product < ActiveRecord::Base
   def images_from_url=(value)
     return unless value.present?
     url = URI.encode URI.decode value.strip
-    marketplace = Catalog::Product.marketplace_by_url(url)
+    marketplace = BasicMarketplace.find_by_url(url)
     img_urls = marketplace.new(url).scrape[:images]
     img_urls.each do |img_url|
       scrape_image(img_url)
