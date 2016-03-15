@@ -1,7 +1,6 @@
 class Catalog::Taxon < ActiveRecord::Base
   include Slugable
   before_create :set_position
-  # after_update :rerender_menu
   has_one :category, class_name: Catalog::Category, foreign_key: :catalog_taxon_id
   has_one :image, as: :imageable, dependent: :destroy
   has_one :seo, as: :seoable, dependent: :destroy
@@ -10,10 +9,6 @@ class Catalog::Taxon < ActiveRecord::Base
   accepts_nested_attributes_for :seo, allow_destroy: false
 
   has_ancestry
-
-  def self.expire_menu_cache_fragment
-    ActionController::Base.new.expire_fragment 'catalog_menu'
-  end
 
   def children_image_path
     image || super_category_random_image
@@ -28,10 +23,6 @@ class Catalog::Taxon < ActiveRecord::Base
   end
 
   private
-
-  def rerender_menu
-    self.class.expire_menu_cache_fragment
-  end
 
   def set_position
     self.position = siblings.count + 1

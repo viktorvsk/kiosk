@@ -65,9 +65,6 @@ module Vendor
         catalog_product.recount
       end
 
-      def select_rrc
-        rrc.active.max_by(&:price).try(:price).to_f.ceil
-      end
     end
 
     def search_marketplace(marketplace, searcher)
@@ -81,10 +78,6 @@ module Vendor
 
     def active?
       current_price? && in_stock? && !trashed?
-    end
-
-    def bound?
-      product.present?
     end
 
     def unbind

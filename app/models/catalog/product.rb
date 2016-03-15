@@ -258,11 +258,6 @@ class Catalog::Product < ActiveRecord::Base
   end
   ### SEO TEMPLATE ###
 
-  def bound?
-    #vendor_products.active.present?
-    price.to_i > 0
-  end
-
   def accessories_products
     return unless accessories.present?
     self.class.where(id: accessories.split).with_price.uniq
@@ -551,7 +546,7 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def price_to_recount
-    rrc = vendor_products.select_rrc
+    rrc = vendor_products.rrc.active.max_by(&:price).try(:price).to_f.ceil
     if rrc > 0
       rrc
     else
