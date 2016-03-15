@@ -244,20 +244,6 @@ class Catalog::Product < ActiveRecord::Base
 
   end
 
-  ### SEO TEMPLATE ###
-  def category_name
-    category.name
-  end
-
-  def brand_name
-    brand.try(:name).to_s
-  end
-
-  def category_single_name
-    category.s_name.to_s
-  end
-  ### SEO TEMPLATE ###
-
   def accessories_products
     return unless accessories.present?
     self.class.where(id: accessories.split).with_price.uniq
@@ -306,42 +292,13 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def update_from_marketplace
-    found = self.class.search_marketplaces_by_model(model)
+    found = BasicMarketplace.find_products_by_query(model)
     random_url = found.select{ |h| h[:price].to_i > 0 }.sample[:url]
-    result = self.class.marketplace_by_url(random_url).new(random_url).scrape.slice(:description, :properties)
+    result = BasicMarketplace.find_by_url(random_url).new(random_url).scrape.slice(:description, :properties)
     self.description = result[:description] if result[:description].present?
     self.properties = result[:properties] if result[:properties].present?
   rescue Exception
     nil
-  end
-
-  def empty_attributes
-    attributes
-      .select{ |k, v| v.blank? }
-      .keys
-      .map{ |k| I18n.t("activerecord.attributes.catalog/product.#{k}") }
-      .join('; ')
-  end
-
-  def advanced_name(category_prefix = false, id_postfix = true)
-    adv_name = []
-    adv_name << category.name if category_prefix
-    adv_name << name
-    adv_name << "[#{id}]" if id_postfix
-    adv_name.join(' ')
-  end
-
-  def stats
-    stats = {
-      '<b>Название</b>' => name,
-      '<b>Пустые поля</b>' => empty_attributes,
-      '<b>Характеристик</b>' => product_properties.where.not(name: nil).count,
-      '<b>Фильтров</b>' => product_filters.where.not(filter_value: nil).count,
-      '<b>Изображений</b>' => images.count,
-      '<b>Длина описания</b>' => description.to_s.size
-    }
-    stats.to_a.map{ |stat| stat.join(": ") }.join("\n<br/>")
-
   end
 
   def reorder(props)
@@ -358,12 +315,6 @@ class Catalog::Product < ActiveRecord::Base
     delta_price = p * delta
     similar_price = p - delta_price..p + delta_price
     category.products.where(price: similar_price).where.not(id: id).order("RANDOM()").limit(number).sort_by(&:price)
-  end
-
-  def warranty(warranty_id=nil)
-    warranty_id ||= Catalog::Property.warranty.try(:id)
-    return unless warranty_id
-    product_properties.where("catalog_property_id = :w AND name != '' AND name IS NOT NULL", w: warranty_id).first
   end
 
   def set_property(property_name, property_value)
