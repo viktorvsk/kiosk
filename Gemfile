@@ -80,4 +80,3 @@ group :profile do
 end
 
 gem 'jbuilder', '~> 2.0'
-gem 'parallel'

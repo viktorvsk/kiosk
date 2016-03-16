@@ -23,8 +23,8 @@
     - if product.in_stock_kharkov
       Харьков: +
       %br/
-    - if product.warranty.present?
-      Гарантия: #{product.warranty}
+    - if presents(product).warranty.present?
+      Гарантия: #{presents(product).warranty}
       %br/
     - if product.category.present?
       Категория: #{product.category}

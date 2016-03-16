@@ -6,7 +6,7 @@
       %small ( #{line_item.quantity} шт. )
   .panel-body
     = link_to edit_admin_product_path(line_item.product) do
-      = image_tag 'lazy-spinner.gif', size: '36x36', class: 'thumbnail lazy', 'data-original' => line_item.product.preview_path
+      = image_tag 'lazy-spinner.gif', size: '36x36', class: 'thumbnail lazy', 'data-original' => line_item.presents(product).preview_path
     = line_item.client_price
     = line_item.in_price
     = line_item.income

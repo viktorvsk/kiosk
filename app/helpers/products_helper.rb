@@ -54,9 +54,9 @@ module ProductsHelper
   end
 
   def warranty_for(product)
-    w = product.warranty.try(:name).to_i
-    if w > 0
-      "Официальная гарантия от производителя <b class='warranty'>#{product.warranty.name}</b>.".html_safe
+    w = presents(product).warranty
+    if w.try(:name).to_i > 0
+      "Официальная гарантия от производителя <b class='warranty'>#{w.name}</b>.".html_safe
     else
       "Официальная гарантия от производителя не менее 12 месяцев."
     end

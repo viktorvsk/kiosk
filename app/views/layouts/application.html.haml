@@ -12,6 +12,7 @@
       %i.glyphicon.glyphicon-chevron-up
     = render 'layouts/nav/catalog'
     = render 'shared/top_bar'
+    = render 'shared/google_adwords' if params[:ordered] == 'true'
     = render 'shared/flash_bar'
     .container
       = yield

@@ -49,7 +49,7 @@ class Admin::ProductsController < Admin::BaseController
 
     respond_to do |format|
       if @product.save
-        current_user.record!(@product, 'Создал', @product.stats)
+        current_user.record!(@product, 'Создал', presents(@product).stats)
         format.html { redirect_to edit_admin_product_path(@product), notice: 'Товар успешно создан.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -65,7 +65,7 @@ class Admin::ProductsController < Admin::BaseController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        current_user.record!(@product, 'Отредактировал', @product.stats)
+        current_user.record!(@product, 'Отредактировал', presents(@product).stats)
         @product.update_properties
         format.html { redirect_to edit_admin_product_url(@product), notice: 'Товар успешно обновлен.' }
         format.js
@@ -80,7 +80,7 @@ class Admin::ProductsController < Admin::BaseController
   # DELETE /admin/products/1
   # DELETE /admin/products/1.json
   def destroy
-    current_user.record!(@product, 'Удалил', @product.stats)
+    current_user.record!(@product, 'Удалил', presents(@product).stats)
     @product.destroy
     respond_to do |format|
       format.html { redirect_to admin_products_url, notice: 'Товар успешно удален.' }
@@ -105,7 +105,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def search_marketplaces
-    @marketplaces = Catalog::Product.search_marketplaces_by_model(params[:model]).compact
+    @marketplaces = BasicMarketplace.find_products_by_query(params[:model])
   end
 
   def create_from_marketplace
@@ -113,7 +113,7 @@ class Admin::ProductsController < Admin::BaseController
     url = URI.decode params[:url]
     model = URI.decode params[:model]
     product = Catalog::Product.create_from_marketplace(url, category: category, model: model)
-    current_user.record!(product, 'Создал', "<center>Спарсил</center><br/>\n#{product.stats}<br/>\n<b>Категория</b>: #{category.name}")
+    current_user.record!(product, 'Создал', "<center>Спарсил</center><br/>\n#{presents(product).stats}<br/>\n<b>Категория</b>: #{category.name}")
     vendor_product = Vendor::Product.ransack(model_cont: model).result.bind_to(product)
     head 200
   end
@@ -121,7 +121,7 @@ class Admin::ProductsController < Admin::BaseController
   def update_from_marketplace
     if @product.update_from_marketplace
       @product.save
-      current_user.record!(@product, 'Отредактировал', "<center>Спарсил</center><br/>\n#{@product.stats}")
+      current_user.record!(@product, 'Отредактировал', "<center>Спарсил</center><br/>\n#{presents(@product).stats}")
       redirect_to edit_admin_product_url(@product), notice: 'Характеристики и описание обновлены'
     else
       redirect_to edit_admin_product_url(@product), error: 'Произошла ошибка'

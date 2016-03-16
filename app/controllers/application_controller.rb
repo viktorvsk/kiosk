@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
 
 private
 
+  def presents(object, klass = nil)
+    klass ||= "#{object.class}Presenter"
+    klass.constantize.new(object)
+  end
+
   def authorize_admin!
     redirect_to root_path, notice: 'Только для администраторов' if !current_user.try(:admin?)
   end

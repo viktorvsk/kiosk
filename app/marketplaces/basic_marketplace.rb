@@ -8,6 +8,29 @@ class BasicMarketplace
     @query = URI.encode URI.decode query
   end
 
+  class << self
+    def find_by_url(url)
+      active_marketplaces = Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify }
+      host = URI.parse(url.to_s.strip).host.to_s
+      active_marketplaces.detect { |m| m.constantize::HOST =~ host }
+    end
+
+    def find_products_by_query(query)
+      threads = []
+      products = []
+      active_marketplaces = Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify }
+      active_marketplaces.each do |marketplace|
+        threads << Thread.new do
+          Timeout::timeout(5) do
+            products << marketplace.constantize.new(query).search
+          end
+        end
+      end
+      threads.each(&:join)
+      products.flatten.compact
+    end
+  end
+
   def search
     html = Typhoeus.get(search_query, followlocation: true, verbose: false).body
     doc = Nokogiri::HTML(html)

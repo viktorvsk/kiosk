@@ -14,7 +14,7 @@
           .row
             .text-center
               = link_to edit_admin_product_path(li.object.product) do
-                = image_tag 'lazy-spinner.gif', class: 'img-responsive thumbnail lazy', 'data-original' => li.object.product.preview_path
+                = image_tag 'lazy-spinner.gif', class: 'img-responsive thumbnail lazy', 'data-original' => li.object.presents(product).preview_path
               %small ( #{li.object.quantity} шт. )
               %br/
 
