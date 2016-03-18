@@ -96,10 +96,6 @@ class Catalog::Category < ActiveRecord::Base
     filter
   end
 
-  def products_for_price
-    products.select('catalog_products.price, catalog_products.name, catalog_products.id, catalog_products.slug').with_price.includes(:product_properties, images: [:imageable])
-  end
-
   def reorder_filter_values=(values)
     return unless values.present?
     values.each do |filter_value_id, position_hash|

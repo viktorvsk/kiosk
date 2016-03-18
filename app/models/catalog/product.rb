@@ -124,7 +124,10 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def with_warranty
-      joins(:product_properties).where(catalog_product_properties: { catalog_property_id: Catalog::Property.warranty.id })
+      includes(:product_properties)
+        .where(catalog_product_properties: { catalog_property_id: Catalog::Property.warranty.id })
+        .where.not(catalog_product_properties: { name: nil })
+        .where.not(catalog_product_properties: { name: '' })
     end
 
     def with_filters(val)

@@ -1,17 +1,41 @@
 !!! XML
-%yml_catalog{:date => Time.now}
+%yml_catalog{ date: Time.now }
   %shop
     %name Интернет-магазин электроники Эвотех
     %company Evotex
-    %products_count= products_count
-    %url evotex.kh.ua
+    %url http://evotex.com.ua
     %currencies
-      %currency#UAH{:rate => "1"}
+      %currency#UAH{ rate: "1" }
     %categories
-      - categories.find_each do |category|
-        %category{:id => category.id}= category.name
-    %local_delivery_cost 30
+      - categories.each do |category|
+        %category{ id: category.id }= category.name
     %offers
-      - categories.find_each do |category|
-        = render collection: category.products_for_price, partial: 'catalog/price_offer', locals: { warranty_id: warranty_id, category: category, offer_available: 'true', with_id: false, words_ary: [] }, as: :product
-
+      - categories.each do |category|
+        - category.products.includes(:product_properties, images: [:imageable]).where('price > 0').each do |product|
+          - warranty = product.product_properties.detect{ |pp| (pp.catalog_property_id == warranty_id) && (pp.name.to_i > 0) }
+          - has_old_price = product.old_price.to_i > 0 && product.old_price.to_i > product.price.to_i
+          - image_url = product.images.sort_by(&:position).first.try(:to_s).presence
+          - is_yandex = offer_available == 'false'
+          %offer{ id: product.id, available: offer_available }
+            %url= "http://evotex.com.ua/p/#{product.slug}/#{product.id}"
+            - if has_old_price
+              %price= product.price.to_i
+              %oldprice= product.old_price.to_i
+            - else
+              %price= product.price.to_i
+            %currencyId UAH
+            %categoryId{:type => "Own"}= category.id
+            - if image_url
+              %picture= image_url
+            %name= ERB::Util.html_escape "#{product.name}"
+            - if is_yandex
+              %sales_notes
+                - if product.price.to_i.in?(1..5000)
+                  Предоплата не требуется.
+                - elsif product.price.to_i.in?(5000..50000)
+                  Необходима предоплата.
+                - else
+                  Предоплата 100%.
+            - if warranty
+              %manufacturer_warranty true
+              %param{:name => "Гарантия", :unit => "Месяцев"}= warranty.name.to_i
