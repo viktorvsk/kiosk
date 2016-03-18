@@ -36,6 +36,15 @@ class ProductsController < CatalogController
 
   end
 
+  def old_show
+    @product = Catalog::Product.where(slug: params[:slug]).first
+    if @product.present?
+      redirect_to p_path(slug: @product.slug, id: @product), status: 301
+    else
+      redirect_to search_products_path(q: {main_search: params[:slug]}), alert: 'Товар не найден, возможно, устаревшая ссылка.'
+    end
+  end
+
   # GET /products/1
   # GET /products/1.json
   def show
