@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :alias do
+  factory :product, class: 'Catalog::Product' do
     name { FFaker::Product.product_name }
-    association :aliasable, factory: :product
+    category
   end
 end

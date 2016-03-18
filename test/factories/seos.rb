@@ -1,9 +1,5 @@
 FactoryGirl.define do
   factory :seo do
-    title "MyString"
-keywords "MyString"
-description "MyString"
-seoable nil
+    association :seoable, factory: :product
   end
-
 end
