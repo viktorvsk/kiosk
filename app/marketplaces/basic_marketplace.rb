@@ -12,7 +12,7 @@ class BasicMarketplace
     def find_by_url(url)
       active_marketplaces = Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify }
       host = URI.parse(url.to_s.strip).host.to_s
-      active_marketplaces.detect { |m| m.constantize::HOST =~ host }
+      active_marketplaces.detect { |m| m.constantize::HOST =~ host }.constantize
     end
 
     def find_products_by_query(query)
