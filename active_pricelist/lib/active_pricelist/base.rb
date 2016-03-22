@@ -19,7 +19,6 @@ module ActivePricelist
       @required         = opts['required']       || %w(name)
       @not_in_stock     = opts['not_in_stock']   || ["-","Нет","нет","нет в наличии","ожидается",'\+/-',"в пути","резерв","доп.склад","в резервах","ждем","заказ","Ожидаем","поштучно","под заказ","Ожидается"]
       @discount         = opts['discount']       || 0
-      @xslt             = opts['xslt']
       @products         = []
       yield self if block_given?
     end
@@ -28,11 +27,6 @@ module ActivePricelist
       check_settings
       parse
       self
-    end
-
-    def xml
-      fail TemplaceMissingError, 'XML transform available only if XSLT template specified' unless @xslt.present?
-      @xml ||= ActivePricelist::Writer.transform(@products, @xslt)
     end
 
     def reader_settings

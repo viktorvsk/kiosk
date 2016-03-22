@@ -7,7 +7,6 @@ require 'active_support/core_ext'
 require 'active_pricelist/version'
 require 'active_pricelist/errors'
 require 'active_pricelist/reader'
-require 'active_pricelist/writer'
 require 'active_pricelist/decoder'
 require 'active_pricelist/base'
 
