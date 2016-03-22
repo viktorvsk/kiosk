@@ -80,5 +80,3 @@ end
 group :profile do
   gem 'ruby-prof'
 end
-
-gem 'jbuilder', '~> 2.0'

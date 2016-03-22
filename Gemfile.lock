@@ -326,9 +326,6 @@ GEM
       railties (>= 3.2, < 5)
       responders
     ipaddress (0.8.2)
-    jbuilder (2.3.1)
-      activesupport (>= 3.0.0, < 5)
-      multi_json (~> 1.2)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -550,7 +547,6 @@ DEPENDENCIES
   file_browser!
   fog
   haml-rails
-  jbuilder (~> 2.0)
   jquery-rails
   kaminari
   mina
