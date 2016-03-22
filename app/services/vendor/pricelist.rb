@@ -23,8 +23,6 @@ module Vendor
       @parser_class   = @merchant.parser_class.presence || 'Default'
       @csv_path       = Rails.root.join('tmp',"products_to_create_#{merchant_id}.csv")
       @update_sql     = []
-      @to_destroy     = []
-      @to_deactivate  = []
     end
 
     def import!
@@ -36,6 +34,7 @@ module Vendor
       write_changes_to_db
       notify('Пересчитывается цена товаров')
       @merchant.catalog_products.recount
+      puts Time.now.to_i - @init_time.to_i
       notify
       true
     rescue => e
@@ -64,17 +63,11 @@ module Vendor
 
     def group_products_articuls
       notify('Новый прайслист сравнивается со старым')
-      @existing_products = @merchant.products.select(:articul, :catalog_product_id)
-      @existing_articuls = @existing_products.map { |p| p['articul'] }
       @new_articuls = @products.map { |p| p['articul'] }
-      @existing_products.each do |p|
-        next if p['articul'].in?(@new_articuls)
-        if p['catalog_product_id'].nil?
-          @to_destroy << p['articul']
-        else
-          @to_deactivate << p['articul']
-        end
-      end
+      @existing_articuls = @merchant.products.pluck(:articul)
+      @existing_products = @merchant.products.select(:articul).where.not(vendor_products: { articul: @new_articuls })
+      @to_destroy = @existing_products.where(catalog_product_id: nil)
+      @to_deactivate = @existing_products.where.not(catalog_product_id: nil)
       @to_update_articuls = @new_articuls & @existing_articuls
       @to_create_articuls = @new_articuls - @to_update_articuls
     end
@@ -96,9 +89,10 @@ module Vendor
     def compose_create_csv
       notify('Находятся прайсы, которые нужно создать')
       CSV.open(@csv_path, "wb") do |csv|
-        @products.select { |p| p['articul'].in?(@to_create_articuls) }.each do |p|
+        @products.reject! { |p| !@to_create_articuls.include?(p['articul']) }.each do |p|
           attrs = p.slice( *REAL_ATTRIBUTES )
           attrs['vendor_merchant_id'] = @merchant.id
+          attrs['current_price'] = true
           csv << Vendor::Product.new(attrs).to_csv
         end
       end
@@ -109,9 +103,8 @@ module Vendor
       ActiveRecord::Base.transaction do
         ActiveRecord::Base.connection.execute("COPY vendor_products(#{CSV_COLUMNS}) FROM '#{@csv_path}' WITH(FORMAT csv);")
         ActiveRecord::Base.connection.execute(@update_sql.join("\n"))
-        @merchant.products.where(vendor_products: { articul: @to_destroy }).delete_all
-        @merchant.products.where(vendor_products: { articul: @to_deactivate }).deactivate
-        @merchant.products.where(vendor_products: { articul: @new_articuls }).activate
+        @to_destroy.delete_all
+        @to_deactivate.deactivate
       end
     end
 

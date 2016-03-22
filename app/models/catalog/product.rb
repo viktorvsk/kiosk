@@ -228,11 +228,11 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def recount
-      transaction do
-        all.eager_load(:vendor_products, :category).find_each do |product|
-          product.recount
-        end
+      update_sql = []
+      all.eager_load(:vendor_products, :category, :seo).where(fixed_price: false).find_each(batch_size: 10000) do |product|
+        update_sql << %(UPDATE "catalog_products" SET "price" = #{product.price_to_recount.to_i} WHERE "catalog_products"."id" = #{product.id};)
       end
+      connection.execute(update_sql.join("\n"))
     end
   end
 
@@ -474,34 +474,35 @@ class Catalog::Product < ActiveRecord::Base
     }
   end
 
-  private
-
-  def filling_attributes
-    slug = self[:slug]
-    [seo.description, name, seo.keywords, name, slug, model].each_slice(2) do |field, value|
-      field.replace(value) if field.blank?
-    end
-  end
-
   def price_to_recount
-    rrc = vendor_products.rrc.active.max_by(&:price).try(:price).to_f.ceil
-    if rrc > 0
-      rrc
+    active_vp = vendor_products.to_a.select { |p| p.in_stock? && p.current_price? && !p.trashed? }
+    rrc = active_vp.select { |p| p.is_rrc? }.max_by { |p| p.price }
+    if rrc && rrc.price.to_f.ceil > 0
+      rrc.price.to_f.ceil
     else
-      prices = vendor_products.active.map do |vendor_product|
+      prices = active_vp.map do |vendor_product|
         vendor_product.price + category.tax_for(vendor_product.price)
       end
       prices.min
     end
   end
 
-  def recount_unfixed
-    return if fixed_price? || !fixed_price_changed?
-    update_column(:price, price_to_recount)
-  end
+  private
 
-  ransacker :id do
-    Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
-  end
+    def filling_attributes
+      slug = self[:slug]
+      [seo.description, name, seo.keywords, name, slug, model].each_slice(2) do |field, value|
+        field.replace(value) if field.blank?
+      end
+    end
+
+    def recount_unfixed
+      return if fixed_price? || !fixed_price_changed?
+      update_column(:price, price_to_recount)
+    end
+
+    ransacker :id do
+      Arel.sql("to_char(\"#{table_name}\".\"id\", '99999999')")
+    end
 
 end
