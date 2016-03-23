@@ -1,90 +1,53 @@
 class Binder
   @queue = :binder
-  class << self
 
-    def perform
-      Binder.new.bind!
-    end
-
+  def self.perform
+    Binder.new.bind!
   end
 
   def initialize
-    set_catalog_products
-    set_vendor_products
+    @vendor_products = {}
+    @products = {}
+    @update_sql = []
+    @to_touch = []
   end
 
   def bind!
-    grouped_catalog_products = group(@catalog_products)
-    grouped_vendor_products = group(@vendor_products)
-
-    catalog_models = to_model(grouped_catalog_products)
-    vendor_models = to_model(grouped_vendor_products)
-
-    @boundable = catalog_models & vendor_models
-
-    @catalog_products = to_boundable(@catalog_products)
-    @vendor_products = to_boundable(@vendor_products)
-
-    ::Vendor::Product.transaction do
-      @vendor_products.each do |vendor_product|
-        bind_vendor_product(vendor_product)
+    Vendor::Product.select(:id, :info).where(product: nil).where("info->>'model' != '' AND (info->'model')::json IS NOT NULL").each do |vp|
+      normalized = vp.model.gsub(/[^\w]/, '').gsub(/\s+/, '').mb_chars.downcase.to_s.freeze
+      if @vendor_products[normalized]
+        @vendor_products[normalized] << vp.id
+      else
+        @vendor_products[normalized] = [vp.id]
       end
+    end
+    Catalog::Product.select(:model, :id).where.not(model: [nil, '']).each do |p|
+      normalized = p.model.gsub(/[^\w]/, '').gsub(/\s+/, '').mb_chars.downcase.to_s.freeze
+      @products[normalized] = p.id
+    end
+
+    compose_update_sql
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Base.connection.execute(@update_sql.join("\n"))
+      Vendor::Product.where(id: @to_touch.flatten.uniq).update_all(updated_at: Time.now)
     end
   end
 
-private
-  def set_catalog_products
-    @catalog_products ||=  ::Catalog::Product
-      .select(:id, :model, :name, :price, :fixed_price, :catalog_category_id)
-      .all
-      .select{ |product| product.model.present? }
-      .map{ |product| clear_model(product) }
-      .select{ |product| product.model.present? }
-  end
+  private
 
-  def set_vendor_products
-    @vendor_products = ::Vendor::Product
-      .unbound
-      .select(:id, :info, :name)
-      .all
-      .select{ |product| product.model.present? }
-      .map{ |product| clear_model(product) }
-      .select{ |product| product.model.present? }
-  end
-
-  def clear_model(product)
-    product.model.gsub!(/[^\w]/, '')
-    product.model.gsub!(/\s+/, '')
-    product.model = product.model.mb_chars.downcase.strip.to_s
-    product
-  end
-
-  def group(products)
-    products
-      .map{ |product| [product.id, product.model] }
-      .group_by{ |product| product.last }
-  end
-
-  def to_model(products)
-    products
-      .map{ |k,v| v.map{ |product| product.last} }
-      .flatten
-  end
-
-  def to_boundable(products)
-    products
-      .select{ |p| p.model.in?(@boundable) }
-  end
-
-  def bind_vendor_product(vendor_product)
-    ids = @vendor_products
-      .select{ |v_p| v_p.model == vendor_product.model }
-      .map(&:id)
-    product = @catalog_products
-      .detect{ |p| p.model == vendor_product.model }
-    ::Vendor::Product.where(id: ids).bind_to(product)
-    print '+' * ids.size
-  end
-
-
+    def compose_update_sql
+      existing_models = @products.keys
+      similars = existing_models & @vendor_products.keys
+      differents = existing_models - similars
+      differents.each do |model|
+        @products.delete(model)
+        @vendor_products.delete(model)
+      end
+      @vendor_products.each do |model, ids|
+        @to_touch << ids
+        if product_id = @products[model]
+          @update_sql << "UPDATE vendor_products SET catalog_product_id = #{product_id} WHERE id IN (#{ids.join(',')});".freeze
+        end
+      end
+    end
 end
