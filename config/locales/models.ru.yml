@@ -164,6 +164,7 @@ ru:
       catalog/category:
         all_aliases: Все синонимы
         active: Рекламируется
+        ym_active: Рекламируется на Яндексе.Маркете
         slug: Ссылка
         name: Название
         tax: Наценка ниже

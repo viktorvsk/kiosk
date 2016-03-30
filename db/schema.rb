@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128180258) do
+ActiveRecord::Schema.define(version: 20160330185851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,19 +69,21 @@ ActiveRecord::Schema.define(version: 20160128180258) do
   add_index "catalog_brands", ["name"], name: "index_catalog_brands_on_name", unique: true, using: :btree
 
   create_table "catalog_categories", force: :cascade do |t|
-    t.string   "name",             default: "",   null: false
-    t.string   "slug",             default: "",   null: false
+    t.string   "name",             default: "",    null: false
+    t.string   "slug",             default: "",    null: false
     t.hstore   "info"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "catalog_taxon_id"
-    t.boolean  "active",           default: true, null: false
+    t.boolean  "active",           default: true,  null: false
+    t.boolean  "ym_active",        default: false
   end
 
   add_index "catalog_categories", ["active"], name: "index_catalog_categories_on_active", using: :btree
   add_index "catalog_categories", ["catalog_taxon_id"], name: "index_catalog_categories_on_catalog_taxon_id", using: :btree
   add_index "catalog_categories", ["name"], name: "index_catalog_categories_on_name", using: :btree
   add_index "catalog_categories", ["slug"], name: "index_catalog_categories_on_slug", using: :btree
+  add_index "catalog_categories", ["ym_active"], name: "index_catalog_categories_on_ym_active", using: :btree
 
   create_table "catalog_category_brands", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false
@@ -94,16 +96,6 @@ ActiveRecord::Schema.define(version: 20160128180258) do
   add_index "catalog_category_brands", ["catalog_brand_id"], name: "index_catalog_category_brands_on_catalog_brand_id", using: :btree
   add_index "catalog_category_brands", ["catalog_category_id", "catalog_brand_id"], name: "category_brands_index", unique: true, using: :btree
   add_index "catalog_category_brands", ["catalog_category_id"], name: "index_catalog_category_brands_on_catalog_category_id", using: :btree
-
-  create_table "catalog_category_filter_values", force: :cascade do |t|
-    t.integer  "catalog_category_id",     null: false
-    t.integer  "catalog_filter_value_id", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "catalog_category_filter_values", ["catalog_category_id"], name: "index_catalog_category_filter_values_on_catalog_category_id", using: :btree
-  add_index "catalog_category_filter_values", ["catalog_filter_value_id"], name: "index_catalog_category_filter_values_on_catalog_filter_value_id", using: :btree
 
   create_table "catalog_category_filters", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false

@@ -22,15 +22,17 @@ namespace :catalog do
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: {
                                                                                 categories: Catalog::Category.pricelist_association,
                                                                                 warranty_id: warranty_id,
-                                                                                offer_available: 'true'
+                                                                                offer_available: 'true',
+                                                                                price_multiplier: 1.00
                                                                               })
     File.open(Rails.public_path.join('price_full.xml'), 'w'){ |f| f.puts pricelist }
 
     # Repeat for Yandex Market
     pricelist = ActionController::Base.new.render_to_string("catalog/price", locals: {
-                                                                                categories: Catalog::Category.where(id: 977),
+                                                                                categories: Catalog::Category.pricelist_association.yandex_market,
                                                                                 warranty_id: warranty_id,
-                                                                                offer_available: 'false'
+                                                                                offer_available: 'false',
+                                                                                price_multiplier: 1.02
                                                                               })
     File.open(Rails.public_path.join('price_yandex.xml'), 'w'){ |f| f.puts pricelist }
 
