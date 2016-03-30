@@ -77,7 +77,7 @@ end
 ################################################################################
 
 current_root = File.expand_path '../', __FILE__
-node_path    = ENV['MINA_NODE_PATH'] 
+node_path    = ENV['MINA_NODE_PATH']
 
 set :domain,      ENV['MINA_DOMAIN']
 set :application, ENV['MINA_APPLICATION']
@@ -145,7 +145,7 @@ end
 
 desc "Restart Resque workers"
 task :restart_resque => :environment do
-  queue! %(RAILS_ENV=#{ENV["RAILS_ENV"]} rake resque:restart_workers)
+  queue! %(RAILS_ENV=#{ENV["RAILS_ENV"]} bundle exec rake resque:restart_workers)
 end
 
 desc "Disable ActiveAdmin before running migrations"
