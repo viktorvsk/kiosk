@@ -1,6 +1,6 @@
-deploy_to = '/home/ubuntu/staging'
-workers Integer(ENV['PUMA_WORKERS'] || 3)
-threads Integer(ENV['MIN_THREADS']  || 16), Integer(ENV['MAX_THREADS'] || 16)
+deploy_to = '/home/ubuntu/kiosk'
+workers Integer(ENV['PUMA_WORKERS'] || 1)
+threads Integer(ENV['MIN_THREADS']  || 4), Integer(ENV['MAX_THREADS'] || 4)
 environment    'staging'
 daemonize       true
 # rackup "#{deploy_to}/current/config.ru"
@@ -19,7 +19,7 @@ on_worker_boot do
   ActiveSupport.on_load(:active_record) do
     config = ActiveRecord::Base.configurations[Rails.env] ||
                 Rails.application.config.database_configuration[Rails.env]
-    config['pool'] = ENV['MAX_THREADS'] || 16
+    config['pool'] = ENV['MAX_THREADS'] || 4
     ActiveRecord::Base.establish_connection(config)
   end
 end
