@@ -85,7 +85,9 @@ set :server_name, ENV['MINA_SERVER_NAME']
 set :deploy_to,   ENV['MINA_DEPLOY']
 set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      ENV['MINA_BRANCH']
-set :puma_config, "#{deploy_to}/#{shared_path}/config/puma/#{ENV['RAILS_ENV']}.rb"
+set :puma_config, "#{deploy_to}/#{current_path}/config/puma/#{ENV['RAILS_ENV']}.rb"
+
+
 set :bundle_prefix, "RAILS_ENV=#{ENV['RAILS_ENV']} bundle exec"
 
 set :shared_paths, [
@@ -105,6 +107,7 @@ task :environment do
 end
 
 task :setup => :environment do
+  raise puma_config.to_s
 
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets")
@@ -164,10 +167,27 @@ task update_crontab: :environment do
   invoke :'whenever:write'
 end
 
+  desc 'Start puma'
+  task :puma_start => :environment do
+    puts puma_config
+    queue! %[
+      if [ -e '#{pumactl_socket}' ]; then
+        echo 'Puma is already running!';
+      else
+        if [ -e '#{puma_config}' ]; then
+          cd #{deploy_to}/#{current_path} && #{puma_cmd} -q -d -e #{puma_env} -C #{puma_config}
+        else
+          cd #{deploy_to}/#{current_path} && #{puma_cmd} -q -d -e #{puma_env} -b 'unix://#{puma_socket}' -S #{puma_state} --pidfile #{puma_pid} --control 'unix://#{pumactl_socket}'
+        fi
+      fi
+    ]
+  end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
 
   deploy do
+    raise puma_config.to_s
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
