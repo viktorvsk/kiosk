@@ -202,13 +202,13 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def properties_with_name
-      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products 
-             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id 
+      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products
+             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id
              WHERE (catalog_product_properties.name != '')) AS temp"
       query = Catalog::Product.connection.select_all(sql)
       query.rows.join
     end
- 
+
     def all_properties
       all.map(&:product_properties).map{ |p| p.map(&:property) }.flatten.uniq
     end
@@ -228,11 +228,11 @@ class Catalog::Product < ActiveRecord::Base
     end
 
     def recount
-      update_sql = []
-      all.eager_load(:vendor_products, :category, :seo).where(fixed_price: false).find_each(batch_size: 10000) do |product|
-        update_sql << %(UPDATE "catalog_products" SET "price" = #{product.price_to_recount.to_i} WHERE "catalog_products"."id" = #{product.id};)
+      update_sql = ""
+      all.includes(:vendor_products, :category).where(fixed_price: false).find_each(batch_size: 1000) do |product|
+        update_sql << %(UPDATE "catalog_products" SET "price" = #{product.price_to_recount.to_i} WHERE "catalog_products"."id" = #{product.id};\n)
       end
-      connection.execute(update_sql.join("\n"))
+      connection.execute(update_sql)
     end
   end
 
@@ -475,12 +475,13 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def price_to_recount
-    active_vp = vendor_products.to_a.select { |p| p.in_stock? && p.current_price? && !p.trashed? }
+    active_vp = vendor_products.to_a.select! { |p| p.in_stock? && p.current_price? && !p.trashed? }
+    return unless active_vp
     rrc = active_vp.select { |p| p.is_rrc? }.max_by { |p| p.price }
     if rrc && rrc.price.to_f.ceil > 0
       rrc.price.to_f.ceil
     else
-      prices = active_vp.map do |vendor_product|
+      prices = active_vp.map! do |vendor_product|
         vendor_product.price + category.tax_for(vendor_product.price)
       end
       prices.min

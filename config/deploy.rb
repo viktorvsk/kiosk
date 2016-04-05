@@ -86,7 +86,7 @@ set :deploy_to,   ENV['MINA_DEPLOY']
 set :repository,  'git@bitbucket.org:ablebeam/kiosk.git'
 set :branch,      ENV['MINA_BRANCH']
 set :puma_config, "#{deploy_to}/#{current_path}/config/puma/#{ENV['RAILS_ENV']}.rb"
-
+set :rails_env,   ENV['RAILS_ENV']
 
 set :bundle_prefix, "RAILS_ENV=#{ENV['RAILS_ENV']} bundle exec"
 
