@@ -230,7 +230,9 @@ class Catalog::Product < ActiveRecord::Base
     def recount
       update_sql = ""
       all.includes(:vendor_products, :category).where(fixed_price: false).find_each(batch_size: 1000) do |product|
-        update_sql << %(UPDATE "catalog_products" SET "price" = #{product.price_to_recount.to_i} WHERE "catalog_products"."id" = #{product.id};\n)
+        recounted_price = product.price_to_recount.to_i
+        next if recounted_price == product.price
+        update_sql << %(UPDATE "catalog_products" SET "price" = #{recounted_price} WHERE "catalog_products"."id" = #{product.id};\n)
       end
       connection.execute(update_sql)
     end

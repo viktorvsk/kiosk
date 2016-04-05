@@ -16,7 +16,7 @@ module PriceAutoupdateable
         merchant.update(format: price_list_format,
                         pricelist_state: 'Прайс добавлен в очередь после авто обновления',
                         pricelist_error: false)
-        Vendor::Pricelist.new(merchant.id, tempfile.path).async_import!
+        Vendor::Pricelist.async_import!(merchant.id, tempfile.path)
       end
 
     end
