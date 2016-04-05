@@ -107,8 +107,6 @@ task :environment do
 end
 
 task :setup => :environment do
-  raise puma_config.to_s
-
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets")
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids")
