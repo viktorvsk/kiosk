@@ -1,9 +1,9 @@
 require 'csv'
-require 'byebug'
 
 module Vendor
   class Pricelist
-    @queue = :pricelist_import
+    @queue = :common
+
     REAL_ATTRIBUTES = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id).map(&:freeze).freeze
     CSV_COLUMNS = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 

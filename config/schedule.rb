@@ -1,34 +1,25 @@
-# Use this file to easily define all of your cron jobs.
-#
-# It's helpful, but not entirely necessary to understand cron before proceeding.
-# http://en.wikipedia.org/wiki/Cron
+every '01 * * * *' do
+  runner 'Resque.enqueue(Binder)'
+end
 
-# Example:
-#
-# set :output, "/path/to/my/cron_log.log"
-#
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
+every '20 * * * *' do
+  runner 'Resque.enqueue(VendorCategoryAliasMatcher)'
+end
 
-# Learn more: http://github.com/javan/whenever
+every '30 * * * *' do
+  runner 'Resque.enqueue(SitemapGenerator)'
+end
 
-every 1.hours do
-  runner "Binder.perform"
-  rake "catalog:hourly_update"
+every '40 * * * *' do
+  runner 'Resque.enqueue(PricelistImportAuto)'
 end
 
 every '50 * * * *' do
-  rake "catalog:update_pricelist"
+  runner 'PricelistExport.new("ym").async_generate!'
+  runner 'PricelistExport.new("pn").async_generate!'
 end
 
-every 1.day do
-  command "/home/vvsk/kiosk/shared/backup_script.sh"
-  runner "Order.in_cart.destroy_all"
+every 1.day, at: '4am' do
+  runner 'Resque.enqueue(BackupDb)'
+  runner 'Order.in_cart.destroy_all'
 end

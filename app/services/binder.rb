@@ -1,5 +1,5 @@
 class Binder
-  @queue = :binder
+  @queue = :common
 
   def self.perform
     Binder.new.bind!
@@ -8,7 +8,7 @@ class Binder
   def initialize
     @vendor_products = {}
     @products = {}
-    @update_sql = []
+    @update_sql = ''
     @to_touch = []
   end
 
@@ -28,7 +28,7 @@ class Binder
 
     compose_update_sql
     ActiveRecord::Base.transaction do
-      ActiveRecord::Base.connection.execute(@update_sql.join("\n"))
+      ActiveRecord::Base.connection.execute(@update_sql)
       Vendor::Product.where(id: @to_touch.flatten.uniq).update_all(updated_at: Time.now)
     end
   end
@@ -46,7 +46,7 @@ class Binder
       @vendor_products.each do |model, ids|
         @to_touch << ids
         if product_id = @products[model]
-          @update_sql << "UPDATE vendor_products SET catalog_product_id = #{product_id} WHERE id IN (#{ids.join(',')});".freeze
+          @update_sql << "UPDATE vendor_products SET catalog_product_id = #{product_id} WHERE id IN (#{ids.join(',')});\n"
         end
       end
     end
