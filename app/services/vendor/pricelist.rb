@@ -22,7 +22,7 @@ module Vendor
       @settings       = @merchant.to_activepricelist
       @parser_class   = @merchant.parser_class.presence || 'Default'
       @csv_path       = Rails.root.join('tmp',"products_to_create_#{merchant_id}.csv")
-      @update_sql     = []
+      @update_sql     = ''
     end
 
     def import!
@@ -82,7 +82,7 @@ module Vendor
             "is_rrc" = #{p['is_rrc']},
             "in_stock" = #{p['in_stock']},
             "info" = $json$#{info_attrs}$json$
-          WHERE "articul" = '#{p['articul']}' AND "vendor_merchant_id" = '#{@merchant.id}';)
+          WHERE "articul" = '#{p['articul']}' AND "vendor_merchant_id" = '#{@merchant.id}';\n)
       end
     end
 
@@ -102,7 +102,7 @@ module Vendor
       notify('Применяются изменения')
       ActiveRecord::Base.transaction do
         ActiveRecord::Base.connection.execute("COPY vendor_products(#{CSV_COLUMNS}) FROM '#{@csv_path}' WITH(FORMAT csv);")
-        ActiveRecord::Base.connection.execute(@update_sql.join("\n"))
+        ActiveRecord::Base.connection.execute(@update_sql)
         @to_destroy.delete_all
         @to_deactivate.deactivate
       end
