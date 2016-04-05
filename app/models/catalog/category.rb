@@ -1,6 +1,5 @@
 class Catalog::Category < ActiveRecord::Base
   include Slugable
-  # after_update :recount_products, :rerender_menu
   store_accessor :info, :tax, :tax_max, :tax_threshold, :description, :s_name
   validates :name, presence: true
   has_many :products, class_name: Catalog::Product, dependent: :destroy, foreign_key: :catalog_category_id
@@ -116,16 +115,6 @@ class Catalog::Category < ActiveRecord::Base
 
   def self.products_pricelist_count
     where(active: true).joins(:products).where('catalog_products.price > 0').count
-  end
-
-  private
-
-  def recount_products
-    Catalog::CategoryProductsUpdater.async_update(id) if info_changed?
-  end
-
-  def rerender_menu
-    Catalog::Taxon.expire_menu_cache_fragment if catalog_taxon_id_changed?
   end
 
 end
