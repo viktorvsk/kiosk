@@ -1,4 +1,5 @@
 require 'csv'
+require 'byebug'
 
 module Vendor
   class Pricelist
@@ -7,22 +8,21 @@ module Vendor
     CSV_COLUMNS = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
     class << self
-      def async_import!(merchant_id, file_path)
-        Resque.enqueue(Vendor::Pricelist, merchant_id, file_path)
-      end
-
-      def perform(merchant_id, file_path)
-        Vendor::Pricelist.new(merchant_id, file_path).import!
+      def perform(merchant_id)
+        Vendor::Pricelist.new(merchant_id).import!
       end
     end
 
-    def initialize(merchant_id, file_path)
-      @file_path      = file_path
+    def initialize(merchant_id)
       @merchant       = Vendor::Merchant.find(merchant_id)
       @settings       = @merchant.to_activepricelist
       @parser_class   = @merchant.parser_class.presence || 'Default'
       @csv_path       = Rails.root.join('tmp',"products_to_create_#{merchant_id}.csv")
       @update_sql     = ''
+    end
+
+    def async_import!
+      Resque.enqueue(self.class, @merchant.id)
     end
 
     def import!
@@ -50,13 +50,6 @@ module Vendor
 
     def process_new_pricelist
       notify('Прайслист обрабатывается')
-      if File.file?(@file_path)
-        @file = File.new(@file_path)
-        File.open(@merchant.pricelist_path, 'wb'){ |f| f.puts @file.read }
-      else
-        notify("Ошибка загрузки файла:\n #{@file_path}", true)
-        return
-      end
       pricelist = "#{@parser_class}Parser".constantize.new(@settings).perform
       @products = pricelist.products
     end

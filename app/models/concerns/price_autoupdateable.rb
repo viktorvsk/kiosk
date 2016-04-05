@@ -1,3 +1,5 @@
+
+
 module PriceAutoupdateable
   def self.included(base)
     base.class_eval do
@@ -10,13 +12,11 @@ module PriceAutoupdateable
 
       def self.auto_update(merchant_id)
         merchant = Vendor::Merchant.find(merchant_id)
-        tempfile = Tempfile.new("#{merchant_id}_price.xml")
-        tempfile << get_fresh_pricelist
-        tempfile.close
         merchant.update(format: price_list_format,
                         pricelist_state: 'Прайс добавлен в очередь после авто обновления',
                         pricelist_error: false)
-        Vendor::Pricelist.async_import!(merchant.id, tempfile.path)
+        File.open(merchant.pricelist_path, 'w') { |f| f.puts(get_fresh_pricelist) }
+        Vendor::Pricelist.new(merchant.id).async_import!
       end
 
     end
