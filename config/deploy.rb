@@ -185,7 +185,6 @@ desc "Deploys the current version to the server."
 task :deploy => :environment do
 
   deploy do
-    raise puma_config.to_s
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
