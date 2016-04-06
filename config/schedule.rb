@@ -2,9 +2,9 @@ every '01 * * * *' do
   runner 'Resque.enqueue(Binder)'
 end
 
-every '20 * * * *' do
-  runner 'Resque.enqueue(VendorCategoryAliasMatcher)'
-end
+# every '20 * * * *' do
+#   runner 'Resque.enqueue(VendorCategoryAliasMatcher)'
+# end
 
 every '30 * * * *' do
   runner 'Resque.enqueue(SitemapGenerator)'
@@ -23,3 +23,5 @@ every 1.day, at: '4am' do
   runner 'Resque.enqueue(BackupDb)'
   runner 'Order.in_cart.destroy_all'
 end
+
+
