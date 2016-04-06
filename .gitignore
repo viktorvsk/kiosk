@@ -78,3 +78,7 @@ tramp
 
 # cask packages
 .cask/
+
+.env.production
+.env.staging
+.env
