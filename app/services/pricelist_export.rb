@@ -24,7 +24,7 @@ class PricelistExport
       @offer_available = 'false'
       @multiplier = 1.02
     when 'pn'
-      @ids = Catalog::Category.pricelist_association
+      @ids = Catalog::Category.pricelist_association.pluck(:id).join(',')
       @filename = 'price_full.xml'
       @offer_available = 'true'
       @multiplier = 1.00
