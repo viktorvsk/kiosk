@@ -32,7 +32,7 @@ namespace :catalog do
                                                                                 categories: Catalog::Category.pricelist_association.yandex_market,
                                                                                 warranty_id: warranty_id,
                                                                                 offer_available: 'false',
-                                                                                price_multiplier: 1.02
+                                                                                price_multiplier: 1.00
                                                                               })
     File.open(Rails.public_path.join('price_yandex.xml'), 'w'){ |f| f.puts pricelist }
 
