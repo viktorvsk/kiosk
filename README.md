@@ -1,8 +1,9 @@
 # Readme
 
-* Ruby 2.2.0
+* Ruby 2.2.4
 
-* Rails 4.2
+* Rails 4.2.6
 
-* Dependencies
-  Minimagic, Sphinx, Redis, LibXML, PostgreSQL
+ansible-playbook -i ansible/inventory/staging deploy.yml -t prepare
+RAILS_ENV=staging mina deploy_cold
+RAILS_ENV=staging mina deploy
