@@ -39,6 +39,9 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
+.env
+.env.production
+.env.staging
 
 .idea
 /public
