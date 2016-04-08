@@ -1,5 +1,0 @@
-check process kiosk_puma
-  with pidfile /home/vvsk/kiosk/shared/tmp/pids/puma.pid
-  start program = "/bin/su - vvsk -c 'cd /home/vvsk/kiosk/current && BUNDLE_GEMFILE=/home/vvsk/kiosk/current/Gemfile bundle exec puma -C config/puma.rb'"
-  stop program  = "/bin/su - vvsk -c 'cd /home/vvsk/kiosk/current/ && kill -9 $(cat /home/vvsk/kiosk/shared/tmp/pids/puma.pid) && rm -f /home/vvsk/kiosk/shared/tmp/pids/puma.pid; exit 0;'"
-  group kiosk_puma
