@@ -51,12 +51,12 @@ module Vendor
     def process_new_pricelist
       notify('Прайслист обрабатывается')
       pricelist = "#{@parser_class}Parser".constantize.new(@settings).perform
-      @products = pricelist.products
+      @products = Hash[pricelist.products.map { |p| [p['articul'], p] } ]
     end
 
     def group_products_articuls
       notify('Новый прайслист сравнивается со старым')
-      @new_articuls = @products.map { |p| p['articul'] }
+      @new_articuls = @products.keys
       @existing_articuls = @merchant.products.pluck(:articul)
       @existing_products = @merchant.products.select(:articul).where.not(vendor_products: { articul: @new_articuls })
       @to_destroy = @existing_products.where(catalog_product_id: nil)
@@ -67,22 +67,25 @@ module Vendor
 
     def compose_update_sql
       notify('Находятся прайсы, которые нужно обновить')
-      @merchant.products.where(vendor_products: { articul: @to_update_articuls }).each do |p|
-        info_attrs = p.info.to_json
-        @update_sql << %(
+      @merchant.products.where(vendor_products: { articul: @to_update_articuls }).each do |old_product|
+        new_product = @products[old_product.articul.to_s]
+        info_attrs = old_product.info.to_json
+        s = %(
           UPDATE "vendor_products" SET
-            "price" = #{p['price']},
-            "is_rrc" = #{p['is_rrc']},
-            "in_stock" = #{p['in_stock']},
+            "price" = #{new_product['price']},
+            "is_rrc" = #{new_product['is_rrc']},
+            "in_stock" = #{new_product['in_stock']},
             "info" = $json$#{info_attrs}$json$
-          WHERE "articul" = '#{p['articul']}' AND "vendor_merchant_id" = '#{@merchant.id}';\n)
+          WHERE "articul" = '#{new_product['articul']}' AND "vendor_merchant_id" = '#{@merchant.id}';\n)
+        @update_sql << s
       end
     end
 
     def compose_create_csv
       notify('Находятся прайсы, которые нужно создать')
       CSV.open(@csv_path, "wb") do |csv|
-        @products.reject! { |p| !@to_create_articuls.include?(p['articul']) }.each do |p|
+        @to_create_articuls.each do |art|
+          p = @products[art]
           attrs = p.slice( *REAL_ATTRIBUTES )
           attrs['vendor_merchant_id'] = @merchant.id
           attrs['current_price'] = true

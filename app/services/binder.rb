@@ -30,6 +30,7 @@ class Binder
     ActiveRecord::Base.transaction do
       ActiveRecord::Base.connection.execute(@update_sql)
       Vendor::Product.where(id: @to_touch.flatten.uniq).update_all(updated_at: Time.now)
+      Catalog::Product.recount
     end
   end
 
