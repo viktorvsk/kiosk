@@ -28,13 +28,13 @@ class PricelistFormatReader
     end
 
     def file=(value)
-      fail FileError, 'Invalid pricelist file' if !value || !File.file?(value)
+      fail StandardError, 'Invalid pricelist file' if !value || !File.file?(value)
       @file       = value.respond_to?(:path) ? value : File.new(value)
       self.format = File.extname(@file).delete('.') unless @format
     end
 
     def format=(value)
-      fail FileError, 'Invalid pricelist file format' unless self.class.supported_format?(value)
+      fail StandardError, 'Invalid pricelist file format' unless self.class.supported_format?(value)
       @format = value
     end
 
