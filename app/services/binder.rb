@@ -13,16 +13,18 @@ class Binder
   end
 
   def bind!
-    Vendor::Product.select(:id, :info).where(product: nil).where("info->>'model' != '' AND (info->'model')::json IS NOT NULL").each do |vp|
+    Vendor::Product.select(:id, :info).where(product: nil).where("info->>'model' != '' AND (info->'model')::json IS NOT NULL").find_each(batch_size: 1000) do |vp|
       normalized = vp.model.gsub(/[^\w]/, '').gsub(/\s+/, '').mb_chars.downcase.to_s.freeze
+      next if normalized.size == 0
       if @vendor_products[normalized]
         @vendor_products[normalized] << vp.id
       else
         @vendor_products[normalized] = [vp.id]
       end
     end
-    Catalog::Product.select(:model, :id).where.not(model: [nil, '']).each do |p|
+    Catalog::Product.select(:model, :id).where.not(model: [nil, '']).find_each(batch_size: 1000) do |p|
       normalized = p.model.gsub(/[^\w]/, '').gsub(/\s+/, '').mb_chars.downcase.to_s.freeze
+      next if normalized.size == 0
       @products[normalized] = p.id
     end
 
