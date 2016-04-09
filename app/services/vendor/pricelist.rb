@@ -58,21 +58,26 @@ module Vendor
       notify('Новый прайслист сравнивается со старым')
       @new_articuls = @products.keys
       @existing_articuls = @merchant.products.pluck(:articul)
+      @to_update_articuls = @new_articuls & @existing_articuls
+      @to_create_articuls = @new_articuls - @to_update_articuls
+
+      # Vendor Products present in current catalog but absent in currently uploaded Pricelist
       @existing_products = @merchant.products.select(:articul).where.not(vendor_products: { articul: @new_articuls })
       @to_destroy = @existing_products.where(catalog_product_id: nil)
       @to_deactivate = @existing_products.where.not(catalog_product_id: nil)
-      @to_update_articuls = @new_articuls & @existing_articuls
-      @to_create_articuls = @new_articuls - @to_update_articuls
+
+      @to_update = @merchant.products.where(vendor_products: { articul: @to_update_articuls })
     end
 
     def compose_update_sql
       notify('Находятся прайсы, которые нужно обновить')
-      @merchant.products.where(vendor_products: { articul: @to_update_articuls }).each do |old_product|
+      @to_update.find_each(batch_size: 1000) do |old_product|
         new_product = @products[old_product.articul.to_s]
-        info_attrs = old_product.info.to_json
+        info_attrs = Vendor::Product.new(new_product.slice(*REAL_ATTRIBUTES)).info.to_json
         s = %(
           UPDATE "vendor_products" SET
             "price" = #{new_product['price']},
+            "name" = $string$#{new_product['name']}$string$,
             "is_rrc" = #{new_product['is_rrc']},
             "in_stock" = #{new_product['in_stock']},
             "info" = $json$#{info_attrs}$json$
@@ -101,6 +106,7 @@ module Vendor
         ActiveRecord::Base.connection.execute(@update_sql)
         @to_destroy.delete_all
         @to_deactivate.deactivate
+        @to_update.activate
       end
     end
 
