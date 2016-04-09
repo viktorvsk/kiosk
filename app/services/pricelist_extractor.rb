@@ -1,50 +1,49 @@
 require 'csv'
 
-module Vendor
-  class Pricelist
-    @queue = :common
+class PricelistExtractor
+  @queue = :common
 
-    REAL_ATTRIBUTES = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id).map(&:freeze).freeze
-    CSV_COLUMNS = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
+  REAL_ATTRIBUTES = %w(uah usd eur rrc in_stock_kharkov in_stock_kiev model brand category warranty name price in_stock is_rrc articul vendor_merchant_id).map(&:freeze).freeze
+  CSV_COLUMNS = %w(articul name price in_stock vendor_merchant_id catalog_product_id created_at updated_at info is_rrc).join(',').freeze
 
-    class << self
-      def perform(merchant_id)
-        Vendor::Pricelist.new(merchant_id).import!
-      end
+  class << self
+    def perform(merchant_id)
+      new(merchant_id).extract!
     end
+  end
 
-    def initialize(merchant_id)
-      @merchant       = Vendor::Merchant.find(merchant_id)
-      @settings       = @merchant.to_activepricelist
-      @parser_class   = @merchant.parser_class.presence || 'Default'
-      @csv_path       = Rails.root.join('tmp',"products_to_create_#{merchant_id}.csv")
-      @update_sql     = ''
-    end
+  def initialize(merchant_id)
+    @merchant       = Vendor::Merchant.find(merchant_id)
+    @settings       = @merchant.to_activepricelist
+    @parser_class   = @merchant.parser_class.presence || 'Default'
+    @csv_path       = Rails.root.join('tmp',"products_to_create_#{merchant_id}.csv")
+    @update_sql     = ''
+  end
 
-    def async_import!
-      Resque.enqueue(self.class, @merchant.id)
-    end
+  def async_extract!
+    Resque.enqueue(self.class, @merchant.id)
+  end
 
-    def import!
-      @init_time = Time.now
-      process_new_pricelist
-      group_products_articuls
-      compose_update_sql
-      compose_create_csv
-      write_changes_to_db
-      notify('Пересчитывается цена товаров')
-      @merchant.catalog_products.recount
-      puts Time.now.to_i - @init_time.to_i
-      notify
-      true
-    rescue => e
-      err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.first(5).join("\n")})
-      notify(err, true)
-      false
-    ensure
-      FileUtils.rm @csv_path if File.file? @csv_path
-      FileUtils.rm @merchant.pricelist_path if File.file? @merchant.pricelist_path
-    end
+  def extract!
+    @init_time = Time.now
+    process_new_pricelist
+    group_products_articuls
+    compose_update_sql
+    compose_create_csv
+    write_changes_to_db
+    notify('Пересчитывается цена товаров')
+    @merchant.catalog_products.recount
+    puts Time.now.to_i - @init_time.to_i
+    notify
+    true
+  rescue => e
+    err = %(Произошла ошибка (#{e.class}): #{e.message}\n#{e.backtrace.first(5).join("\n")})
+    notify(err, true)
+    false
+  ensure
+    FileUtils.rm @csv_path if File.file? @csv_path
+    FileUtils.rm @merchant.pricelist_path if File.file? @merchant.pricelist_path
+  end
 
   private
 
@@ -118,5 +117,4 @@ module Vendor
         @merchant.update(pricelist_state: nil, pricelist_error: false, last_price_date: Time.now.strftime("%e.%m %X") )
       end
     end
-  end
 end

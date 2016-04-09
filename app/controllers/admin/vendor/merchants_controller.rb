@@ -70,7 +70,7 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
     contents = File.read(params[:vendor_merchant][:pricelist].tempfile)
     @merchant.update(format: fmt)
     File.open(@merchant.pricelist_path, 'w') { |f| f.puts(contents) }
-    Vendor::Pricelist.new(@merchant.id).async_import!
+    PricelistExtractor.new(@merchant.id).async_extract!
     @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
     redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
   end

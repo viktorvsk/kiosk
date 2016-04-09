@@ -16,7 +16,7 @@ module PriceAutoupdateable
                         pricelist_state: 'Прайс добавлен в очередь после авто обновления',
                         pricelist_error: false)
         File.open(merchant.pricelist_path, 'w') { |f| f.puts(get_fresh_pricelist) }
-        Vendor::Pricelist.new(merchant.id).async_import!
+        PricelistExtractor.new(merchant.id).async_extract!
       end
 
     end
