@@ -1,4 +1,4 @@
-class ErcParser < ::ActivePricelist::Base
+class ErcParser < BaseParser
 
   private
 

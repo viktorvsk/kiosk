@@ -1,4 +1,4 @@
-class TechnotradeParser < ::ActivePricelist::Base
+class TechnotradeParser < BaseParser
 
   private
 

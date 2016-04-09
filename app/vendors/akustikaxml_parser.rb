@@ -1,4 +1,4 @@
-class AkustikaxmlParser < ::ActivePricelist::Base
+class AkustikaxmlParser < BaseParser
   include PriceAutoupdateable
 
   private

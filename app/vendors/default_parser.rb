@@ -1,4 +1,4 @@
-class DefaultParser < ::ActivePricelist::Base
+class DefaultParser < BaseParser
 
   private
 

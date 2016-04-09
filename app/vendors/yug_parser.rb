@@ -1,4 +1,4 @@
-class YugParser < ::ActivePricelist::Base
+class YugParser < BaseParser
 
 
   private

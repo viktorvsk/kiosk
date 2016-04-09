@@ -48,7 +48,7 @@ end
 group :development, :test do
   gem 'byebug', '~> 5'
   gem 'spring'
-  # gem 'did_you_mean'
+  gem 'did_you_mean'
   gem 'ffaker'
   gem 'factory_girl_rails'
 end
@@ -72,5 +72,4 @@ gem 'activeadmin_hstore_editor'
 gem 'roo'
 gem 'nokogiri'
 gem 'dullard', github: 'ablebeam/dullard'
-gem 'active_pricelist', path: 'active_pricelist'
 gem 'auto_html'

@@ -1,4 +1,4 @@
-class DclinkxmlParser < ::ActivePricelist::Base
+class DclinkxmlParser < BaseParser
   include PriceAutoupdateable
 
   private
@@ -16,7 +16,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
                   }).body.force_encoding('windows-1251').encode("utf-8")
     remove_price_by_pricetype(pricelist)
   end
-  
+
   def self.remove_price_by_pricetype(pricelist)
     pricelist = Nokogiri::XML(pricelist.force_encoding('UTF-8'), nil, 'UTF-8')
     pricelist.search('Product').each do |row|
@@ -54,7 +54,7 @@ class DclinkxmlParser < ::ActivePricelist::Base
         else
           @product['is_rrc'] = false
           rate = if @product['name'] =~ /ddp/i && curr == 'usd'
-                   @dclink_ddp_rate.to_f 
+                   @dclink_ddp_rate.to_f
                  else
                    @rates[curr].to_f
                  end

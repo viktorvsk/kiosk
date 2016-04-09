@@ -1,5 +1,4 @@
-module ActivePricelist
-  class Reader
+class PricelistFormatReader
     SUPPORTED_FORMATS = ['xml', 'strict_xml', 'xls', 'xlsx', 'csv'].freeze
     attr_reader :rows
     attr_accessor :file,        :format,      :encoding,
@@ -70,8 +69,12 @@ module ActivePricelist
     end
 
     def parse_as_xls
-      file = Roo::Spreadsheet.open(@file)
-      spreadsheet = Decoder.new(file).xls
+      spreadsheet = Roo::Spreadsheet.open(@file)
+
+      if not spreadsheet.workbook.encoding.equal?(Encoding::CP1252)
+        spreadsheet.workbook.encoding = Encoding::CP1251
+      end
+
       @start.to_i.upto(spreadsheet.last_row) do |row_num|
         row = {}
         @columns.each do |k, v|
@@ -111,4 +114,3 @@ module ActivePricelist
       end
     end
   end
-end

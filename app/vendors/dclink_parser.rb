@@ -1,4 +1,4 @@
-class DclinkParser < ::ActivePricelist::Base
+class DclinkParser < BaseParser
 
   private
 
