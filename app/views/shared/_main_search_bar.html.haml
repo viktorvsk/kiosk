@@ -1,5 +1,5 @@
 - @q ||= Catalog::Product.ransack
-- @random_search_word ||= Catalog::Product.order("RANDOM()").first.name.split.first
+- @random_search_word ||= Catalog::Product.order("RANDOM()").first.try(:name).to_s.split.first.presence
 
 = search_form_for @q, url: search_products_path, id: 'main_search_form' do |f|
   .input-group
@@ -7,5 +7,6 @@
     .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
 .product_autocomplete
   .product_autocomplete_inner{ 'data-search-autocomplete' => true }
-Например:
-= link_to @random_search_word, '#', class: 'search-example'
+- if @random_search_word
+  Например:
+  = link_to @random_search_word, '#', class: 'search-example'
