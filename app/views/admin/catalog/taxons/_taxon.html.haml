@@ -1,0 +1,8 @@
+%li{ id: "catalog_taxon_#{taxon.id}" }
+  .item{ class: cycle('odd', 'even') }
+    = taxon.name
+    .pull-right
+      = link_to 'Изменить', edit_admin_taxon_path(taxon)
+      = link_to 'Удалить', admin_taxon_path(taxon), method: :delete
+  %ol
+    = render taxon.children.sort_by { |t| t.position } if taxon.children.any?

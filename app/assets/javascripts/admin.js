@@ -10,6 +10,7 @@
 //= require ckeditor/init
 
 //= require jquery-ui/ui/autocomplete
+//= require jquery.mjs.nestedSortable
 // require ace/ace
 // require ace/worker-html
 // require ace/worker-json
@@ -62,4 +63,51 @@ $(document).ready(function () {
   //     $textarea.text(val);
   //   });
   // });
+
+  $("[data-sortable-taxons]").each(function() {
+    $this = $(this);
+
+    return $this.nestedSortable({
+      forcePlaceholderSize: true,
+      forceHelperSizeType: true,
+      errorClass: 'cantdoit',
+      disableNesting: 'cantdoit',
+      handle: '> .item',
+      listType: 'ol',
+      items: 'li',
+      opacity: .6,
+      placeholder: 'placeholder',
+      revert: 250,
+      maxLevels: 2,
+      tabSize: 10,
+      protectRoot: $this.data('protect-root'),
+      tolerance: 'pointer',
+      toleranceElement: '> div',
+      isTree: true,
+      startCollapsed: false,
+      update: function() {
+        $this.nestedSortable("disable");
+        return $.ajax({
+          url: '/admin/taxons/sort',
+          type: "post",
+          data: $this.nestedSortable("serialize")
+        }).always(function() {
+          $this.find('.item').each(function(index) {
+            if (index % 2) {
+              return $(this).removeClass('odd').addClass('even');
+            } else {
+              return $(this).removeClass('even').addClass('odd');
+            }
+          });
+          $this.nestedSortable("enable");
+        }).done(function() {
+          return console.log('done');
+        }).fail(function() {
+          return console.log('fail');
+        });
+      }
+    });
+  });
+
+
 });

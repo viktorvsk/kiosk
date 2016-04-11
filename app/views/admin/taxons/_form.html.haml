@@ -1,0 +1,27 @@
+.well
+  .row
+    = form_for(@taxon, url: @taxon.persisted? ? admin_taxon_path(@taxon) : admin_taxons_path) do |f|
+      .col-xs-12
+        = render 'shared/error_messages', object: f.object
+      .col-sm-6
+        %h3 Основное
+        %ul.list-group
+          %li.list-group-item= field_for(f, :name)
+          %li.list-group-item= field_for(f, :slug)
+          %li.list-group-item
+            - if @taxon.image.present?
+              .thumbnail
+                = image_tag @taxon.image.url, class: 'img-responsive'
+            - else
+              - @taxon.build_image
+            = f.fields_for :image, f.object.image do |f_i|
+              .text-right
+                .btn.btn-default.btn-file
+                  Выбрать изображение
+                  = f_i.file_field :attachment
+      .col-sm-6
+        %h3 SEO
+        = render 'shared/seo_attributes', seo: @taxon.seo, f: f
+      .col-xs-12
+        .form-actions
+          = f.submit f.object.persisted? ? 'Обновить' : 'Создать', class: 'btn btn-success'

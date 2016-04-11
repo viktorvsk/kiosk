@@ -1,0 +1,61 @@
+$cOddRowBackground: #f4f5f5;
+$cRowBorder: #e8e8e8;
+$cRowSelected: #d9e4ec;
+$cRowError: rgb(255, 87, 87);
+
+@import "bourbon";
+
+ol.ui-sortable {
+  list-style-type: none;
+  ol { list-style-type: none; }
+  li {
+    background: white;
+    cursor: default !important;
+    &.placeholder {
+      height: 3em;
+      background: lighten($cOddRowBackground, 10%);
+      border: 1px dashed $cRowSelected;
+      @include box-sizing(border-box);
+      &.cantdoit {
+        border: 1px dashed $cRowError;
+      }
+    }
+    .item {
+      padding: 5px;
+      width: 100%;
+      border-top: 1px solid $cRowBorder;
+      border-bottom: 1px solid $cRowBorder;
+      @include clearfix;
+      &.even {
+        background: white;
+      }
+      &.odd {
+        background: $cOddRowBackground;
+      }
+    }
+  }
+  &.ui-sortable {
+    li .item:hover {
+      cursor: move;
+      background-color: $cRowSelected;
+    }
+  }
+  > li > ol {
+    margin-left: 10px;
+
+  }
+  li.mjs-nestedSortable-collapsed > ol {
+    display: none;
+  }
+  li.mjs-nestedSortable-branch > div > .disclose {
+    display: block;
+    float: left;
+    padding: 10px 5px 8px 5px;
+  }
+  li.mjs-nestedSortable-collapsed > div > .disclose > span:before {
+    content: "+ ";
+  }
+  li.mjs-nestedSortable-expanded > div > .disclose > span:before {
+    content: "- ";
+  }
+}

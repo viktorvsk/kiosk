@@ -1,0 +1,5 @@
+.text-right
+  = link_to 'Новый указатель', new_admin_taxon_path, class: 'btn btn-primary'
+%hr/
+%ol.ui-sortable{ 'data-sortable-taxons': true }
+  = render @taxons.sort_by { |t| t.position }

@@ -10,6 +10,15 @@ class Catalog::Taxon < ActiveRecord::Base
 
   has_ancestry
 
+  def self.sort(params)
+    transaction do
+      params.each_with_index do |(record_id, parent_id), position|
+        parent_id = nil if parent_id == 'null'
+        where(id: record_id).update_all(ancestry: parent_id, position: position)
+      end
+    end
+  end
+
   def children_image_path
     image || super_category_random_image
   rescue
@@ -20,25 +29,25 @@ class Catalog::Taxon < ActiveRecord::Base
     image || category_random_image
   rescue
     'product_missing/png'
-  end
+  end  
 
   private
 
-  def set_position
-    self.position = siblings.count + 1
-  end
+    def set_position
+      self.position = siblings.count + 1
+    end
 
-  def super_category_random_image
-    taxon_id = children.sample.id
-    random_image_for_taxon(taxon_id)
-  end
+    def super_category_random_image
+      taxon_id = children.sample.id
+      random_image_for_taxon(taxon_id)
+    end
 
-  def category_random_image
-    random_image_for_taxon(id)
-  end
+    def category_random_image
+      random_image_for_taxon(id)
+    end
 
-  def random_image_for_taxon(taxon_id)
-    Catalog::Product.joins(category: :taxon).where(catalog_taxons: { id: taxon_id }).order("RANDOM()").joins(:images).first.images.includes(:imageable).sample
-  end
+    def random_image_for_taxon(taxon_id)
+      Catalog::Product.joins(category: :taxon).where(catalog_taxons: { id: taxon_id }).order("RANDOM()").joins(:images).first.images.includes(:imageable).sample
+    end
 
 end

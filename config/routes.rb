@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     namespace :autocomplete do
       get :properties
     end
+    resources :taxons do
+      post :sort, on: :collection
+    end
     resources :products do
       member do
         post :update_from_marketplace

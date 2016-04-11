@@ -48,6 +48,7 @@
       $(filterValuesContainerSelector).sortable({
         update: onUpdateFilterValues
       });
+      console.log('Initialized Category Filters Manager...');
     };
   }
 
@@ -55,8 +56,9 @@
   window.Kiosk.CategoryFiltersManager = new CategoryFiltersManager();
 
   $(document).ready(function () {
-    window.Kiosk.CategoryFiltersManager.init();
-    console.log('Initialized Category Filters Manager...');
+    if($(filtersContainerSelector).size() || $(filterValuesContainerSelector).size()) {
+      window.Kiosk.CategoryFiltersManager.init();
+    }
   });
 
 }());
