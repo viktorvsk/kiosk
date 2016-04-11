@@ -38,8 +38,9 @@
       = td('Поставщиков', Vendor::Merchant.count)
       = td('Поставщиков с авто обновлением прайса', Vendor::Merchant.auto_updateable.count)
       = td('Специальных поставщиков', Vendor::Merchant.special.count)
-      = td('Давний прайс', I18n.l(Vendor::Merchant.oldest_price, format: "%e %b, %X"))
-      = td('Новый прайс', I18n.l(Vendor::Merchant.newest_price, format: "%e %b, %X"))
+      - if Vendor::Merchant.any?
+        = td('Давний прайс', I18n.l(Vendor::Merchant.oldest_price, format: "%e %b, %X"))
+        = td('Новый прайс', I18n.l(Vendor::Merchant.newest_price, format: "%e %b, %X"))
   .table-responsive.col-md-3
     %table.table.table-striped.table-bordered.table-hover
       %tr
