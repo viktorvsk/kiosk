@@ -28,6 +28,7 @@
         %th Телефон
         %th Клиент
         %th Обработан
+        %th Создан
     %tbody
       - @callbacks.each do |callback|
         %tr
@@ -35,6 +36,7 @@
           %td= callback.phone
           %td= link_to callback.name, edit_admin_user_path(callback)
           %td= callback.active? ? 'Да' : 'Нет'
+          %td= I18n.l(callback.created_at, format: "%e %b, %H:%M")
           %td= link_to 'Изменить', edit_admin_callback_path(callback)
           %td
             = link_to admin_callback_path(callback), method: :delete, class: 'btn btn-xs btn-danger', 'data-confirm' => 'Вы уверены?' do
