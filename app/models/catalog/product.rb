@@ -481,13 +481,13 @@ class Catalog::Product < ActiveRecord::Base
   end
 
   def price_to_recount
-    active_vp = vendor_products.to_a.select! { |p| p.in_stock? && p.current_price? && !p.trashed? }
+    active_vp = vendor_products.to_a.select { |p| p.in_stock? && p.current_price? && !p.trashed? }
     return unless active_vp
     rrc = active_vp.select { |p| p.is_rrc? }.max_by { |p| p.price }
     if rrc && rrc.price.to_f.ceil > 0
       rrc.price.to_f.ceil
     else
-      prices = active_vp.map! do |vendor_product|
+      prices = active_vp.map do |vendor_product|
         vendor_product.price + category.tax_for(vendor_product.price)
       end
       prices.min
