@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411214618) do
+ActiveRecord::Schema.define(version: 20160412130358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(version: 20160411214618) do
     t.string   "phone"
     t.text     "body"
     t.integer  "user_id"
-    t.boolean  "active",     default: true
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "callbacks", ["user_id"], name: "index_callbacks_on_user_id", using: :btree
@@ -79,16 +79,6 @@ ActiveRecord::Schema.define(version: 20160411214618) do
   add_index "catalog_category_brands", ["catalog_brand_id"], name: "index_catalog_category_brands_on_catalog_brand_id", using: :btree
   add_index "catalog_category_brands", ["catalog_category_id", "catalog_brand_id"], name: "category_brands_index", unique: true, using: :btree
   add_index "catalog_category_brands", ["catalog_category_id"], name: "index_catalog_category_brands_on_catalog_category_id", using: :btree
-
-  create_table "catalog_category_filter_values", force: :cascade do |t|
-    t.integer  "catalog_category_id",     null: false
-    t.integer  "catalog_filter_value_id", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "catalog_category_filter_values", ["catalog_category_id"], name: "index_catalog_category_filter_values_on_catalog_category_id", using: :btree
-  add_index "catalog_category_filter_values", ["catalog_filter_value_id"], name: "index_catalog_category_filter_values_on_catalog_filter_value_id", using: :btree
 
   create_table "catalog_category_filters", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false

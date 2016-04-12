@@ -32,7 +32,8 @@ class UsersController < CatalogController
         password_confirmation: pass,
         phone: phone,
         email: "#{phone}@evotex.kh.ua",
-        name: params[:callback][:name]
+        name: params[:callback][:name],
+        active: false
       }
       user = User.new(h)
       unless user.valid?
@@ -45,19 +46,20 @@ class UsersController < CatalogController
   end
 
   private
-  def set_user
-    @user = current_user || User.new
-  end
 
-  def user_params
-    if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
+    def set_user
+      @user = current_user || User.new
     end
-    params[:user].permit(:name, :phone, :email, :password, :password_confirmation)
-  end
 
-  def callback_params
-    params[:callback].permit(:name, :phone, :body)
-  end
+    def user_params
+      if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
+        params[:user].delete(:password)
+        params[:user].delete(:password_confirmation)
+      end
+      params[:user].permit(:name, :phone, :email, :password, :password_confirmation)
+    end
+
+    def callback_params
+      params[:callback].permit(:name, :phone, :body, :active)
+    end
 end

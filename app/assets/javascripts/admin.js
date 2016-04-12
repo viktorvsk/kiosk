@@ -78,7 +78,7 @@ $(document).ready(function () {
       opacity: .6,
       placeholder: 'placeholder',
       revert: 250,
-      maxLevels: 2,
+      maxLevels: 3,
       tabSize: 10,
       protectRoot: $this.data('protect-root'),
       tolerance: 'pointer',
