@@ -1,5 +1,5 @@
-- if product.comments.olds.present?
-  = render product.comments.olds
+- if product.comments.where(active: true).present?
+  = render product.comments.where(active: true)
 - else
   Никто еще не оставил отзыв об этом товаре.
 
