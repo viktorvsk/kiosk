@@ -134,22 +134,28 @@ class Catalog::Product < ActiveRecord::Base
       if val == 'y'
         all
           .joins(:product_filters)
-          .where
-          .not(catalog_product_filter_values: {catalog_filter_value_id: nil})
+          .includes(:product_filters)
+          .where.not(catalog_product_filter_values: {catalog_filter_value_id: nil})
           .uniq
       elsif val == 'n'
         all
-          .includes(:product_filters)
-          .where(catalog_product_filter_values: {catalog_filter_value_id: nil})
-          .uniq
+        .joins(:product_filters)
+        .includes(:product_filters)
+        .where(catalog_product_filter_values: {catalog_filter_value_id: nil})
+        .uniq
       end
     end
 
     def with_properties(val)
       if val == 'y'
-        properties_with_name
+        all
+          .joins(:product_properties)
+          .includes(:product_properties)
+          .where("catalog_product_properties.name != ''")
+          .uniq
       elsif val == 'n'
         all
+          .joins(:product_properties)
           .includes(:product_properties)
           .where("catalog_product_properties.catalog_product_id IS NULL OR catalog_product_properties.name = '' OR catalog_product_properties.name IS NULL")
           .uniq
@@ -158,9 +164,15 @@ class Catalog::Product < ActiveRecord::Base
 
     def with_bound(val)
       if val == 'y'
-        all.joins(:vendor_products).uniq
+        all
+          .joins(:vendor_products)
+          .uniq
       elsif val == 'n'
-        all.joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id').group('catalog_products.id').having('COUNT(vendor_products.id) = 0')
+        all
+          .joins('LEFT JOIN vendor_products ON vendor_products.catalog_product_id = catalog_products.id')
+          .group('catalog_products.id')
+          .having('COUNT(vendor_products.id) = 0')
+          .uniq
       end
     end
 
@@ -199,14 +211,6 @@ class Catalog::Product < ActiveRecord::Base
 
     def ransackable_scopes(auth_object = nil)
       [:filters_cont, :main_search, :with_filters, :with_properties, :with_bound, :top]
-    end
-
-    def properties_with_name
-      sql = "SELECT COUNT(*) FROM (SELECT DISTINCT catalog_products.id FROM catalog_products
-             INNER JOIN catalog_product_properties ON catalog_product_properties.catalog_product_id = catalog_products.id
-             WHERE (catalog_product_properties.name != '')) AS temp"
-      query = Catalog::Product.connection.select_all(sql)
-      query.rows.join
     end
 
     def all_properties
