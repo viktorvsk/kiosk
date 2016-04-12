@@ -129,5 +129,4 @@ Rails.application.routes.draw do
     resources :filter_values, except: :show
     resources :properties
   end
-  ActiveAdmin.routes(self)
 end

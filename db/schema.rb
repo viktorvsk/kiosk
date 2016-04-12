@@ -11,29 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330185851) do
+ActiveRecord::Schema.define(version: 20160411214618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_trgm"
-
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string   "namespace"
-    t.text     "body"
-    t.string   "resource_id",   null: false
-    t.string   "resource_type", null: false
-    t.integer  "author_id"
-    t.string   "author_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "active_admin_comments", ["author_id", "author_type"], name: "index_active_admin_comments_on_author_id_and_author_type", using: :btree
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
-  add_index "active_admin_comments", ["resource_id", "resource_type"], name: "index_active_admin_comments_on_resource_id_and_resource_type", using: :btree
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "aliases", force: :cascade do |t|
     t.string   "name",           null: false
@@ -96,6 +79,16 @@ ActiveRecord::Schema.define(version: 20160330185851) do
   add_index "catalog_category_brands", ["catalog_brand_id"], name: "index_catalog_category_brands_on_catalog_brand_id", using: :btree
   add_index "catalog_category_brands", ["catalog_category_id", "catalog_brand_id"], name: "category_brands_index", unique: true, using: :btree
   add_index "catalog_category_brands", ["catalog_category_id"], name: "index_catalog_category_brands_on_catalog_category_id", using: :btree
+
+  create_table "catalog_category_filter_values", force: :cascade do |t|
+    t.integer  "catalog_category_id",     null: false
+    t.integer  "catalog_filter_value_id", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "catalog_category_filter_values", ["catalog_category_id"], name: "index_catalog_category_filter_values_on_catalog_category_id", using: :btree
+  add_index "catalog_category_filter_values", ["catalog_filter_value_id"], name: "index_catalog_category_filter_values_on_catalog_filter_value_id", using: :btree
 
   create_table "catalog_category_filters", force: :cascade do |t|
     t.integer  "catalog_category_id",             null: false

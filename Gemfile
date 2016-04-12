@@ -66,9 +66,6 @@ end
 
 gem 'file_browser', path: 'file_browser'
 gem 'browser'
-gem 'activeadmin', github: 'activeadmin'
-gem 'active_admin-sortable_tree'
-gem 'activeadmin_hstore_editor'
 gem 'roo'
 gem 'nokogiri'
 gem 'dullard', github: 'ablebeam/dullard'

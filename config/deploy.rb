@@ -118,32 +118,9 @@ task :restart_resque => :environment do
   queue! %(RAILS_ENV=#{ENV["RAILS_ENV"]} bundle exec rake resque:restart_workers)
 end
 
-desc "Disable ActiveAdmin before running migrations"
-task :disable_active_admin => environment do
-  queue! %(mkdir -p #{deploy_to}/current/app/admin/)
-  queue! %(mv #{deploy_to}/current/app/admin/ #{deploy_to}/current/admin/ 2>/dev/null)
-end
-
-desc "Enable ActiveAdmin after running migrations"
-task :enable_active_admin => environment do
-  queue! %(mv #{deploy_to}/current/admin/ #{deploy_to}/current/app/admin/ 2>/dev/null)
-end
-
 desc 'Update crontab'
 task update_crontab: :environment do
   invoke :'whenever:write'
-end
-
-desc "First time deploy"
-task :deploy_cold => :environment do
-  deploy do
-    invoke :'git:clone'
-    invoke :'deploy:link_shared_paths'
-    invoke :'bundle:install'
-    invoke :'bower_install'
-    invoke :'rails_patched:assets_precompile'
-    invoke :'deploy:cleanup'
-  end
 end
 
 desc "Deploys the current version to the server."
@@ -153,9 +130,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    invoke :'disable_active_admin'
     invoke :'rails:db_migrate'
-    invoke :'enable_active_admin'
     invoke :'bower_install'
     invoke :'rails_patched:assets_precompile'
     invoke :'deploy:cleanup'
