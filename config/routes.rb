@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'sitemap.xml', to: 'catalog#sitemap'
   get 'price_full.xml', to: 'catalog#price'
   root 'products#index'
-  get :admin, to: 'admin/base#dashboard'
+
   devise_for :users
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get '/', to: 'base#dashboard'
+    post 'internal/:act', to: 'base#internal', as: :internal_action
     post 'binding/:product_id/:vendor_product_id', to: 'binding#bind'
     delete 'binding/:vendor_product_id', to: 'binding#unbind'
     namespace :autocomplete do

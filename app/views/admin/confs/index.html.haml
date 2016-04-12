@@ -9,6 +9,7 @@
       %li= link_to 'HTML', '#html', 'data-toggle' => 'tab'
       %li= link_to 'SEO шаблоны', '#seo-templates', 'data-toggle' => 'tab'
       %li= link_to 'Парсинг', '#parsing', 'data-toggle' => 'tab'
+      %li= link_to 'Действия', '#actions', 'data-toggle' => 'tab'
   .col-md-12
     .tab-content
       #text.tab-pane.active.fade.in
@@ -34,4 +35,10 @@
       #textarea.tab-pane
         %ul.list-group
           = render @confs.select{ |c| c.var =~ /^txt\./ }.sort_by(&:created_at)
-
+      #actions.tab-pane
+        %li.list-group-item= link_to 'Автоматическое привязывание', admin_internal_action_path(act: 'binder'), method: :post
+        %li.list-group-item= link_to 'Карта сайта', admin_internal_action_path(act: 'sitemap'), method: :post
+        %li.list-group-item= link_to 'Автообновление прайсов', admin_internal_action_path(act: 'pricelist_auto'), method: :post
+        %li.list-group-item= link_to 'Прайслист яндекса', admin_internal_action_path(act: 'pricelist_ym'), method: :post
+        %li.list-group-item= link_to 'Общий прайслист', admin_internal_action_path(act: 'pricelist_pn'), method: :post
+        %li.list-group-item= link_to 'Очистить кэш сайта', admin_internal_action_path(act: 'clear_cache'), method: :post
