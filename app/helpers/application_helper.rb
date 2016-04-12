@@ -15,16 +15,6 @@ module ApplicationHelper
     end
   end
 
-  def generate_links(links, klass)
-    counts = links.map do |scope, type|
-      content_tag('li') { 
-        link_to(type, polymorphic_path([:admin, klass], scope: scope)) + 
-        content_tag('span', klass.send(scope).count, class: 'count')
-      }
-    end
-    counts.sum
-  end
-
   def presents(object, klass = nil)
     klass ||= "#{object.class}Presenter"
     klass.constantize.new(object)

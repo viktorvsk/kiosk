@@ -1,4 +1,7 @@
 = form_for([:admin, @user]) do |f|
+  .row
+    .col-xs-12
+      = render 'shared/error_messages', object: f.object
   %ul.list-group
     %li.list-group-item= field_for(f, :email)
     %li.list-group-item= field_for(f, :name)
@@ -6,5 +9,5 @@
     %li.list-group-item= field_for(f, :password)
     %li.list-group-item= field_for(f, :password_confirmation)
     %li.list-group-item
-      = f.select :role, user_roles
+      = f.select :role, User::ROLES.map { |r| [t("activerecord.attributes.users.role.#{r}"),r] }, {}, class: 'form-control'
   = f.submit 'Отправить', class: 'btn btn-success'

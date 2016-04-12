@@ -17,15 +17,19 @@
     .row
       .col-sm-3
         .form-group
+          = f.label :completed_at_gteq, 'Завершен после'
           = f.date_field :completed_at_gteq, class: 'form-control', placeholder: 'Завершен после'
       .col-sm-3
         .form-group
+          = f.label :completed_at_lteq, 'Завершен до'
           = f.date_field :completed_at_lteq, class: 'form-control', placeholder: 'Завершен до'
       .col-sm-3
         .form-group
+          = f.label :created_at_gteq, 'Создан после'
           = f.date_field :created_at_gteq, class: 'form-control', placeholder: 'Создан после'
       .col-sm-3
         .form-group
+          = f.label :created_at_lteq, 'Создан до'
           = f.date_field :created_at_lteq, class: 'form-control', placeholder: 'Создан до'
     .form-actions
       = f.submit 'Найти', class: 'btn btn-success'

@@ -1,9 +1,17 @@
 class Admin::FilterValuesController < Admin::BaseController
   before_action :check_admin_permissions
   before_action :set_filter_value, only: [:edit, :update, :destroy]
-  
+
   def index
-    @filter_values = Catalog::FilterValue.all.page(params[:page])
+    @q = Catalog::FilterValue.ransack
+    @filter_values = Catalog::FilterValue.all.order('created_at DESC').page(params[:page])
+  end
+
+  def search
+    params[:q].each_value do |v| v.strip! end if params[:q]
+    @q = Catalog::FilterValue.ransack(params[:q])
+    @filter_values = @q.result.order('created_at DESC').page(params[:page])
+    render :index
   end
 
   def new
@@ -36,7 +44,7 @@ class Admin::FilterValuesController < Admin::BaseController
   end
 
   private
-  
+
   def filter_value_params
     params.require(:catalog_filter_value).permit(:name, :display_name, :catalog_filter_id)
   end

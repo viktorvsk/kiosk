@@ -1,3 +1,10 @@
+.jumbotron
+  = search_form_for @q, url: search_admin_filter_values_path do |f|
+    .row
+      .col-sm-8.col-sm-offset-2.text-center
+        .input-group
+          = f.search_field :name_cont, class: 'form-control', placeholder: 'Название'
+          .input-group-btn= f.submit 'Найти', class: 'btn btn-success'
 .page-header
   = link_to new_admin_filter_value_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus

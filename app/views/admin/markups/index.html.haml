@@ -1,14 +1,25 @@
+.jumbotron
+  = search_form_for @q, url: search_admin_markups_path do |f|
+    .row
+      .col-sm-6
+        = f.search_field :name_cont, class: 'form-control', placeholder: 'Название'
+      .col-sm-6
+        .form-group
+          = f.select :markup_type_eq, options_for_select(Markup::TYPES.map { |t| [t("activerecord.attributes.markup.types.#{t}"), t] }, params[:q].try(:[], :markup_type_eq)), { prompt: 'По типу страницы', include_blank: true}, class: 'form-control'
+
+
+    .row
+      .col-sm-12
+        .text-right
+          = f.submit 'Найти', class: 'btn btn-success'
+
 .page-header
-  .markups-button-and-links
-    = link_to new_admin_markup_path, :class => 'btn btn-primary' do
-      %span.glyphicon.glyphicon-plus
-      Новая страница
-    .markups-links
-      %ul
-        - markup_links.each do |scope, type|
-          %li= link_to type, admin_markups_path(scope: scope)
-          = Markup.send(scope).count
+  = link_to new_admin_markup_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    Новая страница
+
   %h1 Разметки
+
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
@@ -32,7 +43,7 @@
           %td
             = t("#{markup.active}")
           %td
-            = t("activerecord.attributes.markup.types.#{markup.markup_type}")
+            = t("activerecord.attributes.markup.types.#{markup.markup_type}") if Markup::TYPES.include?(markup.markup_type)
           %td
             = I18n.l(markup.created_at, format: "%e %b, %H:%M")
           %td

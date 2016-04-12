@@ -3,12 +3,15 @@ class Admin::CallbacksController < Admin::BaseController
   before_action :set_callback, only: [:edit, :update, :destroy]
 
   def index
-    callbacks = case params['scope']
-                 when 'olds' then ::Callback.olds
-                 when 'news' then ::Callback.news
-                 else ::Callback.all
-                 end
-    @callbacks = callbacks.page(params[:page])
+    @q = ::Callback.ransack
+    @callbacks = @q.result.order('created_at DESC').page(params[:page])
+  end
+
+  def search
+    params[:q].each_value(&:strip!)
+    @q = ::Callback.ransack(params[:q])
+    @callbacks = @q.result.order('created_at DESC').page(params[:page])
+    render :index
   end
 
   def edit
@@ -26,15 +29,14 @@ class Admin::CallbacksController < Admin::BaseController
     @callback.destroy
     redirect_to admin_callbacks_path
   end
-  
+
   private
-  
-  def callback_params
-    params.require(:callback).permit(:name, :phone, :body, :active,
-                                     :user_id)
-  end
-      
-  def set_callback
-    @callback = ::Callback.find(params[:id])  
-  end
+
+    def callback_params
+      params.require(:callback).permit(:name, :phone, :body, :active, :user_id)
+    end
+
+    def set_callback
+      @callback = ::Callback.find(params[:id])
+    end
 end

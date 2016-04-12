@@ -2,7 +2,7 @@ class Admin::OrdersController < Admin::BaseController
   before_action :check_admin_permissions
   before_action :set_order, only: [:edit, :update]
   def index
-    @q = Order.includes(:products, line_items: :order, user: :orders).ransack(search_params)
+    @q = Order.includes(products: { vendor_products: :merchant }, line_items: :order, user: :orders).ransack(search_params)
     @all_orders = @q.result.order('orders.completed_at DESC NULLS LAST')
     @orders = @all_orders.page(params[:page])
   end

@@ -1,6 +1,7 @@
 class Markup < ActiveRecord::Base
   include Slugable
   has_one :seo, as: :seoable, dependent: :destroy
+  validates :markup_type, presence: true
   TYPES = %w(page article help slide)
   TYPES.each do |t|
     scope t.pluralize.to_sym, -> { where(markup_type: t) }

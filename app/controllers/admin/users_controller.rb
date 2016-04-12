@@ -3,20 +3,34 @@ class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    users = case params['scope']
-            when 'admins'      then User.admins
-            when 'contents'    then User.contents
-            when 'customers'   then User.customers
-            else User.all
-            end
-    @users = users.page(params[:page])
+    @q = User.ransack
+    @users = @q.result.order(created_at: :desc).page(params[:page])
+  end
+
+  def search
+    params[:q].each_value do |v| v.strip! end if params[:q]
+    @q = User.ransack(params[:q])
+    @users = @q.result.order(created_at: :desc).page(params[:page])
+    render :index
   end
 
   def edit
   end
-  
+
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to admin_users_path
+    else
+      render :new
+    end
+  end
+
   def update
-    clean_password
     if @user.update(user_params)
       redirect_to admin_users_path
     else
@@ -30,15 +44,17 @@ class Admin::UsersController < Admin::BaseController
   end
 
   private
-  def user_params
-    params.require(:user).permit(:email, :name, :phone, :password, :password_confirmation, :role)
-  end
 
-  def set_user
-    @user = User.find(params[:id])
-  end
+    def user_params
+      if params[:user][:password].blank?
+        params.require(:user).permit(:email, :name, :phone, :role)
+      else
+        params.require(:user).permit(:email, :name, :phone, :password, :password_confirmation, :role)
+      end
+    end
 
-  def clean_password
-    params[:user].slice!('password', 'password_confirmation') if params[:user][:password].blank?
-  end
+    def set_user
+      @user = User.find(params[:id])
+    end
+
 end

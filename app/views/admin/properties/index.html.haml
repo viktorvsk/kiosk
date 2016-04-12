@@ -1,5 +1,10 @@
 .jumbotron
-  = render 'form'
+  = form_tag(admin_properties_path, method: :get, enforce_utf8: false) do
+    .row
+      .col-sm-8.col-sm-offset-2.text-center
+        .input-group
+          = text_field_tag :name, params[:name], class: 'form-control', placeholder: 'Название'
+          .input-group-btn= submit_tag 'Найти', class: 'btn btn-success'
 .page-header
   = link_to new_admin_property_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus

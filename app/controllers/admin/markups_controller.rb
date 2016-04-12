@@ -16,15 +16,15 @@ class Admin::MarkupsController < Admin::BaseController
   end
 
   def index
-    markups = case params['scope']
-              when 'actives'  then Markup.active
-              when 'pages'    then Markup.pages
-              when 'articles' then Markup.articles
-              when 'helps'    then Markup.helps
-              when 'slides'   then Markup.slides
-              else Markup.all
-              end
-    @markups = markups.order(created_at: :desc).page(params[:page])
+    @q = Markup.ransack
+    @markups = Markup.order(created_at: :desc).page(params[:page])
+  end
+
+  def search
+    params[:q].each_value do |v| v.strip! end if params[:q]
+    @q = Markup.ransack(params[:q])
+    @markups = @q.result.order('created_at DESC').page(params[:page])
+    render :index
   end
   
   def edit

@@ -1,16 +1,35 @@
+.jumbotron
+  = search_form_for @q, url: search_admin_user_actions_path do |f|
+    .row
+      .col-sm-3
+        .form-group
+          = f.label :action_type
+          = f.select :action_type_eq, options_for_select(%w(Привязал Отвязал Отредактировал Создал Удали), params[:q].try(:[], :action_type)), { include_blank: true }, class: 'form-control'
+      .col-sm-3
+        .form-group
+          = f.label :user, 'Пользователь'
+          = f.select :user_id_eq, options_for_select(User.where(role: %w[admin content]).map { |u| [u.name, u.id] }, params[:q].try(:[], :user_id_eq)), { include_blank: true }, class: 'form-control'
+      .col-sm-3
+        .form-group
+          = f.label :created_at_gteq, 'От'
+          = f.date_field :created_at_gteq, class: 'form-control', placeholder: 'Завершен после'
+      .col-sm-3
+        .form-group
+          = f.label :created_at_lteq, 'До'
+          = f.date_field :created_at_lteq, class: 'form-control', placeholder: 'Завершен до'
+    .row
+      .col-sm-12
+        .text-right
+          = f.submit 'Найти', class: 'btn btn-success'
+
+
 .page-header
-  = render 'form'
-  .inline-index-links
-    %ul
-      - user_actions_count(@filtered_actions).each do |type, count|
-        %li= link_to type, '#'
-        = count
   %h1 Истории
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Имя
+        %th Пользователь
         %th Тип действия
         %th Товар
         %th Действие
@@ -18,16 +37,11 @@
     %tbody
       - @user_actions.each do |user_action|
         %tr
-          %td
-            = user_action.user.name
-          %td
-            = user_action.action_type
-          %td
-            = link_to user_action.product.name, product_path(user_action.product) rescue 'Товар удален'
-          %td
-            = user_action.action.html_safe
-          %td
-            = I18n.l(user_action.created_at, format: "%e %b, %H:%M")
+          %td= user_action.user.name
+          %td= user_action.action_type
+          %td= link_to user_action.product.name, product_path(user_action.product) rescue 'Товар удален'
+          %td= user_action.action.html_safe
+          %td= I18n.l(user_action.created_at, format: "%e %b, %H:%M")
     %tfoot
       %tr
         %td.text-center{ colspan: 6 }

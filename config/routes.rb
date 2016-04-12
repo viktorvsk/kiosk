@@ -106,11 +106,15 @@ Rails.application.routes.draw do
       end
     end
     resources :confs, only: [:index, :update]
-    resources :markups, except: [:show]
+    resources :markups, except: [:show] do
+      get :search, on: :collection
+    end
     resources :orders, except: [:show] do
       get :search, on: :collection
     end
-    resources :users, except: [:show]
+    resources :users, except: [:show] do
+      get :search, on: :collection
+    end
     namespace :vendor do
       resources :products, only: [:index, :show, :update] do
         get :search, on: :collection
@@ -120,13 +124,21 @@ Rails.application.routes.draw do
         post :pricelist, on: :member
       end
     end
-    resources :callbacks, except: [:new, :create, :show]
-    resources :catalog_comments, except: [:new, :create, :show]
+    resources :callbacks, except: [:new, :create, :show] do
+      get :search, on: :collection
+    end
+    resources :comments, except: [:new, :create, :show] do
+      get :search, on: :collection
+    end
     resources :markups, except: :show
     resources :users, except: [:new, :create, :show]
-    resources :user_actions, only: :index
+    resources :user_actions, only: :index do
+      get :search, on: :collection
+    end
     resources :filters, except: :show
-    resources :filter_values, except: :show
+    resources :filter_values, except: :show do
+      get :search, on: :collection
+    end
     resources :properties
   end
 end

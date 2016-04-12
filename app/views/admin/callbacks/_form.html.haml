@@ -2,8 +2,6 @@
   %ul.list-group
     %li.list-group-item= field_for(f, :name)
     %li.list-group-item= field_for(f, :phone)
-    %li.list-group-item
-      = field_for(f, :active, :check_box)
+    %li.list-group-item= field_for(f, :active, :check_box)
     %li.list-group-item= field_for(f, :body, :text_area, rows: 8)
-    %li.list-group-item= select_field_for(f, :user_id, user_list)
   = f.submit 'Отправить', class: 'btn btn-success'

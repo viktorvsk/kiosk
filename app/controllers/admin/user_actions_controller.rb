@@ -1,8 +1,15 @@
 class Admin::UserActionsController < Admin::BaseController
   before_action :check_admin_permissions
-  
+
   def index
-    @filtered_actions = UserActionsService.new(params).call
-    @user_actions = @filtered_actions.all.order(created_at: :desc).page(params[:page])
+    @q = UserProductAction.includes(:user, :product).ransack
+    @user_actions = @q.result.order('created_at DESC').page(params[:page])
+  end
+
+  def search
+    params[:q].each_value(&:strip!)
+    @q = UserProductAction.includes(:user, :product).ransack(params[:q])
+    @user_actions = @q.result.order('created_at DESC').page(params[:page])
+    render :index
   end
 end
