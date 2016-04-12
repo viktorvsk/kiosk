@@ -6,7 +6,7 @@
     %li.list-group-item
       = field_for(f, :active, :check_box)
     %li.list-group-item
-      = f.select :markup_type, markup_types
+      = f.select :markup_type, Markup::TYPES.map { |tp| [t("activerecord.attributes.markup.types.#{tp}"), tp] }, {},  class: 'form-control'
     %li.list-group-item
       = field_for(f, :body, :cktext_area, ckeditor: { language: :ru })
     = render 'shared/seo_attributes', seo: @markup.seo, f: f
