@@ -124,6 +124,7 @@ Rails.application.routes.draw do
       end
       resources :merchants, except: [:show] do
         post :pricelist, on: :member
+        get :auto_price, on: :member
       end
     end
     resources :callbacks, except: [:new, :create, :show] do

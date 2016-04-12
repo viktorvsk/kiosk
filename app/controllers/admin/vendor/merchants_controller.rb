@@ -1,6 +1,6 @@
 class Admin::Vendor::MerchantsController < Admin::BaseController
   before_action :check_content_manager_permissions
-  before_action :set_merchant, only: [:show, :edit, :update, :destroy, :pricelist]
+  before_action :set_merchant, only: [:show, :edit, :update, :destroy, :pricelist, :auto_price]
   before_action :set_custom_merchants, only: [:new, :edit]
 
   # GET /admin/vendor/merchants
@@ -73,6 +73,15 @@ class Admin::Vendor::MerchantsController < Admin::BaseController
     PricelistExtractor.new(@merchant.id).async_extract!
     @merchant.update(pricelist_state: 'Прайс в очереди', pricelist_error: false)
     redirect_to admin_vendor_merchants_url, notice: "Прайс добавлен в обработку"
+  end
+
+  def auto_price
+    if "#{@merchant.parser_class}Parser".classify.constantize.respond_to?(:auto_update)
+      klass = "#{@merchant.parser_class}Parser".classify.constantize
+      send_data klass.get_fresh_pricelist, filename: "#{@merchant.name}.xml"
+    else
+      redirect_to :back, flash: { error: 'Этот поставщик не имеет автоматически обновляемого прайса' }
+    end
   end
 
   private

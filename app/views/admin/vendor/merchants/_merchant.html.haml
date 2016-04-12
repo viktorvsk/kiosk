@@ -19,6 +19,9 @@
             %i.glyphicon.glyphicon-pencil
           = link_to admin_vendor_merchant_path(merchant), :data => { confirm: 'Вы уверены?' }, :method => :delete, class: 'btn btn-xs btn-danger' do
             %i.glyphicon.glyphicon-remove
+          - if "#{merchant.parser_class}Parser".classify.constantize.respond_to?(:auto_update)
+            = link_to auto_price_admin_vendor_merchant_path(merchant), class: 'btn btn-xs btn-default' do
+              %i.glyphicon.glyphicon-file
       .panel-body
         .col-sm-4
           Прайсов:
