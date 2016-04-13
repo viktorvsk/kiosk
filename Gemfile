@@ -67,7 +67,7 @@ end
 
 gem 'file_browser', path: 'file_browser'
 gem 'browser'
-gem 'roo'
+gem 'roo', '~> 1'
 gem 'nokogiri'
 gem 'dullard', github: 'ablebeam/dullard'
 gem 'auto_html'

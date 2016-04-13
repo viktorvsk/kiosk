@@ -489,7 +489,7 @@ DEPENDENCIES
   rb-inotify (>= 0.8.8)
   redis-rails
   resque (= 1.25.2)
-  roo
+  roo (~> 1)
   russian (~> 0.6.0)
   sass-rails (~> 5.0)
   select2-rails
