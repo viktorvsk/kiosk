@@ -20,9 +20,10 @@ class BasicMarketplace
       products = []
       active_marketplaces = Conf['marketplaces'].split.map{ |m| "#{m}Marketplace".classify }
       active_marketplaces.each do |marketplace|
+        searcher = marketplace.constantize.new(query)
         threads << Thread.new do
           Timeout::timeout(5) do
-            products << marketplace.constantize.new(query).search
+            products << searcher.search
           end
         end
       end
