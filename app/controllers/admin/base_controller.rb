@@ -9,7 +9,7 @@ class Admin::BaseController < ApplicationController
   end
 
   def internal
-    case params[:action]
+    case params[:act]
     when 'binder'
       Resque.enqueue(Binder)
     when 'sitemap'
@@ -22,6 +22,8 @@ class Admin::BaseController < ApplicationController
       PricelistExport.new("pn").async_generate!
     when 'clear_cache'
       Rails.cache.clear
+    else
+      raise StandardError, "Missing action type"
     end
     redirect_to :back, flash: { notice: 'Задача поставлена в очередь' }
     authorize! :manage, :everything
