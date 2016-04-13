@@ -12,9 +12,14 @@ class Catalog::Taxon < ActiveRecord::Base
 
   def self.sort(params)
     transaction do
-      params.each_with_index do |(record_id, parent_id), position|
-        parent_id = nil if parent_id == 'null'
-        where(id: record_id).update_all(ancestry: parent_id, position: position)
+      params.group_by { |k, v| v }.each do |k, val|
+        val.each_with_index do |x, position|
+          rec = where(id: x.first).first
+          parent_rec = k == 'null' ? nil : find(k)
+          rec.parent = parent_rec
+          rec.position = position
+          rec.save
+        end
       end
     end
   end
@@ -29,7 +34,7 @@ class Catalog::Taxon < ActiveRecord::Base
     image || category_random_image
   rescue
     'product_missing/png'
-  end  
+  end
 
   private
 
