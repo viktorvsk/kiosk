@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2'
+gem 'sprockets-rails', '2.3.3'
 gem 'puma'
 gem 'pg'
 gem 'devise'
@@ -48,7 +49,7 @@ end
 group :development, :test do
   gem 'byebug', '~> 5'
   gem 'spring'
-  gem 'did_you_mean'
+  gem 'did_you_mean', '~> 0'
   gem 'ffaker'
   gem 'factory_girl_rails'
 end
