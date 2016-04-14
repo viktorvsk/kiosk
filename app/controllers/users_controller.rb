@@ -32,8 +32,7 @@ class UsersController < CatalogController
         password_confirmation: pass,
         phone: phone,
         email: "#{phone}@evotex.kh.ua",
-        name: params[:callback][:name],
-        active: false
+        name: params[:callback][:name]
       }
       user = User.new(h)
       unless user.valid?
@@ -60,6 +59,6 @@ class UsersController < CatalogController
     end
 
     def callback_params
-      params[:callback].permit(:name, :phone, :body, :active)
+      params[:callback].permit(:name, :phone, :body)
     end
 end
