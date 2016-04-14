@@ -71,9 +71,13 @@ class PricelistFormatReader
     def parse_as_xls
       spreadsheet = Roo::Spreadsheet.open(@file)
 
-      if not spreadsheet.workbook.encoding.equal?(Encoding::CP1252)
-        spreadsheet.workbook.encoding = Encoding::CP1251
-      end
+      # Doesn't work for Optovik
+      # case @encoding
+      # when 'UTF-8'
+      #   spreadsheet.workbook.encoding = Encoding::UTF_8
+      # when 'Windows-1251'
+      #   spreadsheet.workbook.encoding = Encoding::CP1251
+      # end
 
       @start.to_i.upto(spreadsheet.last_row) do |row_num|
         row = {}
