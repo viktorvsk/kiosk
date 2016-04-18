@@ -91,17 +91,28 @@ class PricelistFormatReader
     end
 
     def parse_as_xlsx
-      wb    = Dullard::Workbook.new(@file)
-      rows  = wb.sheets.first.rows.to_a
-      @start.to_i.upto(rows.count) do |row_num|
-        row = {}
-        @columns.each do |k, v|
-          val = rows[row_num - 1][v.to_i - 1]
-          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
-          row[k] = val.to_s.strip.encode('utf-8')
-        end
-        @rows << row
+      if Conf['b.use_go_xlsx'] == 't'
+        `go run lib/go_xlsx.go #{@file.path}`
+        result_file_path = "#{@file.path}.go_result"
+        result_file = File.read(result_file_path)
+        json = JSON.parse result_file
+        rows = json[(@start.to_i - 1)..-1]
+      else
+        wb = Dullard::Workbook.new(@file)
+        rows = wb.sheets.first.rows.to_a[(@start.to_i - 1)..-1]
       end
+
+      rows.each do |row|
+        t = {}
+        @columns.each do |k, v|
+          val = row[v.to_i - 1]
+          val = val.to_i if (k == 'articul') && (val.kind_of?(Float))
+          t[k] = val.to_s.strip.encode('utf-8')
+        end
+        @rows << t
+      end
+    ensure
+      File.unlink(result_file_path) if result_file_path && File.file?(result_file_path)
     end
 
     def parse_as_csv

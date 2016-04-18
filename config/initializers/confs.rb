@@ -29,6 +29,7 @@ default_settings = {
   'ck.homepage_seo'       => 'Интернет-магазин ...',
   'ck.mode'               => '<h1>Режим работы</h1>',
   'ck.mode_product_card'  => '<h1>Режим работы</h1> Карточка товара',
+  'b.use_go_xlsx'         => 'f',
   'b.search_with_similars'=> 't'
 }
 
