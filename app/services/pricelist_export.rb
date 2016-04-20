@@ -32,7 +32,7 @@ class PricelistExport
   end
 
   def async_generate!
-    Resque.enqueue(self.class, @ids, @filename, @offer_available, @multiplierR)
+    Resque.enqueue(self.class, @ids, @filename, @offer_available, @multiplier)
   end
 
   def generate!
