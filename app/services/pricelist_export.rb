@@ -22,7 +22,7 @@ class PricelistExport
       @ids = Catalog::Category.pricelist_association.yandex_market.pluck(:id).join(',')
       @filename = 'price_yandex.xml'
       @offer_available = 'false'
-      @multiplier = 1.02
+      @multiplier = 1.00
     when 'pn'
       @ids = Catalog::Category.pricelist_association.pluck(:id).join(',')
       @filename = 'price_full.xml'
