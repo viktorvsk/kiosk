@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post '/c/:id/compare/:product_id', to: 'categories#add_to_compare', as: :add_to_compare
   delete '/c/:id/compare/:product_id', to: 'categories#remove_from_compare', as: :remove_from_compare
 
-  resources :products, only: [:index, :show], path: 'p' do
+  resources :products, only: [:show], path: 'p' do
     post :comment, to: 'products#add_comment', as: :comment
     collection do
       get :search
