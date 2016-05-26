@@ -13,4 +13,5 @@
   .panel-footer.text-right
     - css_class = 'btn btn-warning'
     - css_class << ' disabled' unless order.ready?
+    = credit_for(order.credit_names, order.total_sum)
     = link_to 'Оформить заказ', checkout_order_path, class:  css_class, method: :post, instant: instant, product_id: product_id

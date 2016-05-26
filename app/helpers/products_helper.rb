@@ -100,4 +100,17 @@ module ProductsHelper
     ].compact.join(' > ').html_safe
   end
 
+  def credit_for(name, price)
+    price = price.to_s
+    if name.respond_to?(:each)
+      name = name.join(', ')
+    end
+    content_tag(:script, '', src: 'http://iforms.rsb.ua/itrade/data/files/187388946/brs-functions.js') +
+    content_tag(:span, class: 'credit') do
+      link_to("javascript:Anketa_Open_Button('#{escape_javascript(name)}','#{escape_javascript(price)}')") do
+        tag(:img, src: 'http://iforms.rsb.ua/itrade/data/files/img/buttonforward.jpg')
+      end
+    end
+  end
+
 end

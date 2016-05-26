@@ -27,5 +27,7 @@
               = link_to add_product_order_path(product), method: :post, class: 'btn btn-primary product_cart-button' do
                 %i.glyphicon.glyphicon-shopping-cart
                 Добавить в корзину и продолжить покупки
+            .col-xs-12
+              = credit_for(product.name, product.price)
 
 

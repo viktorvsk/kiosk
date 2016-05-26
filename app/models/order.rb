@@ -119,6 +119,14 @@ class Order < ActiveRecord::Base
     ActionController::Base.helpers.number_to_phone(phone[3..-1], country_code: 380)
   end
 
+  def credit_names
+    line_items.map do |li|
+      name = "#{li.product.name}"
+      name << "(x#{li.quantity})" if li.quantity > 1
+      name
+    end
+  end
+
   private
 
   def strip_phone
