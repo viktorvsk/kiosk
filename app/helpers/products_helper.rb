@@ -108,7 +108,7 @@ module ProductsHelper
     content_tag(:script, '', src: 'http://iforms.rsb.ua/itrade/data/files/187388946/brs-functions.js') +
     content_tag(:span, class: 'credit') do
       link_to("javascript:Anketa_Open_Button('#{escape_javascript(name)}','#{escape_javascript(price)}')") do
-        tag(:img, src: 'http://iforms.rsb.ua/itrade/data/files/img/buttonforward.jpg')
+        Conf['txt.credit'].html_safe
       end
     end
   end

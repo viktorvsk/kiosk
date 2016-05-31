@@ -17,6 +17,7 @@ ru:
       delivery_types: Способы доставки
       payment_types: Способы оплаты
       robots: robots.txt
+      credit: Ссылка на кредит
     ck:
       mode: Режим работы
       mode_product_card: Режим работы (карточка товара)

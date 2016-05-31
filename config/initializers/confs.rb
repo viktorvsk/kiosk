@@ -15,6 +15,7 @@ default_settings = {
   'txt.delivery_types'    => '',
   'txt.words_to_downcase' => '',
   'txt.payment_types'     => '',
+  'txt.credit'            => '<img src="http://iforms.rsb.ua/itrade/data/files/img/buttonforward.jpg"/>',
   'ck.logo'               => 'Логотип',
   'ck.logo_min'           => '<img align="top" alt="" src="http://evotex.kh.ua/logo_min.png" style="width: 60px; height: 20px; display: inline; padding: 0; margin: 0" />',
   'ck.delivery_card'      => 'Оплата\Доставка в карточке товара',
