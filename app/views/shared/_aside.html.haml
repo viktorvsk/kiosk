@@ -1,15 +1,55 @@
-.panel.panel-success
-  .panel-heading
-    .panel-title Режим работы
-  .panel-body
-    = Conf['ck.mode_product_card'].html_safe
-.panel.panel-success
-  .panel-heading
-    .panel-title Телефоны
-  .panel-body
-    = Conf['ck.phones_and_mode'].html_safe
-.panel.panel-success
-  .panel-heading
-    .panel-title Мы вконтакте
-  .panel-body
-    = Conf['ck.vk_group'].html_safe
+%section.aside{ itemtype: "http://schema.org/LocalBusiness", itemscope: '' }
+  %h4.text-center Доставка
+  .row
+    .col-md-4
+      = image_tag('delivery.png', class: 'img-responsive')
+    .col-md-8
+      Срок доставки: 1 - 3 дня.
+      %br/
+      Cамовывозом - бесплатно.
+      %br/
+      Курьером - до 8 кг - 30 грн.
+      %br/
+      Отправляем через курьерские службы.
+  %hr/
+  %h4.text-center Оплата
+  .row
+    .col-md-4
+      = image_tag('pay.png', class: 'img-responsive')
+    .col-md-8
+      <b>Наличными</b> - оплата в нашем офисе.<br/>
+      <b>Безнал</b> - банковская карта, через онлайн банк, либо терманалы соответствующего банка.
+  %hr/
+  %h4.text-center
+    Режим работы интернет-магазина
+    %span{ itemprop: 'name' } Evotex
+  .row
+    .col-md-12
+      %p ПН &ndash; ПТ: с 9:00 до 19:00
+      %p СБ: с 10:00 до 16:00
+      %p ВС: выходной
+      %p Офис в городе Харькове: ул.Гамарника 7/9
+
+  %hr/
+  %h4.text-center Контактная информация
+  .row
+    .col-md-12.aside_phones
+      = image_tag('life.png', alt: 'life :)', title: 'life :)')
+      %span{ itemprop: 'telephone' } (093) 805–33–00
+      %br/
+      = image_tag('ks.png', alt: 'Киевстар', title: 'Киевстар')
+      %span{ itemprop: 'telephone' } (098) 118–33–00
+      %br/
+      = image_tag('mts.png', alt: 'mts', title: 'mts')
+      %span{ itemprop: 'telephone' } (095) 387–33–00
+      %br/
+      = image_tag('stationary.png', alt: 'Городской', title: 'Городской')
+      %span{ itemprop: 'telephone' } (057) 731–30–38
+      %br/
+      %p
+        = image_tag("http://web.icq.com/whitepages/online?icq=667590341&img=5")
+        667590341 - EvoTex
+      %p
+        = image_tag("http://web.icq.com/whitepages/online?icq=668202791&img=5")
+        668202791 - EvoTex
+
