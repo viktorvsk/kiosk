@@ -33,8 +33,10 @@ group :development do
   gem 'bootstrap-generators', '~> 3.3.1'
   gem 'rails-dev-boost',
        git: 'git://github.com/thedarkone/rails-dev-boost.git'
-  gem 'rb-inotify', '>= 0.8.8'
-  gem 'rb-fsevent', '>= 0.9.1'
+  gem 'rb-fsevent', '>= 0.9.1', require: RUBY_PLATFORM.include?('darwin')  && 'rb-fsevent'
+  gem 'growl',                  require: RUBY_PLATFORM.include?('darwin')  && 'growl'
+  gem 'rb-inotify', '>= 0.8.8', require: RUBY_PLATFORM.include?('linux')   && 'rb-inotify'
+  gem 'libnotify',              require: RUBY_PLATFORM.include?('linux')   && 'rb-inotify'
   gem 'binding_of_caller'
   gem 'better_errors'
   gem 'awesome_print'
@@ -49,7 +51,6 @@ end
 group :development, :test do
   gem 'byebug', '~> 5'
   gem 'spring'
-  gem 'did_you_mean', '~> 0'
   gem 'ffaker'
   gem 'factory_girl_rails'
 end
