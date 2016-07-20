@@ -1,6 +1,6 @@
 class Catalog::CategoryPresenter < SimpleDelegator
 
-  def seo_meta_title(template)
+  def seo_meta_title(template = Conf['seo_template_category'])
     if seo.present? && seo.title.present?
       seo.title
     else

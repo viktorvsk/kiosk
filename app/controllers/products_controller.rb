@@ -43,7 +43,7 @@ class ProductsController < CatalogController
         @newest = top_products.select{ |p| p.newest == '1' }
         @homepage = top_products.select{ |p| p.homepage == '1' }
         @hit = top_products.select{ |p| p.hit == '1' }
-        @meta_title = presents(@product).seo_meta_title(Conf['seo_template_product'])
+        @meta_title = presents(@product).seo_meta_title
         @meta_keywords = @product.seo.try(:keywords)
         @meta_description = @product.seo.try(:description)
         render layout: 'product_card'

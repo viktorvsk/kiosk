@@ -4,7 +4,7 @@ class Catalog::ProductPresenter < SimpleDelegator
     images.includes(:imageable).sort_by(&:position).first.try(:to_s) || "/product_missing.png"
   end
 
-  def seo_meta_title(template)
+  def seo_meta_title(template = Conf['seo_template_product'])
     if seo && seo.title.present?
       seo.title
     else

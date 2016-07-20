@@ -7,7 +7,7 @@ class CategoriesController < CatalogController
     if params[:slug] != @category.slug
       redirect_to c_path(slug: @category.slug, id: @category), status: 301
     end
-    @meta_title = presents(@category).seo_meta_title(Conf['seo_template_category'])
+    @meta_title = presents(@category).seo_meta_title
     @meta_keywords = @category.seo.try(:keywords)
     @meta_description = @category.seo.try(:description)
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
