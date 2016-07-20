@@ -14,8 +14,7 @@ class Catalog::Product < ActiveRecord::Base
                         :vendor, :vendor_code, :vendor_category
   validates :name, :category, presence: true
   # validates :model, :name, uniqueness: true
-  belongs_to :category, -> { includes(:taxon) },
-                        class_name: Catalog::Category,
+  belongs_to :category, class_name: Catalog::Category,
                         foreign_key: :catalog_category_id
   belongs_to :brand, class_name: Catalog::Brand, foreign_key: :catalog_brand_id
   has_many :comments, as: :commentable, dependent: :destroy
@@ -390,7 +389,7 @@ class Catalog::Product < ActiveRecord::Base
     p = price.to_i
     delta_price = p * delta
     similar_price = p - delta_price..p + delta_price
-    category.products.where(price: similar_price).where.not(id: id).order("RANDOM()").limit(number).sort_by(&:price)
+    category.products.includes(:brand, :seo, :category).where(price: similar_price).where.not(id: id).order("RANDOM()").limit(number).sort_by(&:price)
   end
 
   def set_property(property_name, property_value)
