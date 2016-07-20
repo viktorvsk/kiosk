@@ -9,6 +9,7 @@ default_settings = {
   'kiosk_meta_keywords'   => 'Ноутбуки, нетбуки в Харькове',
   'seo_template_product'  => '{{название}} за {{цена}} грн. в Харькове',
   'seo_template_category' => '{{имя-мн}} в Харькове. Купить {{имя-ед}}',
+  'seo_template_taxon'    => '{{имя}} в Харькове. Купить',
   'txt.js'                => '',
   'txt.robots'            => '',
   'txt.css'               => '',

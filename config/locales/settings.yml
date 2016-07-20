@@ -2,6 +2,7 @@ ru:
   settings:
     seo_template_product: Шаблон заголовка страницы в карточке товара
     seo_template_category: Шаблон заголовка страницы категории
+    seo_template_taxon: Шаблон заголовка страницы надкатегории
     new_layout_limit: Количество посетителей увидящих новую карточку товара (макс. в день)
     site_name: Название сайта
     marketplaces: Источники парсинга
