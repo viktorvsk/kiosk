@@ -10,10 +10,10 @@ Rails.application.routes.draw do
 
   # Old links for SEO
   get 'p/:slug/:id', to: redirect('/p/%{slug}-%{id}')
-  get 't/:slug-:id', to: redirect('/t/%{slug}-%{id}')
-  get 'c/:slug-:id', to: redirect('/c/%{slug}-%{id}')
-  get 'pages/:slug-:id', to: redirect('/pages/%{slug}-%{id}')
-  get 'help/:slug-:id', to: redirect('/help/%{slug}-%{id}')
+  get 't/:slug/:id', to: redirect('/t/%{slug}-%{id}')
+  get 'c/:slug/:id', to: redirect('/c/%{slug}-%{id}')
+  get 'pages/:slug/:id', to: redirect('/pages/%{slug}-%{id}')
+  get 'help/:slug/:id', to: redirect('/help/%{slug}-%{id}')
 
   devise_for :users
   resource :user, only: [:show, :update] do
