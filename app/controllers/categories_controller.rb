@@ -24,7 +24,7 @@ class CategoriesController < CatalogController
   end
 
   def compare
-    @products =  Catalog::Product.includes(:category, product_properties: :property).where(id: session[:comparing_ids].to_s.split, category: @category)
+    @products =  Catalog::Product.includes(:seo, :brand, :category, product_properties: :property).where(id: session[:comparing_ids].to_s.split, category: @category)
   end
 
   def add_to_compare
