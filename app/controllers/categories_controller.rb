@@ -11,7 +11,7 @@ class CategoriesController < CatalogController
     @meta_keywords = @category.seo.try(:keywords)
     @meta_description = @category.seo.try(:description)
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
-    @all_products = @category.products.with_price.by_category_params(params)
+    @all_products = @category.products.includes(:seo, :category, :brand).with_price.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])
     @brand = Catalog::Brand.where(id: params[:b]).first
     @filters_and_results_hash = {

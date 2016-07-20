@@ -10,7 +10,7 @@ class CatalogController < ApplicationController
   end
 
   def help_pages
-    @pages = Markup.active.helps
+    @pages = Markup.active.helps.includes(:seo)
     @page = @pages.sample
     @meta_title = @page.seo.try(:title)
     @meta_keywords = @page.seo.try(:keywords)
@@ -46,7 +46,7 @@ class CatalogController < ApplicationController
   def price
     categories = Catalog::Category.pricelist_association
     warranty_id = Catalog::Property.warranty.try(:id)
-    render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id, 
+    render 'catalog/price.xml', layout: false, locals: { categories: categories, warranty_id: warranty_id,
                                                                                  products_count: products_count }
   end
 

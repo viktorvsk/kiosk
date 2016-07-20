@@ -14,14 +14,14 @@ class ProductsController < CatalogController
   def search
     params[:q].each_value { |v| v.strip! } if params[:q]
     @q = Catalog::Product.ransack(params[:q])
-    @all_products = @q.result.with_price
+    @all_products = @q.result.with_price.includes(:seo, :category, :brand)
     @products = @all_products.zeros_last.order('price ASC').page(params[:page])
     respond_to do |format|
       format.html do
         # TODO: hack the fuck
         @grouped_hash = @all_products.select('catalog_products.id').group('catalog_category_id').count
         @grouped_hash = @grouped_hash.map do |k,v|
-          [Catalog::Category.select(:id, :name, :slug).find(k), v]
+          [Catalog::Category.select(:id, :name, :slug, :info).find(k), v]
         end
       end
       format.js do
@@ -39,7 +39,7 @@ class ProductsController < CatalogController
     end
     respond_to do |format|
       format.html do
-        top_products = Catalog::Product.with_price.top_products
+        top_products = Catalog::Product.includes(:seo, :category, :brand).with_price.top_products
         @newest = top_products.select{ |p| p.newest == '1' }
         @homepage = top_products.select{ |p| p.homepage == '1' }
         @hit = top_products.select{ |p| p.hit == '1' }
