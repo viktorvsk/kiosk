@@ -1,5 +1,5 @@
 .product
   .product_image
-    = image_tag presents(product).preview_path, class: 'img-responsive'
+    = image_tag presents(product).preview_path, alt: product.name, class: 'img-responsive'
   .product_price
     = price_for(product)

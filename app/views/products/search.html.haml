@@ -14,7 +14,7 @@
           - @grouped_hash.sort_by{ |arr| -arr.last.to_i }.each do |arr|
             - total += arr.last
             %li.list-group-item
-              = link_to arr.first.name, c_path(slug: arr.first.slug, id: arr.first.id, name: params[:q][:main_search])
+              = link_to arr.first.name, c_path(slug: arr.first.slug, id: arr.first.id, name: params[:q][:main_search]), title: presents(arr.first).seo_meta_title
               %b= "(#{arr.last})"
   .col-sm-9
     .panel.panel-default

@@ -13,7 +13,7 @@
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
               - if root_taxon.image.present?
-                .taxon-img= image_tag(root_taxon.image)
+                .taxon-img= image_tag(root_taxon.image, alt: root_taxon.name)
               .taxon-name
                 %span= root_taxon.name
               .hidden-xs
@@ -22,11 +22,11 @@
                 %span.caret
             %ul.dropdown-menu
               .container-fluid
-                - root_taxon.children.select{ |t| t.children.present? && t.children.includes(:category).any?{ |c| c.category.present? && c.category.products.with_price.present? } }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
+                - root_taxon.children.includes(:seo).select{ |t| t.children.present? && t.children.includes(:category).any?{ |c| c.category.present? && c.category.products.with_price.present? } }.sort_by(&:position).in_groups_of(4, false).each do |chapter_taxon_group|
                   .row
                     - chapter_taxon_group.each do |chapter_taxon|
                       .col-sm-3
-                        %h4= link_to chapter_taxon.name, t_path(id: chapter_taxon.id, slug: chapter_taxon.slug)
+                        %h4= link_to chapter_taxon.name, t_path(id: chapter_taxon.id, slug: chapter_taxon.slug), title: presents(chapter_taxon).seo_meta_title
                         %ul
                           - chapter_taxon.children.includes(:category).sort_by(&:position).each do |category_taxon|
                             - next unless (cat = category_taxon.category) && cat.products.with_price.present?

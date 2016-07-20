@@ -11,7 +11,7 @@
     %br/
     %br/
     %ul.list-group
-      - @taxon.children.includes(:image, :category).joins(:category).each do |child_taxon|
+      - @taxon.children.includes(:image, { category: [:seo, {products: [:brand, :category, :seo]}] }).joins(:category).each do |child_taxon|
         - next if child_taxon.category.products.with_price.blank?
         %li.list-group-item
           .row
@@ -20,10 +20,10 @@
                 = image_tag child_taxon.category_image_path, class: 'img-responsive thumbnail'
             .col-sm-10.col-md-11
               - if child_taxon.children.present?
-                = link_to child_taxon.name, taxon_path(child_taxon)
+                = link_to child_taxon.name, taxon_path(child_taxon), title: presents(child_taxon).seo_meta_title
               - else
 
-                %h3= link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category)
+                %h3= link_to child_taxon.category.name, c_path(slug: child_taxon.category.slug, id: child_taxon.category), title: presents(child_taxon.category).seo_meta_title
                 = render partial: 'products/cards/search', collection: child_taxon.category.products.with_price.order('RANDOM()').limit(3), as: :product
 
 

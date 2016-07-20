@@ -1,14 +1,14 @@
 %tr
   %td
     .product_name
-      = link_to p_path(slug: product.slug, id: product.id) do
+      = link_to p_path(slug: product.slug, id: product.id), title: presents(product).seo_meta_title do
         = product.name
       = link_to remove_product_order_path(product), method: :delete do
         .pull-right
           %i.glyphicon.glyphicon-remove-circle.text-danger
     .product_image
-      = link_to p_path(slug: product.slug, id: product.id) do
-        = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => presents(product).preview_path
+      = link_to p_path(slug: product.slug, id: product.id), title: presents(product).seo_meta_title do
+        = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => presents(product).preview_path, alt: product.name
   %td
     .product_price= price_for(product)
   %td{ width: 150 }

@@ -65,11 +65,11 @@ module ProductsHelper
   def breadcrumbs_for_product(product)
     top_taxon = product.category.taxon.parent
     category = product.category
-    brand_link = link_to(c_path(slug: category.slug, id: category, b: product.brand.id), itemprop: 'url', itemscope: '') { content_tag(:span, itemprop: 'title', itemscope: '') do product.brand.name end } rescue nil
+    brand_link = link_to(c_path(slug: category.slug, id: category, b: product.brand.id), itemprop: 'url', itemscope: '', title: presents(product).seo_meta_title) { content_tag(:span, itemprop: 'title', itemscope: '') do product.brand.name end } rescue nil
     breadcrumbs_ary = [
       link_to(root_path, itemprop: 'url', itemscope: '') { content_tag(:span, itemprop: 'title', itemscope: '') do Conf[:site_name] end },
-      link_to(t_path(slug: top_taxon.slug, id: top_taxon), itemprop: 'url', itemscope: '') { content_tag(:span, itemprop: 'title', itemscope: '') do top_taxon.name end } ,
-      link_to(c_path(slug: category.slug, id: category), itemprop: 'url', itemscope: '') { content_tag(:span, itemprop: 'title', itemscope: '') do category.name end },
+      link_to(t_path(slug: top_taxon.slug, id: top_taxon), itemprop: 'url', itemscope: '', title: presents(top_taxon).seo_meta_title) { content_tag(:span, itemprop: 'title', itemscope: '') do top_taxon.name end } ,
+      link_to(c_path(slug: category.slug, id: category), itemprop: 'url', itemscope: '', title: presents(category).seo_meta_title) { content_tag(:span, itemprop: 'title', itemscope: '') do category.name end },
       brand_link,
       content_tag(:span, itemprop: 'title', itemscope: '') { product.name }
     ].compact
@@ -95,7 +95,7 @@ module ProductsHelper
     top_taxon = category.taxon.parent
     [
       link_to(Conf[:site_name], root_path),
-      link_to(top_taxon.name, t_path(slug: top_taxon.slug, id: top_taxon)),
+      link_to(top_taxon.name, t_path(slug: top_taxon.slug, id: top_taxon), title: presents(top_taxon).seo_meta_title),
       category.name
     ].compact.join(' > ').html_safe
   end

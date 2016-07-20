@@ -1,11 +1,11 @@
 .product
   .col-xs-3
     .product_image
-      = link_to p_path(slug: product.slug, id: product.id) do
-        = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => presents(product).preview_path
+      = link_to p_path(slug: product.slug, id: product.id), title: presents(product).seo_meta_title do
+        = image_tag 'lazy-spinner.gif', class: 'img-responsive lazy', 'data-original' => presents(product).preview_path, alt: product.name
   .col-xs-6
     .product_name
-      = link_to product.name, p_path(slug: product.slug, id: product.id)
+      = link_to product.name, p_path(slug: product.slug, id: product.id), title: presents(product).seo_meta_title
 
     .product_price
       = price_for(product)

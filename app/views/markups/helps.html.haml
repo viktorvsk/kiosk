@@ -7,7 +7,7 @@
             - if page == @page
               = page.name
             - else
-              = link_to page.name, help_page_path(slug: page.slug, id: page)
+              = link_to page.name, help_page_path(slug: page.slug, id: page), title: page.seo.try(:title)
     .col-sm-9
       = render 'markups/page', page: @page
 - else

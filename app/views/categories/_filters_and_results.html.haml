@@ -6,7 +6,7 @@
           .col-sm-6
             Фильтры
           .col-sm-6.text-right
-            = link_to c_path(slug: @category.slug, id: @category.id), remote: true do
+            = link_to c_path(slug: @category.slug, id: @category.id), remote: true, title: presents(@category).seo_meta_title do
               .btn.btn-info.btn-xs
                 Сбросить
     .panel-body
