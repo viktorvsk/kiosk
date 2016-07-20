@@ -1,7 +1,7 @@
 = render 'products/lists/vendor', product: @product
 .row
   .col-sm-12
-    = render 'products/cards/inner_new', product: @product
+    = render 'products/cards/inner', product: @product
 %h2 Отзывы о товаре <b>#{@product.name}</b>
 = render 'products/card/comments', product: @product
 %h2 Другие товары в интернет-магазине Evotex

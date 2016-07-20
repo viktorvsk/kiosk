@@ -1,10 +1,6 @@
 class ProductsController < CatalogController
   before_action :set_product, only: [:show, :super_instant_checkout]
 
-  layout :resolve_layout
-
-  # GET /products
-  # GET /products.json
   def index
     top_products = Catalog::Product.with_price.top_products
     @newest = top_products.select{ |p| p.newest == '1' }
@@ -36,17 +32,6 @@ class ProductsController < CatalogController
 
   end
 
-  def old_show
-    @product = Catalog::Product.where(slug: params[:slug]).first
-    if @product.present?
-      redirect_to p_path(slug: @product.slug, id: @product), status: 301
-    else
-      redirect_to search_products_path(q: {main_search: params[:slug]}), alert: 'Товар не найден, возможно, устаревшая ссылка.'
-    end
-  end
-
-  # GET /products/1
-  # GET /products/1.json
   def show
     if params[:slug] != @product.slug
       redirect_to p_path(slug: @product.slug, id: @product), status: 301
@@ -61,6 +46,7 @@ class ProductsController < CatalogController
         @meta_title = presents(@product).seo_meta_title(Conf['seo_template_product'])
         @meta_keywords = @product.seo.try(:keywords)
         @meta_description = @product.seo.try(:description)
+        render layout: 'product_card'
       end
       format.js
     end
@@ -74,11 +60,6 @@ class ProductsController < CatalogController
 
   private
 
-    def resolve_layout
-      action_name == 'show' ? 'product_card' : 'application'
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Catalog::Product.find(params[:id])
     end

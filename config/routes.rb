@@ -1,42 +1,37 @@
 Rails.application.routes.draw do
-  get 'robots.txt', to: 'catalog#robots'
-  get 'sitemap.xml', to: 'catalog#sitemap'
-  get 'price_full.xml', to: 'catalog#price'
   root 'products#index'
+  get 'robots.txt', to: 'catalog#robots'
+
+  get 'p/:slug-:id', to: 'products#show', as: :p
+  get 't/:slug-:id', to: 'taxons#show', as: :t
+  get 'c/:slug-:id', to: 'categories#show', as: :c
+  get 'pages/:slug-:id', to: 'catalog#static_page', as: :static_page
+  get 'help/:slug-:id', to: 'catalog#show_help_page', as: :help_page
+
+  # Old links for SEO
+  get 'p/:slug/:id', to: redirect('/p/%{slug}-%{id}')
+  get 't/:slug-:id', to: redirect('/t/%{slug}-%{id}')
+  get 'c/:slug-:id', to: redirect('/c/%{slug}-%{id}')
+  get 'pages/:slug-:id', to: redirect('/pages/%{slug}-%{id}')
+  get 'help/:slug-:id', to: redirect('/help/%{slug}-%{id}')
 
   devise_for :users
+  resource :user, only: [:show, :update] do
+    post :callback
+  end
 
-  mount Ckeditor::Engine => '/ckeditor'
-
-  get '/products/:slug', to: 'products#old_show'
-
-  get 'pages/(:slug)/:id', to: 'catalog#static_page', as: :static_page
   get 'help', to: 'catalog#help_pages', as: :help_pages
-  get 'help/:slug/:id', to: 'catalog#show_help_page', as: :help_page
-
-  get '/p/:slug/:id', to: 'products#show', as: :p
-  get '/t/:slug/:id', to: 'taxons#show', as: :t
+  get 'p/search', to: 'products#search', as: :search_products
+  post 'p/comment', to: 'products#add_comment', as: :product_comment
   get '/c/:id/compare', to: 'categories#compare', as: :compare
-  get '/c/:slug/:id', to: 'categories#show', as: :c
   post '/c/:id/compare/:product_id', to: 'categories#add_to_compare', as: :add_to_compare
   delete '/c/:id/compare/:product_id', to: 'categories#remove_from_compare', as: :remove_from_compare
 
-  resources :products, only: [:show], path: 'p' do
-    post :comment, to: 'products#add_comment', as: :comment
-    collection do
-      get :search
-    end
-  end
-  resources :categories, only: [:index, :show], path: 'c', id: /\d+/
-  resources :taxons, only: [:show], path: 't'
   resource :order, only: [:show, :update] do
     post :checkout
     patch 'update_lineitem_count', to: 'orders#update_lineitem_count', as: :update_lineitem_count
     post 'add_product/:product_id', to: 'orders#add_product', as: :add_product
     delete 'remove_product/:product_id', to: 'orders#remove_product', as: :remove_product
-  end
-  resource :user, only: [:show, :update] do
-    post :callback
   end
 
   namespace :admin do
@@ -144,4 +139,5 @@ Rails.application.routes.draw do
     end
     resources :properties
   end
+  mount Ckeditor::Engine => '/ckeditor'
 end

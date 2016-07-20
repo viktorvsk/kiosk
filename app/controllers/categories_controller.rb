@@ -1,12 +1,6 @@
 class CategoriesController < CatalogController
   before_action :set_category, only: [:show, :compare, :add_to_compare]
 
-  # GET /categories
-  # GET /categories.json
-  def index
-    @categories = Category.all
-  end
-
   # GET /categories/1
   # GET /categories/1.json
   def show
