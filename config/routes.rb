@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   root 'products#index'
   get 'robots.txt', to: 'catalog#robots'
 
+  post 'p/comment', to: 'products#add_comment', as: :product_comment
+  get '/c/:id/compare', to: 'categories#compare', as: :compare
+  post '/c/:id/compare/:product_id', to: 'categories#add_to_compare', as: :add_to_compare
+  delete '/c/:id/compare/:product_id', to: 'categories#remove_from_compare', as: :remove_from_compare
+
   get 'p/:slug-:id', to: 'products#show', as: :p
   get 't/:slug-:id', to: 'taxons#show', as: :t
   get 'c/:slug-:id', to: 'categories#show', as: :c
@@ -22,10 +27,6 @@ Rails.application.routes.draw do
 
   get 'help', to: 'catalog#help_pages', as: :help_pages
   get 'p/search', to: 'products#search', as: :search_products
-  post 'p/comment', to: 'products#add_comment', as: :product_comment
-  get '/c/:id/compare', to: 'categories#compare', as: :compare
-  post '/c/:id/compare/:product_id', to: 'categories#add_to_compare', as: :add_to_compare
-  delete '/c/:id/compare/:product_id', to: 'categories#remove_from_compare', as: :remove_from_compare
 
   resource :order, only: [:show, :update] do
     post :checkout
