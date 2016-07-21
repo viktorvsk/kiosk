@@ -31,7 +31,7 @@
                           - chapter_taxon.children.includes(:category).sort_by(&:position).each do |category_taxon|
                             - next unless (cat = category_taxon.category) && cat.products.with_price.present?
                             %li
-                              = link_to category_taxon.name, c_path(id: cat.id, slug: category_taxon.slug)
+                              = link_to category_taxon.name, c_path(id: cat.id, slug: category_taxon.slug), title: presents(cat).seo_meta_title
 
 :erb
   <style>
