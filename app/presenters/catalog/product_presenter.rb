@@ -10,12 +10,27 @@ class Catalog::ProductPresenter < SimpleDelegator
     else
       seo_mapper = {
         'название'              => name,
+        'артикул'               => id,
         'главное-имя'           => main_name,
         'цена'                  => price,
         'старая-цена'           => old_price,
         'название-категории'    => category.name,
         'название-категории-1'  => category.s_name.to_s,
         'бренд'                 => brand.try(:name).to_s
+      }
+      seo_regexp = /\{\{(#{seo_mapper.keys.join('|')})\}\}/
+
+      template.gsub(seo_regexp){ seo_mapper[$1] }
+    end
+  end
+
+  def seo_meta_descr(template = Conf['seo_descr_product'])
+    if seo && seo.description.present?
+      seo.description
+    else
+      seo_mapper = {
+        'название'  => name,
+        'артикул'   => id
       }
       seo_regexp = /\{\{(#{seo_mapper.keys.join('|')})\}\}/
 

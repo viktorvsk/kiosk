@@ -9,7 +9,7 @@ class CategoriesController < CatalogController
     end
     @meta_title = presents(@category).seo_meta_title
     @meta_keywords = @category.seo.try(:keywords)
-    @meta_description = @category.seo.try(:description)
+    @meta_description = presents(@category).seo_meta_descr
     order = params[:o] == 'd' ? 'price DESC NULLS LAST' : 'price ASC NULLS LAST'
     @all_products = @category.products.includes(:seo, :category, :brand).with_price.by_category_params(params)
     @products = @all_products.zeros_last.order(order).page(params[:page])

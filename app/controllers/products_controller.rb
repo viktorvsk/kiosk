@@ -45,7 +45,7 @@ class ProductsController < CatalogController
         @hit = top_products.select{ |p| p.hit == '1' }
         @meta_title = presents(@product).seo_meta_title
         @meta_keywords = @product.seo.try(:keywords)
-        @meta_description = @product.seo.try(:description)
+        @meta_description = presents(@product).seo_meta_descr
         render layout: 'product_card'
       end
       format.js
