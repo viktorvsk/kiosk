@@ -1,5 +1,5 @@
 - root_url ||= "http://evotex.com.ua/"
 %url
-  %loc= URI.join(root_url, [url_prefix, resource.slug, resource.id.to_s].join('/'))
+  %loc= URI.join(root_url, "#{url_prefix}/#{resource.slug}-#{resource.id}")
   %lastmod= resource.updated_at
   %priority= priority
