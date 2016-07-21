@@ -18,7 +18,7 @@
           - real_price = (product.price.to_f * price_multiplier.to_f).ceil.to_i
           - is_yandex = offer_available == 'false'
           %offer{ id: product.id, available: offer_available }
-            %url= "http://evotex.com.ua/p/#{product.slug}/#{product.id}"
+            %url= "http://evotex.com.ua/p/#{product.slug}-#{product.id}"
             - if has_old_price
               %price= real_price
               %oldprice= product.old_price.to_i
