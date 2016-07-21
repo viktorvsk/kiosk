@@ -108,7 +108,7 @@ class Order < ActiveRecord::Base
   end
 
   def total_sum
-    line_items.includes(:product, :order).map(&:client_price).sum
+    line_items.includes(:product, :order).map { |li| li.quantity * li.client_price } .sum
   end
 
   def total_income
