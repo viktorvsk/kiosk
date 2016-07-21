@@ -39,7 +39,7 @@
         %tr
           %td= user_action.user.name
           %td= user_action.action_type
-          %td= link_to user_action.product.name, product_path(user_action.product) rescue 'Товар удален'
+          %td= link_to user_action.product.name, p_path(slug: user_action.product.slug, id: user_action.product.id) rescue 'Товар удален'
           %td= user_action.action.html_safe
           %td= I18n.l(user_action.created_at, format: "%e %b, %H:%M")
     %tfoot

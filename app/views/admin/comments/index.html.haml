@@ -23,7 +23,7 @@
     %tbody
       - @comments.each do |comment|
         %tr
-          %td= link_to comment.commentable.name, product_path(comment.commentable)
+          %td= link_to comment.commentable.name, p_path(slug: comment.commentable.slug, id: comment.commentable.id)
           %td= I18n.l(comment.created_at, format: "%e %b, %H:%M")
           %td= comment.active? ? 'Да' : 'Нет'
           %td= truncate(comment.body, length: 140)
