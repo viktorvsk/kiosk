@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'products#index'
   get 'robots.txt', to: 'catalog#robots'
+  get 'error/:number', to: 'catalog#error', as: :error
 
   post 'p/comment', to: 'products#add_comment', as: :product_comment
   get '/c/:id/compare', to: 'categories#compare', as: :compare
@@ -141,4 +142,5 @@ Rails.application.routes.draw do
     resources :properties
   end
   mount Ckeditor::Engine => '/ckeditor'
+  get '*unmatched_route', to: redirect('/error/404.html')
 end

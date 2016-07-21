@@ -1,0 +1,32 @@
+<style type="text/css">
+body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+div.dialog {
+  width: 100%;
+  padding: 4em;
+  margin: 0;
+  color: #000;
+  background: #fff;
+}
+ul{
+  list-style: none;
+  padding: 0;
+}
+h1 { color: #f55; }
+</style>
+
+<div class="dialog">
+    <% if params[:number] == '404' %>
+        <h1>Страница не найдена</h1>
+    <% else %>
+        <h1>Внутренняя ошибка</h1>
+    <% end %>
+    <h2>Уважаемые пользователи!</h2>
+    <p>Наш сайт находится в доработке.Этой страницы нет перейти на <p><a href="http://evotex.com.ua/">Главную</a></p>. По вопросам покупки товаров и ценам звоните по телефонам: </p>
+    <a href="/"><img alt="Logo" id="logo" src="/logo_min.png" /></a>
+    <ul id="phone_num">
+      <li class="office">(057) 731 - 30 - 38</li>
+      <li class="djuice">(098) 118 - 33 - 00</li>
+      <li class="life">(093) 805 - 33 - 00</li>
+      <li class="mts">(095) 387 - 33 - 00</li>
+    </ul>
+</div>
