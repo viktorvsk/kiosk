@@ -33,7 +33,7 @@ class CatalogController < ApplicationController
   end
 
   def robots
-    render text: Conf['txt.robots']
+    render plain: Conf['txt.robots']
   end
 
   def sitemap
