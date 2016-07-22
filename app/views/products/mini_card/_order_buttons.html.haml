@@ -1,7 +1,6 @@
 - if product.price.to_i > 0
   .product_buy
-    = link_to 'Купить', add_product_order_path(product), method: :post, class: 'btn btn-success product_cart-button'
-    = link_to p_path(id: product.id, slug: product.slug), method: :get, remote: true, title: presents(product).seo_meta_title do
-      .btn.btn-info.product_instant-button{ 'data-toggle' => 'modal', 'data-target' => '#instant-checkout'}
-        Купить в 1 клик
+    =  button_to 'Купить', add_product_order_path(product), method: :post, class: 'btn btn-success product_cart-button'
+    =  button_to p_path(id: product.id, slug: product.slug), method: :get, remote: true, title: presents(product).seo_meta_title, 'data-toggle' => 'modal', 'data-target' => '#instant-checkout', class: 'btn btn-info product_instant-button' do
+      Купить в 1 клик
 
