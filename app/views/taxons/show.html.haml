@@ -17,7 +17,7 @@
           .row
             .col-sm-2.col-md-1
               - cache ['category_image', child_taxon] do
-                = image_tag child_taxon.category_image_path, class: 'img-responsive thumbnail', alt child_taxon.category.name
+                = image_tag child_taxon.category_image_path, class: 'img-responsive thumbnail', alt: child_taxon.category.name
             .col-sm-10.col-md-11
               - if child_taxon.children.present?
                 = link_to child_taxon.name, taxon_path(child_taxon), title: presents(child_taxon).seo_meta_title
