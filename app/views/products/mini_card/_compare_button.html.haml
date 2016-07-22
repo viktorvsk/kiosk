@@ -6,7 +6,7 @@
   = form_tag send(action, id: product.catalog_category_id, product_id: product.id), remote: true, 'data-autoupdate' => true, method: method do |f|
     .form-group.checkbox
       %label
-        = check_box_tag "compare[#{product.id}]", checked_state, checked_state, class: 'form-control', 'data-compare-id' => product.id
+        = check_box_tag "compare[#{product.id}]", checked_state, checked_state, class: 'form-control', 'data-compare-id' => product.id, id: nil
         %div
           - if checked_state
             = link_to 'Перейти к сравнению', compare_path(id: product.catalog_category_id)
