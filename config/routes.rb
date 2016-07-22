@@ -142,5 +142,4 @@ Rails.application.routes.draw do
     resources :properties
   end
   mount Ckeditor::Engine => '/ckeditor'
-  get '*unmatched_route', to: redirect('/error/404.html')
 end

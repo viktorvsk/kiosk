@@ -1,5 +1,4 @@
 class CatalogController < ApplicationController
-  rescue_from StandardError, :with => :redirect_500
   before_action :set_comparing_products
 
   def static_page
@@ -53,16 +52,6 @@ class CatalogController < ApplicationController
 
   def set_comparing_products
     @comparing_products = session[:comparing_ids].to_s.split.map(&:to_s)
-  end
-
-  def error
-    @meta_title = "Ошибка #{params[:number]}"
-  end
-
-  private
-
-  def redirect_500
-    redirect_to(error_path(500, format: :html))
   end
 
 end
