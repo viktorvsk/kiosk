@@ -3,7 +3,7 @@
 
 asset 'jquery-ui'
 asset 'jquery.ui.touch-punch.dk'
-asset 'nouislider'
+asset 'nouislider', '7.0.10'
 asset 'magnific-popup'
 asset 'jquery.lazyload'
 asset 'jQuery-Mask-Plugin'
