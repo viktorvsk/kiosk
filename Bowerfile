@@ -1,15 +1,6 @@
-# A sample Bowerfile
-# Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
-
-asset 'jquery-ui'
-asset 'jquery.ui.touch-punch.dk'
+asset 'jquery-ui', '1.12.0'
+asset 'jquery.ui.touch-punch.dk', '0.3.3'
 asset 'nouislider', '7.0.10'
-asset 'magnific-popup'
-asset 'jquery.lazyload'
-asset 'jQuery-Mask-Plugin'
-# asset 'typehead.js'
-# asset 'bxslider'
-# asset 'masked-input'
-# asset 'addresspicker'
-# asset 'select2'
-# asset 'juicy-ace-editor'
+asset 'magnific-popup', '1.1.0'
+asset 'jquery.lazyload', '1.9.4'
+asset 'jQuery-Mask-Plugin', '1.14.0'

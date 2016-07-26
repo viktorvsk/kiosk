@@ -1,11 +1,11 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "jquery-ui": "latest",
-    "jquery.ui.touch-punch.dk": "latest",
-    "nouislider": "latest",
-    "magnific-popup": "latest",
-    "jquery.lazyload": "latest",
-    "jQuery-Mask-Plugin": "latest"
+    "jquery-ui": "1.12.0",
+    "jquery.ui.touch-punch.dk": "0.3.3",
+    "nouislider": "7.0.10",
+    "magnific-popup": "1.1.0",
+    "jquery.lazyload": "1.9.4",
+    "jQuery-Mask-Plugin": "1.14.0"
   }
 }
