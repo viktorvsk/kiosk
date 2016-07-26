@@ -69,7 +69,7 @@
   window.Kiosk.CatalogCategoryFiltersManager = new CatalogCategoryFiltersManager();
 
   $(document).ready(function () {
-    if ($(anySelector).size()) {
+    if ($(anySelector).length) {
 
       window.Kiosk.CatalogCategoryFiltersManager.init();
     }

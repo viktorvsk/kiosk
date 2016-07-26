@@ -8,7 +8,7 @@
 
 $(document).ready(function () {
 
-  if($('.binding').size()){
+  if($('.binding').length){
     $(window).scroll(function () {
       if ($(window).scrollTop() > 70 ){
         $('.binding .panel-material').addClass('binding-panel-fixed');

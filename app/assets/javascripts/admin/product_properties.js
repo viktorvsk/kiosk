@@ -83,7 +83,7 @@
   window.Kiosk = window.Kiosk || {};
   window.Kiosk.ProductPropertyManager = new ProductPropertyManager();
   $(document).ready(function () {
-    if ($(containerSelector).size()) {
+    if ($(containerSelector).length) {
       console.log('Initialized Product Properties Manager...');
       window.Kiosk.ProductPropertyManager.init();
     }

@@ -79,7 +79,7 @@
   window.Kiosk = window.Kiosk || {};
   window.Kiosk.CategoryPropertyManager = new CategoryPropertyManager();
   $(document).ready(function () {
-    if ($(containerSelector).size()) {
+    if ($(containerSelector).length) {
       console.log('Initialized Category Properties Manager...');
       window.Kiosk.CategoryPropertyManager.init();
     }

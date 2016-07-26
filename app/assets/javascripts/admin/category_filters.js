@@ -56,7 +56,7 @@
   window.Kiosk.CategoryFiltersManager = new CategoryFiltersManager();
 
   $(document).ready(function () {
-    if($(filtersContainerSelector).size() || $(filterValuesContainerSelector).size()) {
+    if($(filtersContainerSelector).length || $(filterValuesContainerSelector).length) {
       window.Kiosk.CategoryFiltersManager.init();
     }
   });

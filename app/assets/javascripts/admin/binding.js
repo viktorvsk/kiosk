@@ -121,7 +121,7 @@
     }
 
     function recountProduct(product) {
-      if (!product || !product.size()) {
+      if (!product || !product.length) {
         return;
       }
       var id = product.data(dataProductId),
