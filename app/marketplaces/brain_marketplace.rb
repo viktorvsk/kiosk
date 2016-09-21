@@ -33,19 +33,20 @@ class BrainMarketplace < BasicMarketplace
   def product_page_scraper(page)
     res = {}
 
-    properties = page.css('.characteristics .table .row').map do |row|
+    properties = page.css(".specifications-list__item").map do |row|
       {
-        row.css('div')[0].text.strip => row.css('div')[1].text.strip
+        row.xpath('.').first.xpath('./text()').text.strip => row.css('span').text.strip
       } rescue nil
     end
 
-    res[:name]        = page.at_css('.name').text.strip
-    res[:description] = page.at_css('.description_wrapper').inner_html.strip rescue ''
-    res[:images]      = page.css('#thumbnail_container img').map { |img| img['src'].gsub(/small/, 'big') } rescue []
+
+    res[:name]        = page.at_css('.good-card__title').text.strip
+    res[:description] = page.at_css('.description-text').inner_html.strip rescue ''
+    res[:images]      = page.css('.preview_slider img').map { |img| img['src'].gsub(/small/, 'big') } rescue []
     res[:properties]  = properties.select(&:present?)
     res[:url]         = @query
-    res[:vendor_code] = page.at_css('.code').text.gsub('код товара ', '').strip
-    res[:vendor_category]    = page.css('.bread_crumbs a').last.text.strip
+    res[:vendor_code] = page.at_css('.product-num__curr').text.strip
+    res[:vendor_category]    = page.css('.breadcrumbs__list a').last.text.strip
 
     res
 
