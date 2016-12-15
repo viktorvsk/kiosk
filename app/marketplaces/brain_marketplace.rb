@@ -1,6 +1,23 @@
 class BrainMarketplace < BasicMarketplace
   HOST = /brain/
 
+  def search
+    response = Typhoeus.get(search_query, followlocation: true, verbose: false)
+    html = response.body
+    doc = Nokogiri::HTML(html)
+    if response.effective_url =~ /brain.com.ua\/category/
+      product = doc.search(".goods-block--list .goods-block__item").first
+      res = {}
+      res[:name]        = product.at_css('a.goods-block__name').text.strip
+      res[:url]         = URI.join('http://brain.com.ua', product.at_css('a.goods-block__name')['href']).to_s
+      res[:image]       = URI.join('http://brain.com.ua', product.at_css('.goods-block__image img')['src']).to_s
+      res[:price]       = product.at_css('.goods-block__price-new').text.strip.to_i
+      @products = [res]
+    else
+      @products = doc.search(search_found_selector).map { |product| search_results_mapper(product) }.first(24)
+    end
+  end
+
   private
 
   def search_query
