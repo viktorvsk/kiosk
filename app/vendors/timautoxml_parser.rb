@@ -5,7 +5,7 @@ class TimautoxmlParser < BaseParser
 
   class << self
     def get_fresh_pricelist
-      pricelist = Typhoeus.get('http://timauto.com.ua/tools/ym-mopt.php').body.force_encoding('windows-1251').encode('utf-8')
+      pricelist = Typhoeus.get('https://timauto.com.ua/tools/ym-mopt.php').body.force_encoding('windows-1251').encode('utf-8')
       transfer_id_from_attributes(pricelist)
     end
 
