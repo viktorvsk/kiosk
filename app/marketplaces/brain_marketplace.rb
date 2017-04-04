@@ -9,8 +9,8 @@ class BrainMarketplace < BasicMarketplace
       product = doc.search(".goods-block--list .goods-block__item").first
       res = {}
       res[:name]        = product.at_css('a.goods-block__name').text.strip
-      res[:url]         = URI.join('http://brain.com.ua', product.at_css('a.goods-block__name')['href']).to_s
-      res[:image]       = URI.join('http://brain.com.ua', product.at_css('.goods-block__image img')['src']).to_s
+      res[:url]         = URI.join('https://brain.com.ua', product.at_css('a.goods-block__name')['href']).to_s
+      res[:image]       = URI.join('https://brain.com.ua', product.at_css('.goods-block__image img')['src']).to_s
       res[:price]       = product.at_css('.goods-block__price-new').text.strip.to_i
       @products = [res]
     else
@@ -21,7 +21,7 @@ class BrainMarketplace < BasicMarketplace
   private
 
   def search_query
-    "http://brain.com.ua/search/#{@query}"
+    "https://brain.com.ua/search/#{@query}"
   end
 
   def search_found_selector
@@ -31,8 +31,8 @@ class BrainMarketplace < BasicMarketplace
   def search_results_mapper(product)
     res = {}
     res[:name]  = product.at_css('.name a').text.strip
-    res[:url]   = URI.join('http://brain.com.ua', product.at_css('.name a')['href']).to_s
-    res[:image] = URI.join('http://brain.com.ua', product.at_css('.img img')['src']).to_s
+    res[:url]   = URI.join('https://brain.com.ua', product.at_css('.name a')['href']).to_s
+    res[:image] = URI.join('https://brain.com.ua', product.at_css('.img img')['src']).to_s
     price_node  = product.at_css('.price .number')
 
     if price_node.present?
