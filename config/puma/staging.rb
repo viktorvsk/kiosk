@@ -1,4 +1,4 @@
-deploy_to = '/home/root/kiosk'
+deploy_to = '/home/ubuntu/kiosk'
 workers Integer(ENV['PUMA_WORKERS'] || 10)
 threads Integer(ENV['MIN_THREADS']  || 8), Integer(ENV['MAX_THREADS'] || 8)
 environment    'staging'
