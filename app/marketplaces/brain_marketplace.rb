@@ -21,7 +21,7 @@ class BrainMarketplace < BasicMarketplace
   private
 
   def search_query
-    "https://brain.com.ua/search/#{@query}"
+    "https://brain.com.ua/search?s=#{@query}"
   end
 
   def search_found_selector
