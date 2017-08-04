@@ -19,7 +19,7 @@
     = render 'shared/product_card_footer_bar'
     = render 'shared/catalog_modals'
     = javascript_include_tag 'application', 'catalog'
-    %script#topprice3d{ src: "http://topprice.ua/js/3d.js", async: true }
+    %script#topprice3d{ src: "https://topprice.ua/js/3d.js", async: true }
     - if !(current_user && current_user.admin?) && !Rails.env.development?
       %script= Conf['txt.js'].try(:html_safe)
     = yield :post_scripts
