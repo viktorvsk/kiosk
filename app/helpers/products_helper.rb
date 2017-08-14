@@ -105,7 +105,7 @@ module ProductsHelper
     if name.respond_to?(:each)
       name = name.join(', ')
     end
-    content_tag(:script, '', src: 'http://iforms.rsb.ua/itrade/data/files/187388946/brs-functions.js') +
+    content_tag(:script, '', src: 'https://iforms.rsb.ua/itrade/data/files/187388946/brs-functions.js') +
     content_tag(:span, class: 'credit') do
       link_to("javascript:Anketa_Open_Button('#{escape_javascript(name)}','#{escape_javascript(price)}')") do
         Conf['txt.credit'].html_safe
