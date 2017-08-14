@@ -3,7 +3,7 @@
 - else
   Никто еще не оставил отзыв об этом товаре.
 
-= form_for product.comments.new, url: product_comment_path(product) do |f|
+= form_for product.comments.new, url: product_comment_path(product_id: product.id) do |f|
   .panel.panel-default
     .panel-heading
       %h4.panel-title Отзыв о товаре
